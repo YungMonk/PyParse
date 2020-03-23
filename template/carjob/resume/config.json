@@ -1,0 +1,40 @@
+{
+    "20200311": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "value": "",
+        "fname": "zh1.json",
+        "lists": false,
+        "child": {
+            "table-divResume": {
+                "label": "简历主体内容",
+                "rules": "//div[@id='contentResume']",
+                "value": "",
+                "lists": false,
+                "child": {
+                    "content": {
+                        "label": "span中含有‘简历编码’内容",
+                        "rules": ".//span[contains(text(),'简历编码')]",
+                        "value": "",
+                        "lists": false
+                    }
+                }
+            }
+        }
+    },
+    "20200318": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "value": "",
+        "fname": "zh2.json",
+        "lists": false,
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有div中有id=boss_from_exiaobao",
+                "rules": "//span[contains(text(),'简历编码1')]",
+                "value": "",
+                "lists": false
+            }
+        }
+    }
+}

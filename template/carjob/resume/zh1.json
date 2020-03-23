@@ -1,0 +1,80 @@
+{
+    "source": {
+        "label": "基础信息",
+        "rules": "",
+        "value": "",
+        "lists": false,
+        "child": {
+            "src": {
+                "label": "渠道ID",
+                "rules": "",
+                "value": 51
+            },
+            "src_no": {
+                "label": "外网简历ID",
+                "rules": "//span[contains(text(), '简历编码：')]"
+            }
+        }
+    },
+    "basic": {
+        "label": "基础信息",
+        "rules": "",
+        "value": "",
+        "lists": false,
+        "child": {
+            "resume_name": {
+                "label": "简历名",
+                "rules": "",
+                "value": ""
+            },
+            "update_at": {
+                "label": "简历更新时间",
+                "rules": "//span[contains(text(), '更新时间：')]",
+                "cback": [
+                    {
+                        "func": "trim"
+                    },
+                    {
+                        "func": "explode",
+                        "extra": {
+                            "param": [
+                                "："
+                            ],
+                            "index": [
+                                1
+                            ]
+                        }
+                    }
+                ]
+            },
+            "photo2": {
+                "label": "头像base64数据流",
+                "rules": "",
+                "value": ""
+            },
+            "photo": {
+                "label": "头像url",
+                "rules": "",
+                "value": ""
+            },
+            "photo_type": {
+                "label": "头像类型",
+                "rules": "",
+                "value": ""
+            },
+            "name": {
+                "label": "姓名",
+                "rules": ".//span[contains(text(),'姓名：')]/../span[2]"
+            },
+            "age": {
+                "label": "年龄",
+                "rules": ".//span[contains(text(),'年龄：')]/../span[2]",
+                "cback":[
+                    {"func":"trim"},
+                    {"func":"preg_match","extra":{"param":["(\\d+)岁"],"index":[1]}}
+                ]
+            }
+        },
+        "cback": []
+    }
+}
