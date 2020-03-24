@@ -2,12 +2,10 @@
     "source": {
         "label": "基础信息",
         "rules": "",
-        "value": "",
         "lists": false,
         "child": {
             "src": {
                 "label": "渠道ID",
-                "rules": "",
                 "value": 51
             },
             "src_no": {
@@ -19,12 +17,10 @@
     "basic": {
         "label": "基础信息",
         "rules": "",
-        "value": "",
         "lists": false,
         "child": {
             "resume_name": {
                 "label": "简历名",
-                "rules": "",
                 "value": ""
             },
             "update_at": {
@@ -49,17 +45,14 @@
             },
             "photo2": {
                 "label": "头像base64数据流",
-                "rules": "",
                 "value": ""
             },
             "photo": {
                 "label": "头像url",
-                "rules": "",
                 "value": ""
             },
             "photo_type": {
                 "label": "头像类型",
-                "rules": "",
                 "value": ""
             },
             "name": {
@@ -69,9 +62,65 @@
             "age": {
                 "label": "年龄",
                 "rules": ".//span[contains(text(),'年龄：')]/../span[2]",
-                "cback":[
-                    {"func":"trim"},
-                    {"func":"preg_match","extra":{"param":["(\\d+)岁"],"index":[1]}}
+                "cback": [
+                    {
+                        "func": "trim"
+                    },
+                    {
+                        "func": "preg_match",
+                        "extra": {
+                            "param": [
+                                "(\\d+)岁"
+                            ],
+                            "index": [
+                                1
+                            ]
+                        }
+                    }
+                ]
+            },
+            "birth": {
+                "label": "年龄",
+                "rules": ".//span[contains(text(),'年龄：')]/../span[2]",
+                "cback": [
+                    {
+                        "func": "trim"
+                    },
+                    {
+                        "func": "handle_birthday"
+                    }
+                ]
+            },
+            "gender": {
+                "label": "性别",
+                "rules": ".//span[contains(text(),'性别：')]/../span[2]",
+                "cback": [
+                    {
+                        "func": "trim"
+                    },
+                    {
+                        "func": "handle_gender"
+                    }
+                ]
+            },
+            "height": {
+                "label": "身高",
+                "value": ""
+            },
+            "weight": {
+                "label": "体重",
+                "value": ""
+            },
+            "degree": {
+                "label": "学历",
+                "rules": ".//span[contains(text(),'最高学历：')]/../span[2]",
+                "cback": [
+                    {
+                        "func": "trim"
+                    },
+                    {
+                        "func": "handle_degree"
+                    }
                 ]
             }
         },
