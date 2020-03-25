@@ -122,8 +122,259 @@
                         "func": "handle_degree"
                     }
                 ]
+            },
+            "card": {
+                "label": "身份证ID",
+                "value":""
+            },
+            "nation": {
+                "label": "民族",
+                "value":""
+            },
+            "native_place": {
+                "label": "籍贯所在地的市级ID",
+                "value":""
+            },
+            "native_place_province": {
+                "label": "籍贯所在地的省级ID",
+                "value":""
+            },
+            "account": {
+                "label": "户口所在地的市级ID",
+                "value":""
+            },
+            "account_province": {
+                "label": "户口所在地的省级ID",
+                "value":""
+            },
+            "account_district": {
+                "label": "户口所在地的市级ID",
+                "value":""
+            },
+            "account_address": {
+                "label": "户口所在地的详细地址",
+                "value":""
+            },
+            "address": {
+                "label": "当前所在地的市级id",
+                "value":""
+            },
+            "address_province": {
+                "label": "当前所在地的省级id",
+                "value":""
+            },
+            "address_district": {
+                "label": "现居住地区id",
+                "value":""
+            },
+            "address_detail": {
+                "label": "现居住地详细地址",
+                "value":""
+            },
+            "marital": {
+                "label": "婚姻状况",
+                "value":"U"
+            },
+            "political_status": {
+                "label": "政治面貌",
+                "value":""
+            },
+            "current_status": {
+                "label": "当前状态",
+                "value":""
+            },
+            "work_experience": {
+                "label": "工作经历年限",
+                "value":""
+            },
+            "working_seniority_from": {
+                "label": "工作年限最小值",
+                "value":""
+            },
+            "working_seniority_to": {
+                "label": "工作年限最大值",
+                "value":""
+            },
+            "self_remark": {
+                "label": "自我评价",
+                "value":""
+            },
+            "expect_type": {
+                "label": "期望工作性质",
+                "value":""
+            },
+            "expect_city_ids": {
+                "label": "期望城市的id列表",
+                "value":""
+            },
+            "expect_city_names": {
+                "label": "期望城市的名称列表",
+                "value":""
+            },
+            "expect_industry_name": {
+                "label": "期望从事行业",
+                "value":""
+            },
+            "expect_position_name": {
+                "label": "期望从事职业",
+                "value":""
+            },
+            "expect_salary": {
+                "label": "期望薪资,原始字符串",
+                "value":""
+            },
+            "expect_salary_from": {
+                "label": "期望月薪最小值(K)",
+                "value":""
+            },
+            "expect_salary_to": {
+                "label": "期望月薪最大值(K)",
+                "value":""
+            },
+            "expect_salary_month": {
+                "label": "期望薪资月数",
+                "value":""
+            },
+            "expect_annual_salary_from": {
+                "label": "期望年薪最小值(K)",
+                "value":""
+            },
+            "expect_annual_salary_to": {
+                "label": "期望年薪最大值(K)",
+                "value":""
+            },
+            "expect_hour_salary_from": {
+                "label": "期望时薪最小值",
+                "value":""
+            },
+            "expect_hour_salary_to": {
+                "label": "期望时薪最大值",
+                "value":""
+            },
+            "expect_day_salary_from": {
+                "label": "期望日薪最大值",
+                "value":""
+            },
+            "expect_day_salary_to": {
+                "label": "期望日薪最大值",
+                "value":""
+            },
+            "expect_bonus": {
+                "label": "期望其它收入",
+                "value":""
+            },
+            "expect_work_at": {
+                "label": "期望到岗时间",
+                "value":""
+            },
+            "overseas": {
+                "label": "是否有海外经历",
+                "value":"N"
+            },
+            "is_house": {
+                "label": "居住地是否有住房",
+                "value":"U"
+            },
+            "is_fertility": {
+                "label": "生育状况",
+                "value":"U"
+            },
+            "live_family": {
+                "label": "是否与家人同住",
+                "value":"U"
+            },
+            "project_info": {
+                "label": "无法解析的项目经历",
+                "value":""
+            },
+            "basic_salary": {
+                "label": "当前薪资",
+                "value":""
+            },
+            "basic_salary_from": {
+                "label": "当前月薪最小值(K)",
+                "value":""
+            },
+            "basic_salary_to": {
+                "label": "当前月薪最大值(K)",
+                "value":""
+            },
+            "basic_salary_month": {
+                "label": "当前薪资月数",
+                "value":"12"
+            },
+            "not_expect_corporation_name": {
+                "label": "勿推荐企业的名称列表",
+                "value":""
+            },
+            "not_expect_corporation_ids": {
+                "label": "勿推荐企业的id列表",
+                "value":""
+            },
+            "not_expect_corporation_status": {
+                "label": "勿推荐企业的开关",
+                "value":""
+            },
+            "focused_corporations": {
+                "label": "关注的公司",
+                "value":""
+            },
+            "focused_feelings": {
+                "label": "关注的点",
+                "value":""
+            },
+            "interests": {
+                "label": "兴趣",
+                "value":""
+            },
+            "other_info": {
+                "label": "其他信息",
+                "value":""
             }
         },
         "cback": []
+    },
+    "contact": {
+        "label": "联系方式",
+        "rules": "",
+        "lists": false,
+        "child": {
+            "phone": {
+                "label": "手机号码",
+                "value": ""
+            },
+            "phone_area": {
+                "label": "手机号码所属区域",
+                "value": 1
+            },
+            "email": {
+                "label": "电子邮件地址",
+                "value": ""
+            },
+            "qq": {
+                "label": "QQ号码",
+                "value": ""
+            },
+            "wechat": {
+                "label": "微信号码",
+                "value": ""
+            },
+            "tel": {
+                "label": "电话号码",
+                "value": 1
+            },
+            "sina": {
+                "label": "新浪微博",
+                "value": ""
+            },
+            "ten": {
+                "label": "腾讯微博",
+                "value": ""
+            },
+            "msn": {
+                "label": "MSN",
+                "value": ""
+            }
+        }
     }
 }
