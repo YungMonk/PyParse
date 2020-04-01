@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import array, os, json
+import array
+import os
+import json
 from lxml import etree
-from django.utils.html import strip_tags
 from config.static_param import channelMap, parserType
 from lib.helper import optimize
 
@@ -78,9 +79,16 @@ class ParserEngine(object):
             if 'rules' not in value or len(value['rules']) == 0:
                 value['rules'] = '/'
 
+            # 子项处理前对html文本数据进行处理
             expath = etreehtml.xpath(value['rules'])
-            if 'child' in value and isinstance(value['child'], dict) and len(
-                    value['child']):
+            if expath and 'pfunc' in value:
+                print(expath)
+                htmltext = etree.tostring(
+                    expath[7], encoding="utf-8", pretty_print=True, method="html").decode()
+                htmltext = optimize(htmltext, value['pfunc'])
+                print(htmltext)
+
+            if 'child' in value and isinstance(value['child'], dict) and len(value['child']):
                 # 有子项
                 if 'lists' in value and value['lists'] and len(expath):
                     t = []
@@ -100,10 +108,10 @@ class ParserEngine(object):
                     tmp[key] = ''
                 else:
                     tmp[key] = expath[0].text
-            
+
+            # 子项处理后对html文本数据进行处理
             if 'cback' in value:
-                    tmp[key] = optimize(tmp[key], value['cback'])
-            # print(tmp[key], key)
+                tmp[key] = optimize(tmp[key], value['cback'])
 
         return tmp
 

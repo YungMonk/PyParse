@@ -1,12 +1,16 @@
-import re, time
+import re
+import time
+from django.utils.html import strip_tags as st
 
 
 # 回调函数处理
 def optimize(args, funcs=[]):
     funcMaps = {
         "trim": trim,
+        "strip_tags": strip_tags,
         "explode": explode,
         "preg_match": preg_match,
+        "preg_replace": preg_replace,
         "handle_birthday": handle_birthday,
         "handle_gender": handle_gender,
         "handle_degree": handle_degree,
@@ -34,6 +38,11 @@ def trim(args="", **extra):
     return args.strip(character_mask)
 
 
+# 去除html文本中的所有标签
+def strip_tags(args="", **extra):
+    return st(args)
+
+
 # 字符串分割
 def explode(args="", **extra):
     delimiter = " "
@@ -49,6 +58,17 @@ def preg_match(args="", **extra):
     pattern = re.compile(pattern)
     if 'index' in extra and len(extra['index']):
         return pattern.search(args).group(extra['index'][0])
+
+
+# 正则替换
+def preg_replace(args="", **extra):
+    if 'param' in extra and len(extra['param']):
+        pattern = extra['param'][0]
+        if len(extra['param']) > 1:
+            replace = extra['param'][1]
+        else:
+            replace = ""
+        return re.sub(pattern, replace, args)
 
 
 # 匹配出生日
@@ -83,6 +103,7 @@ def handle_gender(args="", **extra):
         return sexs[isMatch.group(1)]
 
 
+# 匹配学历
 def handle_degree(args="", **extra):
     degrees = {
         '本科及以上': 1,
