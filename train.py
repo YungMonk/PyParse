@@ -1,12 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import re
 import array
 import os
 import json
 from lxml import etree
 from config.static_param import channelMap, parserType
-from lib.helper import optimize
+from lib.helper import optimize, preg_match
 
 
 class ParserEngine(object):
@@ -66,6 +67,15 @@ class ParserEngine(object):
 
         print(cv)
 
+    def placeholder(self, str=''):
+        return str.replace('@或@', '|').replace('逗号', ',').replace('左中括号', '[').replace(
+            '右中括号', ']').replace('右括号', '(').replace('左括号', ')').replace('\\n', '\n')
+
+    def filter(self, str):
+        matches = []
+        if preg_match(str, pattern=r'/(.*?)\[(.*)\],(\d+)/'):
+            pass
+
     def parse(self, maps, etreehtml):
         tmp = {}
         for key, value in maps.items():
@@ -79,14 +89,19 @@ class ParserEngine(object):
             if 'rules' not in value or len(value['rules']) == 0:
                 value['rules'] = '/'
 
+            rules = value['rules']
+
+            # 分割规则
+            arr = rules.split('|')
+
             # 子项处理前对html文本数据进行处理
-            expath = etreehtml.xpath(value['rules'])
+            expath = etreehtml.xpath(self.placeholder(arr[0]))
             if expath and 'pfunc' in value:
-                print(expath)
+                # print(expath)
                 htmltext = etree.tostring(
-                    expath[7], encoding="utf-8", pretty_print=True, method="html").decode()
+                    expath[0], encoding="utf-8", pretty_print=True, method="html").decode()
                 htmltext = optimize(htmltext, value['pfunc'])
-                print(htmltext)
+                # print(htmltext)
 
             if 'child' in value and isinstance(value['child'], dict) and len(value['child']):
                 # 有子项
@@ -110,8 +125,10 @@ class ParserEngine(object):
                     tmp[key] = expath[0].text
 
             # 子项处理后对html文本数据进行处理
-            if 'cback' in value:
-                tmp[key] = optimize(tmp[key], value['cback'])
+            arr.pop(0)
+            if len(arr):
+                print(arr)
+                tmp[key] = optimize(tmp[key], arr)
 
         return tmp
 
@@ -134,11 +151,15 @@ class ParserEngine(object):
         return content
 
 
-filename = os.getcwd() + '/test/carjob/1.html'
-with open(filename, 'r') as f:
-    fileContext = f.read()
-    f.close()
-    # print(fileContext)
+# filename = os.getcwd() + '/test/carjob/1.html'
+# with open(filename, 'r') as f:
+#     fileContext = f.read()
+#     f.close()
+#     # print(fileContext)
 
-    obj = ParserEngine(51, fileContext, 1)
-    obj.dispatch()
+#     obj = ParserEngine(51, fileContext, 1)
+#     obj.dispatch()
+strs = "起始位置2019-01-02/2020-09-01/2020-10-11"
+pattern = re.compile(r'(\d{4}.*?\d{1,2}).*?(\d{1,2})')
+print(pattern.findall(strs))
+print(pattern.search(strs).group())

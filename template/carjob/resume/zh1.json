@@ -25,23 +25,7 @@
             },
             "update_at": {
                 "label": "简历更新时间",
-                "rules": "//span[contains(text(), '更新时间：')]",
-                "cback": [
-                    {
-                        "func": "trim"
-                    },
-                    {
-                        "func": "explode",
-                        "extra": {
-                            "param": [
-                                "："
-                            ],
-                            "index": [
-                                1
-                            ]
-                        }
-                    }
-                ]
+                "rules": "//span[contains(text(), '更新时间：')]|trim|explode[：],1"
             },
             "photo2": {
                 "label": "头像base64数据流",
@@ -61,47 +45,15 @@
             },
             "age": {
                 "label": "年龄",
-                "rules": ".//span[contains(text(),'年龄：')]/../span[2]",
-                "cback": [
-                    {
-                        "func": "trim"
-                    },
-                    {
-                        "func": "preg_match",
-                        "extra": {
-                            "param": [
-                                "(\\d+)岁"
-                            ],
-                            "index": [
-                                1
-                            ]
-                        }
-                    }
-                ]
+                "rules": ".//span[contains(text(),'年龄：')]/../span[2]|trim|preg_match[(\\d+)岁],1"
             },
             "birth": {
                 "label": "年龄",
-                "rules": ".//span[contains(text(),'年龄：')]/../span[2]",
-                "cback": [
-                    {
-                        "func": "trim"
-                    },
-                    {
-                        "func": "handle_birthday"
-                    }
-                ]
+                "rules": ".//span[contains(text(),'年龄：')]/../span[2]|trim|handle_birthday"
             },
             "gender": {
                 "label": "性别",
-                "rules": ".//span[contains(text(),'性别：')]/../span[2]",
-                "cback": [
-                    {
-                        "func": "trim"
-                    },
-                    {
-                        "func": "handle_gender"
-                    }
-                ]
+                "rules": ".//span[contains(text(),'性别：')]/../span[2]|trim|handle_gender"
             },
             "height": {
                 "label": "身高",
@@ -113,15 +65,7 @@
             },
             "degree": {
                 "label": "学历",
-                "rules": ".//span[contains(text(),'最高学历：')]/../span[2]",
-                "cback": [
-                    {
-                        "func": "trim"
-                    },
-                    {
-                        "func": "handle_degree"
-                    }
-                ]
+                "rules": ".//span[contains(text(),'最高学历：')]/../span[2]|trim|handle_degree"
             },
             "card": {
                 "label": "身份证ID",
@@ -379,7 +323,7 @@
     },
     "education": {
         "label": "教育经历",
-        "rules": "//div/span[contains(text(),'教育经历')]/../following-sibling::*/div[@class='myResume_title']|//div/span[contains(text(),'教育经历')]/../following-sibling::*/div[@class='myResume_cont']",
+        "rules": "//div/span[contains(text(),'教育经历')]/../following-sibling::*|preg_replace",
         "lists": true,
         "pfunc":[
             {

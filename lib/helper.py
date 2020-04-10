@@ -10,22 +10,17 @@ def optimize(args, funcs=[]):
         "strip_tags": strip_tags,
         "explode": explode,
         "preg_match": preg_match,
+        "preg_match_all": preg_match_all,
         "preg_replace": preg_replace,
         "handle_birthday": handle_birthday,
         "handle_gender": handle_gender,
         "handle_degree": handle_degree,
     }
 
-    if len(funcs) == 0:
-        return args
     for func in funcs:
-        if 'func' not in func or len(func['func']) == 0:
-            continue
-
-        extra = {}
-        if 'extra' in func:
-            extra = func['extra']
-        args = funcMaps[func['func']](args, **extra)
+        
+        params = []
+        args = funcMaps[func['func']](args, *params)
 
     return args
 
@@ -58,6 +53,9 @@ def preg_match(args="", **extra):
     pattern = re.compile(pattern)
     if 'index' in extra and len(extra['index']):
         return pattern.search(args).group(extra['index'][0])
+
+def preg_match_all(args="", **extra):
+    pass
 
 
 # 正则替换
