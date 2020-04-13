@@ -321,6 +321,46 @@
             }
         }
     },
+    "project": {
+        "label": "项目经验",
+        "rules": "//div/span[contains(text(),'工作经历')]/../following-sibling::*",
+        "lists":true,
+        "child": {
+            "start_time": {
+                "label": "开始时间",
+                "rules": ".//span[@class='myResume_times']|preg_match_all[(\\d{4}.*?\\d{1,2})],0|preg_replace[(\\d+).*?(\\d+),\\1年\\2月]"
+            },
+            "end_time": {
+                "label": "截至时间",
+                "rules": ".//span[@class='myResume_times']|preg_match_all[(\\d{4}.*?\\d{1,2})],1|preg_replace[(\\d+).*?(\\d+),\\1年\\2月]"
+            },
+            "corporation_name": {
+                "label": "公司",
+                "rules": ".//div[@class='myResume_title']|trim"
+            },
+            "scale": {
+                "label": "规模",
+                "rules": ""
+            },
+            "industry_name": {
+                "label": "所属行业",
+                "rules": ""
+            },
+            "corporation_type": {
+                "label": "公司性质",
+                "rules": ""
+            },
+            "position_name": {
+                "label": "职位",
+                "rules": ".//div[@class='myResume_neme']|trim"
+            },
+            "responsibilities": {
+                "label": "工作职责",
+                "rules": ".//span[contains(text(),'工作描述：')]/following-sibling::*"
+            }
+        },
+        "application_rules": "handle_sofar"
+    },
     "education": {
         "label": "教育经历",
         "rules": "//div/span[contains(text(),'教育经历')]/../following-sibling::*|call_prev|preg_replace[</div>\\s*<div class=\"myResume_cont\">,]|handle_xpath[//div左中括号@class='myResume_title'右中括号]",
@@ -328,11 +368,11 @@
         "child": {
             "start_time": {
                 "label": "开始时间",
-                "rules": "./text()[1]|trim|preg_match_all[(\\d{4}.*?\\d{1,2})],0"
+                "rules": "./text()[1]|trim|preg_match_all[(\\d{4}.*?\\d{1,2})],0|preg_replace[(\\d+).*?(\\d+),\\1年\\2月]"
             },
             "end_time": {
                 "label": "结束时间",
-                "rules": "./text()[1]|trim|preg_match_all[(\\d{4}.*?\\d{1,2})],1"
+                "rules": "./text()[1]|trim|preg_match_all[(\\d{4}.*?\\d{1,2})],1|preg_replace[(\\d+).*?(\\d+),\\1年\\2月]"
             },
             "school_name": {
                 "label": "学校名称",
@@ -340,8 +380,21 @@
             },
             "discipline_name": {
                 "label": "专业",
+                "rules": ".//span[1][contains(text(),'专业名称')]|explode[：],1"
+            },
+            "degree": {
+                "label": "学历",
+                "rules": ".//span[2][contains(text(),'学历')]|handle_degree"
+            },
+            "degree_origin": {
+                "label": "学历",
                 "rules": ".//span[2][contains(text(),'学历')]"
+            },
+            "discipline_desc": {
+                "label": "专业描述",
+                "rules": ""
             }
-        }
+        },
+        "application_rules": "handle_sofar"
     }
 }

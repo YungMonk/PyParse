@@ -17,6 +17,7 @@ def optimize(args, funcs=[]):
         "handle_birthday": handle_birthday,
         "handle_gender": handle_gender,
         "handle_degree": handle_degree,
+        "handle_sofar": handle_sofar,
     }
 
     for func in funcs:
@@ -28,7 +29,6 @@ def optimize(args, funcs=[]):
         tmp_1 = re.search(r'(.*?)\[(.*)\],(\d+),(\d+)', func)
         tmp_2 = re.search(r'(.*)\[(.*)\],(\d+)', func)
         tmp_3 = re.search(r'(.*?)\[(.*)\]', func)
-        # print(func,tmp_1,tmp_2,tmp_3)
         if tmp_1:
             call_info = tmp_1.groups()
             cbackinfo["func"] = call_info[0]
@@ -100,7 +100,6 @@ def preg_match(args="", **extra):
 def preg_match_all(args="", **extra):
     if 'param' in extra and len(extra['param']):
         pattern = extra['param'][0]
-        print(pattern, args)
         return re.findall(pattern, args)
 
 
@@ -108,6 +107,7 @@ def preg_match_all(args="", **extra):
 def preg_replace(args="", **extra):
     if 'param' in extra and len(extra['param']):
         pattern = extra['param'][0]
+
         if len(extra['param']) > 1:
             replace = extra['param'][1]
         else:
@@ -119,9 +119,8 @@ def handle_xpath(args="", **extra):
     etreehtml = etree.HTML(args)
     return etreehtml.xpath(placeholder(extra['param'][0]))
 
+
 # 匹配出生日
-
-
 def handle_birthday(args="", **extra):
     string = ""
     matchObj = re.search(
@@ -184,3 +183,13 @@ def handle_degree(args="", **extra):
         return degrees[isMatch.group(1)]
     else:
         return 99
+
+
+# 是否最近
+def handle_sofar(args="", **extra):
+    if 'start_time' in args and 'end_time' in args and args['end_time'] == '':
+        args['so_far'] = 'Y'
+    else:
+        args['so_far'] = 'N'
+
+    return args

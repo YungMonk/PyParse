@@ -65,7 +65,7 @@ class ParserEngine(object):
         templateContent = json.loads(self.readFile(templateName))
         cv = self.parse(templateContent, etreehtml)
 
-        print(cv)
+        print(json.dumps(cv, ensure_ascii=False))
 
     # 内容解析
 
@@ -100,7 +100,13 @@ class ParserEngine(object):
                 if 'lists' in value and value['lists'] and len(expath):
                     t = []
                     for sign in expath:
-                        t.append(self.parse(value['child'], sign))
+                        tmp_child = self.parse(value['child'], sign)
+
+                        if 'application_rules' in value and value['application_rules']:
+                            tmp_child = optimize(
+                                tmp_child, value['application_rules'].split('|'))
+
+                        t.append(tmp_child)
                     tmp[key] = t
                 else:
                     if len(expath):
@@ -109,9 +115,13 @@ class ParserEngine(object):
                     else:
                         # 本级规则为空
                         tmp[key] = self.parse(value['child'], etreehtml)
+
+                    if 'application_rules' in value and value['application_rules']:
+                        tmp[key] = optimize(
+                            tmp[key], value['application_rules'].split('|'))
+
             else:
                 # 没有子项
-
                 if len(expath) == 0:
                     tmp[key] = ''
                 elif isinstance(expath[0], str):
@@ -151,10 +161,15 @@ with open(filename, 'r') as f:
 
     obj = ParserEngine(51, fileContext, 1)
     obj.dispatch()
+
+
 # strs = "起始位置2019-01-02/2020-09-01/2020-10-11"
 # pattern = re.compile(r'(\d{4}.*?\d{1,2}).*?(\d{1,2})')
 # print(pattern.findall(strs))
 # print(pattern.search(strs).group())
 
 # strs = '郑州高级汽车维修学院\n                                    (2000-10-2003-06)'
-# print(re.findall('(\\d{4}.*?\\d{1,2})',strs,re.I | re.M))
+# print(re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', strs))
+
+# src = 'aabcdddd'
+# print (re.sub( '(ab).*(d)', '\\1e\\2', src ))
