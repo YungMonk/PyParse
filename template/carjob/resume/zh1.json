@@ -129,7 +129,7 @@
             },
             "work_experience": {
                 "label": "工作经历年限",
-                "value": ""
+                "rules": ".//span[contains(text(),'工作经验')]/following-sibling::*|preg_match[(\\d+)],0"
             },
             "working_seniority_from": {
                 "label": "工作年限最小值",
@@ -321,7 +321,7 @@
             }
         }
     },
-    "project": {
+    "work": {
         "label": "项目经验",
         "rules": "//div/span[contains(text(),'工作经历')]/../following-sibling::*",
         "lists":true,

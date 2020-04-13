@@ -64,6 +64,7 @@ def optimize(args, funcs=[]):
     return args
 
 
+# 占位符还原
 def placeholder(str=''):
     return str.replace('@或@', '|').replace('逗号', ',').replace('左中括号', '[').replace(
         '右中括号', ']').replace('右括号', '(').replace('左括号', ')').replace('\\n', '\n')
@@ -97,6 +98,7 @@ def preg_match(args="", **extra):
         return re.search(pattern, args).groups()
 
 
+# 正则全匹配
 def preg_match_all(args="", **extra):
     if 'param' in extra and len(extra['param']):
         pattern = extra['param'][0]
@@ -115,6 +117,16 @@ def preg_replace(args="", **extra):
         return re.sub(pattern, replace, args)
 
 
+# 单位（千）转换
+def k2k(args="", **extra):
+    return '%.2f' % args
+
+
+# 单位（千）转换
+def w2k(args="", **extra):
+    return '%.2f' % (args*0.1)
+
+# xpath处理
 def handle_xpath(args="", **extra):
     etreehtml = etree.HTML(args)
     return etreehtml.xpath(placeholder(extra['param'][0]))
@@ -193,3 +205,24 @@ def handle_sofar(args="", **extra):
         args['so_far'] = 'N'
 
     return args
+
+
+# 语言匹配
+def handle_langue(args="", **extra):
+    pattern = re.compile(r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语/朝鲜语|普通话|粤语|闽南语|上海话|其它)')
+    isMatch = pattern.search(args)
+    if isMatch:
+        return isMatch.group(1)
+    else:
+        return ""
+
+
+# 婚姻状态
+def handle_marital(args="", **extra):
+    marital = {'已婚': 'Y', '未婚': 'N', 'single': 'N', 'married': 'Y', 'unmarried': 'N'}
+    pattern = re.compile(r'(已婚|未婚|single|married|unmarried)')
+    isMatch = pattern.search(args)
+    if isMatch:
+        return marital[isMatch.group(1)]
+    else:
+        return "U"
