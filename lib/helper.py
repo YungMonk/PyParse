@@ -1,5 +1,6 @@
 import re
 import time
+from lxml import etree
 from django.utils.html import strip_tags as st
 
 
@@ -12,17 +13,60 @@ def optimize(args, funcs=[]):
         "preg_match": preg_match,
         "preg_match_all": preg_match_all,
         "preg_replace": preg_replace,
+        "handle_xpath": handle_xpath,
         "handle_birthday": handle_birthday,
         "handle_gender": handle_gender,
         "handle_degree": handle_degree,
     }
 
     for func in funcs:
-        
-        params = []
-        args = funcMaps[func['func']](args, *params)
+        if func == 'call_prev':
+            continue
+
+        cbackinfo = {"func": "", "param": []}
+
+        tmp_1 = re.search(r'(.*?)\[(.*)\],(\d+),(\d+)', func)
+        tmp_2 = re.search(r'(.*)\[(.*)\],(\d+)', func)
+        tmp_3 = re.search(r'(.*?)\[(.*)\]', func)
+        # print(func,tmp_1,tmp_2,tmp_3)
+        if tmp_1:
+            call_info = tmp_1.groups()
+            cbackinfo["func"] = call_info[0]
+            cbackinfo["param"] = call_info[1].split(',')
+            cres = funcMaps[cbackinfo['func']](args, **cbackinfo)
+            idx_1 = int(call_info[2])
+            idx_2 = int(call_info[3])
+            args = ""
+            if idx_1 < len(cres):
+                tmp = cres[idx_1]
+                if idx_2 < len(tmp):
+                    args = tmp[idx_2]
+        elif tmp_2:
+            call_info = tmp_2.groups()
+            cbackinfo["func"] = call_info[0]
+            if call_info[0] == "preg_match" or call_info[0] == "preg_match_all":
+                cbackinfo["param"].append(call_info[1])
+            else:
+                cbackinfo["param"] = call_info[1].split(',')
+            cres = funcMaps[cbackinfo['func']](args, **cbackinfo)
+            idx_1 = int(call_info[2])
+            args = ""
+            if idx_1 < len(cres):
+                args = cres[idx_1]
+        elif tmp_3:
+            call_info = tmp_3.groups()
+            cbackinfo["func"] = call_info[0]
+            cbackinfo["param"] = call_info[1].split(',')
+            args = funcMaps[cbackinfo['func']](args, **cbackinfo)
+        else:
+            args = funcMaps[func](args, **cbackinfo)
 
     return args
+
+
+def placeholder(str=''):
+    return str.replace('@或@', '|').replace('逗号', ',').replace('左中括号', '[').replace(
+        '右中括号', ']').replace('右括号', '(').replace('左括号', ')').replace('\\n', '\n')
 
 
 # 去除字符串首尾处的空白字符（或者其他字符）
@@ -43,19 +87,21 @@ def explode(args="", **extra):
     delimiter = " "
     if 'param' in extra and len(extra['param']):
         delimiter = extra['param'][0]
-    return args.split(delimiter)[1]
+    return args.split(delimiter)
 
 
 # 正则使用
 def preg_match(args="", **extra):
     if 'param' in extra and len(extra['param']):
         pattern = extra['param'][0]
-    pattern = re.compile(pattern)
-    if 'index' in extra and len(extra['index']):
-        return pattern.search(args).group(extra['index'][0])
+        return re.search(pattern, args).groups()
+
 
 def preg_match_all(args="", **extra):
-    pass
+    if 'param' in extra and len(extra['param']):
+        pattern = extra['param'][0]
+        print(pattern, args)
+        return re.findall(pattern, args)
 
 
 # 正则替换
@@ -69,7 +115,13 @@ def preg_replace(args="", **extra):
         return re.sub(pattern, replace, args)
 
 
+def handle_xpath(args="", **extra):
+    etreehtml = etree.HTML(args)
+    return etreehtml.xpath(placeholder(extra['param'][0]))
+
 # 匹配出生日
+
+
 def handle_birthday(args="", **extra):
     string = ""
     matchObj = re.search(

@@ -45,7 +45,7 @@
             },
             "age": {
                 "label": "年龄",
-                "rules": ".//span[contains(text(),'年龄：')]/../span[2]|trim|preg_match[(\\d+)岁],1"
+                "rules": ".//span[contains(text(),'年龄：')]/../span[2]|trim|preg_match[(\\d+)岁],0"
             },
             "birth": {
                 "label": "年龄",
@@ -323,26 +323,24 @@
     },
     "education": {
         "label": "教育经历",
-        "rules": "//div/span[contains(text(),'教育经历')]/../following-sibling::*|preg_replace",
+        "rules": "//div/span[contains(text(),'教育经历')]/../following-sibling::*|call_prev|preg_replace[</div>\\s*<div class=\"myResume_cont\">,]|handle_xpath[//div左中括号@class='myResume_title'右中括号]",
         "lists": true,
-        "pfunc":[
-            {
-                "func": "preg_replace",
-                "extra":{
-                    "param":[
-                        "</div>\\s+<div class=\"myResume_cont\">"
-                    ]
-                }
-            }
-        ],
         "child": {
             "start_time": {
                 "label": "开始时间",
-                "rules": ""
+                "rules": "./text()[1]|trim|preg_match_all[(\\d{4}.*?\\d{1,2})],0"
             },
             "end_time": {
                 "label": "结束时间",
-                "value": ""
+                "rules": "./text()[1]|trim|preg_match_all[(\\d{4}.*?\\d{1,2})],1"
+            },
+            "school_name": {
+                "label": "学校名称",
+                "rules": "./text()[1]|trim|preg_match[(\\S+)],0"
+            },
+            "discipline_name": {
+                "label": "专业",
+                "rules": ".//span[2][contains(text(),'学历')]"
             }
         }
     }
