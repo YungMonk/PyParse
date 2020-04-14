@@ -25,11 +25,7 @@ def optimize(args, funcs=[]):
             continue
 
         cbackinfo = {"func": "", "param": []}
-
-        tmp_1 = re.search(r'(.*?)\[(.*)\],(\d+),(\d+)', func)
-        tmp_2 = re.search(r'(.*)\[(.*)\],(\d+)', func)
-        tmp_3 = re.search(r'(.*?)\[(.*)\]', func)
-        if tmp_1:
+        if (tmp_1 := re.search(r'(.*?)\[(.*)\],(\d+),(\d+)', func)):
             call_info = tmp_1.groups()
             cbackinfo["func"] = call_info[0]
             cbackinfo["param"] = call_info[1].split(',')
@@ -41,7 +37,7 @@ def optimize(args, funcs=[]):
                 tmp = cres[idx_1]
                 if idx_2 < len(tmp):
                     args = tmp[idx_2]
-        elif tmp_2:
+        elif (tmp_2 := re.search(r'(.*)\[(.*)\],(\d+)', func)):
             call_info = tmp_2.groups()
             cbackinfo["func"] = call_info[0]
             if call_info[0] == "preg_match" or call_info[0] == "preg_match_all":
@@ -53,7 +49,7 @@ def optimize(args, funcs=[]):
             args = ""
             if idx_1 < len(cres):
                 args = cres[idx_1]
-        elif tmp_3:
+        elif (tmp_3 :=re.search(r'(.*?)\[(.*)\]', func)):
             call_info = tmp_3.groups()
             cbackinfo["func"] = call_info[0]
             cbackinfo["param"] = call_info[1].split(',')
@@ -126,6 +122,7 @@ def k2k(args="", **extra):
 def w2k(args="", **extra):
     return '%.2f' % (args*0.1)
 
+
 # xpath处理
 def handle_xpath(args="", **extra):
     etreehtml = etree.HTML(args)
@@ -135,32 +132,19 @@ def handle_xpath(args="", **extra):
 # 匹配出生日
 def handle_birthday(args="", **extra):
     string = ""
-    matchObj = re.search(
-        r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})\s*(月|-|\.){1}\s*([0-3]{0,1}[0-9]{1})',
-        args)
-    if matchObj:
-        string = "{}年{}月{}日".format(matchObj.group(1), matchObj.group(3),
-                                    matchObj.group(5))
-    elif re.search(
-            r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})',
-            args):
-        matchObj = re.search(
-            r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})',
-            args)
+    if (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})\s*(月|-|\.){1}\s*([0-3]{0,1}[0-9]{1})',args)):
+        string = "{}年{}月{}日".format(matchObj.group(1), matchObj.group(3), matchObj.group(5))
+    elif (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})', args)):
         string = "{}年{}月".format(matchObj.group(1), matchObj.group(3))
-    elif re.search(r'(\d+)岁', args):
-        matchObj = re.search(r'(\d+)岁', args)
-        string = "{}年".format(
-            time.localtime(time.time()).tm_year - int(matchObj.group(1)))
+    elif (matchObj := re.search(r'(\d+)岁', args)):
+        string = "{}年".format(time.localtime(time.time()).tm_year - int(matchObj.group(1)))
     return string if string else args
 
 
 # 匹配性别
 def handle_gender(args="", **extra):
     sexs = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F', '1': 'M', '0': 'F'}
-    pattern = re.compile(r'(男|女|male|female)')
-    isMatch = pattern.search(args)
-    if isMatch:
+    if (isMatch := re.search(r'(男|女|male|female)', args)):
         return sexs[isMatch.group(1)]
 
 
@@ -189,12 +173,18 @@ def handle_degree(args="", **extra):
         '其他': 99,
         '不限': 99,
     }
-    pattern = re.compile(r'(初中|高中|中专|中技|专科|大专|本科|硕士|博士|MBA)')
-    isMatch = pattern.search(args)
-    if isMatch:
+    if (isMatch := re.search(r'(初中|高中|中专|中技|专科|大专|本科|硕士|博士|MBA)', args)):
         return degrees[isMatch.group(1)]
     else:
         return 99
+
+
+# 语言匹配
+def handle_langue(args="", **extra):
+    if (isMatch := re.search(r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语/朝鲜语|普通话|粤语|闽南语|上海话|其它)', args)):
+        return isMatch.group(1)
+    else:
+        return ""
 
 
 # 是否最近
@@ -203,26 +193,12 @@ def handle_sofar(args="", **extra):
         args['so_far'] = 'Y'
     else:
         args['so_far'] = 'N'
-
     return args
-
-
-# 语言匹配
-def handle_langue(args="", **extra):
-    pattern = re.compile(r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语/朝鲜语|普通话|粤语|闽南语|上海话|其它)')
-    isMatch = pattern.search(args)
-    if isMatch:
-        return isMatch.group(1)
-    else:
-        return ""
-
 
 # 婚姻状态
 def handle_marital(args="", **extra):
     marital = {'已婚': 'Y', '未婚': 'N', 'single': 'N', 'married': 'Y', 'unmarried': 'N'}
-    pattern = re.compile(r'(已婚|未婚|single|married|unmarried)')
-    isMatch = pattern.search(args)
-    if isMatch:
+    if (isMatch := re.search(r'(已婚|未婚|single|married|unmarried)', args)):
         return marital[isMatch.group(1)]
     else:
         return "U"
