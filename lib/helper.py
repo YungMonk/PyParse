@@ -18,6 +18,9 @@ def optimize(args, funcs=[]):
         "handle_gender": handle_gender,
         "handle_degree": handle_degree,
         "handle_sofar": handle_sofar,
+        "handle_marital": handle_marital,
+        "handle_experience": handle_experience,
+        "handle_interval": handle_interval,
     }
 
     for func in funcs:
@@ -25,8 +28,8 @@ def optimize(args, funcs=[]):
             continue
 
         cbackinfo = {"func": "", "param": []}
-        if (tmp_1 := re.search(r'(.*?)\[(.*)\],(\d+),(\d+)', func)):
-            call_info = tmp_1.groups()
+        if (tmp := re.search(r'(.*?)\[(.*)\],(\d+),(\d+)', func)):
+            call_info = tmp.groups()
             cbackinfo["func"] = call_info[0]
             cbackinfo["param"] = call_info[1].split(',')
             cres = funcMaps[cbackinfo['func']](args, **cbackinfo)
@@ -37,8 +40,8 @@ def optimize(args, funcs=[]):
                 tmp = cres[idx_1]
                 if idx_2 < len(tmp):
                     args = tmp[idx_2]
-        elif (tmp_2 := re.search(r'(.*)\[(.*)\],(\d+)', func)):
-            call_info = tmp_2.groups()
+        elif (tmp := re.search(r'(.*)\[(.*)\],(\d+)', func)):
+            call_info = tmp.groups()
             cbackinfo["func"] = call_info[0]
             if call_info[0] == "preg_match" or call_info[0] == "preg_match_all":
                 cbackinfo["param"].append(call_info[1])
@@ -49,13 +52,23 @@ def optimize(args, funcs=[]):
             args = ""
             if idx_1 < len(cres):
                 args = cres[idx_1]
-        elif (tmp_3 :=re.search(r'(.*?)\[(.*)\]', func)):
-            call_info = tmp_3.groups()
+        elif (tmp :=re.search(r'(.*?)\[(.*)\]', func)):
+            call_info = tmp.groups()
             cbackinfo["func"] = call_info[0]
             cbackinfo["param"] = call_info[1].split(',')
             args = funcMaps[cbackinfo['func']](args, **cbackinfo)
-        else:
-            args = funcMaps[func](args, **cbackinfo)
+        elif (tmp := re.search(r'(.*),(\d+)', func)):
+            call_info = tmp.groups()
+            cbackinfo["func"] = call_info[0]
+            cres = funcMaps[cbackinfo["func"]](args, **cbackinfo)
+            idx_1 = int(call_info[1])
+            args = ""
+            if idx_1 < len(cres):
+                args = cres[idx_1]
+        elif (tmp := re.search(r'(\S+)', func)):
+            call_info = tmp.groups()
+            cbackinfo["func"] = call_info[0]
+            args = funcMaps[cbackinfo["func"]](args, **cbackinfo)
 
     return args
 
@@ -65,6 +78,107 @@ def placeholder(str=''):
     return str.replace('@或@', '|').replace('逗号', ',').replace('左中括号', '[').replace(
         '右中括号', ']').replace('右括号', '(').replace('左括号', ')').replace('\\n', '\n')
 
+
+# 中文数字转阿拉伯数字
+def cn2dig(cn):
+    CN_NUM = {
+        u'〇': 0,
+        u'一': 1,
+        u'二': 2,
+        u'三': 3,
+        u'四': 4,
+        u'五': 5,
+        u'六': 6,
+        u'七': 7,
+        u'八': 8,
+        u'九': 9,
+    
+        u'零': 0,
+        u'壹': 1,
+        u'贰': 2,
+        u'叁': 3,
+        u'肆': 4,
+        u'伍': 5,
+        u'陆': 6,
+        u'柒': 7,
+        u'捌': 8,
+        u'玖': 9,
+    
+        u'貮': 2,
+        u'两': 2,
+    }
+
+    CN_UNIT = {
+        u'十': 10,
+        u'拾': 10,
+        u'百': 100,
+        u'佰': 100,
+        u'千': 1000,
+        u'仟': 1000,
+        u'万': 10000,
+        u'萬': 10000,
+        u'亿': 100000000,
+        u'億': 100000000,
+        u'兆': 1000000000000,
+    }
+
+    lcn = list(cn)
+    unit = 0  # 当前的单位
+    ldig = []  # 临时数组
+ 
+    while lcn:
+        cndig = lcn.pop()
+ 
+        if cndig in CN_UNIT:
+            unit = CN_UNIT.get(cndig)
+            if unit == 10000:
+                ldig.append('w')  # 标示万位
+                unit = 1
+            elif unit == 100000000:
+                ldig.append('y')  # 标示亿位
+                unit = 1
+            elif unit == 1000000000000:  # 标示兆位
+                ldig.append('z')
+                unit = 1
+            continue
+        else:
+            dig = CN_NUM.get(cndig)
+            if unit:
+                dig = dig * unit
+                unit = 0
+ 
+            ldig.append(dig)
+ 
+    if unit == 10:  # 处理10-19的数字
+        ldig.append(10)
+ 
+    ret = 0
+    tmp = 0
+ 
+    while ldig:
+        x = ldig.pop()
+ 
+        if x == 'w':
+            tmp *= 10000
+            ret += tmp
+            tmp = 0
+ 
+        elif x == 'y':
+            tmp *= 100000000
+            ret += tmp
+            tmp = 0
+ 
+        elif x == 'z':
+            tmp *= 1000000000000
+            ret += tmp
+            tmp = 0
+ 
+        else:
+            tmp += x
+ 
+    ret += tmp
+    return ret
+   
 
 # 去除字符串首尾处的空白字符（或者其他字符）
 def trim(args="", **extra):
@@ -195,6 +309,7 @@ def handle_sofar(args="", **extra):
         args['so_far'] = 'N'
     return args
 
+
 # 婚姻状态
 def handle_marital(args="", **extra):
     marital = {'已婚': 'Y', '未婚': 'N', 'single': 'N', 'married': 'Y', 'unmarried': 'N'}
@@ -202,3 +317,54 @@ def handle_marital(args="", **extra):
         return marital[isMatch.group(1)]
     else:
         return "U"
+
+
+# 工作经验
+def handle_experience(args="", **extra):
+    result = ["", ""]
+    if (isMatch := re.search(r'(\d+)年以下(工作经验|经验)*', args)):
+        # 10年以下工作经验，8年以下经验
+        result[1] = isMatch.group(1)
+    elif (isMatch := re.search(r'(\d+)(\s|\.0)*年以上(工作经验|经验)*', args)):
+        # 10以上工作经验，10.0年以上工作经验，8年以上经验
+        result[0] = isMatch.group(1)
+    elif (isMatch := re.search(r'(\S+)年以上', args)):
+        # 十年以上工作经验
+        result[0] = cn2dig(isMatch.group(1))
+    elif (isMatch := re.search(r'(\d+)-(\d+)年(工作经验|经验)*', args)):
+        # 8-10年工作经验，8-10年经验
+        result[0] = isMatch.group(1)
+        result[1] = isMatch.group(2)
+    elif (isMatch := re.search(r'(\d+)年(工作经验|经验)', args)):
+        # 8年工作经验
+        result[1] = result[0] = isMatch.group(1)
+    elif (isMatch := re.search(r'(\d+)years', args)):
+        # 10years
+        result[1] = result[0] = isMatch.group(1)
+    elif (isMatch := re.search(r'(\d+)\s*年(?!\d)', args)):
+        # 10 年，10年
+        result[1] = result[0] = isMatch.group(1)
+    elif (isMatch := re.search(r'(\S+)年', args)):
+        # 八年
+        result[1] = result[0] = cn2dig(isMatch.group(1))
+
+    return result
+
+ 
+#  处理时间间隔
+def handle_interval(args="", **extra):
+    args['start_time'] = ""
+    args['end_time'] = ""
+    args['so_far'] = "N"
+
+    isMatch = re.findall(r'(\d{4}.*?\d{1,2})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args['time']))
+    if len(isMatch) == 1:
+        args['start_time'] = isMatch[0]
+    elif len(isMatch) == 2:
+        args['start_time'] = isMatch[0] 
+        args['end_time'] = isMatch[1]
+
+    args = handle_sofar(args, **extra)
+
+    args.pop('time','')
+    return args

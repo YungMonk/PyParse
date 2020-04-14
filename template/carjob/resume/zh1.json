@@ -133,11 +133,11 @@
             },
             "working_seniority_from": {
                 "label": "工作年限最小值",
-                "value": ""
+                "rules": ".//span[contains(text(),'工作经验')]/following-sibling::*|handle_experience,0"
             },
             "working_seniority_to": {
                 "label": "工作年限最大值",
-                "value": ""
+                "rules": ".//span[contains(text(),'工作经验')]/following-sibling::*|handle_experience,1"
             },
             "self_remark": {
                 "label": "自我评价",
@@ -326,13 +326,9 @@
         "rules": "//div/span[contains(text(),'工作经历')]/../following-sibling::*",
         "lists":true,
         "child": {
-            "start_time": {
+            "time": {
                 "label": "开始时间",
-                "rules": ".//span[@class='myResume_times']|preg_match_all[(\\d{4}.*?\\d{1,2})],0|preg_replace[(\\d+).*?(\\d+),\\1年\\2月]"
-            },
-            "end_time": {
-                "label": "截至时间",
-                "rules": ".//span[@class='myResume_times']|preg_match_all[(\\d{4}.*?\\d{1,2})],1|preg_replace[(\\d+).*?(\\d+),\\1年\\2月]"
+                "rules": ".//span[@class='myResume_times']"
             },
             "corporation_name": {
                 "label": "公司",
@@ -359,20 +355,16 @@
                 "rules": ".//span[contains(text(),'工作描述：')]/following-sibling::*"
             }
         },
-        "application_rules": "handle_sofar"
+        "application_rules": "handle_interval"
     },
     "education": {
         "label": "教育经历",
         "rules": "//div/span[contains(text(),'教育经历')]/../following-sibling::*|call_prev|preg_replace[</div>\\s*<div class=\"myResume_cont\">,]|handle_xpath[//div左中括号@class='myResume_title'右中括号]",
         "lists": true,
         "child": {
-            "start_time": {
+            "time": {
                 "label": "开始时间",
-                "rules": "./text()[1]|trim|preg_match_all[(\\d{4}.*?\\d{1,2})],0|preg_replace[(\\d+).*?(\\d+),\\1年\\2月]"
-            },
-            "end_time": {
-                "label": "结束时间",
-                "rules": "./text()[1]|trim|preg_match_all[(\\d{4}.*?\\d{1,2})],1|preg_replace[(\\d+).*?(\\d+),\\1年\\2月]"
+                "rules": "./text()[1]|trim"
             },
             "school_name": {
                 "label": "学校名称",
@@ -395,6 +387,6 @@
                 "rules": ""
             }
         },
-        "application_rules": "handle_sofar"
+        "application_rules": "handle_interval"
     }
 }

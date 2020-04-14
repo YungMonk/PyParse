@@ -163,10 +163,10 @@ with open(filename, 'r') as f:
     obj.dispatch()
 
 
-# strs = "起始位置2019-01-02/2020-09-01/2020-10-11"
-# pattern = re.compile(r'(\d{4}.*?\d{1,2}).*?(\d{1,2})')
+# strs = "起始位置"
+# pattern = re.compile(r'(\d{4}).*?(\d{1,2})')
 # print(pattern.findall(strs))
-# print(pattern.search(strs).group())
+# print(re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', strs))
 
 # strs = '郑州高级汽车维修学院\n                                    (2000-10-2003-06)'
 # print(re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', strs))
