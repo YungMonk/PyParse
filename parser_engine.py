@@ -65,7 +65,8 @@ class ParserEngine(object):
         templateContent = json.loads(self.readFile(templateName))
         cv = self.parse(templateContent, etreehtml)
 
-        print(json.dumps(cv, ensure_ascii=False))
+        # print(json.dumps(cv, ensure_ascii=False))
+        return json.dumps(cv, ensure_ascii=False)
 
     # 内容解析
 
@@ -152,15 +153,16 @@ class ParserEngine(object):
 
         return content
 
+if __name__ == '__main__':
+    filename = os.getcwd() + '/test/carjob/1.html'
+    with open(filename, 'r') as f:
+        fileContext = f.read()
+        f.close()
+        # print(fileContext)
 
-filename = os.getcwd() + '/test/carjob/1.html'
-with open(filename, 'r') as f:
-    fileContext = f.read()
-    f.close()
-    # print(fileContext)
-
-    obj = ParserEngine(51, fileContext, 1)
-    obj.dispatch()
+        obj = ParserEngine(51, fileContext, 1)
+        obj.dispatch()
+    print(fileContext)
 
 
 # strs = "起始位置"
