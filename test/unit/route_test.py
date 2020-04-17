@@ -5,18 +5,18 @@ import unittest
 from lib.route import my_route
 
 
-class TestNotFlask(unittest.TestCase):
+class TestUnit(unittest.TestCase):
     def setUp(self):
         self.app = my_route()
 
     def test_valid_route(self):
 
-        @self.app.Router('/')
+        @self.app.router('/')
         def index():
-            return 'Hello World'
+            print('Hello World') 
 
-        self.assertEqual(self.app.Serve('/'), 'Hello World')
+        self.app.serve('/')
 
     def test_invalid_route(self):
         with self.assertRaises(ValueError):
-            self.app.Serve('/invalid')
+            self.app.serve('/invalid')

@@ -158,20 +158,6 @@ if __name__ == '__main__':
     with open(filename, 'r') as f:
         fileContext = f.read()
         f.close()
-        # print(fileContext)
 
         obj = ParserEngine(51, fileContext, 1)
         obj.dispatch()
-    print(fileContext)
-
-
-# strs = "起始位置"
-# pattern = re.compile(r'(\d{4}).*?(\d{1,2})')
-# print(pattern.findall(strs))
-# print(re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', strs))
-
-# strs = '郑州高级汽车维修学院\n                                    (2000-10-2003-06)'
-# print(re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', strs))
-
-# src = 'aabcdddd'
-# print (re.sub( '(ab).*(d)', '\\1e\\2', src ))
