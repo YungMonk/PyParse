@@ -245,7 +245,6 @@ def strip_tags(args="", **extra):
             # _strip_once wasn't able to detect more tags.
             break
         value = new_value
-    print(value)
     return value
 
 

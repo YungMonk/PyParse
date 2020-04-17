@@ -21,6 +21,7 @@ class ParserEngine(object):
 
     typeArr = array.array('i', [1, 2])
 
+
     def __init__(self, site, text, type):
         if site == 0 or site == '':
             print("site is empty")
@@ -31,6 +32,7 @@ class ParserEngine(object):
         if self.typeArr.count(type) == 0:
             print("type is empty")
         self.__type = type
+
 
     def dispatch(self):
         etreehtml = etree.HTML(self.__text)
@@ -68,8 +70,8 @@ class ParserEngine(object):
         # print(json.dumps(cv, ensure_ascii=False))
         return json.dumps(cv, ensure_ascii=False)
 
-    # 内容解析
 
+    # 内容解析
     def parse(self, maps, etreehtml):
         tmp = {}
         for key, value in maps.items():
@@ -135,6 +137,7 @@ class ParserEngine(object):
                     tmp[key] = optimize(tmp[key], arr[1:])
         return tmp
 
+
     def readFile(self, filename):
         content = ""
         siteName = channelMap[self.__site]
@@ -153,7 +156,10 @@ class ParserEngine(object):
 
         return content
 
+
+
 if __name__ == '__main__':
+
     filename = os.getcwd() + '/test/carjob/1.html'
     with open(filename, 'r') as f:
         fileContext = f.read()
