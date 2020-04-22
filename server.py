@@ -11,6 +11,7 @@ import os
 from http import server
 from parser_engine import ParserEngine
 
+
 class http_request_handler(server.SimpleHTTPRequestHandler):
     def do_GET(self):
         self.send_error(415, 'Only post is supported')
@@ -40,6 +41,7 @@ class http_request_handler(server.SimpleHTTPRequestHandler):
 
 
 if __name__ == '__main__':
+
     try:
         with socketserver.TCPServer(("", 8000), http_request_handler) as httpd:
             httpd.serve_forever()
