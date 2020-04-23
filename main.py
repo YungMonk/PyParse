@@ -10,11 +10,10 @@ import os
 import json
 import sys
 
-from  utils import xmltodict
-import lib.route as route
-import lib.path as path
-import lib.configer as configer
-
+from lib import route
+from lib import path
+from lib import configer
+from utils import xmltodict
 
 
 # 定义处理类型

@@ -5,8 +5,8 @@ import logging
 import logging.config
 import os
 
-import configer
-import path
+from lib import configer
+from lib import path
 
 class Log(object):
     logger = None
@@ -17,6 +17,7 @@ class Log(object):
 @configer.conf.register(look='logging', level=1)
 def set_up(cfg) :
     log_path = os.path.join(path._CONF_PATH, cfg['config_file'])
+    print(log_path)
     logging.config.fileConfig(log_path)
     Log.logger = logging.getLogger(cfg['default_logger'])
 

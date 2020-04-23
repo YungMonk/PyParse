@@ -12,9 +12,9 @@ import concurrent.futures
 
 import tornado
 
-import configer
-import log
-import path
+from lib import configer
+from lib import log
+from lib import path
 
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=16)
 
@@ -27,6 +27,7 @@ def set_up():
 
     global logger
     logger = log.Log().getLog()
+
     files_list = os.listdir(path._CONTROLLER_PATH)
     files_list = set([x[:x.rfind('.')] for x in files_list if x.endswith('.py')])
     map(__import__, files_list)
@@ -36,7 +37,7 @@ def set_up():
 def _call_wrap(call, params):
     handler = params[0]
     try:
-        # logger.info('request: %s %s', handler.request.path, handler.json_args or {})
+        logger.info('request: %s %s', handler.request.path, handler.json_args or {})
         ret = call(*params)
         
         # stringify result
@@ -169,12 +170,12 @@ class router(object):
     @classmethod
     def emit(cls, path, request_handler, method_flag):
         if not cls.verify_passport():
-            # logger.warn(
-            #     "server is under high pressure ,[free thread:%d] [queue size:%d] [request refused %s]",
-            #     len(executor._threads),
-            #     executor._work_queue.qsize(),
-            #     path,
-            # )
+            logger.warn(
+                "server is under high pressure ,[free thread:%d] [queue size:%d] [request refused %s]",
+                len(executor._threads),
+                executor._work_queue.qsize(),
+                path,
+            )
 
             raise tornado.web.HTTPError(502)
             
@@ -194,7 +195,7 @@ class router(object):
             try:
                 obj = clazz()
             except Exception as e:
-                # logger.exception("error occured when creating instance of %s" % className)
+                logger.exception("error occured when creating instance of %s" % className)
                 pass
 
             call = getattr(obj, callName)
