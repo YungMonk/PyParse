@@ -18,9 +18,9 @@ from lib import path
 
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=16)
 
-
 @configer.conf.register(level=2)
 def set_up():
+
     ''' erase all nodes
         this function maybe called for hot deployment
     '''
@@ -30,7 +30,11 @@ def set_up():
 
     files_list = os.listdir(path._CONTROLLER_PATH)
     files_list = set([x[:x.rfind('.')] for x in files_list if x.endswith('.py')])
-    map(__import__, files_list)
+    list(map(__import__, files_list))
+
+    router.mapper = []
+    router.mapper_sentry = {}
+    router.last_sentry = {}
     router.pre_check()
 
 

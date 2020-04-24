@@ -35,7 +35,7 @@ class configer(object):
     def setup(self, own_cfg, onlevel=0):
         '''
             Call all(or specific level) setup functions which registered via using
-            "Configer.register_my_setup" decorator.
+            "Configer.register" decorator.
             If "onlevel" has been set, only the matched setup fucntions will be
             loaded(or hot reloaded).
             BE CAREFUL! The registed setup function shall apply reload logic in case
@@ -71,12 +71,12 @@ class ConfigParser(object):
         pass
 
 
+# 加载配置文件
 class ConfigParserFromFile(ConfigParser):
     '''
         via Config Files
     '''
     def parseall(self, fullpath):
-        etc = pather._CONF_PATH
         cfg = {}
         with open(fullpath, 'r') as f:
             raw = f.read()
@@ -85,7 +85,8 @@ class ConfigParserFromFile(ConfigParser):
             cfg = json.loads(raw_escape_comment)
         if cfg.get('$includes'):
             for include in cfg['$includes']:
-                icfg = self.parseall(os.path.join(etc, include))
+                include_conf_file = os.path.join(pather._CONF_PATH, include)
+                icfg = self.parseall(include_conf_file)
                 cfg.update(icfg)
         return cfg
 

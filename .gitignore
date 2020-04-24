@@ -4,6 +4,4 @@ __pycache__/
 
 .pytest_cache/
 
-iceworld/
-
-var/
+tmp/*
