@@ -29,12 +29,9 @@ def set_up():
     logger = log.Log().getLog()
 
     files_list = os.listdir(path._CONTROLLER_PATH)
-    files_list = set([x[:x.rfind('.')] for x in files_list if x.endswith('.py')])
+    files_list = set(['controller.'+x[:x.rfind('.')] for x in files_list if x.endswith('.py')])
     list(map(__import__, files_list))
-
-    router.mapper = []
-    router.mapper_sentry = {}
-    router.last_sentry = {}
+    
     router.pre_check()
 
 
@@ -76,7 +73,7 @@ class router(object):
         if sentry['eUrl'] == url_exp and sentry['method'] & method:
             return sentry
         else:
-            return cls.check_redefined_node(sentry['newt'], url_exp, method)
+            return router.check_redefined_node(sentry['newt'], url_exp, method)
 
     @classmethod
     def lookup_suitable_node(cls, prev, sentry, url, method, assert_wrong_method=False):
@@ -95,20 +92,20 @@ class router(object):
 
                 if prev:
                     prev['next'] = sentry['next']
-                    sentry['next'] = cls.mapper_sentry
-                    cls.mapper_sentry = sentry
+                    sentry['next'] = router.mapper_sentry
+                    router.mapper_sentry = sentry
 
                 return sentry, matches
 
             else:
                 wrong = True
 
-        return cls.lookup_suitable_node(sentry, sentry['next'], url, method, wrong)
+        return router.lookup_suitable_node(sentry, sentry['next'], url, method, wrong)
 
     @classmethod
     def pre_check(cls):
         check_mapper_list = filter(lambda y: len(y) > 1, [
-            (key, list(items)) for key, items in itertools.groupby(cls.mapper, lambda x: x)
+            (key, list(items)) for key, items in itertools.groupby(router.mapper, lambda x: x)
         ])
 
         if check_mapper_list:
@@ -123,9 +120,9 @@ class router(object):
         def foo(func):
             url = deco.get('url') or '/'
             eUrl = re.compile('^' + url + '$', re.IGNORECASE)
-            method = deco.get('method') or cls._GET
+            method = deco.get('method') or router._GET
 
-            if cls.check_redefined_node(cls.mapper_sentry, eUrl, method):
+            if router.check_redefined_node(router.mapper_sentry, eUrl, method):
                 logger.fatal('Definition conflict : URL[%s]', url)
                 sys.exit(1)
             else:
@@ -133,24 +130,24 @@ class router(object):
                     'eUrl': eUrl,
                     'method': method,
                     'callName': func.__name__,
-                    'calssName': inspect.stack()[1][3],
+                    'className': inspect.stack()[1][3],
                     'moduleName': func.__module__,
                     'next': {},
                 }
 
-                cls.mapper.append('.'.join([mapper_node['moduleName'], mapper_node['className'], mapper_node['callName']]))
+                router.mapper.append('.'.join([mapper_node['moduleName'], mapper_node['className'], mapper_node['callName']]))
 
                 # Yes, I used linked list here
                 # Any better way to contain urls?
                 # Disadvantage: have to visit the urls list from head to end to
                 # determind 404
 
-                if cls.mapper_sentry:
-                    cls.last_sentry['index'] = mapper_node
-                    cls.last_sentry = cls.last_sentry['next']
+                if router.mapper_sentry:
+                    router.last_sentry['index'] = mapper_node
+                    router.last_sentry = router.last_sentry['next']
                 else:
-                    cls.mapper_sentry = mapper_node
-                    cls.last_sentry = cls.mapper_sentry
+                    router.mapper_sentry = mapper_node
+                    router.last_sentry = router.mapper_sentry
 
             return func
 
@@ -173,7 +170,7 @@ class router(object):
 
     @classmethod
     def emit(cls, path, request_handler, method_flag):
-        if not cls.verify_passport():
+        if not router.verify_passport():
             logger.warn(
                 "server is under high pressure ,[free thread:%d] [queue size:%d] [request refused %s]",
                 len(executor._threads),
@@ -183,7 +180,7 @@ class router(object):
 
             raise tornado.web.HTTPError(502)
             
-        mapper_node, m = cls.lookup_suitable_node(None, cls.mapper_sentry, path, method_flag)
+        mapper_node, m = router.lookup_suitable_node(None, router.mapper_sentry, path, method_flag)
 
         if mapper_node and m:
             params = (request_handler,)
@@ -207,20 +204,20 @@ class router(object):
 
     @classmethod
     def get(cls, path, request_handler):
-        cls.emit(path, request_handler, cls._GET)
+        router.emit(path, request_handler, router._GET)
 
     @classmethod
     def post(cls, path, request_handler):
-        cls.emit(path, request_handler, cls._POST)
+        router.emit(path, request_handler, router._POST)
 
     @classmethod
     def put(cls, path, request_handler):
-        cls.emit(path, request_handler, cls._PUT)
+        router.emit(path, request_handler, router._PUT)
 
     @classmethod
     def delete(cls, path, request_handler):
-        cls.emit(path, request_handler, cls._DELETE)
+        router.emit(path, request_handler, router._DELETE)
 
     @classmethod
     def options(cls, path, request_handler):
-        cls.emit(path, request_handler, cls._OPTIONS)
+        router.emit(path, request_handler, router._OPTIONS)
