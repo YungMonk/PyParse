@@ -5,6 +5,7 @@ import tornado.ioloop
 import tornado.web
 import tornado.log
 
+import asyncio
 import getopt
 import os
 import json
@@ -126,11 +127,12 @@ if __name__ == "__main__":
     conf = configer.ConfigParserFromFile()
     env_config | configer.E(conf.parseall) | configer.E(configer.conf.setup)
 
+    
     app = tornado.web.Application([
         (r"^(/[^\.|]*)(?!\.\w+)$", MainHandler),  # 路由
     ], log_function=log_request)  # 创建一个应用对象
 
-    app.listen(8888)    # 设置端口
+    app.listen(8880)    # 设置端口
 
     tornado.ioloop.IOLoop.current().start()  # 启动web程序，开始监听端口的连接
 

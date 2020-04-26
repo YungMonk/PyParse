@@ -32,7 +32,7 @@ def set_up():
     files_list = set(['controller.'+x[:x.rfind('.')] for x in files_list if x.endswith('.py')])
     list(map(__import__, files_list))
     
-    router.pre_check()
+    # router.pre_check()
 
 
 def _call_wrap(call, params):
@@ -47,10 +47,10 @@ def _call_wrap(call, params):
         else:
             ret = str(ret)
 
-        tornado.ioloop.IOLoop.instance().add_callback(lambda: params[0].finish(ret))
+        tornado.ioloop.IOLoop.instance().add_callback(callback=lambda: params[0].finish(ret))
     except Exception as ex:
         logger.exception(ex)
-        tornado.ioloop.IOLoop.instance().add_callback(lambda: params[0].send_error())
+        tornado.ioloop.IOLoop.instance().add_callback(callback=lambda: params[0].send_error())
 
 
 class router(object):
@@ -156,8 +156,7 @@ class router(object):
     @classmethod
     def verify_passport(cls):
         # 容量
-        _cap = executor._work_queue.qsize()/float(len(executor._threads))
-        capacity = 0 if len(executor._threads) == 0 else _cap
+        capacity = 0 if len(executor._threads) == 0 else executor._work_queue.qsize() / float(len(executor._threads))
 
         if 2 > capacity >= 1.0:
             # 随机拒绝请求
@@ -166,7 +165,6 @@ class router(object):
             return False
         else:
             return True
-
 
     @classmethod
     def emit(cls, path, request_handler, method_flag):
@@ -191,7 +189,7 @@ class router(object):
             callName = mapper_node['callName']
             className = mapper_node['className']
             moduleName = mapper_node['moduleName']
-            clazz = getattr(__import__(moduleName), className)
+            clazz = getattr(__import__(moduleName, fromlist=moduleName[moduleName.rfind('.')+1:]), className)
 
             try:
                 obj = clazz()
