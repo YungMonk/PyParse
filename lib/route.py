@@ -9,6 +9,7 @@ import inspect
 import itertools
 import sys
 import concurrent.futures
+import asyncio
 
 import tornado
 
@@ -47,6 +48,7 @@ def _call_wrap(call, params):
         else:
             ret = str(ret)
 
+        asyncio.set_event_loop(asyncio.new_event_loop())
         tornado.ioloop.IOLoop.instance().add_callback(callback=lambda: params[0].finish(ret))
     except Exception as ex:
         logger.exception(ex)
