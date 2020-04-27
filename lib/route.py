@@ -49,10 +49,10 @@ def _call_wrap(call, params):
             ret = str(ret)
 
         asyncio.set_event_loop(asyncio.new_event_loop())
-        tornado.ioloop.IOLoop.instance().add_callback(callback=lambda: params[0].finish(ret))
+        tornado.ioloop.IOLoop.instance().add_callback(callback=lambda: handler.finish(ret))
     except Exception as ex:
         logger.exception(ex)
-        tornado.ioloop.IOLoop.instance().add_callback(callback=lambda: params[0].send_error())
+        tornado.ioloop.IOLoop.instance().add_callback(callback=lambda: handler.send_error())
 
 
 class router(object):

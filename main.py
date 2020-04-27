@@ -10,6 +10,8 @@ import getopt
 import os
 import json
 import sys
+import time
+import signal
 
 from lib import route
 from lib import path
@@ -71,7 +73,8 @@ class MainHandler(tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def post(self, path):
         route.router.post(path, self)
-        
+        tornado.ioloop.IOLoop.current()
+
     @tornado.gen.coroutine
     def put(self, path):
         route.router.put(path, self)
@@ -96,6 +99,28 @@ def log_request(handler) :
     request = handler.request
     log_method('"%s %s" %d %s %.6f',request.method, request.uri, handler.get_status(), request.remote_ip, request.request_time() )
          
+
+def sig_handler(sig, frame):
+    tornado.log.access_log.warning('Caught signal: %s', sig)
+    tornado.ioloop.IOLoop.instance().add_callback(shutdown)
+
+def shutdown():
+    io_loop = tornado.ioloop.IOLoop.instance()
+    
+    ##########################
+    ##自己去做一些处理，保证入库等。
+    ##########################
+
+    deadline = time.time() + 5
+
+    def stop_loop():
+        now = time.time()
+        if now < deadline and io_loop._callbacks:
+            io_loop.add_timeout(now + 1, stop_loop)
+        else:
+            io_loop.stop() # 处理完现有的 callback后，结束ioloop循环
+    
+    stop_loop()
 
 if __name__ == "__main__":
 
@@ -136,4 +161,6 @@ if __name__ == "__main__":
 
     tornado.ioloop.IOLoop.current().start()  # 启动web程序，开始监听端口的连接
 
-    # tornado.ioloop.IOLoop.current().close()
+    # ctrl+c
+    # signal.signal(signal.SIGTERM, sig_handler)
+    # signal.signal(signal.SIGINT, sig_handler)
