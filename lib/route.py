@@ -10,6 +10,7 @@ import itertools
 import sys
 import concurrent.futures
 import asyncio
+import time
 
 import tornado
 
@@ -37,22 +38,22 @@ def set_up():
 
 
 def _call_wrap(call, params):
+    
     handler = params[0]
     try:
         logger.info('request: %s %s', handler.request.path, handler.json_args or {})
         ret = call(*params)
         
-        # stringify result
         if isinstance(ret, dict):
             ret = json.dumps(ret)
         else:
             ret = str(ret)
 
         asyncio.set_event_loop(asyncio.new_event_loop())
-        tornado.ioloop.IOLoop.instance().add_callback(callback=lambda: handler.finish(ret))
+        tornado.ioloop.IOLoop.current().add_callback(callback=lambda: handler.finish(ret))
     except Exception as ex:
         logger.exception(ex)
-        tornado.ioloop.IOLoop.instance().add_callback(callback=lambda: handler.send_error())
+        tornado.ioloop.IOLoop.current().add_callback(callback=lambda: handler.send_error())
 
 
 class router(object):
