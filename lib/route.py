@@ -8,8 +8,6 @@ import re
 import inspect
 import itertools
 import sys
-import concurrent.futures
-import asyncio
 import time
 
 import tornado
@@ -18,7 +16,6 @@ from lib import configer
 from lib import log
 from lib import path
 
-executor = concurrent.futures.ThreadPoolExecutor(max_workers=16)
 
 @configer.conf.register(level=2)
 def set_up():
@@ -35,25 +32,6 @@ def set_up():
     list(map(__import__, files_list))
     
     # router.pre_check()
-
-def _call_wrap(call, params):
-    handler = params[0]
-    try:
-        logger.info('request: %s %s', handler.request.path, handler.json_args or {})
-
-        ret = call(*params)
-        if isinstance(ret, dict):
-            ret = json.dumps(ret)
-        else:
-            ret = str(ret)
-
-        # asyncio.set_event_loop(asyncio.new_event_loop())
-        ioloop = tornado.ioloop.IOLoop.instance()
-        ioloop.add_callback(callback=lambda: handler.finish(ret))
-    except Exception as ex:
-        logger.exception(ex)
-        tornado.ioloop.IOLoop.current().add_callback(callback=lambda: handler.send_error())
-
 
 class router(object):
     '''dispather and decortor'''
@@ -75,7 +53,7 @@ class router(object):
         if sentry['eUrl'] == url_exp and sentry['method'] & method:
             return sentry
         else:
-            return router.check_redefined_node(sentry['newt'], url_exp, method)
+            return router.check_redefined_node(sentry['next'], url_exp, method)
 
     @classmethod
     def lookup_suitable_node(cls, prev, sentry, url, method, assert_wrong_method=False):
@@ -156,31 +134,8 @@ class router(object):
         return foo
 
     @classmethod
-    def verify_passport(cls):
-        # 容量
-        capacity = 0 if len(executor._threads) == 0 else executor._work_queue.qsize() / float(len(executor._threads))
-
-        if 2 > capacity >= 1.0:
-            # 随机拒绝请求
-            return False if (random.random() + 1) > capacity else True
-        elif capacity > 2:
-            return False
-        else:
-            return True
-
-    @classmethod
     def emit(cls, path, request_handler, method_flag):
-
-        if not router.verify_passport():
-            logger.warn(
-                "server is under high pressure ,[free thread:%d] [queue size:%d] [request refused %s]",
-                len(executor._threads),
-                executor._work_queue.qsize(),
-                path,
-            )
-
-            raise tornado.web.HTTPError(502)
-            
+        
         mapper_node, m = router.lookup_suitable_node(None, router.mapper_sentry, path, method_flag)
 
         if mapper_node and m:
@@ -196,12 +151,18 @@ class router(object):
 
             try:
                 obj = clazz()
-            except Exception as e:
+            except Exception:
                 logger.exception("error occured when creating instance of %s" % className)
                 pass
 
             call = getattr(obj, callName)
-            executor.submit(_call_wrap, call, params)
+            ret = call(*params)
+            if isinstance(ret, dict):
+                ret = json.dumps(ret)
+            else:
+                ret = str(ret)
+
+            request_handler.write(ret)
 
     @classmethod
     def get(cls, path, request_handler):

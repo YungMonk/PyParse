@@ -12,6 +12,7 @@ class HelloTest(object):
         return "hello world"
 
 
+    @route.router.route(url=r"/parse", method=route.router._POST | route.router._GET)
     def cv_parser(self):
         filename = os.getcwd() + '/test/carjob/1.html'
         with open(filename, 'r') as f:
