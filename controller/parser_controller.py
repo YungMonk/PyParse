@@ -7,10 +7,8 @@ from model import parser_engine
 
 class HelloTest(object):
 
-    @route.router.route(url=r"/home", method=route.router._POST | route.router._GET)
+    @route.router.route(url=r"/hello", method=route.router._POST | route.router._GET)
     def home(self, req):
-        time.sleep(5)
-        print(111)
         return "hello world"
 
 

@@ -36,21 +36,20 @@ def set_up():
     
     # router.pre_check()
 
-
 def _call_wrap(call, params):
-    
     handler = params[0]
     try:
         logger.info('request: %s %s', handler.request.path, handler.json_args or {})
+
         ret = call(*params)
-        
         if isinstance(ret, dict):
             ret = json.dumps(ret)
         else:
             ret = str(ret)
 
-        asyncio.set_event_loop(asyncio.new_event_loop())
-        tornado.ioloop.IOLoop.current().add_callback(callback=lambda: handler.finish(ret))
+        # asyncio.set_event_loop(asyncio.new_event_loop())
+        ioloop = tornado.ioloop.IOLoop.instance()
+        ioloop.add_callback(callback=lambda: handler.finish(ret))
     except Exception as ex:
         logger.exception(ex)
         tornado.ioloop.IOLoop.current().add_callback(callback=lambda: handler.send_error())
@@ -171,6 +170,7 @@ class router(object):
 
     @classmethod
     def emit(cls, path, request_handler, method_flag):
+
         if not router.verify_passport():
             logger.warn(
                 "server is under high pressure ,[free thread:%d] [queue size:%d] [request refused %s]",
