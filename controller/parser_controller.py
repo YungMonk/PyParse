@@ -2,7 +2,7 @@
 import os
 import time
 
-from lib import route
+from lib import route,path
 from model import parser_engine
 
 class HelloTest(object):
@@ -13,11 +13,12 @@ class HelloTest(object):
 
 
     @route.router.route(url=r"/parse", method=route.router._POST | route.router._GET)
-    def cv_parser(self):
-        filename = os.getcwd() + '/test/carjob/1.html'
+    def cv_parser(self, req):
+        filename =  path._ROOT_PATH +'/test/carjob/1.html'
+        print(filename)
         with open(filename, 'r') as f:
             fileContext = f.read()
             f.close()
 
             obj = parser_engine.ParserEngine(51, fileContext, 1)
-            obj.dispatch()
+            return obj.dispatch()

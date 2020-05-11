@@ -31,7 +31,7 @@ def set_up():
     files_list = set(['controller.'+x[:x.rfind('.')] for x in files_list if x.endswith('.py')])
     list(map(__import__, files_list))
     
-    # router.pre_check()
+    router.pre_check()
 
 class router(object):
     '''dispather and decortor'''
@@ -84,12 +84,16 @@ class router(object):
 
     @classmethod
     def pre_check(cls):
-        check_mapper_list = filter(lambda y: len(y) > 1, [
-            (key, list(items)) for key, items in itertools.groupby(router.mapper, lambda x: x)
-        ])
+        check_mapper_list = []
+
+        for item in set(router.mapper) :
+
+            if router.mapper.count(item) > 1 :
+
+                check_mapper_list.append(item)
 
         if check_mapper_list:
-            
+
             for check_child in check_mapper_list:
                 logger.fatal('Definition conflict : FUNCTION[%s]', check_child[0])
             
@@ -123,7 +127,7 @@ class router(object):
                 # determind 404
 
                 if router.mapper_sentry:
-                    router.last_sentry['index'] = mapper_node
+                    router.last_sentry['next'] = mapper_node
                     router.last_sentry = router.last_sentry['next']
                 else:
                     router.mapper_sentry = mapper_node

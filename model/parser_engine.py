@@ -5,9 +5,12 @@ import re
 import array
 import os
 import json
+
 from lxml import etree
-from config.static_param import channelMap, parserType
-from lib.helper import optimize, placeholder
+# from config.static_param import channelMap, parserType
+# from lib.helper import optimize, placeholder
+from config import static_param
+from lib import helper, path
 
 
 class ParserEngine(object):
@@ -91,12 +94,12 @@ class ParserEngine(object):
             arr = rules.split('|')
 
             # 子项处理前对html文本数据进行处理
-            expath = etreehtml.xpath(placeholder(arr[0]))
+            expath = etreehtml.xpath(helper.placeholder(arr[0]))
 
             if len(arr) > 1 and arr[1] == 'call_prev':
                 htmltext = etree.tostring(
                     expath[0], encoding="utf-8", pretty_print=True, method="html").decode()
-                expath = optimize(htmltext, arr[1:])
+                expath = helper.optimize(htmltext, arr[1:])
 
             if 'child' in value and isinstance(value['child'], dict) and len(value['child']):
                 # 有子项
@@ -106,7 +109,7 @@ class ParserEngine(object):
                         tmp_child = self.parse(value['child'], sign)
 
                         if 'application_rules' in value and value['application_rules']:
-                            tmp_child = optimize(
+                            tmp_child = helper.optimize(
                                 tmp_child, value['application_rules'].split('|'))
 
                         t.append(tmp_child)
@@ -120,7 +123,7 @@ class ParserEngine(object):
                         tmp[key] = self.parse(value['child'], etreehtml)
 
                     if 'application_rules' in value and value['application_rules']:
-                        tmp[key] = optimize(
+                        tmp[key] = helper.optimize(
                             tmp[key], value['application_rules'].split('|'))
 
             else:
@@ -134,15 +137,15 @@ class ParserEngine(object):
 
                 # 子项处理后对html文本数据进行处理
                 if tmp[key] and len(arr) > 1:
-                    tmp[key] = optimize(tmp[key], arr[1:])
+                    tmp[key] = helper.optimize(tmp[key], arr[1:])
         return tmp
 
 
     def readFile(self, filename):
         content = ""
-        siteName = channelMap[self.__site]
+        siteName = static_param.channelMap[self.__site]
 
-        filepath = os.getcwd() + '/template/' + siteName + '/' + parserType[
+        filepath = path._TEMPLATE + '/' + siteName + '/' + static_param.parserType[
             self.__type] + '/' + filename
         if os.path.exists(filepath) is False:
             print(filepath + " is not found")
