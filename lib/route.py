@@ -160,13 +160,15 @@ class router(object):
                 pass
 
             call = getattr(obj, callName)
+
+            # maybe as asynchronous
             ret = call(*params)
             if isinstance(ret, dict):
                 ret = json.dumps(ret)
             else:
                 ret = str(ret)
 
-            request_handler.write(ret)
+            request_handler.finish(ret)
 
     @classmethod
     def get(cls, path, request_handler):
