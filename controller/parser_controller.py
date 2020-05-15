@@ -15,7 +15,7 @@ class HelloTest(object):
     @route.router.route(url=r"/parse", method=route.router._POST | route.router._GET)
     async def cv_parser(self, req):
 
-        raise Exception("Invalid level!")
+        # raise Exception("Invalid level!")
 
         filename =  path._ROOT_PATH +'/test/carjob/1.html'
         print(filename)

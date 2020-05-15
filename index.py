@@ -4,6 +4,7 @@
 import tornado.ioloop
 import tornado.web
 import tornado.log
+import tornado.httpserver
 
 import asyncio
 import getopt
@@ -153,7 +154,13 @@ if __name__ == "__main__":
         (r"^(/[^\.|]*)(?!\.\w+)$", MainHandler),  # 路由
     ], log_function=log_request)  # 创建一个应用对象
 
-    app.listen(8880)    # 设置端口
+    # app.listen(8880)    # 设置端口
+
+    server = tornado.httpserver.HTTPServer(app)
+
+    server.bind(8880)
+
+    server.start(2)  
 
     # signal.signal(signal.SIGTERM, sig_handler)
     # signal.signal(signal.SIGINT, sig_handler)

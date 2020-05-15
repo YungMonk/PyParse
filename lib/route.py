@@ -9,6 +9,7 @@ import inspect
 import itertools
 import sys
 import time
+from concurrent import futures
 
 import tornado
 
@@ -16,6 +17,9 @@ from lib import configer
 from lib import log
 from lib import path
 
+MAX_WORKERS = 16
+
+executor = futures.ThreadPoolExecutor(max_workers=MAX_WORKERS)
 
 @configer.conf.register(level=2)
 def set_up():
@@ -32,6 +36,26 @@ def set_up():
     list(map(__import__, files_list))
     
     router.pre_check()
+
+
+# 线程池调用@todo
+async def _call_wrap(call, params):
+    request_handler = params[0]
+    try:
+        ret = await call(*params)
+        if isinstance(ret, dict):
+            ret = json.dumps(ret)
+        else:
+            ret = str(ret)
+        print(ret)
+        request_handler.finish(ret)
+        tornado.ioloop.IOLoop.instance().add_callback(lambda: request_handler.finish(ret))
+    except Exception as ex:
+
+        logger.exception(ex)
+        request_handler.finish(ex)
+        tornado.ioloop.IOLoop.instance().add_callback(lambda: request_handler.send_error())
+
 
 class router(object):
     '''dispather and decortor'''
@@ -160,6 +184,8 @@ class router(object):
                 pass
 
             call = getattr(obj, callName)
+
+            # executor.submit(_call_wrap, call, params)
 
             try:
                 # maybe as asynchronous
