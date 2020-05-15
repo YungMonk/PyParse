@@ -67,25 +67,20 @@ class MainHandler(tornado.web.RequestHandler):
 
         
     # 添加一个处理get请求方式的方法
-    @tornado.gen.coroutine
-    def get(self, path):
-        route.router.get(path, self)
+    async def get(self, path):
+        await route.router.get(path, self)
         
-    @tornado.gen.coroutine
-    def post(self, path):
-        route.router.post(path, self)
+    async def post(self, path):
+        await route.router.post(path, self)
 
-    @tornado.gen.coroutine
-    def put(self, path):
-        route.router.put(path, self)
+    async def put(self, path):
+        await route.router.put(path, self)
         
-    @tornado.gen.coroutine
-    def delete(self, path):
-        route.router.delete(path, self)
+    async def delete(self, path):
+        await route.router.delete(path, self)
 
-    @tornado.gen.coroutine
-    def options(self, path):
-        route.router.options(path, self)
+    async def options(self, path):
+        await route.router.options(path, self)
 
 
 def log_request(handler) :

@@ -8,12 +8,15 @@ from model import parser_engine
 class HelloTest(object):
 
     @route.router.route(url=r"/hello", method=route.router._POST | route.router._GET)
-    def home(self, req):
+    async def home(self, req):
         return "hello world"
 
 
     @route.router.route(url=r"/parse", method=route.router._POST | route.router._GET)
-    def cv_parser(self, req):
+    async def cv_parser(self, req):
+
+        raise Exception("Invalid level!")
+
         filename =  path._ROOT_PATH +'/test/carjob/1.html'
         print(filename)
         with open(filename, 'r') as f:

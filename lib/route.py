@@ -138,7 +138,7 @@ class router(object):
         return foo
 
     @classmethod
-    def emit(cls, path, request_handler, method_flag):
+    async def emit(cls, path, request_handler, method_flag):
         
         mapper_node, m = router.lookup_suitable_node(None, router.mapper_sentry, path, method_flag)
 
@@ -161,31 +161,40 @@ class router(object):
 
             call = getattr(obj, callName)
 
-            # maybe as asynchronous
-            ret = call(*params)
-            if isinstance(ret, dict):
-                ret = json.dumps(ret)
-            else:
-                ret = str(ret)
+            try:
+                # maybe as asynchronous
+                ret = await call(*params)
+                if isinstance(ret, dict):
+                    ret = json.dumps(ret)
+                else:
+                    ret = str(ret)
 
-            request_handler.finish(ret)
+                request_handler.finish(ret)
+                # tornado.ioloop.IOLoop.instance().add_callback(lambda: request_handler.finish(ret))
+            except Exception as ex:
 
-    @classmethod
-    def get(cls, path, request_handler):
-        router.emit(path, request_handler, router._GET)
+                logger.exception(ex)
+                request_handler.finish(ex)
+                # tornado.ioloop.IOLoop.instance().add_callback(lambda: request_handler.send_error())
+    
 
-    @classmethod
-    def post(cls, path, request_handler):
-        router.emit(path, request_handler, router._POST)
-
-    @classmethod
-    def put(cls, path, request_handler):
-        router.emit(path, request_handler, router._PUT)
 
     @classmethod
-    def delete(cls, path, request_handler):
-        router.emit(path, request_handler, router._DELETE)
+    async def get(cls, path, request_handler):
+        await router.emit(path, request_handler, router._GET)
 
     @classmethod
-    def options(cls, path, request_handler):
-        router.emit(path, request_handler, router._OPTIONS)
+    async def post(cls, path, request_handler):
+        await router.emit(path, request_handler, router._POST)
+
+    @classmethod
+    async def put(cls, path, request_handler):
+        await router.emit(path, request_handler, router._PUT)
+
+    @classmethod
+    async def delete(cls, path, request_handler):
+        await router.emit(path, request_handler, router._DELETE)
+
+    @classmethod
+    async def options(cls, path, request_handler):
+        await router.emit(path, request_handler, router._OPTIONS)
