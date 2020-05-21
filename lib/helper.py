@@ -9,33 +9,19 @@ from html.parser import HTMLParser
 
 # 回调函数处理
 def optimize(args, funcs=[]):
-    funcMaps = {
-        "trim": trim,
-        "strip_tags": strip_tags,
-        "explode": explode,
-        "preg_match": preg_match,
-        "preg_match_all": preg_match_all,
-        "preg_replace": preg_replace,
-        "handle_xpath": handle_xpath,
-        "handle_birthday": handle_birthday,
-        "handle_gender": handle_gender,
-        "handle_degree": handle_degree,
-        "handle_sofar": handle_sofar,
-        "handle_marital": handle_marital,
-        "handle_experience": handle_experience,
-        "handle_interval": handle_interval,
-    }
 
     for func in funcs:
         if func == 'call_prev':
             continue
 
-        cbackinfo = {"func": "", "param": []}
+        params = []
         if (tmp := re.search(r'(.*?)\[(.*)\],(\d+),(\d+)', func)):
             call_info = tmp.groups()
-            cbackinfo["func"] = call_info[0]
-            cbackinfo["param"] = call_info[1].split(',')
-            cres = funcMaps[cbackinfo['func']](args, **cbackinfo)
+
+            params = call_info[1].split(',')
+            func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
+            cres = func(args, *params)
+
             idx_1 = int(call_info[2])
             idx_2 = int(call_info[3])
             args = ""
@@ -43,35 +29,44 @@ def optimize(args, funcs=[]):
                 tmp = cres[idx_1]
                 if idx_2 < len(tmp):
                     args = tmp[idx_2]
+
         elif (tmp := re.search(r'(.*)\[(.*)\],(\d+)', func)):
             call_info = tmp.groups()
-            cbackinfo["func"] = call_info[0]
+
             if call_info[0] == "preg_match" or call_info[0] == "preg_match_all":
-                cbackinfo["param"].append(call_info[1])
+                params.append(call_info[1])
             else:
-                cbackinfo["param"] = call_info[1].split(',')
-            cres = funcMaps[cbackinfo['func']](args, **cbackinfo)
+                params = call_info[1].split(',')
+            func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
+            cres = func(args, *params)
+
             idx_1 = int(call_info[2])
             args = ""
             if idx_1 < len(cres):
                 args = cres[idx_1]
         elif (tmp :=re.search(r'(.*?)\[(.*)\]', func)):
             call_info = tmp.groups()
-            cbackinfo["func"] = call_info[0]
-            cbackinfo["param"] = call_info[1].split(',')
-            args = funcMaps[cbackinfo['func']](args, **cbackinfo)
+
+            params = call_info[1].split(',')
+            func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
+
+            args = func(args, *params)
         elif (tmp := re.search(r'(.*),(\d+)', func)):
             call_info = tmp.groups()
-            cbackinfo["func"] = call_info[0]
-            cres = funcMaps[cbackinfo["func"]](args, **cbackinfo)
+
+            func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
+            cres = func(args)
+
             idx_1 = int(call_info[1])
             args = ""
             if idx_1 < len(cres):
                 args = cres[idx_1]
         elif (tmp := re.search(r'(\S+)', func)):
             call_info = tmp.groups()
-            cbackinfo["func"] = call_info[0]
-            args = funcMaps[cbackinfo["func"]](args, **cbackinfo)
+
+            func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
+
+            args = func(args)
 
     return args
 
@@ -184,11 +179,9 @@ def cn2dig(cn):
    
 
 # 去除字符串首尾处的空白字符（或者其他字符）
-def trim(args="", **extra):
-    character_mask = " \t\n\r\0\x0B"
-    if 'param' in extra and len(extra['param']):
-        character_mask = extra['param'][0]
-    return args.strip(character_mask)
+def trim(args="", *extra):
+    return args.strip(extra[0] if len(extra) else " \t\n\r\0\x0B")
+
 
 class MLStripper(HTMLParser):
     def __init__(self):
@@ -219,21 +212,8 @@ def _strip_once(value):
     return s.get_data()
 
 
-# def strip_tags(value):
-#     """Return the given HTML with all tags stripped."""
-#     # Note: in typical case this loop executes _strip_once once. Loop condition
-#     # is redundant, but helps to reduce number of executions of _strip_once.
-#     value = str(value)
-#     while '<' in value and '>' in value:
-#         new_value = _strip_once(value)
-#         if value.count('<') == new_value.count('<'):
-#             # _strip_once wasn't able to detect more tags.
-#             break
-#         value = new_value
-#     return value
-
 # 去除html文本中的所有标签
-def strip_tags(args="", **extra):
+def strip_tags(args="", *extra):
     value = args
     """Return the given HTML with all tags stripped."""
     # Note: in typical case this loop executes _strip_once once. Loop condition
@@ -249,57 +229,47 @@ def strip_tags(args="", **extra):
 
 
 # 字符串分割
-def explode(args="", **extra):
-    delimiter = " "
-    if 'param' in extra and len(extra['param']):
-        delimiter = extra['param'][0]
-    return args.split(delimiter)
+def explode(args="", *extra):
+    return args.split(extra[0] if len(extra) else " ")
 
 
 # 正则使用
-def preg_match(args="", **extra):
-    if 'param' in extra and len(extra['param']):
-        pattern = extra['param'][0]
-        return re.search(pattern, args).groups()
+def preg_match(args="", *extra):
+    if len(extra) and extra[0] and (matches := re.search(extra[0], args)):
+        return matches.groups()
 
 
 # 正则全匹配
-def preg_match_all(args="", **extra):
-    if 'param' in extra and len(extra['param']):
-        pattern = extra['param'][0]
-        return re.findall(pattern, args)
+def preg_match_all(args="", *extra):
+    if len(extra) and extra[0] and (matches := re.findall(extra[0], args)):
+        return matches
 
 
 # 正则替换
-def preg_replace(args="", **extra):
-    if 'param' in extra and len(extra['param']):
-        pattern = extra['param'][0]
-
-        if len(extra['param']) > 1:
-            replace = extra['param'][1]
-        else:
-            replace = ""
-        return re.sub(pattern, replace, args)
+def preg_replace(args="", *extra):
+    if len(extra) and extra[0]:
+        return re.sub(extra[0], extra[1] if len(extra) > 1 else "", args)
+    else:
+        return args
 
 
 # 单位（千）转换
-def k2k(args="", **extra):
-    return '%.2f' % args
+def k2k(args="", *extra):
+    return '%.2f' % (args*0.001)
 
 
 # 单位（千）转换
-def w2k(args="", **extra):
+def w2k(args="", *extra):
     return '%.2f' % (args*0.1)
 
 
 # xpath处理
-def handle_xpath(args="", **extra):
-    etreehtml = etree.HTML(args)
-    return etreehtml.xpath(placeholder(extra['param'][0]))
+def handle_xpath(args="", *extra):
+    return etree.HTML(args).xpath(placeholder(extra[0]))
 
 
 # 匹配出生日
-def handle_birthday(args="", **extra):
+def handle_birthday(args="", *extra):
     string = ""
     if (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})\s*(月|-|\.){1}\s*([0-3]{0,1}[0-9]{1})',args)):
         string = "{}年{}月{}日".format(matchObj.group(1), matchObj.group(3), matchObj.group(5))
@@ -311,14 +281,14 @@ def handle_birthday(args="", **extra):
 
 
 # 匹配性别
-def handle_gender(args="", **extra):
+def handle_gender(args="", *extra):
     sexs = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F', '1': 'M', '0': 'F'}
     if (isMatch := re.search(r'(男|女|male|female)', args)):
         return sexs[isMatch.group(1)]
 
 
 # 匹配学历
-def handle_degree(args="", **extra):
+def handle_degree(args="", *extra):
     degrees = {
         '本科及以上': 1,
         '本科': 1,
@@ -349,7 +319,7 @@ def handle_degree(args="", **extra):
 
 
 # 语言匹配
-def handle_langue(args="", **extra):
+def handle_langue(args="", *extra):
     if (isMatch := re.search(r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语/朝鲜语|普通话|粤语|闽南语|上海话|其它)', args)):
         return isMatch.group(1)
     else:
@@ -357,7 +327,7 @@ def handle_langue(args="", **extra):
 
 
 # 是否最近
-def handle_sofar(args="", **extra):
+def handle_sofar(args="", *extra):
     if 'start_time' in args and 'end_time' in args and args['end_time'] == '':
         args['so_far'] = 'Y'
     else:
@@ -366,7 +336,7 @@ def handle_sofar(args="", **extra):
 
 
 # 婚姻状态
-def handle_marital(args="", **extra):
+def handle_marital(args="", *extra):
     marital = {'已婚': 'Y', '未婚': 'N', 'single': 'N', 'married': 'Y', 'unmarried': 'N'}
     if (isMatch := re.search(r'(已婚|未婚|single|married|unmarried)', args)):
         return marital[isMatch.group(1)]
@@ -375,7 +345,7 @@ def handle_marital(args="", **extra):
 
 
 # 工作经验
-def handle_experience(args="", **extra):
+def handle_experience(args="", *extra):
     result = ["", ""]
     if (isMatch := re.search(r'(\d+)年以下(工作经验|经验)*', args)):
         # 10年以下工作经验，8年以下经验
@@ -407,7 +377,7 @@ def handle_experience(args="", **extra):
 
  
 #  处理时间间隔
-def handle_interval(args="", **extra):
+def handle_interval(args="", *extra):
     args['start_time'] = ""
     args['end_time'] = ""
     args['so_far'] = "N"
@@ -419,7 +389,14 @@ def handle_interval(args="", **extra):
         args['start_time'] = isMatch[0] 
         args['end_time'] = isMatch[1]
 
-    args = handle_sofar(args, **extra)
+    args = handle_sofar(args, *extra)
 
     args.pop('time','')
     return args
+
+
+if __name__ == "__main__":
+    args = "hello,world"
+    extra = [r"hello", "s"]
+    
+    print(k2k(2000))
