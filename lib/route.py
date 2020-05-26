@@ -185,24 +185,11 @@ class router(object):
 
             call = getattr(obj, callName)
 
+            # maybe as asynchronous
             # executor.submit(_call_wrap, call, params)
 
-            try:
-                # maybe as asynchronous
-                ret = await call(*params)
-                if isinstance(ret, dict):
-                    ret = json.dumps(ret)
-                else:
-                    ret = str(ret)
-
-                request_handler.finish(ret)
-                # tornado.ioloop.IOLoop.instance().add_callback(lambda: request_handler.finish(ret))
-            except Exception as ex:
-
-                logger.exception(ex)
-                request_handler.finish(ex)
-                # tornado.ioloop.IOLoop.instance().add_callback(lambda: request_handler.send_error())
-    
+            ret = await call(*params)
+            request_handler.finish(ret)
 
 
     @classmethod

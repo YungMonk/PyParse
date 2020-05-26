@@ -21,20 +21,5 @@
                 }
             }
         }
-    },
-    "20200318": {
-        "label": "中文简历--PC网页简历",
-        "rules": "",
-        "value": "",
-        "fname": "zh2.json",
-        "lists": false,
-        "child": {
-            "table-divResume": {
-                "label": "dom树中含有div中有id=boss_from_exiaobao",
-                "rules": "//span[contains(text(),'简历编码1')]",
-                "value": "",
-                "lists": false
-            }
-        }
     }
 }

@@ -3,14 +3,18 @@
 
 import re
 import array
-import os
+import os,sys
 import json
 
+curPath = os.path.abspath(os.path.dirname(__file__))
+rootPath = os.path.split(curPath)[0]
+sys.path.append(rootPath)
+
+from tornado.web import HTTPError
+
+from lib import helper, path, error, log
 from lxml import etree
-# from config.static_param import channelMap, parserType
-# from lib.helper import optimize, placeholder
 from config import static_param
-from lib import helper, path
 
 
 class ParserEngine(object):
@@ -25,16 +29,13 @@ class ParserEngine(object):
     typeArr = array.array('i', [1, 2])
 
 
-    def __init__(self, site, text, type):
-        if site == 0 or site == '':
-            print("site is empty")
-        self.__site = site
-        if text == "":
-            print("text is empty")
-        self.__text = text
-        if self.typeArr.count(type) == 0:
-            print("type is empty")
-        self.__type = type
+    def __init__(self, **args):
+        self.__site = args['site_id']
+        self.__text = args['body']
+        self.__type = args['type']
+
+        global logger
+        logger = log.Log().getLog()
 
 
     def dispatch(self):
@@ -59,11 +60,14 @@ class ParserEngine(object):
                         res = False
             return res
 
-        # 选择模板文件 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        # 选择模板文件
         configKey = ''
         for key, maps in configParser.items():
             if recursive(maps):
                 configKey = key
+        if configKey == '':
+            logger.warn("not found the template!!!", exc_info=True)
+            raise HTTPError(400, log_message="not found the template!!!")
 
         templateName = tplConf[configKey]['fname']
 
@@ -159,14 +163,23 @@ class ParserEngine(object):
 
         return content
 
+    # @staticmethod
+    # def engine(cls, ctx, rule) :
 
+        
+        
 
 if __name__ == '__main__':
-
-    filename = os.getcwd() + '/test/carjob/1.html'
+    print(os.getcwd())
+    filename = os.getcwd() + '/test/data/51job/1.1.html'
     with open(filename, 'r') as f:
         fileContext = f.read()
         f.close()
 
-        obj = ParserEngine(51, fileContext, 1)
+    try :
+
+        obj = ParserEngine(site_id=2, body=fileContext, type=1)
         obj.dispatch()
+    except Exception as exp :
+        print(exp)
+    

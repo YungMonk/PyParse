@@ -73,8 +73,7 @@ def optimize(args, funcs=[]):
 
 # 占位符还原
 def placeholder(str=''):
-    return str.replace('@或@', '|').replace('逗号', ',').replace('左中括号', '[').replace(
-        '右中括号', ']').replace('右括号', '(').replace('左括号', ')').replace('\\n', '\n')
+    return str.replace('@或@', '|').replace('逗号', ',').replace('左中括号', '[').replace('右中括号', ']').replace('右括号', '(').replace('左括号', ')').replace('\\n', '\n')
 
 
 # 中文数字转阿拉伯数字
