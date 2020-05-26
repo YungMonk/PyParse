@@ -67,14 +67,13 @@ class ParserEngine(object):
                 configKey = key
         if configKey == '':
             logger.warn("not found the template!!!", exc_info=True)
-            raise HTTPError(400, log_message="not found the template!!!")
+            raise HTTPError(400, log_message="not found the template!!!", error_code=80001)
 
         templateName = tplConf[configKey]['fname']
 
         templateContent = json.loads(self.readFile(templateName))
         cv = self.parse(templateContent, etreehtml)
 
-        # print(json.dumps(cv, ensure_ascii=False))
         return json.dumps(cv, ensure_ascii=False)
 
 

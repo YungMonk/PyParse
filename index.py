@@ -93,7 +93,7 @@ class MainHandler(tornado.web.RequestHandler):
 
     def write_error(self, status_code, **kwargs):
         tornado.log.logging.info("---write_error---：处理错误")
-
+        
         # 获取send_error中的reason
         reason = kwargs.get('reason', 'unknown')
 
