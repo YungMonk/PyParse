@@ -13,6 +13,7 @@ import json
 import sys
 import time
 import signal
+import traceback
 
 from lib import route
 from lib import path
@@ -94,7 +95,7 @@ class MainHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         tornado.log.logging.info("---write_error---：处理错误")
         
-        # 获取send_error中的reason
+        # 获取send_error中的reason，默认值是 unknown
         reason = kwargs.get('reason', 'unknown')
 
         # 获取HTTPError中的log_message作为reason
@@ -103,6 +104,11 @@ class MainHandler(tornado.web.RequestHandler):
             if isinstance(exception, tornado.web.HTTPError) and exception.log_message:
                 reason = exception.log_message
 
+            tracebackinfo = kwargs.get('exc_info')[2]
+            for filename, linenum, funcname, source in traceback.extract_tb(tracebackinfo, -1):
+                tornado.log.access_log.warning("%-23s:%s '%s' in %s()", filename, linenum, source, funcname) 
+
+        self.set_status(200)
         self.write({'status_code': status_code, 'reason': reason})
 
     def on_finish(self):

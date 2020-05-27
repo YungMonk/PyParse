@@ -12,7 +12,7 @@ sys.path.append(rootPath)
 
 from tornado.web import HTTPError
 
-from lib import helper, path, error, log
+from lib import helper, path, log
 from lxml import etree
 from config import static_param
 
@@ -41,6 +41,9 @@ class ParserEngine(object):
     def dispatch(self):
         etreehtml = etree.HTML(self.__text)
 
+        # result = etreehtml.xpath("string(//table[@class='infr'])")
+        # print(result)
+
         # 读取配置信息
         tplConf = json.loads(self.readFile("config.json"))
         configParser = self.parse(tplConf, etreehtml)
@@ -66,8 +69,7 @@ class ParserEngine(object):
             if recursive(maps):
                 configKey = key
         if configKey == '':
-            logger.warn("not found the template!!!", exc_info=True)
-            raise HTTPError(400, log_message="not found the template!!!", error_code=80001)
+            raise HTTPError(80012, "not found the template!!!")
 
         templateName = tplConf[configKey]['fname']
 
@@ -99,7 +101,8 @@ class ParserEngine(object):
             # 子项处理前对html文本数据进行处理
             expath = etreehtml.xpath(helper.placeholder(arr[0]))
 
-            if len(arr) > 1 and arr[1] == 'call_prev':
+            if len(expath) > 0 and len(arr) > 1 and arr[1] == 'call_prev':
+                print(expath)
                 htmltext = etree.tostring(
                     expath[0], encoding="utf-8", pretty_print=True, method="html").decode()
                 expath = helper.optimize(htmltext, arr[1:])
