@@ -129,13 +129,14 @@ class ParserEngine(object):
                         tmp[key] = self.parse(value['child'], etreehtml)
 
                     if 'application_rules' in value and value['application_rules']:
-                        tmp[key] = helper.optimize(
-                            tmp[key], value['application_rules'].split('|'))
+                        tmp[key] = helper.optimize(tmp[key], value['application_rules'].split('|'))
 
             else:
                 # 没有子项
                 if len(expath) == 0:
                     tmp[key] = ''
+                elif isinstance(expath, str):
+                    tmp[key] = expath
                 elif isinstance(expath[0], str):
                     tmp[key] = expath[0]
                 else:

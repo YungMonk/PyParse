@@ -11,6 +11,9 @@ from html.parser import HTMLParser
 def optimize(args, funcs=[]):
 
     for func in funcs:
+        if not args:
+            return args
+
         if func == 'call_prev':
             continue
 
@@ -19,6 +22,7 @@ def optimize(args, funcs=[]):
             call_info = tmp.groups()
 
             params = call_info[1].split(',')
+            params = [placeholder(str(x)) for x in params]
             func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
             cres = func(args, *params)
 
@@ -37,17 +41,20 @@ def optimize(args, funcs=[]):
                 params.append(call_info[1])
             else:
                 params = call_info[1].split(',')
+            
+            params = [placeholder(str(x)) for x in params]
+
             func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
             cres = func(args, *params)
 
             idx_1 = int(call_info[2])
-            args = ""
             if idx_1 < len(cres):
                 args = cres[idx_1]
         elif (tmp :=re.search(r'(.*?)\[(.*)\]', func)):
             call_info = tmp.groups()
 
             params = call_info[1].split(',')
+            params = [placeholder(str(x)) for x in params]
             func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
 
             args = func(args, *params)
@@ -274,9 +281,18 @@ def handle_birthday(args="", *extra):
         string = "{}年{}月{}日".format(matchObj.group(1), matchObj.group(3), matchObj.group(5))
     elif (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})', args)):
         string = "{}年{}月".format(matchObj.group(1), matchObj.group(3))
-    elif (matchObj := re.search(r'(\d+)岁', args)):
+    elif (matchObj := re.search(r'(\d+)\s*岁', args)):
         string = "{}年".format(time.localtime(time.time()).tm_year - int(matchObj.group(1)))
     return string if string else args
+
+
+# 匹配年龄
+def handle_age(args="", *extra):
+    string = ""
+    if (matchObj := re.search(r'(\d+)\s*岁', args)):
+        string = matchObj.group(1)
+    
+    return string
 
 
 # 匹配性别
@@ -393,9 +409,58 @@ def handle_interval(args="", *extra):
     args.pop('time','')
     return args
 
+# 户籍，现居住地相关 
+def handle_address_city(args, *extra) -> dict:
+    if not isinstance(args, dict):
+        return args
+    else:
+        # 籍贯所在地的市级ID
+        args['native_place'] = ""
+        # 籍贯所在地的省级ID
+        args['native_place_province'] = ""
+        # 户口所在地的市级ID
+        args['account'] = ""
+        args['account_district'] = args['account'] # 灵活用工使用
+        # 户口所在地的省级ID
+        args['account_province'] = ""
+        # 当前所在地的市级id
+        args['address'] = ""
+        args['address_district'] = args['address'] # 灵活用工使用
+        # 当前所在地的省级id
+        args['address_province'] = ""
+        
+        http_curl()
+        
+
+    return args
+
+def http_curl(**kwargs):
+    from tornado.httpclient import AsyncHTTPClient,HTTPRequest,HTTPError
+    from tornado.concurrent import Future 
+    
+    http_client = AsyncHTTPClient()
+    http_request = HTTPRequest(
+        url="https://www.jianshu.com/p/ff9cb6dea27a",
+    )
+
+    def callback(getResponse) :
+        getResponse()
+
+    result = ""
+    try:
+        http_client.fetch(http_request, callback)
+    except HTTPError as e:
+        # HTTPError is raised for non-200 responses; the response
+        # can be found in e.response.
+        print("Error: " + str(e))
+    except Exception as e:
+        # Other errors are possible, such as IOError.
+        print("Error: " + str(e))
+    finally :
+        http_client.close()
+
+    return result
+
 
 if __name__ == "__main__":
-    args = "hello,world"
-    extra = [r"hello", "s"]
-    
-    print(k2k(2000))
+    http_curl()

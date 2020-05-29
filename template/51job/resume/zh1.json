@@ -6,11 +6,11 @@
         "child": {
             "src": {
                 "label": "渠道ID",
-                "value": 51
+                "value": 2
             },
             "src_no": {
                 "label": "外网简历ID",
-                "rules": "//span[contains(text(), '简历编码：')]"
+                "rules": "//td[@class='icard']|trim|preg_match[(\\d+)],0"
             }
         }
     },
@@ -41,19 +41,23 @@
             },
             "name": {
                 "label": "姓名",
-                "rules": ".//span[contains(text(),'姓名：')]/../span[2]"
+                "rules": "//td[@class='name']|trim"
             },
             "age": {
                 "label": "年龄",
-                "rules": ".//span[contains(text(),'年龄：')]/../span[2]|trim|preg_match[(\\d+)岁],0"
+                "rules": "string(//table[@class='infr']//tr[last()]//p)|trim|handle_age"
+            },
+            "age_orgin": {
+                "label": "年龄",
+                "rules": "string(//table[@class='infr']//tr[last()]//p)|trim"
             },
             "birth": {
-                "label": "年龄",
-                "rules": ".//span[contains(text(),'年龄：')]/../span[2]|trim|handle_birthday"
+                "label": "出生日期",
+                "rules": "string(//table[@class='infr']//tr[last()]//p)|trim|handle_birthday"
             },
             "gender": {
                 "label": "性别",
-                "rules": ".//span[contains(text(),'性别：')]/../span[2]|trim|handle_gender"
+                "rules": "string(//table[@class='infr']//tr[last()]//p)|trim|handle_gender"
             },
             "height": {
                 "label": "身高",
@@ -75,40 +79,8 @@
                 "label": "民族",
                 "value": ""
             },
-            "native_place": {
-                "label": "籍贯所在地的市级ID",
-                "value": ""
-            },
-            "native_place_province": {
-                "label": "籍贯所在地的省级ID",
-                "value": ""
-            },
-            "account": {
-                "label": "户口所在地的市级ID",
-                "value": ""
-            },
-            "account_province": {
-                "label": "户口所在地的省级ID",
-                "value": ""
-            },
-            "account_district": {
-                "label": "户口所在地的市级ID",
-                "value": ""
-            },
             "account_address": {
                 "label": "户口所在地的详细地址",
-                "value": ""
-            },
-            "address": {
-                "label": "当前所在地的市级id",
-                "value": ""
-            },
-            "address_province": {
-                "label": "当前所在地的省级id",
-                "value": ""
-            },
-            "address_district": {
-                "label": "现居住地区id",
                 "value": ""
             },
             "address_detail": {
@@ -276,7 +248,7 @@
                 "value": ""
             }
         },
-        "cback": []
+        "application_rules": "handle_address_city"
     },
     "contact": {
         "label": "联系方式",
