@@ -428,39 +428,12 @@ def handle_address_city(args, *extra) -> dict:
         args['address_district'] = args['address'] # 灵活用工使用
         # 当前所在地的省级id
         args['address_province'] = ""
-        
-        http_curl()
-        
 
     return args
 
-def http_curl(**kwargs):
-    from tornado.httpclient import AsyncHTTPClient,HTTPRequest,HTTPError
-    from tornado.concurrent import Future 
-    
-    http_client = AsyncHTTPClient()
-    http_request = HTTPRequest(
-        url="https://www.jianshu.com/p/ff9cb6dea27a",
-    )
-
-    def callback(getResponse) :
-        getResponse()
-
-    result = ""
-    try:
-        http_client.fetch(http_request, callback)
-    except HTTPError as e:
-        # HTTPError is raised for non-200 responses; the response
-        # can be found in e.response.
-        print("Error: " + str(e))
-    except Exception as e:
-        # Other errors are possible, such as IOError.
-        print("Error: " + str(e))
-    finally :
-        http_client.close()
-
-    return result
 
 
-if __name__ == "__main__":
-    http_curl()
+
+
+if __name__ == "__main__" :
+    print(11)
