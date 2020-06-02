@@ -5,5 +5,8 @@
     "logging": {
         "config_file": "dev_log.conf",
         "default_logger": "simple"
+    },
+    "rcp_service":{
+        "gsystem" : "http://gsystem.rpc/gsystem_basic"
     }
 }

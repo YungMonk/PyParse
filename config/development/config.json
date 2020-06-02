@@ -1,0 +1,12 @@
+{
+    "$includes": [
+        "development/redis.json"
+    ],
+    "logging": {
+        "config_file": "development/log.conf",
+        "default_logger": "simple"
+    },
+    "rcp_service":{
+        "gsystem" : "http://dev.gsystem.rpc/gsystem_basic"
+    }
+}

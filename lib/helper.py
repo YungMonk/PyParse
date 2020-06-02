@@ -3,8 +3,11 @@
 
 import re
 import time
+
 from lxml import etree
 from html.parser import HTMLParser
+
+from lib.configer import conf
 
 
 # 回调函数处理
@@ -434,7 +437,9 @@ async def handle_address_city(args, *extra) -> dict:
         args['address_province'] = ""
 
         result = await http_curl(url="http://www.qq.com")
-        print(result)
+        print(conf.config.get('rcp_service', None))
+
+        
 
     return args
 
@@ -445,6 +450,13 @@ async def http_curl(**kwargs):
     http_client = AsyncHTTPClient()
     http_request = HTTPRequest(
         url=kwargs['url'],
+        headers={
+            "Content-type":"application/json;charset='utf-8'",
+            "Accept":"application/json",
+            "Cache-Control:":"no-cache",
+            "Pragma":"no-cache",
+            "Connection":"Keep-Alive"
+        },
     )
 
     result = ""

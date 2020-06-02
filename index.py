@@ -179,7 +179,7 @@ if __name__ == "__main__":
             sys.exit(0)
 
     if not env_config:
-        env_config = os.path.join(path._CONF_PATH, 'dev.json')
+        env_config = os.path.join(path._CONF_PATH, 'development/config.json')
         print("no configuration found!,will use [%s] instead" % env_config)
 
     conf = configer.ConfigParserFromFile()
