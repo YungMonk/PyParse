@@ -38,7 +38,7 @@ class ParserEngine(object):
         logger = log.Log().getLog()
 
 
-    def dispatch(self):
+    async def dispatch(self):
         etreehtml = etree.HTML(self.__text)
 
         # result = etreehtml.xpath("string(//table[@class='infr'])")
@@ -46,7 +46,7 @@ class ParserEngine(object):
 
         # 读取配置信息
         tplConf = json.loads(self.readFile("config.json"))
-        configParser = self.parse(tplConf, etreehtml)
+        configParser = await self.parse(tplConf, etreehtml)
 
         # 递归遍历字典
         def recursive(dictOlist):
@@ -74,13 +74,13 @@ class ParserEngine(object):
         templateName = tplConf[configKey]['fname']
 
         templateContent = json.loads(self.readFile(templateName))
-        cv = self.parse(templateContent, etreehtml)
+        cv = await self.parse(templateContent, etreehtml)
 
         return json.dumps(cv, ensure_ascii=False)
 
 
     # 内容解析
-    def parse(self, maps, etreehtml):
+    async def parse(self, maps, etreehtml):
         tmp = {}
         for key, value in maps.items():
 
@@ -105,17 +105,17 @@ class ParserEngine(object):
                 print(expath)
                 htmltext = etree.tostring(
                     expath[0], encoding="utf-8", pretty_print=True, method="html").decode()
-                expath = helper.optimize(htmltext, arr[1:])
+                expath = await helper.optimize(htmltext, arr[1:])
 
             if 'child' in value and isinstance(value['child'], dict) and len(value['child']):
                 # 有子项
                 if 'lists' in value and value['lists'] and len(expath):
                     t = []
                     for sign in expath:
-                        tmp_child = self.parse(value['child'], sign)
+                        tmp_child = await self.parse(value['child'], sign)
 
                         if 'application_rules' in value and value['application_rules']:
-                            tmp_child = helper.optimize(
+                            tmp_child = await helper.optimize(
                                 tmp_child, value['application_rules'].split('|'))
 
                         t.append(tmp_child)
@@ -123,13 +123,13 @@ class ParserEngine(object):
                 else:
                     if len(expath):
                         # 本级规则不为空
-                        tmp[key] = self.parse(value['child'], expath[0])
+                        tmp[key] = await self.parse(value['child'], expath[0])
                     else:
                         # 本级规则为空
-                        tmp[key] = self.parse(value['child'], etreehtml)
+                        tmp[key] = await self.parse(value['child'], etreehtml)
 
                     if 'application_rules' in value and value['application_rules']:
-                        tmp[key] = helper.optimize(tmp[key], value['application_rules'].split('|'))
+                        tmp[key] = await helper.optimize(tmp[key], value['application_rules'].split('|'))
 
             else:
                 # 没有子项
@@ -144,7 +144,7 @@ class ParserEngine(object):
 
                 # 子项处理后对html文本数据进行处理
                 if tmp[key] and len(arr) > 1:
-                    tmp[key] = helper.optimize(tmp[key], arr[1:])
+                    tmp[key] = await helper.optimize(tmp[key], arr[1:])
         return tmp
 
 

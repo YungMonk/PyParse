@@ -8,7 +8,7 @@ from html.parser import HTMLParser
 
 
 # 回调函数处理
-def optimize(args, funcs=[]):
+async def optimize(args, funcs=[]):
 
     for func in funcs:
         if not args:
@@ -72,8 +72,10 @@ def optimize(args, funcs=[]):
             call_info = tmp.groups()
 
             func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
-
-            args = func(args)
+            if call_info[0] == "handle_address_city":
+                args = await func(args)
+            else :
+                args = func(args)
 
     return args
 
@@ -409,8 +411,10 @@ def handle_interval(args="", *extra):
     args.pop('time','')
     return args
 
+from tornado.concurrent import Future
+
 # 户籍，现居住地相关 
-def handle_address_city(args, *extra) -> dict:
+async def handle_address_city(args, *extra) -> dict:
     if not isinstance(args, dict):
         return args
     else:
@@ -429,11 +433,40 @@ def handle_address_city(args, *extra) -> dict:
         # 当前所在地的省级id
         args['address_province'] = ""
 
+        result = await http_curl(url="http://www.qq.com")
+        print(result)
+
     return args
 
 
+async def http_curl(**kwargs):
+    from tornado.httpclient import AsyncHTTPClient,HTTPRequest,HTTPError
+    
+    http_client = AsyncHTTPClient()
+    http_request = HTTPRequest(
+        url=kwargs['url'],
+    )
+
+    result = ""
+    try:
+        response = await AsyncHTTPClient().fetch(http_request)
+        result = str(response.body)
+    except HTTPError as e:
+        # HTTPError is raised for non-200 responses; the response
+        # can be found in e.response.
+        print("Error: " + str(e))
+    except Exception as e:
+        # Other errors are possible, such as IOError.
+        print("Error: " + str(e))
+    finally :
+        http_client.close()
+
+    return result
 
 
-
-if __name__ == "__main__" :
-    print(11)
+if __name__ == "__main__":
+    from tornado.ioloop import IOLoop
+    from tornado.concurrent import Future
+    # import asyncio
+    # asyncio.get_event_loop()
+    IOLoop.instance().run_sync(lambda : http_curl(url="https://www.jianshu.com"))

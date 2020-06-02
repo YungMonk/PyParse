@@ -37,4 +37,29 @@ class HelloTest(object):
         if req.json_args['request']['p']['type'] not in static_param.parserType:
             return '{"code":1000,"message":"params is error, \'type is no availd!\'"}'
 
-        return parser_engine.ParserEngine(**req.json_args['request']['p']).dispatch()
+        return await parser_engine.ParserEngine(**req.json_args['request']['p']).dispatch()
+
+    async def http_curl(self, **kwargs):
+        from tornado.httpclient import AsyncHTTPClient,HTTPRequest,HTTPError
+        
+        http_client = AsyncHTTPClient()
+        http_request = HTTPRequest(
+            url=kwargs['url'],
+        )
+
+        result = ""
+        try:
+            response = await AsyncHTTPClient().fetch(http_request)
+            result = str(response.body, 'utf-8')
+            print(result)
+        except HTTPError as e:
+            # HTTPError is raised for non-200 responses; the response
+            # can be found in e.response.
+            print("Error: " + str(e))
+        except Exception as e:
+            # Other errors are possible, such as IOError.
+            print("Error: " + str(e))
+        finally :
+            http_client.close()
+
+        return result
