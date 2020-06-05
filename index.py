@@ -56,7 +56,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 
         # json格式请求
-        if self.request.headers.get('Content-Type', '').find("application/json") >= 0:
+        if "application/json" in self.request.headers.get('Content-Type', ''):
             try:
                 self.json_args = json.loads(self.request.body)
             except Exception:
@@ -64,7 +64,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 
         # xml格式请求
-        elif self.request.headers.get('Content-Type', '').find('application/xml') >= 0:
+        elif 'application/xml' in self.request.headers.get('Content-Type', ''):
             try:
                 self.json_args = xmltodict.parse(self.request.body)
             except Exception:

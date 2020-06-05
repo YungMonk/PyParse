@@ -5,9 +5,9 @@ import re
 import time
 
 from lxml import etree
-from html.parser import HTMLParser
 
 from lib.configer import conf
+from utils import strings
 
 
 # 回调函数处理
@@ -191,52 +191,12 @@ def cn2dig(cn):
 
 # 去除字符串首尾处的空白字符（或者其他字符）
 def trim(args="", *extra):
-    return args.strip(extra[0] if len(extra) else " \t\n\r\0\x0B")
-
-
-class MLStripper(HTMLParser):
-    def __init__(self):
-        super().__init__(convert_charrefs=False)
-        self.reset()
-        self.fed = []
-
-    def handle_data(self, d):
-        self.fed.append(d)
-
-    def handle_entityref(self, name):
-        self.fed.append('&%s;' % name)
-
-    def handle_charref(self, name):
-        self.fed.append('&#%s;' % name)
-
-    def get_data(self):
-        return ''.join(self.fed)
-
-
-def _strip_once(value):
-    """
-    Internal tag stripping utility used by strip_tags.
-    """
-    s = MLStripper()
-    s.feed(value)
-    s.close()
-    return s.get_data()
+    return strings.trim(args, *extra)
 
 
 # 去除html文本中的所有标签
 def strip_tags(args="", *extra):
-    value = args
-    """Return the given HTML with all tags stripped."""
-    # Note: in typical case this loop executes _strip_once once. Loop condition
-    # is redundant, but helps to reduce number of executions of _strip_once.
-    value = str(value)
-    while '<' in value and '>' in value:
-        new_value = _strip_once(value)
-        if value.count('<') == new_value.count('<'):
-            # _strip_once wasn't able to detect more tags.
-            break
-        value = new_value
-    return value
+    return strings.strip_tags(args)
 
 
 # 字符串分割
@@ -266,12 +226,12 @@ def preg_replace(args="", *extra):
 
 # 单位（千）转换
 def k2k(args="", *extra):
-    return '%.2f' % (args*0.001)
+    return strings.salary_to_k(args)
 
 
-# 单位（千）转换
+# 单位（万）转换
 def w2k(args="", *extra):
-    return '%.2f' % (args*0.1)
+    return strings.salary_to_k(args, 'W')
 
 
 # xpath处理
@@ -414,7 +374,68 @@ def handle_interval(args="", *extra):
     args.pop('time','')
     return args
 
-from tornado.concurrent import Future
+
+def handle_basic_salary(args="", *extra):
+    args['basic_salary_from'] = ""
+    args['basic_salary_to'] = ""
+
+    if "basic_salary" in args:
+        salary = args['basic_salary']
+        # 年薪
+        if '年' in salary and (matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S)):
+            if len(matches) == 1:
+                args['basic_salary_from'] = strings.salary_to_k(matches[0], salary)
+                args['basic_salary_to']   = strings.salary_to_k(matches[0], salary)
+            elif len(matches) == 2:
+                args['basic_salary_from'] = strings.salary_to_k(matches[0], salary)
+                args['basic_salary_to']   = strings.salary_to_k(matches[1], salary)
+
+        elif matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S):
+            if len(matches) == 1:
+                args['basic_salary_from'] = strings.salary_to_k(matches[0], salary)
+                args['basic_salary_to']   = strings.salary_to_k(matches[0], salary)
+            elif len(matches) == 2:
+                args['basic_salary_from'] = strings.salary_to_k(matches[0], salary)
+                args['basic_salary_to']   = strings.salary_to_k(matches[1], salary)
+
+    return args
+
+
+# 处理期望薪资
+def handle_expect_salary(args="", *extra):
+    args['expect_salary_from'] = ""
+    args['expect_salary_to'] = ""
+    args['expect_annual_salary_from'] = ""
+    args['expect_annual_salary_to'] = ""
+    args['expect_hour_salary_from'] = ""
+    args['expect_hour_salary_to'] = ""
+    args['expect_day_salary_from'] = ""
+    args['expect_day_salary_to'] = ""
+
+    if "expect_salary" in args:
+        salary = args['expect_salary']
+        # 年薪
+        if '年' in salary and (matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S)):
+            if len(matches) == 1:
+                args['expect_annual_salary_from'] = strings.salary_to_k(matches[0], salary)
+                args['expect_annual_salary_to']   = strings.salary_to_k(matches[0], salary)
+            elif len(matches) == 2:
+                args['expect_annual_salary_from'] = strings.salary_to_k(matches[0], salary)
+                args['expect_annual_salary_to']   = strings.salary_to_k(matches[1], salary)
+
+            args['expect_salary_from'] = '%.2f' % (args['expect_annual_salary_from']/12)
+            args['expect_salary_to']   = '%.2f' % (args['expect_annual_salary_to']/12)
+        elif matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S):
+            if len(matches) == 1:
+                args['expect_salary_from'] = strings.salary_to_k(matches[0], salary)
+                args['expect_salary_to']   = strings.salary_to_k(matches[0], salary)
+            elif len(matches) == 2:
+                args['expect_salary_from'] = strings.salary_to_k(matches[0], salary)
+                args['expect_salary_to']   = strings.salary_to_k(matches[1], salary)
+
+    return args
+
+
 
 # 户籍，现居住地相关 
 async def handle_address_city(args, *extra) -> dict:
@@ -427,29 +448,40 @@ async def handle_address_city(args, *extra) -> dict:
         args['native_place_province'] = ""
         # 户口所在地的市级ID
         args['account'] = ""
-        args['account_district'] = args['account'] # 灵活用工使用
         # 户口所在地的省级ID
         args['account_province'] = ""
         # 当前所在地的市级id
         args['address'] = ""
-        args['address_district'] = args['address'] # 灵活用工使用
         # 当前所在地的省级id
         args['address_province'] = ""
 
-        result = await http_curl(url="http://www.qq.com")
-        print(conf.config.get('rcp_service', None))
-
+        import json
+        if "account_address" in args and args['account_address']:
+            args['account'] = await http_curl(url=conf.config.get('rcp_service', None)['gsystem'], city=args['account_address'])
+        if "address_detail" in args and args['address_detail']:
+            args['address'] = await http_curl(url=conf.config.get('rcp_service', None)['gsystem'], city=args['address_detail'])
+                
         
+        args['account_district'] = args['account'] # 灵活用工使用
+        args['address_district'] = args['address'] # 灵活用工使用
 
     return args
 
 
 async def http_curl(**kwargs):
+    if "city" not in kwargs or not kwargs['city']:
+        return ""
+
+    if "url" not in kwargs or not kwargs['url']:
+        return ""
+
     from tornado.httpclient import AsyncHTTPClient,HTTPRequest,HTTPError
+    import json
     
     http_client = AsyncHTTPClient()
     http_request = HTTPRequest(
         url=kwargs['url'],
+        method='POST',
         headers={
             "Content-type":"application/json;charset='utf-8'",
             "Accept":"application/json",
@@ -457,12 +489,19 @@ async def http_curl(**kwargs):
             "Pragma":"no-cache",
             "Connection":"Keep-Alive"
         },
+        body=json.dumps(strings.rpc_params({
+            'c':'Logic_region',
+            'm':'city_ids',
+            'p':kwargs['city'],
+        })),
     )
 
     result = ""
     try:
         response = await AsyncHTTPClient().fetch(http_request)
-        result = str(response.body)
+        respdata = json.loads(response.body)
+        if 'response' in respdata and 'err_no' in respdata['response'] and not respdata['response']['err_no']:
+            result = respdata['response']['results']
     except HTTPError as e:
         # HTTPError is raised for non-200 responses; the response
         # can be found in e.response.
@@ -474,11 +513,3 @@ async def http_curl(**kwargs):
         http_client.close()
 
     return result
-
-
-if __name__ == "__main__":
-    from tornado.ioloop import IOLoop
-    from tornado.concurrent import Future
-    # import asyncio
-    # asyncio.get_event_loop()
-    IOLoop.instance().run_sync(lambda : http_curl(url="https://www.jianshu.com"))
