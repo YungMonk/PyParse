@@ -100,11 +100,8 @@ class ParserEngine(object):
 
             # 子项处理前对html文本数据进行处理
             expath = etreehtml.xpath(helper.placeholder(arr[0]))
-
-            if len(expath) > 0 and len(arr) > 1 and arr[1] == 'call_prev':
-                print(expath)
-                htmltext = etree.tostring(
-                    expath[0], encoding="utf-8", pretty_print=True, method="html").decode()
+            if len(expath) > 0 and len(arr) > 1 and arr[1] == 'call_prev' and len(arr[1:]) > 2:
+                htmltext =etree.tostring(expath[0], encoding="utf-8", pretty_print=True, method="html").decode()# self.xpath_to_html(expath)
                 expath = await helper.optimize(htmltext, arr[1:])
 
             if 'child' in value and isinstance(value['child'], dict) and len(value['child']):
@@ -113,12 +110,12 @@ class ParserEngine(object):
                     t = []
                     for sign in expath:
                         tmp_child = await self.parse(value['child'], sign)
-
                         if 'application_rules' in value and value['application_rules']:
-                            tmp_child = await helper.optimize(
-                                tmp_child, value['application_rules'].split('|'))
+                            tmp_child = await helper.optimize(tmp_child, value['application_rules'].split('|'))
 
-                        t.append(tmp_child)
+                        if tmp_child :
+                            t.append(tmp_child)
+                        
                     tmp[key] = t
                 else:
                     if len(expath):
@@ -166,8 +163,9 @@ class ParserEngine(object):
 
         return content
 
-    # @staticmethod
-    # def engine(cls, ctx, rule) :
+
+    def xpath_to_html(self, xpath_list:list):
+        return etree.tostring(xpath_list[0], encoding="utf-8", pretty_print=True, method="html").decode()
 
         
         

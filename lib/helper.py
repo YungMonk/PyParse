@@ -375,6 +375,7 @@ def handle_interval(args="", *extra):
     return args
 
 
+# 处理基本薪资
 def handle_basic_salary(args="", *extra):
     args['basic_salary_from'] = ""
     args['basic_salary_to'] = ""
@@ -436,7 +437,25 @@ def handle_expect_salary(args="", *extra):
     return args
 
 
+# 清洗技能
+def wash_skill(args, *extra):
+    parrten = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它)'
+    if "name" in args and re.findall(parrten, args['name'], re.S | re.I):
+        return None
+    else:
+        return args
 
+
+# 清洗语言
+def wash_langue(args, *extra):
+    parrten = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它)'
+    if "name" in args and re.findall(parrten, args['name'], re.S | re.I):
+        return args
+    else:
+        return None
+
+
+""""异步方法调用"""
 # 户籍，现居住地相关 
 async def handle_address_city(args, *extra) -> dict:
     if not isinstance(args, dict):

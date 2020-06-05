@@ -80,10 +80,7 @@
 
 
 if __name__ == "__main__":
-    salary = "20.0万-30万/年"
-
     import re
-
-    args={}
-    if '年' in salary and (matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S)):
-        print(matches)
+    inputStr = "hello 2017/2, nihao 2017/2"
+    replacedStr = re.sub("(\\d{4}).*?(\\d{1,2})", "\\1年\\2月", inputStr)
+    print("replacedStr =",replacedStr) #crifan

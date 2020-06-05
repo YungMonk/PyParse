@@ -255,70 +255,197 @@
     },
     "work": {
         "label": "工作经历",
-        "rules": "//td[contains(text(),'工作经验')]/../following-sibling::tr",
-        "lists":true,
+        "rules": "//td[contains(text(),'工作经验')]/../following-sibling::tr//td[contains(@class,'p15')]",
+        "lists": true,
         "child": {
             "time": {
-                "label": "开始时间",
-                "rules": ".//span[@class='myResume_times']"
+                "label": "工作时间",
+                "rules": ".//td[@class='time']"
             },
             "corporation_name": {
                 "label": "公司",
-                "rules": ".//div[@class='myResume_title']|trim"
+                "rules": ".//td[contains(@class,'phd tb1')]/span"
             },
             "scale": {
                 "label": "规模",
-                "rules": ""
+                "rules": "string(.//td[@class='phd tb1 gray2'])|explode[@或@],1"
             },
             "industry_name": {
                 "label": "所属行业",
-                "rules": ""
+                "rules": "string(.//td[@class='phd tb1 gray2'])|explode[@或@],0"
             },
             "corporation_type": {
                 "label": "公司性质",
-                "rules": ""
+                "rules": "string(.//td[@class='phd tb1 gray2'])|explode[@或@],2"
             },
             "position_name": {
                 "label": "职位",
-                "rules": ".//div[@class='myResume_neme']|trim"
+                "rules": ".//strong[@class='txt3']|trim"
             },
             "responsibilities": {
                 "label": "工作职责",
-                "rules": ".//span[contains(text(),'工作描述：')]/following-sibling::*"
+                "rules": ".//td[contains(text(),'工作描述：')]/following-sibling::*"
+            }
+        },
+        "application_rules": "handle_interval"
+    },
+    "project": {
+        "label": "项目经验",
+        "rules": "//td[contains(text(),'项目经验')]/../following-sibling::tr//td[contains(@class,'p15')]",
+        "lists": true,
+        "child": {
+            "time": {
+                "label": "开始时间",
+                "rules": ".//td[@class='time']"
+            },
+            "name": {
+                "label": "项目名称",
+                "rules": ".//strong"
+            },
+            "corporation_name": {
+                "label": "公司名称",
+                "rules": "string(.//td[contains(text(),'所属公司：')]/following-sibling::*)"
+            },
+            "position_name": {
+                "label": "职位名称",
+                "rules": ""
+            },
+            "describe": {
+                "label": "项目描述",
+                "rules": "string(.//td[contains(text(),'项目描述：')]/following-sibling::*)"
+            },
+            "achivement": {
+                "label": "工作业绩",
+                "rules": ""
+            },
+            "responsibilities": {
+                "label": "职责",
+                "rules": "string(.//td[contains(text(),'责任描述：')]/following-sibling::*)"
             }
         },
         "application_rules": "handle_interval"
     },
     "education": {
         "label": "教育经历",
-        "rules": "//div/span[contains(text(),'教育经历')]/../following-sibling::*|call_prev|preg_replace[</div>\\s*<div class=\"myResume_cont\">,]|handle_xpath[//div左中括号@class='myResume_title'右中括号]",
+        "rules": "//td[contains(text(),'教育经历')]/../following-sibling::tr//td[contains(@class,'p15')]",
         "lists": true,
         "child": {
             "time": {
                 "label": "开始时间",
-                "rules": "./text()[1]|trim"
+                "rules": ".//td[@class='time']"
             },
             "school_name": {
                 "label": "学校名称",
-                "rules": "./text()[1]|trim|preg_match[(\\S+)],0"
+                "rules": ".//strong"
             },
             "discipline_name": {
                 "label": "专业",
-                "rules": ".//span[1][contains(text(),'专业名称')]|explode[：],1"
+                "rules": "string(.//td[@class='tb1'])|explode[@或@],1"
             },
             "degree": {
                 "label": "学历",
-                "rules": ".//span[2][contains(text(),'学历')]|handle_degree"
+                "rules": "string(.//td[@class='tb1'])|explode[@或@],0|handle_degree"
             },
             "degree_origin": {
                 "label": "学历",
-                "rules": ".//span[2][contains(text(),'学历')]"
+                "rules": "string(.//td[@class='tb1'])|explode[@或@],0"
             },
             "discipline_desc": {
                 "label": "专业描述",
-                "rules": ""
+                "rules": "string(.//td[contains(text(),'专业描述：')]/following-sibling::*)"
             }
         },
         "application_rules": "handle_interval"
+    },
+    "training": {
+        "label": "培训经历",
+        "rules": "//td[contains(text(),'培训经历')]/../following-sibling::tr//td[contains(@class,'p15')]",
+        "lists": true,
+        "child": {
+            "time": {
+                "label": "开始时间",
+                "rules": ".//td[@class='time']"
+            },
+            "name": {
+                "label": "培训课程名称",
+                "rules": ".//strong"
+            },
+            "authority": {
+                "label": "培训机构名称",
+                "rules": "string(.//td[contains(text(),'培训机构：')]/following-sibling::*)"
+            },
+            "city": {
+                "label": "培训地点",
+                "rules": "string(.//td[contains(text(),'培训地点：')]/following-sibling::*)"
+            },
+            "certificate": {
+                "label": "获得证书名称",
+                "rules": ""
+            },
+            "description": {
+                "label": "培训描述",
+                "rules": "string(.//td[contains(text(),'培训描述：')]/following-sibling::*)"
+            }
+        },
+        "application_rules": "handle_interval"
+    },
+    "language": {
+        "label": "语言能力",
+        "rules": "//td[contains(text(),'技能/语言')]/../following-sibling::tr//td[contains(@class,'tb2')]",
+        "lists": true,
+        "child": {
+            "name": {
+                "label": "语言名称",
+                "rules": ".//strong"
+            },
+            "certificate": {
+                "label": "相关证书",
+                "rules": ""
+            },
+            "level": {
+                "label": "语言掌握程度",
+                "rules": ".//span[@class='skco']"
+            }
+        },
+        "application_rules": "wash_langue"
+    },
+    "skill": {
+        "label": "技能",
+        "rules": "//td[contains(text(),'技能/语言')]/../following-sibling::tr//td[contains(@class,'tb2')]",
+        "lists": true,
+        "child": {
+            "name": {
+                "label": "语言名称",
+                "rules": ".//strong"
+            },
+            "level": {
+                "label": "掌握程度",
+                "rules": ".//span[@class='skco']"
+            },
+            "period": {
+                "label": "使用时间",
+                "rules": ""
+            }
+        },
+        "application_rules": "wash_skill"
+    },
+    "certificate": {
+        "label": "证书",
+        "rules": "//td[contains(text(),'技能特长')]/../following-sibling::tr//td[contains(text(),'证书')]/../following-sibling::tr//td[contains(@class,'tb3')]",
+        "lists": true,
+        "child": {
+            "name": {
+                "label": "名称",
+                "rules": ".//strong"
+            },
+            "description": {
+                "label": "描述",
+                "rules": ""
+            },
+            "start_time": {
+                "label": "证书获得时间",
+                "rules": ".//td[@class='time']"
+            }
+        }
     }
 }
