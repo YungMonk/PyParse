@@ -444,7 +444,7 @@
             },
             "start_time": {
                 "label": "证书获得时间",
-                "rules": ".//td[@class='time']"
+                "rules": ".//td[@class='time']|handle_time"
             }
         }
     }

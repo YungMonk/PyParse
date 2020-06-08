@@ -356,13 +356,20 @@ def handle_experience(args="", *extra):
     return result
 
  
+# 处理时间
+def handle_time(args="", *extra):
+    matches = re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args))
+    if matches:
+        return matches[0]
+
+
 #  处理时间间隔
 def handle_interval(args="", *extra):
     args['start_time'] = ""
     args['end_time'] = ""
     args['so_far'] = "N"
 
-    isMatch = re.findall(r'(\d{4}.*?\d{1,2})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args['time']))
+    isMatch = re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args['time']))
     if len(isMatch) == 1:
         args['start_time'] = isMatch[0]
     elif len(isMatch) == 2:

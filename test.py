@@ -81,6 +81,6 @@
 
 if __name__ == "__main__":
     import re
-    inputStr = "hello 2017/2, nihao 2017/2"
-    replacedStr = re.sub("(\\d{4}).*?(\\d{1,2})", "\\1年\\2月", inputStr)
-    print("replacedStr =",replacedStr) #crifan
+    args = "202-06-01"
+    isMatch = re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args))
+    print(isMatch)
