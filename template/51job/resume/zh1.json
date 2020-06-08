@@ -287,7 +287,7 @@
                 "rules": ".//td[contains(text(),'工作描述：')]/following-sibling::*"
             }
         },
-        "application_rules": "handle_interval"
+        "application_rules": "handle_interval|wash_name_null"
     },
     "project": {
         "label": "项目经验",
@@ -323,7 +323,7 @@
                 "rules": "string(.//td[contains(text(),'责任描述：')]/following-sibling::*)"
             }
         },
-        "application_rules": "handle_interval"
+        "application_rules": "handle_interval|wash_name_null"
     },
     "education": {
         "label": "教育经历",
@@ -355,7 +355,7 @@
                 "rules": "string(.//td[contains(text(),'专业描述：')]/following-sibling::*)"
             }
         },
-        "application_rules": "handle_interval"
+        "application_rules": "handle_interval|wash_name_null"
     },
     "training": {
         "label": "培训经历",
@@ -387,7 +387,7 @@
                 "rules": "string(.//td[contains(text(),'培训描述：')]/following-sibling::*)"
             }
         },
-        "application_rules": "handle_interval"
+        "application_rules": "handle_interval|wash_name_null"
     },
     "language": {
         "label": "语言能力",
@@ -446,6 +446,7 @@
                 "label": "证书获得时间",
                 "rules": ".//td[@class='time']|handle_time"
             }
-        }
+        },
+        "application_rules": "wash_name_null"
     }
 }

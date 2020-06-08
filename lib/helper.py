@@ -462,6 +462,18 @@ def wash_langue(args, *extra):
         return None
 
 
+# 清洗名称为空的
+def wash_name_null(args, *extra):
+    if "name" in args and args['name']:
+        return args
+    elif "corporation_name" in args and args['corporation_name']:
+        return args
+    elif "school_name" in args and args['school_name']:
+        return args
+    else:
+        return None
+
+
 """"异步方法调用"""
 # 户籍，现居住地相关 
 async def handle_address_city(args, *extra) -> dict:
