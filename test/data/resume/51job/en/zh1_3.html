@@ -1,0 +1,1213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	ZamRiaz
+</title><meta http-equiv="X-UA-Compatible" content="IE=7" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link href="../App_Themes/Default/20110412/style.css" type="text/css" rel="stylesheet" /><link href="../App_Themes/Default/20110412/ui.theme.css" type="text/css" rel="stylesheet" /><link href="../App_Themes/Default/style.css" type="text/css" rel="stylesheet" /><link href="../App_Themes/Default/ui.theme.css" type="text/css" rel="stylesheet" /></head>
+    <style type="text/css">
+		table,td,p { font-family: Arial, Verdana, Helvetica, \'宋体\'; font-size:12px; line-height:150%;}
+        a:link{color:#296ebb;text-decoration: none;}
+        a:visited {color:black; text-decoration: none; }
+        body{overflow:visible;}
+   </style>
+   
+   <style media="print" type="text/css">.PrintHideMenuContent { display:none }</style>
+   
+<link href="http://js.51jobcdn.com/ehire2007/css/20150704/default/jquery-ui-1.8.4.custom.css" type="text/css" rel="stylesheet" />
+<link href="http://js.51jobcdn.com/ehire2007/css/20150704/default/jquery-ui-1.8.4.thin.css" type="text/css" rel="stylesheet" />
+<link href="http://js.51jobcdn.com/ehire2007/css/20150704/default/rschart.css" type="text/css" rel="stylesheet" />
+<link href="http://js.51jobcdn.com/ehire2007/css/20150704/default/candidate.css" type="text/css" rel="stylesheet" />
+<link href="http://js.51jobcdn.com/ehire2007/css/20150704/default/message.css" type="text/css" rel="stylesheet" />
+<link href="http://js.51jobcdn.com/ehire2007/css/20150704/default/tinybox.css" rel="stylesheet" />
+<body onload="" id="rBody" style="margin-top: 0px; margin-left: 0px; ">
+<style type="text/css">
+    .p_bottom{background:url(http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/listbgbottom.gif) repeat-x;}
+</style>
+	<script type="text/javascript" src="http://js.51jobcdn.com/ehire2007/js/20150909/PublicFunction.js"></script>
+	
+	<script src="http://js.51jobcdn.com/ehire2007/js/20150909/GlobalLogAjax.js" language="javascript" type="text/javascript"></script>	
+	<script src="http://js.51jobcdn.com/ehire2007/js/20150909/ResumeBeta.js" language="javascript" type="text/javascript"></script>
+	<script src="http://js.51jobcdn.com/ehire2007/js/20150909/jquery/jquery.js" language="javascript" type="text/javascript"></script>
+	<script src="http://js.51jobcdn.com/ehire2007/js/20150909/jquery/jquery-1.4.2.min.js" language="javascript" type="text/javascript"></script>
+	<script src="http://js.51jobcdn.com/ehire2007/js/20150909/jquery/jquery.color.js" language="javascript" type="text/javascript"></script>
+    
+    <script type="text/javascript" src="http://js.51jobcdn.com/ehire2007/js/20150909/jquery/jquery-ui-1.8.4.custom.min.js"></script> 
+    <script type="text/javascript" src="http://js.51jobcdn.com/ehire2007/js/20150909/jquery/jquery.bgiframe.min.js"></script>
+    
+    <script src="http://js.51jobcdn.com/ehire2007/js/20150909/tinybox.js" language="javascript" type="text/javascript"></script>    
+    
+    <script type="text/javascript" language="javascript" src="http://js.51jobcdn.com/ehire2007/js/20150909/DateControl.js"></script>
+    <script type="text/javascript" language="javascript">init();</script>
+    <script language="javascript" type="text/javascript">
+        var strLoadingDiv="<table style=\'position:absolute;margin-left:100px;margin-top:40px;width:240px;height:60px;margin:0px;margin-top:4px;margin-bottom:4px;border:1px solid #548AB4; background-color:#F7F7F7\'><tr><td colspan=\'2\' style=\'height:10px;\'></td></tr><tr><td style=\'width:70px;\' align=\'right\'><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/common/loading2.gif\' style=\'padding-right:10px;vertical-align:middle;\' alt=\'\'/></td><td style=\'width:170px; color:#A2A2A2; font-weight:bold; font-size:17px;\'>页面载入中。。。</td></tr><tr><td></td><td style=\'color:#B7B7B7;\'>如无响应&nbsp;&nbsp;<a href=\'#A\' onclick=\\"location.reload();\\" style=\'text-decoration:underline;cursor:pointer; color:#527499\'>手动刷新</a></td></tr><tr><td colspan=\'2\' style=\'height:10px;\'></td></tr></table>";
+        var varLang = "";      // 语言版本
+		var strLoad = "正在加载数据";
+	    var ImagePath = "http://img01.51jobcdn.com/imehire/ehire2007/default/image/";
+	    var Refresh = "刷新页面";
+        var selectIndex=-1;
+        var tblNameUserList = "tblUserList";
+        var tab_tblNameUserList = "tab_tblUserList";
+        var hidNameCheckedIds = "hidCheckedSeqIds";
+        var hidNameAllIds = "hidAllSeqIds";
+        var hidNameId = "hidSeqID";
+        var IMGPATH	= "http://img01.51jobcdn.com/imehire/ehire2007/default/";//图片路径
+        var Rsm_CommentErr="评语不能为空";
+		var Rsm_CommentLong="评语不能超过1000字";
+		var Rsm_CommetSave="确实要保存评语吗？";
+		var In_SURE2EMP="<div style=\'text-align:center;margin:0px;\'>确定要下载吗？<br> （需要扣除下载数）</div>";
+		var job_SureMoveInt="确定要放入面试夹吗？";
+		var job_SureMoveRecycle="确定要放入回收站吗？";
+		var C_DelCfm="确实要删除吗？";
+		/*流程设置*/
+        var C_PlsSelRsm = "请选择简历！";
+        // 面试流程弹层
+        var common_ContactBuy="联系购买";
+        var common_exisitMail="该Email已存在！";
+        var common_hasHtmlTag="{0}只支持纯文本内容！";
+        var common_WordsCheck="内容已到{0}个字，不可再输入！";
+        var common_Max="最多可输入3个Email！";
+        var common_words="个字";
+        var common_current="当前输入";
+        var common_errMails="第{0}个Email错误，请输入有效的Email!";//第*个Email错误，请输入有效的Email!
+        var common_MailToIsNull="请输入有效的E-mail地址！";//请输入有效的E-mail地址！
+        var common_CurrentSms="（现有余额：{0}条）";
+        var common_SubSms="将扣除短信：{0}条";
+        var common_SmsCountLt="短信余额不足！";
+        var common_Space="";
+        var common_ContentNotEmpty="请输入{0}!";
+        var common_revRefEmail="请输入正确邮件地址！";
+        var common_NoSetLetterTemplate="请选择信件模板！";
+        var common_Content="信件内容";
+        var common_Title="信件主题";
+        var common_ContentEmpty="请输入要发送的内容！";
+        var common_NoSetSender="请选择发信公司！";
+        var common_Reciver="收件人";
+        var common_Tips="提示";
+        var common_DeleteTag="删除标签";
+        var varComTips = "提示";
+        var varSureDeleteLabel="确定要删除标签吗？";
+        var varRecommendJob ="确定要推荐职位吗？";  
+        var varMoveCan="确定要放入人才夹吗？";  
+        var varMoveRecycle="确定要放入回收站吗？";  // 放入回收站(暂时保留)
+        var varDelTag = "删除标签";
+        var varChoose ="请选择数据！";  
+        var varMoveInt ="确定要放入面试夹吗？";   //放入面试夹用(暂时保留)  
+        var varMessage_SendInterview="发面试通知";
+        var ImgWoman ="http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/girl.gif";  //"http://img01.51jobcdn.com/imehire/ehire2007/default/image/resume_match_womanpic.gif";             // 默认照片(女)
+        var ImgMan ="http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/boy.gif"; //"http://img01.51jobcdn.com/imehire/ehire2007/default/image/resume_match_manpic.gif";                 // 默认照片(男)
+        var ImgLoad = "http://img01.51jobcdn.com/imehire/ehire2007/default/image/inbox/photo_load.gif";                   // 照片加载
+        var GR_Colon="：";                 // 分号
+        var common_MailTitleInputMore="信件主题最多150字符！";  // add by peggy 20121026 信件主题最多输入150个字符
+        var common_Interview_EmailTile="来自51job的面试信件";  // add by peggy 20121026  面试设置-默认信件主题
+        var common_Hire_EmailTile="来自51job的录用信件";  // add by peggy 20121026  录用设置-默认信件主题
+        function operateMenu(a) {
+	        var b = $("#hidMenuStatus"),
+	        a = $("#divMenuContent"),
+	        c = $("#imgMenuStatus");
+	        b.val() == "0" ? (a.hide(), b.val("1"), c.attr("src", ImagePath + "candidate/listexpand.png")) : (a.show(), b.val("0"), c.attr("src", ImagePath + "candidate/listcontract.png"))
+        }
+        function ChangeLang(lan)
+        {
+            if (lan == "1")
+            {
+                lan = "0";
+                document.getElementById("lang").value="0";
+            }
+            else
+            {
+                lan = "1";
+                document.getElementById("lang").value="1";
+            }
+            var params = {\'LanType\':lan}
+            AjaxShowLoadMask();
+            AjaxLoadShow();
+            post_to_url(window.location.href,params,\'form1\');
+        }
+        $(function(){
+            InitMenuPostion();//定位小精灵菜单
+            window.onbeforeprint=beforePrint_folder;//打印
+            window.onafterprint=afterPrint_folder;
+            tab_BuildUserList("folder");
+            displayToTopBtn();
+        });
+	</script>
+    
+    <script type="text/javascript" language="javascript" src="http://js.51jobcdn.com/ehire2007/js/20150909/FromLoad.js" ></script>
+    <script type="text/javascript" language="javascript" src="http://js.51jobcdn.com/ehire2007/js/20150909/Controls.js"></script> 
+	<form method="post" action="ResumeViewFolder.aspx?hidSeqID=214075190&amp;hidFolder=BAK" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJMTc0NDg5MDIxDxYKHgZGb2xkZXIFA0JBSx4KUmVzdW1lTGFuZwUBMR4FSm9iSUQFATAeCFNob3dGcm9tBQEyHgdWaWV3U01TBQExFgICAQ9kFgQCAg8PZBYCHgVzdHlsZQUNZGlzcGxheTpub25lO2QCDQ8WAh4FVmFsdWUFCTIxNDA3NTE5MGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgoFE2N0bEV4cG9ydDEkcmRiRXhjZWwFE2N0bEV4cG9ydDEkcmRiRXhjZWwFFGN0bEV4cG9ydDEkcmRiQWNjZXNzBRRjdGxFeHBvcnQxJHJkYkFjY2VzcwUSY3RsRXhwb3J0MSRyZGJIdG1sBRJjdGxFeHBvcnQxJHJkYldvcmQFEmN0bEV4cG9ydDEkcmRiV29yZAUWY3RsRXhwb3J0MSRyZGJEb3dubG9hZAUTY3RsRXhwb3J0MSRyZGJFbWFpbAUTY3RsRXhwb3J0MSRyZGJFbWFpbA==" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms[\'form1\'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+		<iframe id="ifLoad" frameborder="0" style="display:none;"></iframe>
+        <div id="divRefresh" style="position: absolute; background-color: #fff; background-image:url(http://img01.51jobcdn.com/imehire/ehire2007/default/image/onloading_bg.gif); background-repeat:no-repeat;width: 203px; height: 39px; z-index: 9999;font-size:9pt; vertical-align:middle;line-height:39px;text-align:left;display:none;">
+           <table border="0" cellpadding="0" cellspacing="0" style="height:39px; vertical-align:middle;">
+            <tr style="padding-top:1px;">
+                <td style="width:27px;">&nbsp;</td>
+                <td style="vertical-align:middle; background:url(http://img01.51jobcdn.com/imehire/ehire2007/default/image/onloading2.gif) no-repeat; background-position:left;width:16px;" title="正在加载数据">&nbsp;</td>
+                <td><span class="red_num">&nbsp;&nbsp;正在加载数据</span>&nbsp;&nbsp;<a
+                href="#" onclick="location.reload();">刷新页面</a></td>
+            </tr>
+           </table>
+        </div>
+             <table width="674" border="0" align="center" cellpadding="0" cellspacing="0" id="divResume">
+                <tr>
+                    <td width="650">
+                        <table id="tab_tableResumeMenu" width="650" border="0" align="center" cellpadding="0" cellspacing="0" style="margin:0 auto;border:0;">
+	<tr>
+		<td valign="bottom">
+                                <div id=\'tab_divUserListAll\' style="display:none;">
+                                <p style="margin-top:10px;">&nbsp;</p>
+                                <div class="rview_tab1" id=\'tab_divUserList\' style="width:645px;height:25px;overflow:hidden;"></div>
+                                <div class="rview_tab1">
+                                    <p style="background-color:#3778bb;height:25px;clear:both;width:650px;">
+                                    <span style="display:block;float:left;margin-top:3px;margin-left:2px;"><input name="tab_chkAllUserID" type="checkbox" id="tab_chkAllUserID" onclick="return tab_ChkAllUsers(this);" value=""/></span>
+                                    <span style="display:block;float:left;color:#FFF;margin-top:4px;"><label for="tab_chkAllUserID">全选</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已选(<label id=\'tab_lblChkNum\'>0</label>)</span>
+                                    <span style="display:block;float:right;color:#FFF;padding:3px;"><label id="tab_lblTabPos"></label>&nbsp;<img id="tab_imgPre" src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/btn_previous_dis.gif" width="18" height="18" align="absmiddle" style="cursor:pointer;" onclick="tab_preResume(this)"/>&nbsp;<img id="tab_imgNext" src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/btn_next.gif" width="18" height="18" align="absmiddle" style="cursor:pointer;" onclick="tab_nextResume(this)"/></span>
+                                    </p>
+                                </div>
+                                </div>
+                            </td>
+	</tr>
+</table>
+
+	                    		
+	                    <div id="divHead"><table width="650" border="0" align="center" cellpadding="0" cellspacing="0" style="margin:0 auto;border:0;"><tr><td width="277" rowspan="3"><br /><br />Last Update：<span id="lblResumeUpdateTime" class="blue">2015-08-28</span></td><td width="127" height="21">&nbsp;</td><td width="246" rowspan="3" align="right" valign="bottom"><img src="http://image.51job.com/imehire/ehire2007/default/image/im2009/logo.gif" width="120" alt="" height="50" /></td></tr><tr><td height="21">&nbsp;</td></tr><tr style="vertical-align:bottom;"><td height="21" align="center"></td></tr></table></div>
+                        
+			            <table border="0" cellpadding="0" align="center" cellspacing="0" width="650">
+			  	            <tr style="height:5px"><td></td></tr>
+			            </table>
+			            <table border="0" cellpadding="0" align="center" cellspacing="0" width="650">
+				            <tr>
+					            <td align="right" valign="bottom">
+						            <table cellpadding="0" cellspacing="0" border="0">
+							            <tr valign="bottom">
+								            <td style="width: 70%; height: 100%; white-space:nowrap;" align="left">
+									            <input type="submit" name="AD_btnRefresh" value="" id="AD_btnRefresh" style="display:none;" />
+								            </td>
+								            <td style="width: 100%; height: 100%;white-space:nowrap;" align="right" colspan="2">
+								            </td>
+							            </tr>
+						            </table>
+					            </td>
+				            </tr>
+				            <tr>
+                                <td valign="top" style="BORDER-RIGHT: #4182C2 2px solid;BORDER-LEFT: #4182C2 2px solid;BORDER-TOP: #4182C2 2px solid;BORDER-BOTTOM: #4182C2 2px solid;">
+						            <style>
+          
+          body{margin:0;padding:0;}
+          table{font-size:12px;font-family:arial,"宋体";}
+          td
+          {
+          word-break:break-word;
+          }
+          .blue{color:#256fb8;}
+          .greenscore{color:#0b8e09;}
+          .redscore{color:#ed0000;}
+          .graybutton{color:#676767;}
+          .font14{font-size:14px;}
+          .font18{font-size:18px;}
+          .font25{font-size:25px;}
+          hr{width:97%;margin:0 auto;color:#cacaca;background:#cacaca;height:1px;border:0;}
+          table.borderline th{border-collapse:collapse;border:solid #c7c7c7; border-width:1px 1px 0 1px;text-indent:5px;text-align:left;font-weight:normal;}
+          table.borderline td{border-collapse:collapse;border:solid #c7c7c7; border-width:1px 0 0 1px;text-indent:5px;}
+          table.none td{border-collapse:collapse;border:0;}
+          a.blue{color:#256fb8;text-decoration:underline;}
+          a.boldblue{color:#256fb8;text-decoration:none;font-weight:bold;}
+          a.gray{color:#676767;text-decoration:none;}
+          .text_left {padding-left:10px;font-size: 12px;color: 2B2B2B;text-decoration: none;font-family: Arial, Helvetica, sans-serif;}
+          .cvtitle{padding-left:6px;font-size: 15px;color:#2670B7;text-decoration: none;font-weight: bold;font-family: Arial, Helvetica, sans-serif;}
+          hr {border:1px #cccccc}
+          .table_set{margin:8px auto;line-height:20px;padding:0 0 0 8px;}
+        .rs_tab3{padding-left:10px;border-bottom:#3778bb 4px solid;height:26px;padding-top:8px;}
+		.rs_tab3 span{display:block;float:left;margin-left:3px;}
+		.rs_tab3on{background-image:url(http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/tabd.gif);width:95px;height:20px;_height:19px;text-align:center;color:#FFF;padding-top:7px;cursor:pointer;}
+		.rs_tab3off{background-image:url(http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/tabc.gif);width:95px;height:20px;_height:19px;text-align:center;color:#333;padding-top:7px;cursor:pointer;}
+		
+        </style><script><!--
+           
+				function ShowAttach(userid,AttachID,picSize)
+				{	
+					var newwin = window.open(\'\',\'attachment\');
+					newwin.document.write(\'<img src = "../Candidate/ReadAttach.aspx?UserID=\' + userid + \'&AttachID=\' + AttachID + \'&picSize=\' + picSize + \'">\');
+					newwin.document.close();
+				}
+			
+        --></script><table width="650" border="0" align="center" cellpadding="0" cellspacing="0"><tr><td valign="top"><table width="97%" border="0" align="center" cellpadding="0" cellspacing="0" style="margin:10px auto;padding:0px 0 0 8px;background:#f5f9fd;border:1px solid #88b4e0;line-height:22px;"><tr><td height="45" style="border-bottom:1px dashed #88b4e0;vertical-align:middle;"><span style="float:right;padding-top:8px;display:none;" id="spanProcessStatusHead">Process Status：<span style="color:#cd6800;" id="spanProcessStatus"></span><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/space.gif" width="12" border="0" height="1"></span><span style="font-size:25px;"><b>ZamRiaz</b></span><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/space.gif" width="15" border="0" height="1"><span id="spanVideoResumeIco"></span><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/space.gif" width="3" border="0" height="1"><span id="spanRmsIco"></span><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/space.gif" width="3" border="0" height="1"><span id="spanLabelTitleHead" style="display:none;">&nbsp;&nbsp;&nbsp;&nbsp;  Tag:<span id="spanLabelTitle"></span></span></td></tr><tr><td valign="top" style="padding-top:4px;"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td height="26" colspan="4"><span class="blue"><b>8-9 years|&nbsp;Male
+                            |  &nbsp;34&nbsp;Years old(1981/3/30)
+                          
+								|  &nbsp;Unmarried
+								|  &nbsp;171cm</b></span></td><td width="17%" rowspan="6" align="center" valign="middle"><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/resume_match_manpic.gif" width="90" height="110"><br>
+							(ID:51908879)
+						</td></tr><tr><td width="18%" height="20">Residency:</td><td width="34%" height="20">Suzhou-Industrial Park</td><td width="11%" height="20">Hukou:</td><td width="20%" height="20">Suzhou
+</td></tr><tr><td height="20">
+                        Address:</td><td height="20" colspan="3">YuanQu&#x20;Suzhou
+                        (Postal Code:200000)
+                      </td></tr><tr><td height="20">Telephone number:</td><td height="20" colspan="3">15995450193(Mobile Phone)
+                        </td></tr><tr><td height="20">E-mail:</td><td height="20" colspan="3"><a class="blue" href="mailto:zaigham_riaz@hotmail.com">zaigham_riaz@hotmail.com</a></td></tr><tr><td height="20">Website:</td><td height="20" colspan="3" style="word-break:break-all;"><a class="blue" href="http://shconnector.com" target="_blank">http://shconnector.com</a></td></tr></table></td></tr></table><table width="97%" border="0" align="center" cellpadding="0" cellspacing="0"><tr><td width="45%" colspan="2"><table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:8px auto;line-height:22px;padding:0 0 0 8px;"><tr><td colspan="2"><span class="font14 blue"><b>The latest work</b></span><span style="color:#676767;"><b>
+                                    [ 4month]
+                                  </b></span></td></tr><tr><td width="23%">Company:</td><td>Morgan&#x20;Stanley&#x20;(Consultant)</td></tr><tr><td>Industry:</td><td>Banking</td></tr><tr><td>Job Title:</td><td>Cloud&#x20;Development&#x20;Specialist</td></tr></table></td><td width="43" align="center" style="background:url(http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/resume_match_space-line.gif) repeat-y;"></td><td width="49%" colspan="2"><table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:8px auto;line-height:22px;padding:0 0 0 10px;"><tr><td colspan="2"><span class="font14 blue"><b>Education</b></span></td></tr><tr><td width="23%">Degree:</td><td>Master</td></tr><tr><td>Major:</td><td>Computer&#x20;Science&#x20;And&#x20;Technology</td></tr><tr><td height="22">School:</td><td>Government&#x20;College&#x20;University,&#x20;Lahore,&#x20;Pakistan</td></tr></table></td></tr></table><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><div style="width:650px;"><p class="rs_tab3"><span class="rs_tab3on" id="tabJL1" onclick="setIfr(1)">Resume</span><span id="tabCZ2" class="rs_tab3off" onclick="
+												javascript:setIfr(2,51908879)
+											">Log
+										</span><span id="tabTX3" class="rs_tab3off" onclick="
+												javascript:setIfr(3,51908879)
+											">Message
+										</span><span style="padding-right:10px;padding-top:5px;color:Red;display:none;float:right;" id="span18clear">
+										Note：Records will be kept for 18 months.
+									</span></p></div></td></tr><tr><td valign="top"><div id="ifrPrintInfo" style="display:none;"></div><iframe id="ifrInfo" style="width:650px;border:0px;display:none;overflow:hidden;" frameborder="0"></iframe></td></tr><tr><td style="padding-top:10px;" id="divInfo"><table width="97%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_set"><tr><td width="97">Current Salary: </td><td width="221">Annual Salary 
+							400,000-500,000 
+							RMB</td><td width="65"></td><td width="234"></td></tr></table><table width="97%" border="0" align="center" cellspacing="0" cellpadding="0"><tr><td align="left" valign="middle" class="cvtitle">Self Assessment</td></tr><tr><td align="middle" valign="middle" height="4"><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/line1_1.gif" width="100%" height="4"></td></tr><tr><td height="10" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle" class="text_left"><span class="text">oCan&#x20;speak&#x20;basic&#x20;Chinese&#x20;fluently.&#x20;Can&#x20;have&#x20;written&#x20;chat&#x20;in&#x20;Chinese.<br>o9+&#x20;years&#x20;of&#x20;experience&#x20;in&#x20;software/firmware&#x20;development,&#x20;design,&#x20;testing&#x20;and&#x20;project&#x20;management&#x20;while&#x20;working&#x20;at&#x20;fortune&#x20;100&#x20;companies.<br>oStrong&#x20;development&#x20;experience&#x20;with&#x20;major&#x20;programming&#x20;languages&#x20;such&#x20;as&#x20;C#,&#x20;PHP,&#x20;C++,&#x20;Java,&#x20;Assembly,&#x20;HTML,&#x20;JavaScript,&#x20;AJAX,&#x20;CSS&#x20;etc.<br>oGood&#x20;expertise&#x20;with&#x20;modern&#x20;database&#x20;systems&#x20;such&#x20;as&#x20;SQL&#x20;Server,&#x20;MYSQL,&#x20;MongoDB,&#x20;ElasticSearch&#x20;and&#x20;Hadoop.<br>oExcellent&#x20;performer:&#x20;At&#x20;Cisco,&#x20;received&#x20;9&#x20;recognition&#x20;rewards.&#x20;During&#x20;2&#x20;years&#x20;of&#x20;stay&#x20;at&#x20;Cisco,&#x20;got&#x20;“Outstanding”&#x20;and&#x20;“Excellent”&#x20;annual&#x20;performance&#x20;reviews.<br>oDemonstrated&#x20;project&#x20;management&#x20;skills&#x20;in&#x20;successfully&#x20;completing&#x20;medium-large&#x20;scale&#x20;software&#x20;projects&#x20;from&#x20;inception&#x20;to&#x20;design,&#x20;development,&#x20;and&#x20;maintenance.<br>oArchitect&#x20;for&#x20;software&#x20;projects–Architect&#x20;the&#x20;framework&#x20;for&#x20;Cisco’s&#x20;WebEx&#x20;real-time&#x20;performance&#x20;analysis&#x20;web&#x20;platform,&#x20;functional&#x20;testing&#x20;automated&#x20;system&#x20;for&#x20;www.englishtown.com&#x20;&#x20;and&#x20;billing.microsoft.com.</span></td></tr><tr><td height="20" align="left" valign="middle"></td></tr></table><table width="97%" border="0" align="center" cellspacing="0" cellpadding="0"><tr><td align="left" valign="middle" class="cvtitle">Career Objective</td></tr><tr><td align="middle" valign="middle" height="4"><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/line1_1.gif" width="100%" height="4"></td></tr><tr><td height="10" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_set"><tr><td class="text_left">
+                          I can start:
+                          <span class="text" style="padding-left:10px;">within 1 month</span></td></tr><tr><td class="text_left">
+                          Employment Type:
+                          <span class="text" style="padding-left:10px;">Full-time</span></td></tr><tr><td class="text_left">
+                          Desired Location:
+                          <span class="text" style="padding-left:10px;">Shanghai，Suzhou</span></td></tr><tr><td class="text_left">
+                          Desired Salary:
+                          <span class="text" style="padding-left:10px;">Monthly Salary 
+                            				20,000-24,000</span></td></tr><tr><td class="text_left">
+                          Desired Position:
+                          <span class="text" style="padding-left:10px;">Project Manager，Quality Assurance QA Manager，Software Testing QA，Senior Software Engineer，Project Specialist / Coordinator</span></td></tr><tr><td class="text_left">
+                          Current Situation:
+                          <span class="text" style="padding-left:10px;">I\'m looking for jobs now</span></td></tr></table></td></tr><tr><td height="20" align="left" valign="middle"></td></tr></table><table width="97%" border="0" align="center" cellspacing="0" cellpadding="0"><tr><td align="left" valign="middle" class="cvtitle">Work Experience</td></tr><tr><td align="middle" valign="middle" height="4"><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/line1_1.gif" width="100%" height="4"></td></tr><tr><td height="10" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_set"><tr><td colspan="2" class="text_left">2015/5--Present:Morgan&#x20;Stanley&#x20;(Consultant)(>10000 people)<img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/space.gif" width="3" border="0" height="1"><span style="color:#676767;"><b>
+                        [ 4month]
+                      </b></span></td></tr><tr><td width="22%" class="text_left">Industry:</td><td width="78%" class="text">Banking</td></tr><tr><td class="text_left"><b>Enterprise&#x20;Infrastructure</b></td><td class="text"><b>Cloud&#x20;Development&#x20;Specialist</b></td></tr><tr><td colspan="2" class="text_left">Position:&#x20;Cloud&#x20;development&#x20;specialist<br>Roles&#x20;Performed:&#x20;Cloud&#x20;computing&#x20;developer,&#x20;web&#x20;developer<br>Skills/Tech&#x20;Used:&#x20;Windows&#x20;Azure&#x20;cloud,&#x20;AngularJS,&#x20;BootstrapJS,&#x20;ElasticSearch,&#x20;MongoDB,&#x20;C#,&#x20;ASP.Net,&#x20;MVC,&#x20;MSSQL&#x20;Server,&#x20;Linux,&#x20;Bash&#x20;shell,&#x20;Scrum,&#x20;Agile<br><br>Working&#x20;for&#x20;Enterprise&#x20;Infrastructure&#x20;team&#x20;at&#x20;Morgan&#x20;Stanley,&#x20;my&#x20;job&#x20;at&#x20;Morgan&#x20;Stanley&#x20;deals&#x20;with&#x20;developing,&#x20;updating&#x20;and&#x20;maintaining&#x20;the&#x20;online&#x20;cloud&#x20;based&#x20;software&#x20;that&#x20;are&#x20;used&#x20;by&#x20;the&#x20;entire&#x20;organization&#x20;internally.&#x20;<br>Most&#x20;recently,&#x20;I&#39;ve&#x20;been&#x20;working&#x20;with&#x20;the&#x20;development&#x20;of&#x20;a&#x20;new&#x20;cloud&#x20;web&#x20;application&#x20;through&#x20;which&#x20;the&#x20;employees&#x20;can&#x20;deploy&#x20;and&#x20;install&#x20;the&#x20;required&#x20;apps&#x20;and&#x20;services&#x20;on&#x20;any&#x20;cloud-connected&#x20;machines.&#x20;Further&#x20;they&#x20;can&#x20;view&#x20;the&#x20;real-time&#x20;status&#x20;of&#x20;the&#x20;progress&#x20;of&#x20;their&#x20;requests.<br>Besides&#x20;this,&#x20;in&#x20;parallel&#x20;I&#39;ve&#x20;been&#x20;working&#x20;with&#x20;maintaining&#x20;a&#x20;cloud&#x20;based&#x20;online&#x20;portal&#x20;that&#x20;serves&#x20;as&#x20;a&#x20;single-entry&#x20;point&#x20;for&#x20;several&#x20;internal&#x20;websites&#x20;that&#x20;provide&#x20;different&#x20;services&#x20;to&#x20;the&#x20;employees.&#x20;Using&#x20;this&#x20;portal,&#x20;employees&#x20;can&#x20;just&#x20;submit&#x20;and&#x20;register&#x20;their&#x20;request&#x20;tickets&#x20;at&#x20;this&#x20;single&#x20;platform&#x20;instead&#x20;of&#x20;visiting&#x20;different&#x20;platforms&#x20;for&#x20;different&#x20;type&#x20;of&#x20;requests.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2012/12--2014/11:Cisco&#x20;（思科）(>10000 people)<img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/space.gif" width="3" border="0" height="1"><span style="color:#676767;"><b>
+                        [ 1 year and 11month]
+                      </b></span></td></tr><tr><td width="22%" class="text_left">Industry:</td><td width="78%" class="text">Telecom & Network Equipment</td></tr><tr><td class="text_left"><b>WebEx</b></td><td class="text"><b>Senior&#x20;Software&#x20;Engineer/Team&#x20;Leader/Scrum&#x20;Master</b></td></tr><tr><td colspan="2" class="text_left">At&#x20;Cisco&#x20;Systems&#x20;WebEx&#x20;team,&#x20;I’m&#x20;working&#x20;as&#x20;different&#x20;roles&#x20;in&#x20;2&#x20;different&#x20;projects&#x20;at&#x20;the&#x20;same&#x20;time.&#x20;<br><br>First&#x20;project&#x20;is&#x20;about&#x20;web-based&#x20;performance&#x20;test&#x20;automation&#x20;system&#x20;for&#x20;WebEx.&#x20;Working&#x20;as&#x20;architect&#x20;and&#x20;team&#x20;leader&#x20;in&#x20;a&#x20;team&#x20;of&#x20;4&#x20;people,&#x20;I&#x20;designed,&#x20;developed&#x20;and&#x20;delivered&#x20;this&#x20;system&#x20;from&#x20;scratch&#x20;to&#x20;end&#x20;just&#x20;in&#x20;6&#x20;months.&#x20;Since&#x20;then&#x20;it’s&#x20;been&#x20;running&#x20;smoothly&#x20;and&#x20;used&#x20;by&#x20;different&#x20;teams.&#x20;Now&#x20;I&#x20;mainly&#x20;maintain&#x20;the&#x20;system&#x20;and&#x20;develop&#x20;new&#x20;features&#x20;based&#x20;on&#x20;requirements&#x20;of&#x20;new&#x20;teams&#x20;coming&#x20;onboard.&#x20;The&#x20;job&#x20;required&#x20;a&#x20;complex&#x20;architecture&#x20;to&#x20;invoke&#x20;tests&#x20;on&#x20;multiple&#x20;layers&#x20;of&#x20;virtual&#x20;machines&#x20;and&#x20;then&#x20;generating,&#x20;fetching&#x20;and&#x20;analyzing&#x20;the&#x20;performance&#x20;data&#x20;in&#x20;real&#x20;time,&#x20;and&#x20;then&#x20;displaying&#x20;it&#x20;on&#x20;web&#x20;for&#x20;user&#x20;to&#x20;view&#x20;and&#x20;interact&#x20;with.&#x20;For&#x20;this&#x20;project,&#x20;I&#x20;achieved&#x20;my&#x20;goals&#x20;using&#x20;PHP,&#x20;MySQL,&#x20;AJAX,&#x20;JQuery,&#x20;JavaScript&#x20;and&#x20;C#.<br><br>My&#x20;2nd&#x20;major&#x20;role&#x20;is&#x20;being&#x20;scrum&#x20;master&#x20;of&#x20;another&#x20;project.&#x20;This&#x20;project&#x20;deals&#x20;with&#x20;the&#x20;performance&#x20;testing&#x20;of&#x20;multimedia&#x20;video&#x20;conference&#x20;using&#x20;Cisco’s&#x20;TelePresence&#x20;devices.<br>For&#x20;this&#x20;job,&#x20;my&#x20;responsibilities&#x20;can&#x20;be&#x20;described&#x20;as:&#x20;<br><br>a)Architect,&#x20;design,&#x20;develop&#x20;and&#x20;test&#x20;the&#x20;performance&#x20;test&#x20;automation&#x20;framework&#x20;(called&#x20;DIGGER)&#x20;for&#x20;WebEx.<br>b)Guide&#x20;the&#x20;team&#x20;members&#x20;to&#x20;understand,&#x20;optimize&#x20;and&#x20;implement&#x20;the&#x20;architecture&#x20;for&#x20;DIGGER&#x20;System.<br>c)Introducing&#x20;different&#x20;teams&#x20;to&#x20;DIGGER,&#x20;provide&#x20;technical&#x20;support&#x20;and&#x20;maintenance.&#x20;<br>d)As&#x20;a&#x20;Scrum&#x20;master,&#x20;communicate&#x20;with&#x20;different&#x20;team&#x20;members&#x20;and&#x20;resolve&#x20;their&#x20;problems&#x20;if&#x20;any,&#x20;trying&#x20;to&#x20;make&#x20;every&#x20;sprint&#x20;go&#x20;smooth,&#x20;delivering&#x20;sprint&#x20;goals&#x20;in&#x20;time,&#x20;helping&#x20;to&#x20;get&#x20;and&#x20;clarify&#x20;scrum&#x20;requirements&#x20;from&#x20;the&#x20;PO&#x20;(product&#x20;owner)&#x20;and&#x20;trying&#x20;to&#x20;resolve&#x20;blocking&#x20;issues&#x20;if&#x20;any.<br>e)Being&#x20;a&#x20;member&#x20;of&#x20;Cisco&#x20;Systems&#x20;local&#x20;patent&#x20;review&#x20;committee,&#x20;review&#x20;the&#x20;newly&#x20;filed&#x20;patents,&#x20;doing&#x20;research&#x20;if&#x20;similar&#x20;ideas&#x20;are&#x20;already&#x20;patented&#x20;or&#x20;not,&#x20;and&#x20;guiding&#x20;the&#x20;applicants&#x20;to&#x20;improve&#x20;the&#x20;probability&#x20;of&#x20;their&#x20;filing&#x20;success.<br>f)Hosting&#x20;English&#x20;corner&#x20;activity&#x20;to&#x20;help&#x20;improve&#x20;the&#x20;English&#x20;language&#x20;of&#x20;my&#x20;colleagues.<br><br>Further&#x20;I’ve&#x20;been&#x20;actively&#x20;participating&#x20;in&#x20;research&#x20;work&#x20;for&#x20;developing&#x20;new&#x20;patents&#x20;for&#x20;Cisco’s&#x20;products.&#x20;I’m&#x20;also&#x20;a&#x20;member&#x20;of&#x20;Cisco’s&#x20;local&#x20;patent&#x20;review&#x20;committee&#x20;that&#x20;locally&#x20;reviews&#x20;patent&#x20;applications&#x20;submitted&#x20;by&#x20;colleagues&#x20;before&#x20;a&#x20;final&#x20;review&#x20;by&#x20;Cisco’s&#x20;central&#x20;patent&#x20;committee.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2011/12--2013/1:English&#x20;First/EF/English&#x20;Town(>10000 people)<img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/space.gif" width="3" border="0" height="1"><span style="color:#676767;"><b>
+                        [ 1 year and 1month]
+                      </b></span></td></tr><tr><td width="22%" class="text_left">Industry:</td><td width="78%" class="text">Education/Training/Universities and Colleges</td></tr><tr><td class="text_left"><b>Software</b></td><td class="text"><b>QA&#x20;Team&#x20;Leader</b></td></tr><tr><td colspan="2" class="text_left">English&#x20;First/EF/English&#x20;Town&#x20;(http://www.englishtown.com)&#x20;is&#x20;a&#x20;well-known&#x20;multinational&#x20;organization&#x20;focused&#x20;on&#x20;teaching&#x20;English&#x20;to&#x20;people&#x20;around&#x20;the&#x20;world&#x20;through&#x20;online&#x20;software.<br><br>Previously&#x20;at&#x20;EF,&#x20;all&#x20;the&#x20;software&#x20;testing&#x20;was&#x20;being&#x20;performed&#x20;manually&#x20;which&#x20;was&#x20;a&#x20;time&#x20;consuming&#x20;and&#x20;inefficient&#x20;way&#x20;for&#x20;such&#x20;a&#x20;massive&#x20;website.&#x20;After&#x20;I&#x20;joined&#x20;in,&#x20;just&#x20;in&#x20;5&#x20;months&#x20;I&#x20;made&#x20;their&#x20;entire&#x20;automation&#x20;framework&#x20;ready&#x20;along&#x20;with&#x20;200+&#x20;comprehensive&#x20;tests.&#x20;The&#x20;job&#x20;required&#x20;well&#x20;complicated&#x20;web&#x20;automation&#x20;tasks&#x20;e.g.&#x20;drag&#x20;and&#x20;drop,&#x20;media&#x20;player&#x20;playback,&#x20;css-based&#x20;web&#x20;elements&#x20;and&#x20;so&#x20;on.&#x20;For&#x20;this&#x20;project,&#x20;I&#x20;achieved&#x20;my&#x20;goals&#x20;using&#x20;C#&#x20;2010,&#x20;JQuery,&#x20;MSTest,&#x20;XPath&#x20;and&#x20;Selenium.<br><br>For&#x20;this&#x20;job,&#x20;my&#x20;responsibilities&#x20;are:&#x20;<br>a)End-end&#x20;automation&#x20;owner&#x20;for&#x20;entire&#x20;EF&#x20;project.&#x20;<br>b)Leading&#x20;and&#x20;training&#x20;other&#x20;QA&#x20;engineers.<br>c)Design&#x20;and&#x20;review&#x20;test&#x20;cases&#x20;for&#x20;each&#x20;sprint.<br>d)Work&#x20;closely&#x20;with&#x20;scrum&#x20;master&#x20;and&#x20;developers&#x20;to&#x20;solve&#x20;all&#x20;the&#x20;problems&#x20;related&#x20;to&#x20;automation.<br>e)&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;Driving&#x20;product&#39;s&#x20;software&#x20;quality&#x20;efficiently&#x20;by&#x20;focusing&#x20;the&#x20;team&#39;s&#x20;attention&#x20;more&#x20;towards&#x20;bug&#x20;prevention&#x20;instead&#x20;of&#x20;bug&#x20;detection.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2011/1--2011/7:Microsoft(>10000 people)<img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/space.gif" width="3" border="0" height="1"><span style="color:#676767;"><b>
+                        [ 6month]
+                      </b></span></td></tr><tr><td width="22%" class="text_left">Industry:</td><td width="78%" class="text">Computers,Software</td></tr><tr><td class="text_left"><b>Online&#x20;Services&#x20;Division</b></td><td class="text"><b>SDET</b></td></tr><tr><td colspan="2" class="text_left">Microsoft&#x20;Commerce&#x20;Transaction&#x20;Platform&#x20;team&#x20;is&#x20;responsible&#x20;for&#x20;all&#x20;Microsoft&#x20;transaction&#x20;handling&#x20;at&#x20;the&#x20;back-end.&#x20;Our&#x20;team&#x20;mainly&#x20;provides&#x20;web&#x20;services&#x20;APIs&#x20;to&#x20;all&#x20;Microsoft&#x20;product&#x20;partners&#x20;so&#x20;that&#x20;by&#x20;using&#x20;those&#x20;APIs,&#x20;they&#x20;can&#x20;enable&#x20;customers&#x20;to&#x20;make&#x20;all&#x20;kind&#x20;of&#x20;online&#x20;transactions.<br><br>For&#x20;this&#x20;job,&#x20;my&#x20;responsibilities&#x20;were:&#x20;<br>a)Test&#x20;owner&#x20;for&#x20;end&#x20;to&#x20;end&#x20;features&#x20;assigned&#x20;in&#x20;present&#x20;releases.&#x20;<br>b)Writing&#x20;test&#x20;plan&#x20;document&#x20;and&#x20;test&#x20;requirement&#x20;specification&#x20;(TRS).&#x20;<br>c)Implementing&#x20;automation&#x20;of&#x20;test&#x20;cases&#x20;at&#x20;all&#x20;level&#x20;(BVT,&#x20;Daily,&#x20;Comprehensive).&#x20;<br>d)Implementing&#x20;test&#x20;infrastructure&#x20;and&#x20;libraries&#x20;required&#x20;for&#x20;automation.<br><br>&#x20;<br>I&#x20;went&#x20;through&#x20;2&#x20;full&#x20;(agile-based)&#x20;release&#x20;cycles,&#x20;in&#x20;which&#x20;I&#x20;performed&#x20;following&#x20;tasks:<br><br>a)For&#x20;all&#x20;Microsoft&#x20;products/subscriptions/user&#x20;accounts,&#x20;we&#x20;introduced&#x20;a&#x20;new&#x20;MS-only&#x20;payment&#x20;method&#x20;(like&#x20;credit&#x20;card).&#x20;The&#x20;main&#x20;purpose&#x20;was&#x20;to&#x20;use&#x20;it&#x20;as&#x20;internal&#x20;MS&#x20;currency&#x20;for&#x20;all&#x20;MS&#x20;e-commerce&#x20;business&#x20;internationally&#x20;in&#x20;different&#x20;MS-supported&#x20;markets.&#x20;My&#x20;job&#x20;was&#x20;to&#x20;partially&#x20;own&#x20;the&#x20;testing&#x20;of&#x20;this&#x20;feature.&#x20;<br>b)New&#x20;MS&#x20;website&#x20;for&#x20;end&#x20;user&#x20;related&#x20;to&#x20;any&#x20;of&#x20;MS&#x20;e-commerce&#x20;business.It&#x20;can&#x20;be&#x20;found&#x20;at&#x20;https://billing.microsoft.com/home.aspx.&#x20;Through&#x20;this&#x20;website,&#x20;the&#x20;end&#x20;user&#x20;can&#x20;view&#x20;his&#x20;transactions,&#x20;payment&#x20;methods&#x20;registered&#x20;with&#x20;his&#x20;MS&#x20;account,&#x20;his&#x20;subscriptions&#x20;and&#x20;so&#x20;on.&#x20;Since&#x20;it’s&#x20;a&#x20;major&#x20;website&#x20;for&#x20;MS&#x20;e-commerce&#x20;business,&#x20;so&#x20;the&#x20;testing&#x20;requires&#x20;to&#x20;be&#x20;done&#x20;from&#x20;various&#x20;critical&#x20;perspectives&#x20;such&#x20;as&#x20;user&#x20;experience&#x20;and&#x20;interface,&#x20;security,&#x20;concurrency,&#x20;functionality,&#x20;localization&#x20;and&#x20;globalization,&#x20;performance&#x20;and&#x20;stress.<br><br>My&#x20;personal&#x20;contributions&#x20;so&#x20;far,&#x20;aside&#x20;from&#x20;the&#x20;regular&#x20;work&#x20;assigned,&#x20;are:&#x20;<br><br>1)Wrote&#x20;a&#x20;tool&#x20;for&#x20;test&#x20;team&#x20;that&#x20;automates&#x20;a&#x20;lot&#x20;of&#x20;donkey&#x20;work&#x20;in&#x20;each&#x20;day&#x20;testers’&#x20;activities.&#x20;The&#x20;tool&#x20;helped&#x20;the&#x20;team&#x20;in&#x20;building&#x20;required&#x20;components&#x20;in&#x20;debug/release&#x20;mode,&#x20;transferring&#x20;the&#x20;built&#x20;assemblies&#x20;to&#x20;respective&#x20;folders&#x20;in&#x20;target&#x20;test&#x20;machine,&#x20;executing&#x20;test&#x20;framework&#x20;and&#x20;running&#x20;test&#x20;cases&#x20;on&#x20;target&#x20;test&#x20;machine.&#x20;<br>2)Introduced&#x20;a&#x20;new&#x20;concept&#x20;of&#x20;&quot;Weighted&#x20;Code&#x20;Coverage&quot;&#x20;in&#x20;test&#x20;team.&#x20;Previously&#x20;the&#x20;ordinary&#x20;code&#x20;coverage&#x20;methodology&#x20;was&#x20;being&#x20;used,&#x20;which&#x20;was&#x20;OK&#x20;but&#x20;not&#x20;as&#x20;useful&#x20;as&#x20;this&#x20;new&#x20;idea.&#x20;The&#x20;concept&#x20;of&#x20;&quot;Weighted&#x20;Code&#x20;Coverage&quot;&#x20;got&#x20;highly&#x20;appreciated&#x20;by&#x20;my&#x20;lead&#x20;and&#x20;other&#x20;colleagues.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2009/1--2011/1:Wicresoft&#x20;Co.&#x20;Ltd.&#x20;Shanghai,&#x20;China(5000-10000 people)<img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/space.gif" width="3" border="0" height="1"><span style="color:#676767;"><b>
+                        [ 2 year]
+                      </b></span></td></tr><tr><td width="22%" class="text_left">Industry:</td><td width="78%" class="text">Computers,Software</td></tr><tr><td class="text_left"><b>Microsoft&#x20;Product&#x20;Department</b></td><td class="text"><b>SDET&#x20;3-Software&#x20;Testing&#x20;Technical&#x20;Leader</b></td></tr><tr><td colspan="2" class="text_left">Wicresoft&#x20;China&#x20;(http://www.wicresoft.com)&#x20;provides&#x20;software&#x20;outsourcing&#x20;services&#x20;to&#x20;well-known&#x20;international&#x20;clients&#x20;like&#x20;Microsoft,&#x20;Intel&#x20;etc.<br>I&#x20;worked&#x20;on&#x20;the&#x20;following&#x20;projects&#x20;here:<br><br>Microsoft&#x20;Dynamic&#x20;AX&#x20;Project&#x20;(Testing)<br>==============================================<br>Aimed&#x20;at&#x20;business&#x20;community,&#x20;Dynamic&#x20;AX&#x20;helps&#x20;Microsoft&#x20;customers&#x20;to&#x20;prepare&#x20;customized&#x20;ERP&#x20;solutions&#x20;with&#x20;the&#x20;minimum&#x20;effort&#x20;and&#x20;time&#x20;involved.<br><br>My&#x20;job&#x20;for&#x20;this&#x20;project&#x20;was&#x20;to&#x20;design&#x20;and&#x20;code&#x20;features&#x20;for&#x20;an&#x20;internal&#x20;application&#x20;(called&#x20;Test&#x20;Studio)&#x20;and&#x20;the&#x20;relevant&#x20;tools.&#x20;These&#x20;set&#x20;of&#x20;software&#x20;perform&#x20;automated&#x20;regression&#x20;thereby&#x20;saving&#x20;a&#x20;lot&#x20;of&#x20;effort&#x20;and&#x20;time.<br><br>Team&#x20;Task&#x20;Management&#x20;System&#x20;(Development&#x20;team&#x20;lead)<br>===================================================<br>Developed&#x20;with&#x20;ASP.Net,SQL&#x20;server&#x20;and&#x20;C#,&#x20;the&#x20;purpose&#x20;of&#x20;this&#x20;project&#x20;was&#x20;to&#x20;allow&#x20;team&#x20;leaders&#x20;assign&#x20;tasks&#x20;to&#x20;their&#x20;team&#x20;members&#x20;through&#x20;an&#x20;online&#x20;portal.&#x20;Team&#x20;members&#x20;could&#x20;receive&#x20;tasks&#x20;and&#x20;update&#x20;the&#x20;progress&#x20;accordingly&#x20;then&#x20;team&#x20;leader&#x20;could&#x20;check&#x20;the&#x20;progress&#x20;and&#x20;approve/reject&#x20;the&#x20;progress&#x20;updated&#x20;by&#x20;team&#x20;members.&#x20;<br><br>In&#x20;team&#x20;lead’s&#x20;role,&#x20;my&#x20;job&#x20;in&#x20;this&#x20;project&#x20;was&#x20;to:<br>a)&#x20;Take&#x20;ownership&#x20;of&#x20;this&#x20;project&#x20;and&#x20;lead&#x20;it&#x20;to&#x20;successful&#x20;completion&#x20;from&#x20;beginning&#x20;to&#x20;end<br>b)&#x20;Requirements&#x20;analysis&#x20;and&#x20;specification&#x20;<br>c)&#x20;Designing&#x20;the&#x20;software&#x20;architecture&#x20;and&#x20;planning&#x20;the&#x20;project&#x20;<br>d)&#x20;Training&#x20;new&#x20;team&#x20;members<br>e)&#x20;Dividing&#x20;the&#x20;work&#x20;and&#x20;assigning&#x20;it&#x20;to&#x20;different&#x20;team&#x20;members&#x20;<br>f)&#x20;Managing&#x20;the&#x20;team&#x20;and&#x20;monitoring&#x20;their&#x20;performance&#x20;<br>g)&#x20;Helping&#x20;team&#x20;members&#x20;to&#x20;solve&#x20;their&#x20;problems&#x20;if&#x20;they&#x20;get&#x20;stuck<br><br>In&#x20;developer’s&#x20;role,&#x20;I&#x20;worked&#x20;on&#x20;following:<br>a)&#x20;Developing&#x20;the&#x20;entire&#x20;database&#x20;model&#x20;using&#x20;EER&#x20;modeling<br>b)&#x20;Stored&#x20;procedure&#x20;layer&#x20;layout<br>c)&#x20;Developing&#x20;main&#x20;architecture&#x20;for&#x20;master/detail&#x20;page&#x20;layout<br>d)&#x20;Developing&#x20;main&#x20;layout&#x20;for&#x20;AJAX&#x20;usage<br>e)&#x20;DB&#x20;connectivity&#x20;and&#x20;logging&#x20;module<br>f)&#x20;Handling&#x20;of&#x20;security&#x20;issues&#x20;like&#x20;XSS&#x20;and&#x20;SQL&#x20;injections.<br><br>Microsoft&#x20;Dot&#x20;Net&#x20;Development&#x20;Project(Testing)&#x20;<br>==============================================&#x20;<br>Working&#x20;for&#x20;DotNet&#x20;service&#x20;pack&#x20;team,&#x20;my&#x20;main&#x20;job&#x20;was&#x20;involved&#x20;with&#x20;test&#x20;automation&#x20;and&#x20;failure&#x20;analysis.<br><br>My&#x20;responsibilities,&#x20;as&#x20;SDET&#x20;2,&#x20;for&#x20;this&#x20;project&#x20;were&#x20;to:&#x20;<br>a)&#x20;Investigating&#x20;and&#x20;root-causing&#x20;the&#x20;automated&#x20;test&#x20;failures.&#x20;<br>b)&#x20;If&#x20;the&#x20;problem&#x20;for&#x20;test&#x20;case&#x20;failure&#x20;is&#x20;caused&#x20;by&#x20;test&#x20;case&#x20;source&#x20;code&#x20;then&#x20;to&#x20;figure&#x20;out&#x20;the&#x20;problem&#x20;and&#x20;fix&#x20;it.&#x20;<br>c)&#x20;Writing&#x20;new&#x20;test&#x20;case&#x20;source&#x20;code&#x20;and&#x20;modifying&#x20;the&#x20;existing&#x20;code.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2006/3--2008/12:Microtech&#x20;Industries,&#x20;Lahore,&#x20;Pakistan.<img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/space.gif" width="3" border="0" height="1"><span style="color:#676767;"><b>
+                        [ 2 year and 9month]
+                      </b></span></td></tr><tr><td width="22%" class="text_left">Industry:</td><td width="78%" class="text">Computers,Software</td></tr><tr><td class="text_left"><b>Research&#x20;and&#x20;Development</b></td><td class="text"><b>Software&#x20;Engineer</b></td></tr><tr><td colspan="2" class="text_left">Job&#x20;Responsibilities:<br>&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;<br>a)&#x20;Designing&#x20;and&#x20;programming&#x20;new&#x20;software&#x20;and&#x20;firmware<br>b)&#x20;Leading&#x20;the&#x20;team&#x20;members&#x20;in&#x20;major&#x20;software&#x20;applications<br>c)&#x20;Preparing&#x20;project&#x20;plans&#x20;and&#x20;dividing&#x20;tasks&#x20;among&#x20;team&#x20;members<br>d)&#x20;Monitoring&#x20;and&#x20;synchronizing&#x20;team’s&#x20;tasks&#x20;progress&#x20;with&#x20;deadlines<br>e)&#x20;Assuring&#x20;quality&#x20;in&#x20;both&#x20;the&#x20;code&#x20;and&#x20;output&#x20;of&#x20;all&#x20;the&#x20;team&#x20;members<br>f)&#x20;Merging&#x20;the&#x20;code&#x20;of&#x20;team&#x20;members&#x20;and&#x20;testing&#x20;the&#x20;final&#x20;software&#x20;before&#x20;passing&#x20;it&#x20;to&#x20;testing&#x20;department<br>g)&#x20;Training&#x20;new&#x20;team&#x20;members</td></tr><tr><td class="text_left">Report Directly to:</td><td class="text">Manager&#x20;R&#x20;&amp;&#x20;D</td></tr><tr><td class="text_left">Number of Subordinate:</td><td class="text">4</td></tr><tr><td class="text_left" valign="top">Achievements:</td><td class="text">a)&#x20;Award&#x20;of&#x20;“Best&#x20;employee&#x20;of&#x20;quarter&#x20;1,&#x20;2007”&#x20;in&#x20;the&#x20;first&#x20;year&#x20;of&#x20;my&#x20;first&#x20;job.<br>b)&#x20;From&#x20;an&#x20;R&#x20;&amp;&#x20;D&#x20;department&#x20;of&#x20;about&#x20;70&#x20;employees,&#x20;I&#x20;(with&#x20;2&#x20;other&#x20;colleagues)&#x20;was&#x20;selected&#x20;for&#x20;training&#x20;abroad&#x20;in&#x20;SIMCOM&#x20;(www.sim.com)&#x20;Shanghai,&#x20;China.&#x20;The&#x20;purpose&#x20;of&#x20;this&#x20;training&#x20;was&#x20;to&#x20;gain&#x20;expertise&#x20;in&#x20;a&#x20;modern&#x20;wireless&#x20;phone&#x20;module&#x20;system&#x20;which&#x20;can&#x20;be&#x20;used&#x20;to&#x20;program&#x20;GSM&#x20;based&#x20;mobile&#x20;handsets&#x20;and&#x20;payphones.<br>c)&#x20;Just&#x20;after&#x20;a&#x20;short&#x20;period&#x20;of&#x20;one&#x20;and&#x20;half&#x20;year&#x20;job,&#x20;I’m&#x20;leading&#x20;the&#x20;development&#x20;of&#x20;major&#x20;payphone&#x20;projects&#x20;in&#x20;my&#x20;company.<br>d)&#x20;Promotion&#x20;to&#x20;Software&#x20;Design&#x20;Engineer&#x20;II&#x20;from&#x20;Software&#x20;Design&#x20;Engineer&#x20;I&#x20;just&#x20;in&#x20;one&#x20;year.</td></tr></table></td></tr><tr><td height="20" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle" class="cvtitle">Project Experience</td></tr><tr><td align="middle" valign="middle" height="4"><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/line1_1.gif" width="100%" height="4"></td></tr><tr><td height="10" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_set"><tr><td colspan="2" class="text_left">2011/1--2011/6:Microsoft&#x20;Commerce&#x20;Transaction&#x20;Platform</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">Visual&#x20;Studio.Net&#x20;2010,&#x20;Sql&#x20;Server&#x20;2008</td></tr><tr><td class="text_left" valign="top">Hardware:</td><td class="text">Intel&#x20;Core&#x20;I7</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">C#,&#x20;ASP.Net,&#x20;WCF</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">Microsoft&#x20;CTP&#x20;(Commerce&#x20;Transaction&#x20;Platform)&#x20;team&#x20;is&#x20;responsible&#x20;for&#x20;handling&#x20;everything&#x20;at&#x20;middle&#x20;and&#x20;bottom&#x20;tiers&#x20;for&#x20;every&#x20;product&#x20;purchased&#x20;from&#x20;Microsoft.&#x20;Backend&#x20;level&#x20;mainly&#x20;deals&#x20;with&#x20;SQL&#x20;Server,&#x20;while&#x20;middle&#x20;tier&#x20;is&#x20;managed&#x20;in&#x20;C#.&#x20;Our&#x20;team&#x20;mainly&#x20;provides&#x20;web&#x20;services&#x20;to&#x20;all&#x20;Microsoft&#x20;product&#x20;partners&#x20;so&#x20;that&#x20;by&#x20;using&#x20;our&#x20;web&#x20;service&#x20;APIs,&#x20;they&#x20;can&#x20;enable&#x20;customers&#x20;to&#x20;make&#x20;all&#x20;kind&#x20;of&#x20;online&#x20;transactions.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">a)&#x20;Test&#x20;owner&#x20;for&#x20;end&#x20;to&#x20;end&#x20;features&#x20;assigned&#x20;in&#x20;present&#x20;releases.&#x20;<br>b)&#x20;Writing&#x20;test&#x20;plan&#x20;document<br>c)&#x20;Writing&#x20;detailed&#x20;test&#x20;requirement&#x20;specification&#x20;(TRS)&#x20;and&#x20;thereby&#x20;breaking&#x20;down&#x20;test&#x20;cases&#x20;to&#x20;atomic&#x20;level.&#x20;<br>d)&#x20;Implementing&#x20;automation&#x20;of&#x20;test&#x20;cases&#x20;at&#x20;all&#x20;level&#x20;(BVT,&#x20;Daily,&#x20;Comprehensive).&#x20;<br>e)&#x20;Implementing&#x20;test&#x20;infrastructure&#x20;and&#x20;libraries&#x20;required&#x20;for&#x20;automation.<br>f)&#x20;Working&#x20;closely&#x20;with&#x20;developers&#x20;and&#x20;PM&#x20;to&#x20;successfully&#x20;complete&#x20;the&#x20;release&#x20;in&#x20;due&#x20;time.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2010/3--2010/6:Team&#x20;Task&#x20;Management&#x20;System</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">Windows&#x20;server&#x20;2003</td></tr><tr><td class="text_left" valign="top">Hardware:</td><td class="text">Intel&#x20;Core&#x20;2&#x20;Duo</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">C#,&#x20;SQL&#x20;Server,&#x20;ASP.Net,&#x20;XML</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">The&#x20;purpose&#x20;of&#x20;this&#x20;project&#x20;was&#x20;to&#x20;allow&#x20;team&#x20;leaders&#x20;assign&#x20;tasks&#x20;to&#x20;their&#x20;team&#x20;members&#x20;through&#x20;an&#x20;online&#x20;portal.&#x20;Team&#x20;members&#x20;could&#x20;receive&#x20;tasks&#x20;and&#x20;update&#x20;the&#x20;progress&#x20;accordingly&#x20;then&#x20;team&#x20;leader&#x20;could&#x20;check&#x20;the&#x20;progress&#x20;and&#x20;approve/reject&#x20;the&#x20;progress&#x20;updated&#x20;by&#x20;team&#x20;members.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">a)&#x20;Take&#x20;ownership&#x20;of&#x20;this&#x20;project&#x20;and&#x20;lead&#x20;it&#x20;to&#x20;successful&#x20;completion&#x20;from&#x20;beginning&#x20;to&#x20;end<br>b)&#x20;Requirements&#x20;analysis&#x20;and&#x20;specification&#x20;<br>c)&#x20;Designing&#x20;the&#x20;software&#x20;architecture&#x20;<br>d)&#x20;Planning&#x20;<br>e)&#x20;Training&#x20;new&#x20;team&#x20;members<br>f)&#x20;Dividing&#x20;the&#x20;work&#x20;and&#x20;assigning&#x20;it&#x20;to&#x20;different&#x20;team&#x20;members&#x20;<br>g)&#x20;Managing&#x20;the&#x20;team&#x20;and&#x20;monitoring&#x20;their&#x20;performance&#x20;<br>h)&#x20;Monitoring&#x20;the&#x20;progress&#x20;of&#x20;the&#x20;project&#x20;<br>i)&#x20;Helping&#x20;team&#x20;members&#x20;to&#x20;solve&#x20;their&#x20;problems&#x20;if&#x20;they&#x20;get&#x20;stuck<br>j)&#x20;Participating&#x20;in&#x20;coding&#x20;phase&#x20;as&#x20;a&#x20;developer</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2009/6--2009/12:Flexible&#x20;Attendance&#x20;System</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">Windows&#x20;XP,&#x20;Vista</td></tr><tr><td class="text_left" valign="top">Hardware:</td><td class="text">Intel&#x20;Core&#x20;2&#x20;duo&#x20;based&#x20;PC</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">ASP.Net,&#x20;C#&#x20;2008,&#x20;Sql&#x20;Server&#x20;2008,&#x20;Visual&#x20;Studio.Net&#x20;2008</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">The&#x20;purpose&#x20;of&#x20;this&#x20;project&#x20;was&#x20;to&#x20;introduce&#x20;a&#x20;flexible&#x20;timing&#x20;and&#x20;attendance&#x20;system&#x20;at&#x20;office.&#x20;Before&#x20;this&#x20;system,&#x20;office&#x20;timings&#x20;were&#x20;strict&#x20;and&#x20;employees&#x20;were&#x20;fined&#x20;if&#x20;they’d&#x20;arrived&#x20;late&#x20;in&#x20;the&#x20;office&#x20;in&#x20;morning.&#x20;Also&#x20;they&#x20;had&#x20;limited&#x20;number&#x20;of&#x20;annual&#x20;leaves&#x20;available.&#x20;This&#x20;system’s&#x20;main&#x20;goal&#x20;was&#x20;to&#x20;facilitate&#x20;employees&#x20;so&#x20;that&#x20;they&#x20;could&#x20;have&#x20;a&#x20;more&#x20;comfortable&#x20;work&#x20;atmosphere.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">a)&#x20;Take&#x20;ownership&#x20;of&#x20;this&#x20;project&#x20;and&#x20;lead&#x20;it&#x20;to&#x20;successful&#x20;completion&#x20;from&#x20;beginning&#x20;to&#x20;end<br>b)&#x20;Requirements&#x20;analysis&#x20;and&#x20;specification&#x20;<br>c)&#x20;Designing&#x20;the&#x20;software&#x20;architecture&#x20;<br>d)&#x20;Planning&#x20;<br>e)&#x20;Training&#x20;new&#x20;team&#x20;members<br>f)&#x20;Dividing&#x20;the&#x20;work&#x20;and&#x20;assigning&#x20;it&#x20;to&#x20;different&#x20;team&#x20;members&#x20;<br>g)&#x20;Managing&#x20;the&#x20;team&#x20;and&#x20;monitoring&#x20;their&#x20;performance&#x20;<br>h)&#x20;Monitoring&#x20;the&#x20;progress&#x20;of&#x20;the&#x20;project&#x20;<br>i)&#x20;Helping&#x20;team&#x20;members&#x20;to&#x20;solve&#x20;their&#x20;problems&#x20;if&#x20;they&#x20;get&#x20;stuck<br>j)&#x20;Participating&#x20;in&#x20;coding&#x20;phase&#x20;as&#x20;a&#x20;developer</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2009/1--2010/1:Microsoft&#x20;Dot&#x20;Net&#x20;Development&#x20;Project</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">All&#x20;available&#x20;Microsoft&#x20;operating&#x20;systems</td></tr><tr><td class="text_left" valign="top">Hardware:</td><td class="text">Product&#x20;is&#x20;tested&#x20;on&#x20;different&#x20;hardware&#x20;environments</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">C#,&#x20;Windbg,&#x20;Visual&#x20;Studio.Net,&#x20;Reflector</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">Microsoft&#x20;keeps&#x20;on&#x20;releasing&#x20;the&#x20;enhanced&#x20;versions&#x20;of&#x20;the&#x20;dot&#x20;net&#x20;framework&#x20;from&#x20;time&#x20;to&#x20;time.&#x20;Service&#x20;packs&#x20;and&#x20;patches&#x20;are&#x20;also&#x20;released&#x20;when&#x20;required.&#x20;To&#x20;test&#x20;these&#x20;products,&#x20;automated&#x20;tests&#x20;are&#x20;run&#x20;against&#x20;different&#x20;software&#x20;and&#x20;hardware&#x20;platforms&#x20;before&#x20;every&#x20;release.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">a)&#x20;Investigate&#x20;the&#x20;failures&#x20;for&#x20;automated&#x20;tests.<br>b)&#x20;Finding&#x20;if&#x20;the&#x20;tests&#x20;failed&#x20;because&#x20;of&#x20;environment&#x20;issue,&#x20;for&#x20;some&#x20;bug&#x20;in&#x20;test&#x20;source&#x20;code,&#x20;for&#x20;incompatibility&#x20;between&#x20;the&#x20;test&#x20;source&#x20;code&#x20;and&#x20;the&#x20;platform,&#x20;or&#x20;for&#x20;some&#x20;bug&#x20;in&#x20;the&#x20;product.<br>c)&#x20;If&#x20;the&#x20;problem&#x20;for&#x20;test&#x20;failure&#x20;is&#x20;caused&#x20;by&#x20;test&#x20;&#x20;source&#x20;code&#x20;then&#x20;to&#x20;figure&#x20;out&#x20;the&#x20;problem&#x20;and&#x20;fix&#x20;it.<br>d)&#x20;Writing&#x20;new&#x20;test&#x20;case&#x20;code&#x20;and&#x20;sometimes&#x20;modifying&#x20;the&#x20;existing&#x20;code.<br>e)&#x20;Writing&#x20;investigation&#x20;reports&#x20;to&#x20;Microsoft&#x20;engineers&#x20;and&#x20;managers.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2008/2--2008/4:Network&#x20;Management&#x20;System&#x20;(NMS)&#x20;for&#x20;wireless&#x20;GSM&#x20;payphones</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C#.Net,&#x20;Crystal&#x20;Reports,&#x20;Microsoft&#x20;Excel,&#x20;SQL&#x20;Server&#x20;2000&#x20;and&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;studio.Net,&#x20;SQL&#x20;Server&#x20;2000</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">I&#x20;alone&#x20;designed,&#x20;planned&#x20;and&#x20;developed&#x20;the&#x20;complete&#x20;NMS&#x20;from&#x20;scratch&#x20;for&#x20;payphones&#x20;using&#x20;C#.Net&#x20;and&#x20;crystal&#x20;reports.&#x20;The&#x20;underlying&#x20;database&#x20;was&#x20;made&#x20;in&#x20;SQL&#x20;server.&#x20;Through&#x20;this&#x20;management&#x20;system,&#x20;the&#x20;client&#x20;can&#x20;assign/change&#x20;various&#x20;settings&#x20;and&#x20;different&#x20;tariff&#x20;to&#x20;payphones&#x20;deployed&#x20;in&#x20;the&#x20;market.&#x20;He&#x20;can&#x20;create/delete/modify&#x20;payphones&#x20;and&#x20;also&#x20;divide&#x20;payphone&#x20;among&#x20;regions,&#x20;cities&#x20;and&#x20;exchanges.&#x20;This&#x20;system&#x20;was&#x20;completed&#x20;in&#x20;about&#x20;60&#x20;days.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Designing,&#x20;planning,&#x20;development&#x20;and&#x20;unit&#x20;testing.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2007/11--2007/11:Utilize&#x20;Multi&#x20;Cores</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C#,&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio.Net</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">If&#x20;you&#x20;got&#x20;a&#x20;multi&#x20;core&#x20;processor,&#x20;you&#x20;should&#x20;know&#x20;that&#x20;by&#x20;default&#x20;all&#x20;the&#x20;applications&#x20;are&#x20;set&#x20;to&#x20;run&#x20;at&#x20;all&#x20;cores&#x20;of&#x20;the&#x20;processors&#x20;(Although&#x20;the&#x20;application&#x20;may&#x20;actually&#x20;utilize&#x20;only&#x20;the&#x20;default&#x20;core).&#x20;&quot;ZAMs&#x20;Utilize&#x20;Multi&#x20;Cores&quot;&#x20;utility&#x20;enables&#x20;you&#x20;to&#x20;set&#x20;specific&#x20;applications&#x20;to&#x20;run&#x20;at&#x20;specific&#x20;cores&#x20;of&#x20;your&#x20;multi&#x20;core&#x20;processor.&#x20;
+<br>&#x20;&#x20;&#x20;&#x20;&#x20;The&#x20;utility&#x20;also&#x20;features&#x20;an&#x20;&quot;Intelli&#x20;Core&#x20;Multi&#x20;Instance&#x20;Handling&quot;&#x20;feature.&#x20;This&#x20;feature&#x20;deals&#x20;with&#x20;the&#x20;case&#x20;when&#x20;you&#x20;run&#x20;the&#x20;same&#x20;application&#x20;more&#x20;than&#x20;once&#x20;at&#x20;the&#x20;same&#x20;time.&#x20;If&#x20;you&#x20;enable&#x20;this&#x20;feature,&#x20;you&#x20;can&#x20;set&#x20;at&#x20;what&#x20;cores&#x20;the&#x20;different&#x20;instances&#x20;of&#x20;the&#x20;same&#x20;application&#x20;should&#x20;run.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2007/10--2008/1:Communication&#x20;Engine&#x20;System&#x20;for&#x20;payphones</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C#.Net,&#x20;SQL&#x20;Server&#x20;2000,&#x20;Microsoft&#x20;Excel&#x20;&amp;&#x20;Windows&#x20;2000/XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio.Net,&#x20;SQL&#x20;Server&#x20;2000</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">I&#x20;alone&#x20;designed,&#x20;planned&#x20;and&#x20;developed&#x20;the&#x20;complete&#x20;communication&#x20;engine&#x20;system&#x20;for&#x20;payphones&#x20;using&#x20;C#.Net.&#x20;The&#x20;client&#x20;first&#x20;assigns&#x20;various&#x20;settings&#x20;and&#x20;tariff&#x20;to&#x20;payphones&#x20;and&#x20;then&#x20;this&#x20;communication&#x20;engine&#x20;system&#x20;sends&#x20;those&#x20;settings&#x20;and&#x20;tariffs&#x20;to&#x20;payphones&#x20;in&#x20;encrypted&#x20;form.&#x20;It&#x20;also&#x20;receives&#x20;call&#x20;detail&#x20;records&#x20;(CDR)&#x20;from&#x20;payphones&#x20;when&#x20;required.&#x20;The&#x20;communication&#x20;is&#x20;conducted&#x20;either&#x20;via&#x20;SMS&#x20;or&#x20;GPRS.&#x20;In&#x20;GPRS&#x20;mode,&#x20;the&#x20;communication&#x20;engine&#x20;uses&#x20;TCP/IP&#x20;to&#x20;connect&#x20;with&#x20;payphones.&#x20;This&#x20;system&#x20;was&#x20;completed&#x20;in&#x20;about&#x20;4&#x20;months.&#x20;Both&#x20;of&#x20;the&#x20;NMS&#x20;and&#x20;communication&#x20;engine&#x20;developed&#x20;by&#x20;me,&#x20;are&#x20;being&#x20;used&#x20;happily&#x20;by&#x20;the&#x20;foreign&#x20;client.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Designing,&#x20;planning,&#x20;development&#x20;and&#x20;unit&#x20;testing</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2007/9--2007/9:Auto&#x20;lock&#x20;and&#x20;manual&#x20;lock&#x20;features&#x20;in&#x20;wirelesss&#x20;GSM&#x20;Modules</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C&#x20;for&#x20;firmware</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Source&#x20;Insight</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">Developed&#x20;auto&#x20;lock&#x20;&amp;&#x20;manual&#x20;lock&#x20;(shortcut&#x20;lock)&#x20;features&#x20;in&#x20;SIM300&#x20;based&#x20;wireless&#x20;GSM&#x20;payphones.&#x20;These&#x20;features&#x20;were&#x20;implemented&#x20;exactly&#x20;like&#x20;as&#x20;found&#x20;in&#x20;mobile&#x20;phones.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Developing&#x20;the&#x20;feature&#x20;and&#x20;unit&#x20;testing</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2007/7--2008/5:Wireless&#x20;GSM&#x20;Payphones</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C&#x20;for&#x20;firmware,&#x20;C#&#x20;for&#x20;desktop&#x20;applications,&#x20;SQL&#x20;Server&#x20;2000&#x20;Database,&#x20;Crystal&#x20;Reports&#x20;&amp;&#x20;Microsoft&#x20;Excel</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio.Net,&#x20;Source&#x20;Insight&#x20;Editor,&#x20;SQL&#x20;Server&#x20;2000,&#x20;KADAK&#x20;RTOS</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">To&#x20;implement&#x20;various&#x20;features&#x20;in&#x20;firmware&#x20;for&#x20;wireless&#x20;GSM&#x20;payphones&#x20;according&#x20;to&#x20;client&#39;s&#x20;requirement.&#x20;Also&#x20;to&#x20;make&#x20;a&#x20;network&#x20;management&#x20;system&#x20;and&#x20;communication&#x20;engine&#x20;through&#x20;which&#x20;all&#x20;payphones&#x20;deployed&#x20;through&#x20;client&#x20;can&#x20;be&#x20;monitored,&#x20;configured&#x20;and&#x20;controlled&#x20;on&#x20;daily&#x20;basis&#x20;via&#x20;GPRS&#x20;or&#x20;SMS.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">As&#x20;the&#x20;team&#x20;leader,&#x20;designing&#x20;the&#x20;structure&#x20;of&#x20;various&#x20;modules&#x20;of&#x20;the&#x20;application;&#x20;making&#x20;project&#x20;plans;&#x20;dividing&#x20;tasks&#x20;among&#x20;team&#x20;members;&#x20;Programming&#x20;both&#x20;firmware&#x20;and&#x20;desktop&#x20;application&#x20;etc.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2007/1--2007/3:SMS&#x20;(Incoming&#x20;&amp;&#x20;Outgoing)&#x20;Implementation&#x20;In&#x20;Wireless&#x20;GSM&#x20;Payphones</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">Assembly&#x20;Language</td></tr><tr><td class="text_left" valign="top">Hardware:</td><td class="text">Atmel&#x20;Microcontroller&#x20;80S52</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Keil</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">Developed&#x20;complete&#x20;SMS&#x20;(incoming&#x20;&amp;&#x20;outgoing)&#x20;feature&#x20;in&#x20;assembly&#x20;language&#x20;from&#x20;scratch&#x20;for&#x20;wireless&#x20;GSM&#x20;payphones.&#x20;The&#x20;LCD&#x20;used&#x20;was&#x20;a&#x20;4&#x20;line&#x20;text-only&#x20;LCD&#x20;and&#x20;MCU&#x20;used&#x20;was&#x20;Atmel’s&#x20;80S52.&#x20;I&#x20;also&#x20;developed&#x20;a&#x20;complete&#x20;text&#x20;editor&#x20;to&#x20;input&#x20;SMS&#x20;text&#x20;and&#x20;special&#x20;characters.&#x20;This&#x20;assignment&#x20;was&#x20;completed&#x20;in&#x20;about&#x20;40&#x20;days.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Planning,&#x20;designing&#x20;and&#x20;developing&#x20;the&#x20;SMS&#x20;feature&#x20;from&#x20;scratch.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2006/9--2006/10:Automated&#x20;Executable&#x20;Generator</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C#.Net,&#x20;Borland&#x20;C++,SQL&#x20;Server&#x20;2000&#x20;&amp;&#x20;WIndows&#x20;XP/2000</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio.Net,&#x20;Borland&#x20;C++&#x20;Builder,&#x20;SQL&#x20;Server&#x20;2000</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">For&#x20;my&#x20;company’s&#x20;existing&#x20;network&#x20;management&#x20;system,&#x20;depending&#x20;on&#x20;different&#x20;clients&#x20;different&#x20;executable&#x20;files&#x20;were&#x20;prepared.&#x20;To&#x20;create&#x20;these&#x20;executable&#x20;files,&#x20;each&#x20;time&#x20;the&#x20;developers&#x20;had&#x20;to&#x20;open&#x20;the&#x20;source&#x20;code,&#x20;modify&#x20;it,&#x20;compile&#x20;it&#x20;and&#x20;then&#x20;build&#x20;the&#x20;executable&#x20;files.&#x20;The&#x20;modification&#x20;in&#x20;the&#x20;code&#x20;consisted&#x20;of&#x20;different&#x20;parameters&#x20;for&#x20;different&#x20;clients.&#x20;I&#x20;developed&#x20;this&#x20;utility&#x20;application&#x20;so&#x20;that&#x20;one&#x20;only&#x20;needs&#x20;to&#x20;enter&#x20;these&#x20;parameters&#x20;in&#x20;a&#x20;form.&#x20;Then&#x20;this&#x20;application&#x20;automatically&#x20;changes&#x20;parameters&#x20;in&#x20;code&#x20;files,&#x20;compiles&#x20;that&#x20;and&#x20;transfers&#x20;the&#x20;executable&#x20;files&#x20;to&#x20;the&#x20;specified&#x20;folder.&#x20;This&#x20;application&#x20;was&#x20;completed&#x20;in&#x20;20&#x20;days.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Planning,&#x20;Designing,&#x20;developing&#x20;and&#x20;testing</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2006/1--2006/3:Wholesale&#x20;Electric&#x20;Store&#x20;Management&#x20;System</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C#.Net,&#x20;Crystal&#x20;Reports,&#x20;SQL&#x20;Server&#x20;2000&#x20;&amp;&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio.Net&#x20;&amp;&#x20;SQL&#x20;Server&#x20;2000</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">A&#x20;complete&#x20;database&#x20;application&#x20;to&#x20;manage&#x20;the&#x20;product&#x20;manufacturing&#x20;and&#x20;sales&#x20;for&#x20;a&#x20;wholesale&#x20;electric&#x20;store.&#x20;The&#x20;project&#x20;design&#x20;was&#x20;developed&#x20;using&#x20;Microsoft&#x20;Visio&#x20;2002&#x20;and&#x20;the&#x20;software&#x20;was&#x20;implemented&#x20;using&#x20;Visual&#x20;Studio.Net&#x20;2003&#x20;and&#x20;ADO.NET.&#x20;
+<br>Special&#x20;effort&#x20;was&#x20;put&#x20;forward&#x20;in&#x20;order&#x20;to&#x20;make&#x20;the&#x20;appearance&#x20;and&#x20;behavior&#x20;of&#x20;the&#x20;project&#x20;really&#x20;professional&#x20;and&#x20;cool.&#x20;The&#x20;color&#x20;combinations&#x20;used&#x20;and&#x20;the&#x20;very&#x20;uncommon&#x20;but&#x20;great&#x20;looking&#x20;fonts&#x20;selected&#x20;from&#x20;a&#x20;list&#x20;of&#x20;500+&#x20;fonts&#x20;make&#x20;this&#x20;application&#x20;look&#x20;really&#x20;great.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">As&#x20;a&#x20;team&#x20;leader,&#x20;desiging,&#x20;planning,&#x20;developing&#x20;and&#x20;testing&#x20;the&#x20;project.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2005/6--2005/6:Personal&#x20;Web&#x20;Site</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">HTML,&#x20;DHTML,&#x20;Java&#x20;Script,&#x20;Cascading&#x20;Style&#x20;Sheets,&#x20;Flash,&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Macromedia&#x20;Dreamweaver,&#x20;Internet&#x20;Explorer,&#x20;Anim&#x20;FX&#x20;(Flash),&#x20;Swish&#x20;MX(Flash),&#x20;Mix&#x20;FX&#x20;(Flash)</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">This&#x20;complete&#x20;website&#x20;was&#x20;aimed&#x20;to&#x20;be&#x20;my&#x20;personal&#x20;home&#x20;page.The&#x20;purpose&#x20;was&#x20;to&#x20;maintain&#x20;my&#x20;personal&#x20;career&#x20;profile&#x20;as&#x20;a&#x20;proof&#x20;of&#x20;my&#x20;innovation&#x20;and&#x20;hard&#x20;work.&#x20;So&#x20;that&#x20;companies&#x20;willing&#x20;to&#x20;hire&#x20;me&#x20;can&#x20;see&#x20;the&#x20;details&#x20;of&#x20;my&#x20;working&#x20;experience.&#x20;The&#x20;websites&#x20;lists&#x20;all&#x20;of&#x20;my&#x20;programming&#x20;projects.&#x20;You&#x20;can&#x20;also&#x20;download&#x20;the&#x20;source&#x20;code&#x20;of&#x20;many&#x20;of&#x20;my&#x20;projects&#x20;there&#x20;and&#x20;see&#x20;the&#x20;snapshots&#x20;of&#x20;the&#x20;rest&#x20;there.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2005/4--2005/6:Secret&#x20;Media&#x20;Player</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C#,&#x20;Windows&#x20;Media&#x20;Player&#x20;10,&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio.Net</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">Have&#x20;you&#x20;ever&#x20;felt&#x20;the&#x20;need&#x20;of&#x20;hiding&#x20;your&#x20;media&#x20;player&#x20;as&#x20;quickly&#x20;as&#x20;possible?&#x20;What&#x20;can&#x20;be&#x20;the&#x20;fastest&#x20;possible&#x20;way&#x20;to&#x20;do&#x20;so??
+<br>Secret&#x20;Media&#x20;player&#x20;provides&#x20;you&#x20;the&#x20;fastest&#x20;possible&#x20;way:&#x20;Just&#x20;move&#x20;the&#x20;mouse&#x20;away&#x20;from&#x20;the&#x20;player&#x20;and&#x20;the&#x20;player&#x20;is&#x20;collapsed&#x20;to&#x20;extremely&#x20;small&#x20;size,&#x20;where&#x20;only&#x20;a&#x20;portion&#x20;of&#x20;its&#x20;title&#x20;bar&#x20;is&#x20;visible.&#x20;Between,&#x20;it&#x20;also&#x20;temporarily&#x20;pauses&#x20;the&#x20;playback&#x20;when&#x20;collapsed.&#x20;The&#x20;player&#x20;is&#x20;very&#x20;useful&#x20;in&#x20;cases&#x20;when&#x20;you&#x20;are&#x20;watching&#x20;some&#x20;video,&#x20;but&#x20;don’t&#x20;want&#x20;others&#x20;to&#x20;know&#x20;about&#x20;it.&#x20;So&#x20;whenever&#x20;someone&#x20;comes,&#x20;you&#x20;can&#x20;hide&#x20;the&#x20;player&#x20;by&#x20;just&#x20;moving&#x20;the&#x20;mouse&#x20;away&#x20;from&#x20;the&#x20;player.
+<br>This&#x20;player&#x20;basically&#x20;wraps&#x20;up&#x20;the&#x20;windows&#x20;media&#x20;player&#x20;10&#x20;and&#x20;besides&#x20;the&#x20;quick&#x20;hide&#x20;feature,&#x20;this&#x20;player&#x20;contains&#x20;a&#x20;lot&#x20;of&#x20;other&#x20;features&#x20;that&#x20;are&#x20;not&#x20;present&#x20;in&#x20;the&#x20;original&#x20;windows&#x20;media&#x20;player&#x20;like&#x20;Forward,&#x20;Reverse,&#x20;Fast&#x20;Playback,&#x20;Slow&#x20;Playback,&#x20;Step&#x20;Forward&#x20;and&#x20;Step&#x20;Backward.&#x20;You&#x20;can&#x20;use&#x20;the&#x20;forward,&#x20;reverse,&#x20;fast&#x20;playback&#x20;and&#x20;slow&#x20;playback&#x20;functions&#x20;in&#x20;4&#x20;different&#x20;speeds.&#x20;The&#x20;player&#x20;also&#x20;provides&#x20;hotkeys&#x20;for&#x20;all&#x20;the&#x20;features&#x20;provided.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2005/3--2005/3:Custom&#x20;Textbox&#x20;Control</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C#.Net,&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio.Net</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">A&#x20;customized&#x20;textbox&#x20;control&#x20;to&#x20;suit&#x20;the&#x20;needs&#x20;of&#x20;professional&#x20;projects.&#x20;By&#x20;using&#x20;this&#x20;control,&#x20;you&#x20;can&#x20;restrict&#x20;the&#x20;user&#x20;to&#x20;type&#x20;only&#x20;a&#x20;certain&#x20;type&#x20;of&#x20;text.&#x20;For&#x20;example,&#x20;you&#x20;can&#x20;restrict&#x20;the&#x20;user&#x20;to&#x20;type&#x20;only&#x20;alphabetic,&#x20;numeric&#x20;or&#x20;alphanumeric&#x20;type&#x20;of&#x20;text.&#x20;In&#x20;addition&#x20;you&#x20;can&#x20;specify&#x20;any&#x20;characters&#x20;that&#x20;are&#x20;acceptable&#x20;with&#x20;any&#x20;type&#x20;of&#x20;text.&#x20;Also&#x20;you&#x20;can&#x20;restrict&#x20;the&#x20;user&#x20;to&#x20;enter&#x20;the&#x20;text&#x20;in&#x20;a&#x20;specific&#x20;customized&#x20;format&#x20;which&#x20;you&#x20;specify&#x20;in&#x20;the&#x20;form&#x20;of&#x20;a&#x20;regular&#x20;expression.&#x20;You&#x20;can&#x20;also&#x20;enable/disable&#x20;space&#x20;characters.&#x20;
+<br>Whenever&#x20;the&#x20;control&#x20;gets&#x20;focus,&#x20;it&#x20;gets&#x20;highlighted&#x20;to&#x20;a&#x20;color&#x20;that&#x20;you&#x20;specify.&#x20;The&#x20;control&#39;s&#x20;boundary&#x20;also&#x20;gets&#x20;highlighted&#x20;to&#x20;the&#x20;specified&#x20;color&#x20;whenever&#x20;the&#x20;mouse&#x20;cursor&#x20;moves&#x20;over&#x20;it.&#x20;You&#x20;can&#x20;also&#x20;toggle&#x20;these&#x20;appearance&#x20;related&#x20;properties&#x20;of&#x20;the&#x20;control.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;experience&#x20;and&#x20;learning</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2004/11--2005/3:Online&#x20;Job&#x20;Market&#x20;(like&#x20;51job.com&#x20;or&#x20;chinahr.com)</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">J2EE,&#x20;HTML,&#x20;DHTML,&#x20;JavaScript,&#x20;JSP,&#x20;Java&#x20;Beans,&#x20;SQL,&#x20;Flash,&#x20;Cascading&#x20;style&#x20;sheets,&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Macromedia&#x20;Dreamweaver,&#x20;Borland&#x20;JBuilder&#x20;10,&#x20;Oracle&#x20;9i,&#x20;Xara&#x20;Menu&#x20;Maker,&#x20;&#x20;Swish&#x20;2&#x20;(Flash),&#x20;Anim-FX(Flash),&#x20;Mix&#x20;FX(Flash),&#x20;SQL&#x20;Server</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">An&#x20;online&#x20;database&#x20;that&#x20;serves&#x20;as&#x20;a&#x20;job&#x20;market&#x20;for&#x20;both&#x20;the&#x20;companies&#x20;and&#x20;the&#x20;candidates.&#x20;The&#x20;project&#x20;has&#x20;three&#x20;modules&#x20;named&#x20;Company,&#x20;Applicant&#x20;and&#x20;Job&#x20;Processor.&#x20;The&#x20;companies&#x20;can&#x20;post&#x20;job&#x20;advertisements&#x20;along&#x20;with&#x20;job&#x20;details&#x20;and&#x20;check&#x20;out&#x20;the&#x20;candidates&#x20;who&#x20;apply&#x20;for&#x20;those&#x20;jobs.&#x20;The&#x20;applicants&#x20;can&#x20;seek&#x20;different&#x20;jobs&#x20;on&#x20;the&#x20;basis&#x20;of&#x20;their&#x20;detailed&#x20;search&#x20;criteria&#x20;and&#x20;check&#x20;whether&#x20;they&#x20;are&#x20;selected&#x20;for&#x20;interview&#x20;or&#x20;not.&#x20;The&#x20;job&#x20;processor&#x20;acts&#x20;as&#x20;the&#x20;administrator&#x20;who&#x20;can&#x20;edit/delete/update&#x20;anything.
+<br>The&#x20;project&#x20;was&#x20;developed&#x20;using&#x20;JSP,&#x20;JAVA&#x20;Beans,&#x20;JavaScript,&#x20;Oracle&#x20;9i,&#x20;Dreamweaver&#x20;and&#x20;JBuilder10.&#x20;A&#x20;lot&#x20;of&#x20;animation&#x20;tools&#x20;were&#x20;used&#x20;to&#x20;create&#x20;animated&#x20;buttons&#x20;and&#x20;menus.&#x20;A&#x20;few&#x20;to&#x20;name&#x20;are&#x20;Xara&#x20;menu&#x20;maker,&#x20;Xara&#x20;web&#x20;style,&#x20;Swish&#x20;2.0,&#x20;Anim-fx&#x20;etc.
+<br>Special&#x20;effort&#x20;was&#x20;put&#x20;forward&#x20;in&#x20;order&#x20;to&#x20;make&#x20;the&#x20;looks&#x20;of&#x20;the&#x20;project&#x20;really&#x20;professional&#x20;and&#x20;cool.&#x20;The&#x20;color&#x20;combinations&#x20;used,&#x20;the&#x20;animated&#x20;buttons&#x20;and&#x20;menus&#x20;and&#x20;the&#x20;very&#x20;uncommon&#x20;but&#x20;great&#x20;looking&#x20;fonts&#x20;selected&#x20;from&#x20;a&#x20;list&#x20;of&#x20;500+&#x20;fonts&#x20;make&#x20;this&#x20;application&#x20;look&#x20;really&#x20;great.
+<br>Later&#x20;on&#x20;a&#x20;second&#x20;version&#x20;of&#x20;this&#x20;project&#x20;was&#x20;created&#x20;to&#x20;work&#x20;with&#x20;SQL&#x20;server&#x20;instead&#x20;of&#x20;Oracle&#x20;9i.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">As&#x20;the&#x20;team&#x20;leader&#x20;of&#x20;this&#x20;university&#x20;project,&#x20;to&#x20;design,&#x20;plan,&#x20;develop&#x20;and&#x20;test&#x20;the&#x20;software.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2004/10--2005/1:Collapsible&#x20;Group&#x20;box&#x20;Control</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C#.Net,&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio.Net</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">This&#x20;control&#x20;is&#x20;just&#x20;like&#x20;that&#x20;present&#x20;in&#x20;the&#x20;explorer&#x20;of&#x20;Windows&#x20;XP.&#x20;You&#x20;can&#x20;put&#x20;other&#x20;controls/text&#x20;in&#x20;this&#x20;group&#x20;box&#x20;and&#x20;then&#x20;with&#x20;a&#x20;single&#x20;click&#x20;the&#x20;group&#x20;box&#x20;is&#x20;collapsed&#x20;to&#x20;the&#x20;size&#x20;of&#x20;its&#x20;title&#x20;bar.&#x20;The&#x20;control&#x20;allows&#x20;you&#x20;to&#x20;graphically&#x20;customize&#x20;almost&#x20;all&#x20;of&#x20;its&#x20;aspects&#x20;like&#x20;smooth&#x20;state&#x20;change,&#x20;gradient&#x20;caption,&#x20;auto&#x20;hide,&#x20;time&#x20;to&#x20;auto&#x20;hide,&#x20;border&#x20;visibility,&#x20;border&#x20;color,&#x20;text&#x20;color&#x20;etc.&#x20;When&#x20;the&#x20;control&#x20;is&#x20;collapsed/expanded,&#x20;all&#x20;the&#x20;other&#x20;controls&#x20;on&#x20;the&#x20;container&#x20;control&#x20;are&#x20;relocated&#x20;accordingly&#x20;just&#x20;as&#x20;in&#x20;windows.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2004/10--2005/1:Innovative&#x20;Snake&#x20;World&#x20;Game</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C#.Net,&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio.Net</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">The&#x20;most&#x20;entertaining,&#x20;challenging&#x20;and&#x20;playable&#x20;snake&#x20;game&#x20;ever.&#x20;The&#x20;game&#x20;supports&#x20;up&#x20;to&#x20;4&#x20;players.&#x20;There&#x20;are&#x20;4&#x20;different&#x20;game&#x20;types&#x20;in&#x20;the&#x20;snake&#x20;world&#x20;game:&#x20;level&#x20;based&#x20;game,&#x20;time&#x20;attack,&#x20;survival&#x20;and&#x20;king&#x20;of&#x20;the&#x20;ring.&#x20;The&#x20;game&#39;s&#x20;looks&#x20;and&#x20;controls&#x20;are&#x20;fully&#x20;customizable&#x20;in&#x20;the&#x20;most&#x20;interactive&#x20;manner&#x20;possible.&#x20;
+<br>The&#x20;game&#x20;introduces&#x20;a&#x20;lot&#x20;of&#x20;new&#x20;and&#x20;entertaining&#x20;ideas&#x20;that&#x20;are&#x20;never&#x20;introduced&#x20;before&#x20;in&#x20;any&#x20;snake&#x20;game&#x20;e.g.&#x20;the&#x20;manual&#x20;speed&#x20;up/down.&#x20;The&#x20;game&#x20;offers&#x20;10&#x20;levels,&#x20;each&#x20;one&#x20;of&#x20;which&#x20;offers&#x20;the&#x20;increased&#x20;difficulty&#x20;and&#x20;fun.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2004/4--2004/4:Mass&#x20;File-Extension&#x20;Changer&#x20;Utility</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C++</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Borland&#x20;C++</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">This&#x20;small&#x20;utility&#x20;was&#x20;created&#x20;to&#x20;change&#x20;the&#x20;extension&#x20;of&#x20;a&#x20;large&#x20;number&#x20;of&#x20;files&#x20;in&#x20;a&#x20;directory.&#x20;The&#x20;files&#x20;must&#x20;have&#x20;similar&#x20;names.&#x20;For&#x20;example,&#x20;if&#x20;a&#x20;folder&#x20;contains&#x20;files&#x20;named&#x20;FILE0001.CHK,&#x20;FILE0002.CHK,&#x20;..........,&#x20;FILE9999.CHK&#x20;and&#x20;you&#x20;want&#x20;to&#x20;change&#x20;the&#x20;extension&#x20;of&#x20;all&#x20;the&#x20;files&#x20;to&#x20;.TXT&#x20;then&#x20;you&#x20;can&#x20;do&#x20;this&#x20;by&#x20;running&#x20;this&#x20;program.&#x20;You&#x20;only&#x20;need&#x20;to&#x20;set&#x20;the&#x20;parameters&#x20;like&#x20;directory&#x20;path,&#x20;old&#x20;extension,&#x20;new&#x20;extension,&#x20;sequence&#x20;start&#x20;number&#x20;(0001&#x20;in&#x20;this&#x20;case)&#x20;and&#x20;sequence&#x20;end&#x20;number&#x20;(9999&#x20;in&#x20;this&#x20;case).</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2004/3--2004/3:VIRUS&#x20;-&#x20;Destroy&#x20;All&#x20;Windows</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C++</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Borland&#x20;C++</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">This&#x20;program&#x20;destroys&#x20;all&#x20;the&#x20;windows&#x20;OS&#x20;installed&#x20;on&#x20;your&#x20;machine.&#x20;It&#x20;does&#x20;so&#x20;in&#x20;such&#x20;a&#x20;manner&#x20;that&#x20;you&#x20;can&#39;t&#x20;just&#x20;simply&#x20;reinstall&#x20;the&#x20;windows.&#x20;Once&#x20;it&#x20;has&#x20;done&#x20;its&#x20;work,&#x20;an&#x20;average&#x20;computer&#x20;user&#x20;will&#x20;have&#x20;to&#x20;format&#x20;his&#x20;hard&#x20;disk&#x20;and&#x20;only&#x20;then&#x20;he&#39;ll&#x20;be&#x20;able&#x20;to&#x20;install&#x20;the&#x20;windows.&#x20;This&#x20;program&#x20;was&#x20;created&#x20;solely&#x20;for&#x20;educational&#x20;purposes,&#x20;so&#x20;it’s&#x20;not&#x20;really&#x20;meant&#x20;to&#x20;destroy&#x20;anyone&#39;s&#x20;computer.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2004/2--2004/2:Customize&#x20;Your&#x20;Desktop</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">Visual&#x20;Basic,&#x20;Win32&#x20;API,&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio&#x20;6</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">This&#x20;program&#x20;allows&#x20;you&#x20;to&#x20;show/hide:
+<br>&amp;#8226;Desktop&#x20;Icons
+<br>&amp;#8226;Start&#x20;Button
+<br>&amp;#8226;Quick&#x20;Launch&#x20;Bar&#x20;on&#x20;the&#x20;taskbar
+<br>&amp;#8226;Taskbar&#x20;portion&#x20;that&#x20;displays&#x20;opened&#x20;programs
+<br>&amp;#8226;System&#x20;Tray&#x20;with&#x20;the&#x20;clock&#x20;on&#x20;the&#x20;taskbar
+<br>&amp;#8226;Clock
+<br>&amp;#8226;Whole&#x20;Taskbar
+<br>&amp;#8226;Mouse&#x20;Pointer</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2003/5--2003/7:Paint&#x20;Software</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">JAVA,&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Borland&#x20;JBuilder&#x20;10</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">A&#x20;pure&#x20;object&#x20;oriented&#x20;project&#x20;that&#x20;provides&#x20;the&#x20;functionality&#x20;just&#x20;like&#x20;that&#x20;provided&#x20;by&#x20;the&#x20;windows&#x20;paint&#x20;software.&#x20;The&#x20;project&#x20;was&#x20;developed&#x20;using&#x20;notepad&#x20;only.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2003/3--2003/6:Computer&#x20;Adaptive&#x20;Test</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C++,&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Borland&#x20;C++</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">A&#x20;multiple-choice-questions&#x20;(MCQs)&#x20;based&#x20;test&#x20;application&#x20;created&#x20;by&#x20;using&#x20;2-3-4&#x20;trees.&#x20;The&#x20;application&#x20;has&#x20;two&#x20;modules&#x20;named&#x20;teacher&#x20;and&#x20;student.&#x20;The&#x20;teacher&#x20;can&#x20;add/modify&#x20;the&#x20;questions&#x20;to&#x20;the&#x20;test&#x20;and&#x20;also&#x20;set&#x20;the&#x20;time&#x20;limit&#x20;for&#x20;the&#x20;test.&#x20;Each&#x20;question&#x20;has&#x20;four&#x20;possible&#x20;answers&#x20;and&#x20;a&#x20;correct&#x20;answer.&#x20;Each&#x20;question&#x20;has&#x20;also&#x20;a&#x20;difficulty&#x20;level&#x20;from&#x20;1(easy)-3(hard).&#x20;When&#x20;a&#x20;student&#x20;starts&#x20;the&#x20;test,&#x20;he&#x20;views&#x20;questions&#x20;one&#x20;by&#x20;one&#x20;and&#x20;selects&#x20;one&#x20;of&#x20;the&#x20;four&#x20;possible&#x20;choices.&#x20;He&#x20;has&#x20;to&#x20;complete&#x20;the&#x20;test&#x20;in&#x20;the&#x20;specified&#x20;time&#x20;limit.&#x20;The&#x20;first&#x20;question&#x20;always&#x20;comes&#x20;from&#x20;the&#x20;easy&#x20;difficulty&#x20;level.&#x20;If&#x20;the&#x20;student&#x20;answers&#x20;it&#x20;correct,&#x20;the&#x20;next&#x20;question&#x20;comes&#x20;from&#x20;a&#x20;higher&#x20;difficult&#x20;level.&#x20;If&#x20;the&#x20;student&#x20;answers&#x20;wrong,&#x20;the&#x20;next&#x20;question&#x20;comes&#x20;from&#x20;a&#x20;lower&#x20;difficulty&#x20;level.&#x20;After&#x20;the&#x20;test&#x20;is&#x20;over,&#x20;student&#x20;can&#x20;view&#x20;the&#x20;results&#x20;that&#x20;how&#x20;he&#x20;is&#x20;ranked&#x20;on&#x20;the&#x20;basis&#x20;of&#x20;his&#x20;answers.&#x20;He&#x20;can&#x20;also&#x20;view&#x20;the&#x20;answers&#x20;to&#x20;the&#x20;questions&#x20;that&#x20;he&#x20;was&#x20;unable&#x20;to&#x20;answer&#x20;correctly.&#x20;
+<br>This&#x20;application&#x20;provides&#x20;a&#x20;very&#x20;interactive&#x20;and&#x20;user&#x20;friendly&#x20;GUI&#x20;that&#x20;was&#x20;created&#x20;using&#x20;my&#x20;Visual&#x20;Controls&#x20;Library&#x20;project.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">University&#x20;project&#x20;for&#x20;data&#x20;structures&#x20;course</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2003/1--2003/2:Mass&#x20;File&#x20;Organizer</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">Visual&#x20;Basic,&#x20;Windows&#x20;XP</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio&#x20;6</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">What&#x20;if&#x20;you&#x20;have&#x20;thousands&#x20;of&#x20;files&#x20;in&#x20;some&#x20;directories;&#x20;you&#x20;want&#x20;to&#x20;arrange&#x20;those&#x20;files&#x20;in&#x20;different&#x20;directories,&#x20;but&#x20;don&#39;t&#x20;have&#x20;time.&#x20;So&#x20;let&#x20;&quot;mass&#x20;file&#x20;organizer&quot;&#x20;do&#x20;it&#x20;for&#x20;you.&#x20;This&#x20;program&#x20;arranges&#x20;similar&#x20;files&#x20;into&#x20;folders.&#x20;The&#x20;movement&#x20;of&#x20;files&#x20;is&#x20;made&#x20;on&#x20;the&#x20;basis&#x20;of&#x20;different&#x20;filename-match&#x20;criteria.&#x20;The&#x20;files&#x20;can&#x20;either&#x20;be&#x20;moved&#x20;or&#x20;copied&#x20;to&#x20;the&#x20;different&#x20;folders.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2002/11--2002/12:SPY</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">Visual&#x20;basic,&#x20;Win32&#x20;API,&#x20;Windows&#x20;98</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio&#x20;6</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">A&#x20;complete&#x20;spy&#x20;application&#x20;that&#x20;monitors&#x20;a&#x20;lot&#x20;of&#x20;activities&#x20;on&#x20;the&#x20;computer.&#x20;This&#x20;program&#x20;
+<br>
+<br>&amp;#8226;Monitors&#x20;the&#x20;keys&#x20;pressed&#x20;on&#x20;the&#x20;computer.
+<br>&amp;#8226;Monitors&#x20;the&#x20;programs&#x20;opened&#x20;on&#x20;the&#x20;computer.
+<br>&amp;#8226;Takes&#x20;screenshots&#x20;of&#x20;the&#x20;desktop&#x20;after&#x20;a&#x20;specific&#x20;period&#x20;of&#x20;time&#x20;that&#x20;you&#x20;set.
+<br>
+<br>In&#x20;a&#x20;similar&#x20;manner&#x20;to&#x20;the&#x20;key&#x20;logger&#x20;program&#x20;described&#x20;above,&#x20;the&#x20;program&#x20;locks&#x20;all&#x20;the&#x20;files&#x20;(log&#x20;files&#x20;+&#x20;screenshots)&#x20;until&#x20;you&#x20;enter&#x20;the&#x20;password&#x20;that&#x20;was&#x20;initially&#x20;set&#x20;by&#x20;you.&#x20;The&#x20;program&#x20;is&#x20;completely&#x20;undetectable&#x20;and&#x20;automatically&#x20;starts&#x20;itself&#x20;at&#x20;each&#x20;windows&#x20;startup.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2002/7--2002/8:Key&#x20;Logger</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">Visual&#x20;Basic,&#x20;Win32&#x20;API,&#x20;Windows2000/XP/98</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio&#x20;6</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">A&#x20;simple&#x20;key&#x20;logger&#x20;that&#x20;keeps&#x20;record&#x20;of&#x20;every&#x20;key&#x20;that&#x20;you&#x20;press&#x20;on&#x20;your&#x20;keyboard.&#x20;If&#x20;multiple&#x20;users&#x20;use&#x20;the&#x20;computer,&#x20;the&#x20;program&#x20;stores&#x20;the&#x20;keys&#x20;pressed&#x20;by&#x20;different&#x20;users&#x20;under&#x20;their&#x20;account&#x20;name.&#x20;This&#x20;utility&#x20;is&#x20;especially&#x20;useful&#x20;for&#x20;stealing&#x20;the&#x20;passwords&#x20;of&#x20;people&#x20;at&#x20;a&#x20;massive&#x20;scale&#x20;in&#x20;an&#x20;office/college&#x20;network&#x20;where&#x20;different&#x20;people&#x20;access&#x20;the&#x20;same&#x20;computers&#x20;again&#x20;and&#x20;again.&#x20;However&#x20;for&#x20;this&#x20;you&#39;ll&#x20;need&#x20;the&#x20;privileges&#x20;to&#x20;edit&#x20;the&#x20;windows&#x20;registry.&#x20;
+<br>When&#x20;you&#x20;start&#x20;it&#x20;for&#x20;the&#x20;first&#x20;time,&#x20;you&#x20;need&#x20;to&#x20;set&#x20;the&#x20;master&#x20;password&#x20;by&#x20;pressing&#x20;a&#x20;special&#x20;hotkey,&#x20;after&#x20;which&#x20;it&#x20;keeps&#x20;recording&#x20;all&#x20;the&#x20;keys&#x20;pressed.&#x20;The&#x20;program&#x20;is&#x20;completely&#x20;undetectable&#x20;as&#x20;it&#x20;doesn&#39;t&#x20;appear&#x20;in&#x20;the&#x20;&quot;Applications&quot;&#x20;or&#x20;&quot;Processes&quot;&#x20;portions&#x20;of&#x20;the&#x20;task&#x20;manager.&#x20;The&#x20;file&#x20;in&#x20;which&#x20;the&#x20;keys&#x20;are&#x20;stored&#x20;is&#x20;permanently&#x20;locked.&#x20;To&#x20;unlock&#x20;the&#x20;file,&#x20;you&#x20;need&#x20;to&#x20;press&#x20;the&#x20;same&#x20;hotkey&#x20;to&#x20;enter&#x20;the&#x20;master&#x20;password,&#x20;and&#x20;then&#x20;a&#x20;form&#x20;is&#x20;displayed&#x20;by&#x20;which&#x20;you&#x20;can&#x20;unlock&#x20;the&#x20;log&#x20;file.&#x20;The&#x20;file&#x20;is&#x20;automatically&#x20;locked&#x20;again&#x20;when&#x20;you&#x20;close&#x20;this&#x20;form.&#x20;The&#x20;program&#x20;is&#x20;automatically&#x20;started&#x20;at&#x20;each&#x20;windows&#x20;startup.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2002/5--2002/7:LUDO&#x20;Game</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C++&#x20;DOS</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Borland&#x20;C++</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">The&#x20;very&#x20;common&#x20;LUDO&#x20;game&#x20;created&#x20;in&#x20;graphics&#x20;mode.&#x20;Four&#x20;players&#x20;can&#x20;play&#x20;at&#x20;a&#x20;time.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2002/3--2002/4:Customized&#x20;Notepad</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">Visual&#x20;Basic,&#x20;Win32&#x20;API,&#x20;Windows&#x20;XP/98</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio&#x20;6</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">A&#x20;notepad&#x20;that&#x20;provides&#x20;all&#x20;the&#x20;features&#x20;provided&#x20;by&#x20;the&#x20;windows&#x20;default&#x20;notepad.&#x20;However&#x20;some&#x20;extra&#x20;features&#x20;are&#x20;also&#x20;provided&#x20;like&#x20;changing&#x20;the&#x20;text&#x20;color&#x20;and&#x20;the&#x20;background&#x20;color,&#x20;customizing&#x20;the&#x20;text&#x20;font,&#x20;changing&#x20;the&#x20;selected&#x20;text&#x20;to&#x20;lower&#x20;or&#x20;capital&#x20;letters,&#x20;searching&#x20;within&#x20;the&#x20;selected&#x20;text&#x20;etc.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2002/2--2002/2:Lock&#x20;Computer</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">Visual&#x20;Basic,&#x20;Win32&#x20;API,&#x20;Windows&#x20;98,&#x20;Windows&#x20;Millenium</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Visual&#x20;Studio&#x20;6</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">A&#x20;utility&#x20;to&#x20;lock&#x20;your&#x20;computer.&#x20;This&#x20;program&#x20;was&#x20;specially&#x20;created&#x20;for&#x20;windows&#x20;98&#x20;and&#x20;windows&#x20;ME&#x20;that&#x20;don&#39;t&#x20;have&#x20;any&#x20;locking&#x20;mechanism.&#x20;This&#x20;utility&#x20;can&#x20;also&#x20;be&#x20;set&#x20;to&#x20;start&#x20;itself&#x20;at&#x20;each&#x20;windows&#x20;startup.&#x20;This&#x20;project&#x20;was&#x20;created&#x20;using&#x20;windows&#x20;APIs.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2001/10--2001/11:Snake&#x20;Game</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C++&#x20;DOS</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Borland&#x20;C++</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">An&#x20;ordinary&#x20;snake&#x20;game&#x20;created&#x20;in&#x20;graphics&#x20;mode.&#x20;A&#x20;maximum&#x20;of&#x20;two&#x20;players&#x20;can&#x20;play&#x20;the&#x20;game&#x20;at&#x20;a&#x20;time.</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="2" class="text_left">2001/6--2001/8:Visual&#x20;Controls&#x20;Library&#x20;in&#x20;DOS</td></tr><tr><td class="text_left" valign="top">Software:</td><td class="text">C++&#x20;for&#x20;DOS,&#x20;WInows&#x20;98/2000/Xp</td></tr><tr><td class="text_left" valign="top">Tools:</td><td class="text">Borland&#x20;C++</td></tr><tr><td width="22%" class="text_left" valign="top">Description:</td><td width="78%" class="text">The&#x20;primary&#x20;purpose&#x20;of&#x20;this&#x20;project&#x20;was&#x20;to&#x20;create&#x20;controls&#x20;that&#x20;serve&#x20;to&#x20;provide&#x20;a&#x20;user-friendly&#x20;environment&#x20;and&#x20;enhance&#x20;the&#x20;graphical&#x20;outlook&#x20;of&#x20;the&#x20;programs.&#x20;Almost&#x20;all&#x20;the&#x20;visual&#x20;languages&#x20;(e.g.&#x20;visual&#x20;basic,&#x20;java)&#x20;provide&#x20;these&#x20;controls&#x20;to&#x20;the&#x20;programmers.&#x20;But&#x20;unfortunately&#x20;DOS-based&#x20;c++&#x20;doesn&#39;t.&#x20;Hence&#x20;a&#x20;DOS-based&#x20;c++&#x20;programs&#x20;always&#x20;lacks&#x20;a&#x20;so&#x20;much&#x20;user&#x20;friendly&#x20;environment&#x20;and&#x20;good&#x20;graphical&#x20;outlook.&#x20;To&#x20;solve&#x20;this&#x20;problem,&#x20;an&#x20;effort&#x20;was&#x20;made&#x20;and&#x20;about&#x20;9000+&#x20;lines&#x20;of&#x20;pure&#x20;object&#x20;oriented&#x20;code&#x20;were&#x20;written&#x20;to&#x20;provide&#x20;some&#x20;basic&#x20;controls&#x20;to&#x20;a&#x20;DOS-based&#x20;c++&#x20;programmer.&#x20;Any&#x20;of&#x20;these&#x20;controls&#x20;can&#x20;be&#x20;used&#x20;in&#x20;any&#x20;of&#x20;the&#x20;DOS-based&#x20;c++&#x20;programs,&#x20;by&#x20;just&#x20;including&#x20;the&#x20;header&#x20;file&#x20;and&#x20;then&#x20;calling&#x20;the&#x20;class&#x20;functions&#x20;for&#x20;that&#x20;control&#x20;in&#x20;your&#x20;code.&#x20;These&#x20;controls&#x20;provide&#x20;almost&#x20;all&#x20;the&#x20;features&#x20;as&#x20;provided&#x20;in&#x20;windows&#x20;or&#x20;by&#x20;any&#x20;visual&#x20;language.&#x20;The&#x20;functions&#x20;work&#x20;almost&#x20;in&#x20;the&#x20;same&#x20;way&#x20;as&#x20;they&#x20;do&#x20;in&#x20;java&#39;s&#x20;AWT&#x20;or&#x20;swing&#x20;library&#x20;(Even&#x20;the&#x20;function&#x20;names&#x20;of&#x20;various&#x20;functions&#x20;are&#x20;same&#x20;to&#x20;those&#x20;provided&#x20;in&#x20;java.&#x20;So&#x20;any&#x20;one&#x20;having&#x20;some&#x20;knowledge&#x20;about&#x20;java&#x20;will&#x20;find&#x20;the&#x20;usage&#x20;of&#x20;these&#x20;controls&#x20;much&#x20;easier).&#x20;Due&#x20;to&#x20;the&#x20;pure&#x20;object&#x20;oriented&#x20;approach&#x20;towards&#x20;the&#x20;creation&#x20;of&#x20;these&#x20;controls,&#x20;more&#x20;functions&#x20;can&#x20;be&#x20;added&#x20;by&#x20;anyone&#x20;according&#x20;to&#x20;the&#x20;requirement.&#x20;The&#x20;controls&#x20;provided&#x20;so&#x20;far&#x20;are:&#x20;
+<br>&amp;#8226;List&#x20;box
+<br>&amp;#8226;Drop&#x20;down&#x20;list&#x20;box
+<br>&amp;#8226;Combo&#x20;box
+<br>&amp;#8226;Textbox
+<br>&amp;#8226;Popup&#x20;menu
+<br>&amp;#8226;Menu&#x20;bar
+<br>&amp;#8226;Button
+<br>&amp;#8226;Dialog&#x20;box</td></tr><tr><td class="text_left" valign="top">Responsibility:</td><td class="text">Personal&#x20;project&#x20;for&#x20;learning&#x20;and&#x20;experience</td></tr></table></td></tr><tr><td height="20" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle" class="cvtitle">Education</td></tr><tr><td align="middle" valign="middle" height="4"><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/line1_1.gif" width="100%" height="4"></td></tr><tr><td height="10" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_set"><tr><td width="27%" class="text_left">2004/9--2006/10</td><td width="30%" class="text">Government&#x20;College&#x20;University,&#x20;Lahore,&#x20;Pakistan</td><td width="30%" class="text">Computer&#x20;Science&#x20;And&#x20;Technology</td><td width="13%" class="text">Master</td></tr><tr><td colspan="4" class="text_left">1)&#x20;&#x20;Introduction&#x20;to&#x20;Computer&#x20;Science&#x20;&amp;&#x20;Technology<br>2)&#x20;&#x20;Structured&#x20;Programming<br>3)&#x20;&#x20;Object&#x20;Oriented&#x20;Programming<br>4)&#x20;&#x20;Web&#x20;Programming<br>5)&#x20;&#x20;Databases<br>6)&#x20;&#x20;Operating&#x20;Systems<br>7)&#x20;&#x20;Digital&#x20;Logic&#x20;Design<br>8)&#x20;&#x20;Computer&#x20;Architecture<br>9)&#x20;&#x20;Discrete&#x20;Mathematics<br>10)&#x20;Data&#x20;Structures<br>11)&#x20;Assembly&#x20;Language<br>12)&#x20;Data&#x20;Communication&#x20;&amp;&#x20;Networks<br>13)&#x20;Visual&#x20;Programming&#x20;(C#)<br>14)&#x20;Software&#x20;Engineering<br>15)&#x20;Wireless&#x20;Communication<br>16)&#x20;Compiler&#x20;Construction<br>17)&#x20;Distributed&#x20;Databases</td></tr></table></td></tr><tr><td height="20" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle" class="cvtitle">Training</td></tr><tr><td align="middle" valign="middle" height="4"><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/line1_1.gif" width="100%" height="4"></td></tr><tr><td height="10" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle"></td></tr><tr><td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_set"><tr><td width="20%" class="text_left">2007/5--2007/6:
+          </td><td width="29%" class="text">SIMCOM</td><td width="29%" class="text">Open&#x20;Platform&#x20;Wireless&#x20;Module&#x20;Training</td><td width="22%" class="text">Open&#x20;Platform&#x20;Wireless&#x20;Module&#x20;Training&#x20;using&#x20;SIM300</td></tr><tr><td colspan="4" class="text_left">This&#x20;training&#x20;included&#x20;using&#x20;and&#x20;implementing&#x20;new&#x20;features&#x20;in&#x20;open&#x20;platform&#x20;source&#x20;code&#x20;for&#x20;mobile&#x20;handsets&#x20;using&#x20;SIM300&#x20;wireless&#x20;module.</td></tr></table></td></tr><tr><td height="20" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle" class="cvtitle">Language Skills</td></tr><tr><td align="middle" valign="middle" height="4"><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/line1_1.gif" width="100%" height="4"></td></tr><tr><td height="10" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle"><table border="0" cellspacing="0" cellpadding="0" width="100%"><tr><td width="72%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_set"><tr height="25"><td width="170" class="text_left">Others(Very Good
+):
+          </td><td class="text"></td></tr><tr height="25"><td width="170" class="text_left">English(Excellent
+):
+          </td><td class="text">
+              Listening&amp;Speaking(Excellent)，Reading&amp;Writing(Excellent)
+            </td></tr><tr height="25"><td width="170" class="text_left">Chinese Mandarin(Average
+):
+          </td><td class="text">
+              Listening&amp;Speaking(Average)，Reading&amp;Writing(Average)
+            </td></tr></table></td><td valign="top" align="left" style="padding-left:90px;"></td></tr></table></td></tr><tr><td height="20" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle" class="cvtitle">IT Skills</td></tr><tr><td align="middle" valign="middle" height="4"><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/line1_1.gif" width="100%" height="4"></td></tr><tr><td height="10" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_set"><tr><td width="33%" class="text_left" style="padding-left:25px;">Skill Name</td><td width="33%" class="text">Skill Level</td><td width="33%" class="text">Experience</td></tr><tr><td colspan="3" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td colspan="3" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td width="82%" valign="top" align="left"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_set"><tr><td class="text_left" width="41%">Visual Basic</td><td class="text" width="40%">Advanced</td><td class="text" width="19%">24Month
+										</td></tr><tr><td class="text_left" width="41%">Java</td><td class="text" width="40%">Advanced</td><td class="text" width="19%">24Month
+										</td></tr><tr><td class="text_left" width="41%">JavaScript</td><td class="text" width="40%">Advanced</td><td class="text" width="19%">72Month
+										</td></tr><tr><td class="text_left" width="41%">SQL Server</td><td class="text" width="40%">Advanced</td><td class="text" width="19%">60Month
+										</td></tr><tr><td class="text_left" width="41%">GUI</td><td class="text" width="40%">Expert</td><td class="text" width="19%">60Month
+										</td></tr><tr><td class="text_left" width="41%">IIS</td><td class="text" width="40%">Limited</td><td class="text" width="19%">48Month
+										</td></tr><tr><td class="text_left" width="41%">SQL</td><td class="text" width="40%">Basic</td><td class="text" width="19%">96Month
+										</td></tr><tr><td class="text_left" width="41%">Oracle</td><td class="text" width="40%">Basic</td><td class="text" width="19%">10Month
+										</td></tr><tr><td class="text_left" width="41%">C#</td><td class="text" width="40%">Expert</td><td class="text" width="19%">96Month
+										</td></tr><tr><td class="text_left" width="41%">C/C++</td><td class="text" width="40%">Expert</td><td class="text" width="19%">60Month
+										</td></tr><tr><td class="text_left" width="41%">J2EE</td><td class="text" width="40%">Advanced</td><td class="text" width="19%">24Month
+										</td></tr><tr><td class="text_left" width="41%">HTML</td><td class="text" width="40%">Advanced</td><td class="text" width="19%">96Month
+										</td></tr><tr><td class="text_left" width="41%">Win32</td><td class="text" width="40%">Basic</td><td class="text" width="19%">24Month
+										</td></tr><tr><td class="text_left" width="41%">DHTML</td><td class="text" width="40%">Advanced</td><td class="text" width="19%">96Month
+										</td></tr><tr><td class="text_left" width="41%">JSP</td><td class="text" width="40%">Basic</td><td class="text" width="19%">12Month
+										</td></tr><tr><td class="text_left" width="41%">DreamWeaver</td><td class="text" width="40%">Advanced</td><td class="text" width="19%">36Month
+										</td></tr><tr><td class="text_left" width="41%">ASP.NET</td><td class="text" width="40%">Advanced</td><td class="text" width="19%">96Month
+										</td></tr><tr><td class="text_left" width="41%">XML/XSLT</td><td class="text" width="40%">Basic</td><td class="text" width="19%">48Month
+										</td></tr><tr><td class="text_left" width="41%">E-Commerce</td><td class="text" width="40%">Advanced</td><td class="text" width="19%">60Month
+										</td></tr></table></td><td valign="top" align="left" style="padding-top:5px;padding-left:25px;"></td></tr></table></td></tr></table></td></tr><tr><td height="20" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle" class="cvtitle">Miscellaneous Info</td></tr><tr><td align="middle" valign="middle" height="4"><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/im2009/line1_1.gif" width="100%" height="4"></td></tr><tr><td height="10" align="left" valign="middle"></td></tr><tr><td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_set"><tr><td width="18%" class="text_left" valign="top">Speciality:
+              </td><td width="84%" class="text">I&#x20;am&#x20;a&#x20;fast&#x20;learner.&#x20;Because&#x20;of&#x20;much&#x20;experience&#x20;and&#x20;knowledge&#x20;about&#x20;programming&#x20;in&#x20;general,&#x20;I&#x20;can&#x20;learn&#x20;and&#x20;adapt&#x20;to&#x20;new&#x20;technology&#x20;very&#x20;fast.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td width="18%" class="text_left" valign="top">Speciality:
+              </td><td width="84%" class="text">Computer&#x20;programming&#x20;is&#x20;my&#x20;passion&#x20;and&#x20;I&#x20;like&#x20;to&#x20;accept&#x20;and&#x20;accomplish&#x20;challenging&#x20;and&#x20;complicated&#x20;tasks.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td width="18%" class="text_left" valign="top">Speciality:
+              </td><td width="84%" class="text">I&#x20;am&#x20;good&#x20;at&#x20;oral&#x20;and&#x20;written&#x20;English.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td width="18%" class="text_left" valign="top">Objective:
+              </td><td width="84%" class="text">Learning&#x20;new&#x20;technologies&#x20;and&#x20;work&#x20;in&#x20;a&#x20;competitive&#x20;environment.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td width="18%" class="text_left" valign="top">Religion:
+              </td><td width="84%" class="text">None</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td width="18%" class="text_left" valign="top">Chinese&#x20;Language&#x20;Skills:
+              </td><td width="84%" class="text">Currently&#x20;learning&#x20;how&#x20;to&#x20;write&#x20;and&#x20;read&#x20;Chinese&#x20;language.&#x20;
+Can&#x20;do&#x20;basic&#x20;communication&#x20;and&#x20;read/write&#x20;400+&#x20;Chinese&#x20;words.</td></tr><tr><td colspan="2" align="center" valign="middle"><hr size="1" noshade></td></tr><tr><td width="18%" class="text_left" valign="top">English&#x20;Language&#x20;Skills:
+              </td><td width="84%" class="text">English&#x20;is&#x20;one&#x20;of&#x20;the&#x20;two&#x20;official&#x20;languages&#x20;in&#x20;my&#x20;country.&#x20;I&#x20;have&#x20;always&#x20;been&#x20;educated&#x20;at&#x20;good&#x20;English&#x20;medium&#x20;schools&#x20;and&#x20;universities.&#x20;So&#x20;my&#x20;communication&#x20;skills&#x20;in&#x20;English,&#x20;written&#x20;and&#x20;oral,&#x20;are&#x20;good.</td></tr></table></td></tr><tr><td height="20" align="left" valign="middle"></td></tr></table></td></tr></table></td></tr></table>
+						            
+						            
+					            </td>
+				            </tr>
+			            </table>
+			        </td>
+			        <td width="24" style="padding:0px; margin:0px;">
+                        <img onclick="window.scrollTo(0, 0)" src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/back_top.gif" alt="返回顶部" style="cursor:pointer; width:24px; height:33px; display:none; float:left; position:absolute;" id="bt_ToTop" />
+                    </td>
+			    </tr>
+			</table>
+			    <table border="0" cellpadding="0" align="center" cellspacing="0" width="650" id="divButtons">
+			    <tr><td style="width:100%; padding:20px;" align="center">
+			        <input type="button" onclick="RV_OpenResume(-1)" value="上一封" id="bt_Pre" style="display:none"/>
+			        <input type="button" onclick="RV_OpenResume(1)" value="下一封" id="bt_Next" style="display:none"/>
+			        </td></tr>
+			    </table>
+                <div id=\'MenuContent\' class=\'PrintHideMenuContent\'>
+                    <div id=\'divMainMenuElf\' class=\'MenuContentCssFolder\'><p class=\'rself_listtop\'>简历小精灵</p><div id=\'divMenuContent\' style=\'display:;\'><p class=\'rself_listoff\' onclick=\'Invite.showDialog();\'><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/ico_12.png\' style=\'margin-left:3px;width:18px;height:24px;\' align=\'absmiddle\'/>邀请应聘</p><p class=\'rself_listoff\' onclick=\'return ExportResume();\'><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/ico_1.gif\' align=\'absmiddle\'/>导出简历</p><p class=\'rself_listoff\' onclick=\'javascript:PopupProcTransmit_Dialog();return false;\'><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/step_ico2.gif\' align=\'absmiddle\'/>转发用人方</p><p class=\'rself_listoff\' id=\'lbtnMsgInbox_Menu\' onclick=\'PopupSendMessage_Dialog();return false;\'><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/ico_2.gif\' align=\'absmiddle\'/>发消息</p><p class=\'rself_listoff\' onclick=\'return PrintResume();\'><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/ico_3.gif\' align=\'absmiddle\'/>打印简历</p><p class=\'rself_listoff\' onclick=\'return RecomandPosition();\'><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/ico_8.gif\' align=\'absmiddle\'/>推荐职位</p><p class=\'rself_listoff\'  onclick="javascript:PopupRemark_Dialog();return false;"><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/ico_5.gif\' align=\'absmiddle\'/>标签/评语</p><p class=\'rself_listoff\'  onclick=\'IntoRecycle_Dialog(2);return false;\'><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/ico_6.gif\' align=\'absmiddle\'/>放入回收站</p><p class=\'rself_listoff\' style=\'height:34px;\' onclick="PopupBlacklist_Dialog();return false;"><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/ico_7.gif\' align=\'absmiddle\'/>举报/黑名单</p></div><div class=\'p_empty\'></div><div class=\'p_bottom\' onclick=\'operateMenu(this)\'><img id=\'imgMenuStatus\' src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/listcontract.png\' style=\'margin-top:6px;\' /></div></div>
+                </div>
+				<input name="hidMenuStatus" type="hidden" id="hidMenuStatus" value="0" />
+				<input type="hidden" name="hidViewType" value="1" id="hidViewType"/>
+				<input type="hidden" name="hidChartType" value="BAR" id="hidChartType"/>
+				<input type="hidden" name="hidgroupValB" id="hidgroupValB" />
+				<input type="hidden" name="hidresumeInfo" id="hidresumeInfo" />
+				<input type="hidden" name="hidgroupValR" id="hidgroupValR" />
+				<input type="hidden" name="hidChartTitle" id="hidChartTitle" />
+				
+				<input type="hidden" name="hidUserID" id="hidUserID" value="51908879" />
+				<input type="hidden" name="hidFolder" id="hidFolder" value="BAK" />
+				<input type="hidden" name="hidIsFilter" id="hidIsFilter" value="0" />
+				
+				<input type="hidden" name="hidSeqID" id="hidSeqID" value="214075190" />
+				<input type="hidden" name="hidJobID" id="hidJobID" value="0" />
+                
+				<input type="hidden" name="lang" id="lang" value="1" />
+				
+                <input name="hidSMSJobName" type="hidden" id="hidSMSJobName" value="  " />
+				
+				
+				<input type="hidden" name="hidVisitedUserIds" id="hidVisitedUserIds" />
+				
+				<input type="hidden" name="hidAllUserNames" id="hidAllUserNames" />
+				
+				<input type="hidden" name="hidAllSeqIds" id="hidAllSeqIds" value="214075190" />
+                <input type="hidden" name="hidAllUserIds" id="hidAllUserIds" />
+				
+                <input type="hidden" name="hidCheckedSeqIds" id="hidCheckedSeqIds" />
+                <input type="hidden" name="hidCheckedUserIds" id="hidCheckedUserIds" />
+                <input name="SubmitValue" type="hidden" id="SubmitValue" style="width: 10px" />         
+                <input type="hidden" id="hidBtnType" value="" style="width: 0px; display: none"/>                      
+                <input name="hidDisplayType" type="hidden" id="hidDisplayType" style="width: 0px; display: none" />  
+                <input type="hidden" id="hidSeqIDTmp" style="width: 0px; display: none" value="" />                    
+                <input type="hidden" id="hidUserIDTmp" style="width: 0px; display: none" value="" />                                  
+                <input name="hidUserSex" type="hidden" id="hidUserSex" style="display:none" />
+				<input id="BAK2INT" type="hidden" />
+                <a id="hidLinkButton" href="javascript:__doPostBack(&#39;hidLinkButton&#39;,&#39;&#39;)" style="width: 0px; display: none"></a>  
+				<div id="ResumeView_DeleteLabel" style="position: absolute; z-index: 999; left: 0px; top: 100px; display: none; background-color: #ffffff; border-right: #379ee9 2px solid; padding-right: 5px; border-top: #379ee9 2px solid; padding-left: 5px; padding-bottom: 5px; border-left: #379ee9 2px solid;padding-top: 5px; border-bottom: #379ee9 2px solid; table-layout: auto; width:60px; text-align: center;" onmouseout="document.getElementById(&#39;ResumeView_DeleteLabel&#39;).style.display=&#39;none&#39;;" onmouseover="document.getElementById(&#39;ResumeView_DeleteLabel&#39;).style.display=&#39;block&#39;;">
+					<a href="javascript:void(0);" onclick="mk_DeleteLabel();">删除标签</a>
+				</div>
+				<div id="linkCSS_for_external" style="display:none;"></div>
+		        
+        
+        <div id="sendMessageDialog" style="display: none;width:100%; margin:0px; padding:0px;">            
+            <div>
+                
+<input type="hidden" value="" id="msg_hidNames" />
+<input type="hidden" value="" id="msg_hidUserIDs" />
+<input type="hidden" value="" id="msg_hidSeqIDs" />
+<input type="hidden" value="" id="msg_hidFolderType" />
+<input type="hidden" value="" id="msg_hidJobId" />
+<input type="hidden" value="" id="msg_hidJobName" />
+<input type="hidden" value="" id="msg_hidCVLogIDs" />
+
+<div id="msg_divMain" style="width:100%;border:0px solid #027ec8; margin:0px;padding:0px;" >
+<table width="100%"   border="0" cellpadding="0" cellspacing="0"  align="center" style="height:16px;font-size:14px;margin:10px;margin-left:0px;margin-right:0px;">
+   <tr><td style="color:#333;white-space:nowrap;padding-left:10px;"  valign="top">选中简历：</td><td style="color:#999;width:95%;" id="msg_spanName"></td></tr>
+</table>
+<p style="clear:both;border-bottom:dashed 1px #ccc;margin-bottom:2px;line-height:normal;"/>
+<p class="ibx_tab2" style="line-height:normal;">
+    <span id="msg_tab1" class="ibx_tabxoff01" onclick="msg_tabClick(this)">站内信/Email</span>
+    <span id="msg_tab2" class="ibx_tabxoff" onclick="msg_tabClick(this)">手机短信</span>
+</p>
+<div id="msg_divPlan" class="ibx_tabxkuang">
+   <table border="0" cellpadding="0" cellspacing="0"  style="width:100%; margin:0px;">
+     <tr><td id="msg_td" style="width:100%;" valign="top" ></td></tr>
+   </table>
+   <div class="exptrs_errpadt2l10" id="msg_errDivSendPlan" style="clear:both;border-top:dashed 1px #ccc;"></div>
+      <p style="margin:2px;padding-top:10px;padding-bottom:10px;text-align:center; margin-top:-10px;"/>
+      <input id="SM_BtSave" name="" type="button" value="发送" class="ibx_an" onclick="msg_sendPlan()" style="margin-top:5px;"/></p>
+   </div>
+</div>
+
+
+<div id="msg_divAjaxLoading" style="position:absolute;display:none;"><table style=\'position:absolute;margin-left:100px;margin-top:40px;width:240px;height:60px;margin:0px;margin-top:4px;margin-bottom:4px;border:1px solid #548AB4; background-color:#F7F7F7\'>
+<tr><td colspan=\'2\' style=\'height:10px;\'></td></tr>
+<tr><td style=\'width:70px;\' align=\'right\'><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/common/loading2.gif\' style=\'padding-right:10px;vertical-align:middle;\' alt=\'\'/></td>
+<td style=\'width:170px; color:#A2A2A2; font-weight:bold; font-size:17px;\'>页面载入中。。。</td></tr>
+<tr><td></td><td style=\'color:#B7B7B7;\'>如无响应&nbsp;&nbsp;<a href=\'#A\' onclick="location.reload();" style=\'text-decoration:underline;cursor:pointer; color:#527499\'>手动刷新</a></td></tr>
+<tr><td colspan=\'2\' style=\'height:10px;\'></td></tr>
+</table></div>
+
+
+<div id="divSendMessageResult" style="display: none;">
+   <p id="sendMessageSpn" class="exptrs_pmar20a4"></p>
+</div>
+
+
+
+
+
+<script language="javascript" type="text/javascript">
+var sendMessage_title="发消息"; 
+
+var MSG_SendCo="发信公司";
+var MSG_Type="消息类型";
+var MSG_Template="消息模板";
+var MSG_Content="消息内容";
+
+var MAIL_SendCo="发信公司";
+var MAIL_Type="<font style=\'color:#ff9900\'>*</font>信件类型";
+var MAIL_Template="信件模板";   // modify by peggy 20121016 信件模板改为可选项，去除*标记
+var MAIL_Content="信件内容";
+var MAIL_NoSetLetterType="请选择信件类型！";
+var MAIL_NotReplyMail="请输入正确的回复邮箱！";
+var MAIL_NoSetSender="请选择发信公司！";
+var MAIL_ContentEmpty="请输入要发送的内容！";
+var MAIL_RevRefEmail="请输入正确邮件地址！";
+
+var message_Current="当前输入";
+var message_Words="个字";
+var message_SmsGtOneLtTwo="内容已超过1条，需发送第二条！";
+var message_SmsIsTwo="内容字数已满2条，不可再输入！";
+var message_ThisSmsWords="本条短信已输入{0}个字";
+var message_SmsLeftCount="将扣除{0}条短信(现有余额：{1}条)"; 
+var message_WordsCheck="内容已到{0}个字，不可再输入！";
+var message_PleaseSelect="--请选择--";
+var message_CurrentSms="（现有余额：{0}条）";
+var message_SubSms="将扣除短信：{0}条";
+var message_ContactBuy="联系购买";
+var message_SmsCountLt="短信余额不足！";
+var message_SmsSendFolderRead="1897507@qq.com";   //modify by lisa 20130821 替换用户邮箱
+// add by peggy 20121016 增加资源文件
+var MAIL_MailTitleInputMore="信件主题最多150字符！";  // 信件主题最多输入150个字符
+var MAIL_MailTitle="来自51job的通知邮件";  // Email-默认信件主题
+var SMS_Content="短信内容";    // 短信内容
+// end 20121016
+
+$(function(){
+  $("#divSendMessageResult").dialog({
+    bgiframe: true,
+    modal: true,
+    autoOpen: false,
+    draggable:false,
+    resizable:false,
+    width:330,
+    title:"发消息",
+    buttons:{
+               "确认": function() 
+               {       
+                  $("#sendMessageSpn").html("");      
+                  $(this).dialog(\'close\');
+               }
+             }
+    });
+});
+
+// delete by peggy 20121025 删除同时发送短信再确认层
+//$(function(){
+// $("#syncSmsDialog").dialog({
+//            bgiframe: true,
+//            modal: true,
+//            autoOpen: false,
+//            draggable:false,
+//            resizable:false,  
+//            width:420,
+//            title:"发消息",
+//            buttons: {
+//                "确认": function() { 
+//                    useAlertSendMobile="1";
+//                    msg_sendPlan();
+//                    $(this).dialog(\'close\');
+//                 }
+//            }
+//        });
+//});
+// end 20121025
+</script>
+
+<script src="http://js.51jobcdn.com/ehire2007/js/20150909/Message.js" type="text/javascript" language="javascript"></script>
+
+            </div>
+        </div>
+        
+        
+        
+        <div id="exportDialog" style="display: none;width:100%;">
+            <div>
+                
+
+<div>
+    <table style="width:435px;background-color:#fff;" cellpadding="0" cellspacing="0">
+        <tr> 
+            <td>
+                <table width="435"  border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style ="height:27px" colspan="2" align="left">
+                            <table width="435"  border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td class="exptrs_per45h25pl10"><span>请选择导出格式</span></td>
+                                    <td class="exptrs_pr15vabtar"><span id="ViewTxt" style="display:none;color:Red;height:25;padding-top:5px;">注： 支持word2003及以上版本</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td align="center" class="exptrs_detial" style="width:20px">&nbsp;</td>
+                        <td align="left" class="exptrs_detial">
+                        <input id="ctlExport1_rdbExcel" type="radio" name="ctlExport1$1" value="rdbExcel" onclick="TS_ViewWordText(false);" /><label for="ctlExport1_rdbExcel">Excel 文件</label>
+                        <input id="ctlExport1_rdbAccess" type="radio" name="ctlExport1$1" value="rdbAccess" onclick="TS_ViewWordText(false);" /><label for="ctlExport1_rdbAccess">Access文件</label>
+                        <input id="ctlExport1_rdbHtml" type="radio" name="ctlExport1$1" value="rdbHtml" checked="checked" onclick="TS_ViewWordText(false);" /><label for="ctlExport1_rdbHtml">Html文件</label>
+                        <input id="ctlExport1_rdbWord" type="radio" name="ctlExport1$1" value="rdbWord" onclick="TS_ViewWordText(true);" /><label for="ctlExport1_rdbWord">Word文件</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="left" class="exptrs_per85h27pl10">
+                            <span>下载方式</span>
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td align="center">&nbsp;</td>
+                        <td align="left">
+                            <input id="ctlExport1_rdbDownload" type="radio" name="ctlExport1$2" value="rdbDownload" checked="checked" onclick="TS_nodeClick_Uc(this,false);" /><label for="ctlExport1_rdbDownload">从页面下载</label>
+                            &nbsp; &nbsp;&nbsp;
+                            
+                            <input id="ctlExport1_rdbEmail" type="radio" name="ctlExport1$2" value="rdbEmail" onclick="FillExportDiv(this);" /><label for="ctlExport1_rdbEmail">发送到邮箱</label>                                            
+                        </td>
+                    </tr>
+                    <tr align="center" style="display:none;">
+                        
+                        <td id="ExportDiv" align="center" valign="middle"  colspan ="2"></td>
+                        
+                    </tr>  
+                    <tr><td colspan="2">
+                        <div style="overflow:hidden;background:url(http://img01.51jobcdn.com/imehire/ehire2007/default/image/bid_dash.gif) repeat-x;width:430px;height:5px;clear:both;margin-left:-1px;margin-top:5px;">
+                        </div>
+                        <div class="exptrs_padb5clear">
+                            <div class="exptrs_errpadt2l10" id="errExportDiv">
+                            </div>
+                        </div>  
+                    </td></tr>                                   
+                </table>
+            </td>
+        </tr>                        
+        <tr align="center">
+            <td>
+                <input type="submit" name="ctlExport1$btnSubmit" value="" id="ctlExport1_btnSubmit" style="display:none;" />  
+                <input id="hidExportFolder" name="hidExportFolder" type="hidden" />
+                <input type="hidden" name="hidExportFilter" id="hidExportFilter" value="0" />
+                <input id="hidExportSeqID" name="hidExportSeqID" type="hidden" /> 
+                <input id="hidExportJobID" name="hidExportJobID" type="hidden" />
+                <input id="hidExportUserID" name="hidExportUserID" type="hidden" />
+                <input id="hidExportFormat" name="hidExportFormat" type="hidden" />
+            </td>
+        </tr>
+    </table>   
+</div>
+<div id="divExportMails" class="exptrs_divdnopabsz1003">    
+    <div class="exptrs_padt5h18">
+        <div class="exptrs_padl10float">以下为网才用户，请选择&nbsp;&nbsp;</div>
+        <div onclick="TS_HideMailsDiv()" class="exptrs_closepadr10cur">关闭</div>        
+    </div>
+    <div class="exptrs_errpadl10h17" id="divExportErr"></div>
+    <div id="ctlExport1_labMails" class="exptrs_labh144bor1"></div>
+</div>
+<div id="promptExport" style="display: none;">
+    <p id="exportSpn" class="exptrs_pmar20a4"></p>
+</div>
+
+
+<div id="divAjaxLoading" style="position:absolute;display:none;">
+  <div style="position:absolute;margin-left:50px;margin-top:40px;background-color: #fff; background-image:url(http://img01.51jobcdn.com/imehire/ehire2007/default/image/onloading_bg.gif); background-repeat:no-repeat;width: 203px; height: 39px; z-index: 9999;">
+     <table border="0" cellpadding="0" cellspacing="0" style="width:100%;font-size:9pt;">
+	    <tr><td style="height:39px;width:100%;"><img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/onloading2.gif" alt="" style="margin-left:30px;margin-right:10px;"/>
+	            <span class="red_num">正在加载数据</span>
+	        </td>
+	    </tr>
+     </table>
+  </div>
+</div>
+
+<script type="text/javascript" language="javascript">
+    var export_hfid="ctlExport1_";
+    var export_lan="";
+    var C_Reciver="收件人";
+    var export_defSubject="(51job)导出简历";
+    var export_defContent="附件简历导出自51job“网才”系统，已经过筛选。";
+    var export_email3="最多可输入3个Email！";
+    var export_exisitMail="该Email已存在！";
+    var export_errMails="第{0}个Email错误，请输入有效的Email!";//第*个Email错误，请输入有效的Email!
+    var export_MailFromIsNull="发件人不能为空";//收件人不能为空！
+    var export_MailToIsNull="请输入有效的E-mail地址！";//请输入有效的E-mail地址！
+    var export_lt500content="留言最多可输入500个字！";
+    var export_title="<img align=\'absmiddle\' src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/icon.gif\' />&nbsp;导出"+(export_lan=="en-us"?" ":"")+"简历";
+    var common_hasHtmlTag="{0}只支持纯文本内容！";
+    var common_etitle="信件主题";
+    var common_econtent="留言";
+    var common_esender="发件人";
+</script>
+<script type="text/javascript" language="javascript">
+    $(function(){
+        $("#exportDialog").dialog({
+            bgiframe: true,
+            modal: true,
+            autoOpen: false,
+            resizable:false,
+            draggable:false,
+            width:435,
+            buttons: {
+                "确认": function() {
+                    var result=TS_SubmitExportValid();
+                    if(result)
+                    {
+                        __doPostBack(export_hfid.replace("_","")+\'$btnSubmit\',\'\');
+                    }	                
+                 },
+			    "取消": function() {
+				    $(this).dialog(\'close\');
+			    }
+            }
+        });	
+        $("#exportDialog").removeClass("ui-dialog-content");
+    
+        $("#promptExport").dialog({
+            bgiframe: true,
+            modal: true,
+            autoOpen: false,
+            draggable:false,
+            resizable:false,
+            width:330,
+            title:"<img align=\'absmiddle\' src=\'"+ImagePath+"icon.gif\' />&nbsp;导出",
+            buttons: {
+                "确认": function() {             
+                    $(this).dialog(\'close\');
+                 }
+            }
+        });        
+    }); 
+</script>
+            </div>
+        </div>        
+        
+        <!--流程设置-->
+        
+        <div id="procTransmitDialog" style="display: none;width:100%; margin:0px; padding:0px;">
+            
+<div id="fw_divMain" style="width: 100%; border: 0px solid #027ec8; margin: 0px;
+    padding: 0px;">
+</div>
+<div class="exptrs_errpadt2l10" id="Div1" style="clear: both; border-top: dashed 1px #ccc;
+    margin-top: 10px;">
+</div>
+<table border="0" cellpadding="0" cellspacing="0" align="left" style="width: 495;
+    font-size: 14px; margin-bottom: 10px; margin-top: 5px;">
+    <tr>
+        <td style="width: 100px; padding-top: 6px;" align="right">
+            信件主题：
+        </td>
+        <td align="left" style="padding-left: 0px; padding-top: 6px;">
+            <input id="fw_txtTitle" style="width: 338px;" value="(51job)转发简历"
+                maxlength="100" /></td>
+    </tr>
+    <tr>
+        <td style="padding-top: 6px;" align="right" valign="top">
+            留言：
+        </td>
+        <td style="padding-top: 6px;">
+            <textarea id="fw_txtRemark" rows="10" style="margin: 0px; padding: 4px; width: 334px;
+                height: 100px; border: 1px solid #7f9db9;" onpaste="fw_check_Words(this,document.getElementById(\'fw_txtInfo\'))"
+                onkeyup="fw_check_Words(this,document.getElementById(\'fw_txtInfo\'))" onmouseup="fw_check_Words(this,document.getElementById(\'fw_txtInfo\'))"></textarea></td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+        <td style="padding: 0px; width: 344px;">
+            <table border="0" cellpadding="0" cellspacing="0" style="margin: 0px; padding: 0px;
+                width: 344px;">
+                <tr>
+                    <td id="errfw_txtInfo" style="color: Red; padding: 0px; width: 154px;">
+                    </td>
+                    <td style="padding: 0px;" align="right" valign="top">
+                        <div class="ibx_zs" id="fw_txtInfo" style="width: 190px;">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<br />
+<div id="fw_divTip" style="clear: both; border-top: dashed 1px #ccc; padding: 5px;
+    display: none; padding-left: 65px;">
+    <span id="fw_TipInfo"><font style="color: #FF9900">提示：</font> 该（部分）简历已进入后续流程，是否变更状态为“已转发”？</span>
+    <br />
+    <input id="fw_radio1" value="1" type="radio" name="fw_radio1" style="margin-left: 140px;" />是
+    <input id="fw_radio0" value="0" type="radio" name="fw_radio1" checked="checked" style="margin-left: 1px;" />否
+</div>
+<div class="exptrs_errpadt2l10" id="errDivProcTransmitResult" style="clear: both;
+    border-top: dashed 1px #ccc; margin-top: 0px;">
+</div>
+<br />
+<p style="margin: 2px; text-align: center;">
+    <input name="" type="button" value="发送" class="ibx_an"
+        onclick="fw_Send()" style="margin-bottom: 5px;" /></p>
+
+<div id="fw_divAjaxLoading" style="position: absolute; display: none;">
+    <table style=\'position:absolute;margin-left:100px;margin-top:40px;width:240px;height:60px;margin:0px;margin-top:4px;margin-bottom:4px;border:1px solid #548AB4; background-color:#F7F7F7\'>
+<tr><td colspan=\'2\' style=\'height:10px;\'></td></tr>
+<tr><td style=\'width:70px;\' align=\'right\'><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/common/loading2.gif\' style=\'padding-right:10px;vertical-align:middle;\' alt=\'\'/></td>
+<td style=\'width:170px; color:#A2A2A2; font-weight:bold; font-size:17px;\'>页面载入中。。。</td></tr>
+<tr><td></td><td style=\'color:#B7B7B7;\'>如无响应&nbsp;&nbsp;<a href=\'#A\' onclick="location.reload();" style=\'text-decoration:underline;cursor:pointer; color:#527499\'>手动刷新</a></td></tr>
+<tr><td colspan=\'2\' style=\'height:10px;\'></td></tr>
+</table>
+</div>
+<div id="divProcTransmitResult" style="display: none;">
+    <p id="sendProcTransmitSpn" class="exptrs_pmar20a4">
+    </p>
+</div>
+
+<script type="text/javascript" language="javascript">
+var procTransmit_Title="转发用人方";
+var fw_MailFromIsNull="发件人不能为空!";
+var fw_EmailContent="留言";
+var fw_EmailTitle="信件主题";
+var fw_MailContentIsNull="留言内容不能为空";
+var fw_MailContent="以下简历转发自51job“网才”系统，已经过筛选，可点击姓名（ID）链接查看具体简历内容。若有反馈或问题，可直接回复此邮件，亦可发送至：";
+var fw_MailAddess2="请输入有效的E-mail地址！";
+var fw_SynCCEmail="请输入有效的抄送邮箱！";
+
+$(function(){
+    $("#procTransmitDialog").dialog({
+        bgiframe: true,         //则调用bgiframe插件，用于修复在IE6浏览器中无法显示于其它控件（select,flash）之上的问题。    
+        modal: true,            //模式窗体 true
+        autoOpen: false,        //自动打开 true
+        resizable:false,        //可改大小 true
+        draggable:false,        //可拖动 true
+        width:500,              //height:500,    $("#setupDialog").dialog({ height: 800,width:200 });  dialog({ position:[100,100]});
+        closeOnEscape:true,     //设置当对话框打开的时候，用户按ESC键是否关闭对话框
+        title:"转发用人方"
+    });	
+
+    $("#divProcTransmitResult").dialog({
+        bgiframe: true,
+        modal: true,
+        autoOpen: false,
+        draggable:false,
+        resizable:false,
+        width:330,
+        title:"转发用人方",
+        buttons:{
+                   "确认": function() 
+                   {       
+                      $("#sendProcTransmitSpn").html("");
+                      $("#procTransmitDialog").dialog("close");
+                      $(this).dialog(\'close\');
+                   }
+                 }
+    });
+}); 
+
+
+</script>
+
+
+        </div>
+         
+        
+        <div id="blacklistDialog" style="display: none;width:100%; margin:0px; padding:0px;">
+            
+<div id="bl_divMain" style="width: 100%; border: 0px solid #027ec8; margin: 0px;
+    padding: 0px;">
+    <div class="exptrs_errpadt2l10" id="Div1" style="clear: both; border-top: dashed 1px #ccc;">
+    </div>
+    <table border="0" cellpadding="0" cellspacing="0" align="center" style="width: 100%;
+        margin-top: 10px; font-size: 14px; line-height: normal">
+        <tr>
+            <td style="width: 80px; padding-top: 4px;" align="right" valign="top">
+                举报原因：
+            </td>
+            <td align="left" style="padding-left: 0px;">
+                <input id="rdoReason1" value="1" onclick="ChangeReason()" type="radio" name="bl_radio1" checked="checked" />广告/垃圾简历
+                <input id="rdoReason2" value="2" onclick="ChangeReason()" type="radio" name="bl_radio1" style="margin-left: 20px;" />重复/恶意投递简历
+                <br />
+                <input id="rdoReason3" value="3" onclick="ChangeReason()" type="radio" name="bl_radio1" />无故缺席面试
+                <br />
+                <input id="rdoReason9" value="9" onclick="ChangeReason()" type="radio" name="bl_radio1" />其他<span style="color:#999999">（请输入）</span>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" style="padding-top: 6px; width: 80px;" valign="top">
+            </td>
+            <td style="padding-top: 6px;">
+                <textarea id="bl_txtRemark" rows="10" style="margin: 0px; padding: 4px; width: 334px;
+                    height: 100px; border: 1px solid #7f9db9;" onpaste="check_Words(this,document.getElementById(\'bl_txtInfo\'),200)"
+                    onkeyup="check_Words(this,document.getElementById(\'bl_txtInfo\'),200)" onmouseup="check_Words(this,document.getElementById(\'bl_txtInfo\'),200)"></textarea></td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td style="padding: 0px; width: 344px; line-height: normal">
+                <table border="0" cellpadding="0" cellspacing="0" style="margin: 0px; padding: 0px;
+                    width: 344px;">
+                    <tr>
+                        <td id="errbl_txtInfo" style="color: Red; padding: 0px; width: 154px;">
+                        </td>
+                        <td style="padding: 0px;" align="right" valign="top">
+                            <div class="ibx_zs" id="bl_txtInfo" style="width: 190px;">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <div style="clear: both; border-bottom: dashed 1px #ccc; padding: 15px;">
+        <input id="bl_chkBlacklist" type="checkbox" onclick="if(this.checked){$(\'#div_Alert\').css(\'display\',\'\'); }else{$(\'#div_Alert\').css(\'display\',\'none\'); }" /><span
+            id="bl_spanBlacklist">同时放入黑名单（每个会员最多放入40份简历）</span>
+        <br />
+        <div style="margin-left: 20px; color: #ff9900; display: none" id="div_Alert">
+            简历一旦放入黑名单，将无法投递贵公司的任何职位，请慎重选择
+        </div>
+    </div>
+    <div style="padding: 15px; line-height: 20px;">
+        <p>谢谢您的反馈，我们将及时跟进！如需回复，请填写您的联系方式。</p>
+        <p><input id="bl_chkDontReply" type="checkbox" onclick="$(\'#tabContactInfo\').toggle();ChangeReason();" /><label for="bl_chkDontReply">无需回复</label></p>
+        <table id="tabContactInfo" border="0" cellspacing="0" cellpadding="0" style="margin-left:20px; display: block;">
+            <tr>
+                <td style="width: 60px;">联系人</td>
+                <td style="width: auto;"><input id="bl_txtFilter_Contact" type="text" style="width: 260px;height: 18px; line-height: 18px;border: 1px solid #54a1d9; margin: 3px 0; padding-left: 4px; padding-top: 3px;vertical-align: text-bottom;" maxlength="100" /></td>
+            </tr>
+            <tr>
+                <td style="width: 60px;">Email</td>
+                <td style="width: auto;"><input id="bl_txtFilter_Email" type="text" style="width: 260px;height: 18px; line-height: 18px;border: 1px solid #54a1d9; margin: 3px 0; padding-left: 4px; padding-top: 3px;vertical-align: text-bottom;" maxlength="80" value="1897507@qq.com" /></td>
+            </tr>
+            <tr>
+                <td style="width: 60px;">电话</td>
+                <td style="width: auto;"><input id="bl_txtFilter_Tel" type="text" style="width: 260px;height: 18px; line-height: 18px;border: 1px solid #54a1d9; margin: 3px 0; padding-left: 4px; padding-top: 3px;vertical-align: text-bottom;" maxlength="20" /></td>
+            </tr>
+        </table>
+    </div>
+    <div class="exptrs_errpadt2l10" id="errDivBlacklistResult" style="clear: both; border-top: dashed 1px #ccc;">
+    </div>
+    <br />
+    <p style="margin: 2px; text-align: center;">
+        <input name="" type="button" value="提交" class="ibx_an"
+            onclick="bl_Send()" style="margin-bottom: 5px;" /></p>
+</div>
+
+<div id="divBlackListResult" style="display: none;">
+    <p id="sendBlackListSpn" class="exptrs_pmar20a4">
+    </p>
+</div>
+
+
+<div id="bl_divAjaxLoading" style="position: absolute; display: none;">
+    <table style=\'position:absolute;margin-left:100px;margin-top:40px;width:240px;height:60px;margin:0px;margin-top:4px;margin-bottom:4px;border:1px solid #548AB4; background-color:#F7F7F7\'>
+<tr><td colspan=\'2\' style=\'height:10px;\'></td></tr>
+<tr><td style=\'width:70px;\' align=\'right\'><img src=\'http://img01.51jobcdn.com/imehire/ehire2007/default/image/common/loading2.gif\' style=\'padding-right:10px;vertical-align:middle;\' alt=\'\'/></td>
+<td style=\'width:170px; color:#A2A2A2; font-weight:bold; font-size:17px;\'>页面载入中。。。</td></tr>
+<tr><td></td><td style=\'color:#B7B7B7;\'>如无响应&nbsp;&nbsp;<a href=\'#A\' onclick="location.reload();" style=\'text-decoration:underline;cursor:pointer; color:#527499\'>手动刷新</a></td></tr>
+<tr><td colspan=\'2\' style=\'height:10px;\'></td></tr>
+</table>
+</div>
+
+<input type="hidden" id="hidBlklstSuccessSeqIds" style="width: 0px; display: none" value="" />   
+
+<script type="text/javascript" language="javascript">
+var blacklist_Title="举报/黑名单";
+var blacklist_Reason="举报原因";
+var blacklist_OtherReason="提示：请输入其他举报原因！";
+var blacklist_Max40="同时放入黑名单（每个会员最多放入40份简历）";
+var blacklist_Unlock="同时放入黑名单（黑名单已满40个，请到“系统设置”中解除部分简历）";
+var blacklist_emailError="EMAIL格式填写错误!";
+var blacklist_telError="电话格式填写错误!";
+var blacklist_maxEmailCharacters="EMAIL不能超过80个字符!";
+var blacklist_maxTelCharacters="电话不能超过20个字符!";
+var blacklist_maxContactCharacters="联系人不能超过100个字!";
+var blacklist_userEmail="1897507@qq.com";
+function ChangeReason()
+{
+        $("#bl_divAjaxLoading").css("display","none"); 
+        $("#errDivBlacklistResult").html(""); 
+}
+$(function(){
+    $("#blacklistDialog").dialog({
+        bgiframe: true,         //则调用bgiframe插件，用于修复在IE6浏览器中无法显示于其它控件（select,flash）之上的问题。    
+        modal: true,            //模式窗体 true
+        autoOpen: false,        //自动打开 true
+        resizable:false,        //可改大小 true
+        draggable:false,        //可拖动 true
+        width:460,              //height:500,    $("#setupDialog").dialog({ height: 800,width:200 });  dialog({ position:[100,100]});
+        closeOnEscape:true,     //设置当对话框打开的时候，用户按ESC键是否关闭对话框
+        title:blacklist_Title
+        });	
+     
+    $("#divBlackListResult").dialog({
+        bgiframe: true,
+        modal: true,
+        autoOpen: false,
+        draggable:false,
+        resizable:false,
+        width:340,
+        title:"转发用人方",
+        buttons:{
+            "确认": function() 
+            {       
+                $("#sendBlackListSpn").html("");
+                $("#blacklistDialog").dialog("close");
+                if($("#hidBlklstSuccessSeqIds").val()!="")
+                {
+                    var arrSuccessSeqIds = $("#hidBlklstSuccessSeqIds").val().split(\',\');
+                    if($("#hidAllSeqIds").length>0)
+                    {
+                        try
+                        {
+                            RefreshOpener_folder();
+                        }
+                        catch(ex){}
+                        if($("#hidAllSeqIds").val().split(\',\').length==1||($("#hidAllSeqIds").val().split(\',\').length==arrSuccessSeqIds.length))
+                        {
+                            $("html").html("");
+                            window.close();
+                        }
+                        else
+                        {
+                            var bNeedRefresh=false;
+                            for(var i=0; i<arrSuccessSeqIds.length; i++)
+                            {
+                                if(i==arrSuccessSeqIds.length-1)
+                                {
+                                    bNeedRefresh=true;
+                                }
+                                else
+                                {
+                                    bNeedRefresh=false;
+                                }
+                                tab_RemoveUser(arrSuccessSeqIds[i],bNeedRefresh);
+                                tab_BuildUserList("folder",1);
+                            }
+                        }
+                    }
+                }
+                $(this).dialog(\'close\');
+            }
+        }
+    });
+}); 
+</script>
+
+
+        </div>
+        
+        
+        
+         
+
+<div id="divInboxCommonLayer" style="display:none; z-index:500;position:absolute;">
+<table cellpadding="0" cellspacing="0" class="inbox_table3">
+<tr>
+ 
+ <td style="background-color:#017dc7;color:#FFFFFF;height:25px;border:1px solid #ffffff;">
+   <p class="inbox_p4"><span id="spCommonTitle"></span></p>
+   <p class="inbox_p5">
+     <img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/inbox/layerClose.gif" onclick="CloseDivMask(\'divInboxCommonLayer\')" style="vertical-align:middle;cursor:pointer;" />
+   </p>
+ </td>
+</tr>
+<tr>
+ 
+ <td class="inbox_td16">
+   <span id="spContentValue"></span><br />
+   <div id="divMoveHrTip" style="width:100%;display:none;padding-top:12px;">
+    <ul>
+     <li style="float:left;color:#FF9900;width:100%"><span style="font-family:\'宋体\'; ">注：收件箱将不再保存简历，若有附属招聘流程及面试等信息<p style=\'padding-left:24px;\'>亦将自动清除。</p></span></li>
+     <li style="float:left;color:#FF9900;padding-left:25px;padding-top:5px;"></li>
+    </ul>
+   </div>
+ </td>
+</tr>
+
+<tr><td style="background-image:url(http://img01.51jobcdn.com/imehire/ehire2007/default/image/inbox/dot_line_gray.gif);width:100%;height:2px;"></td></tr>
+<tr>
+ 
+ <td style="height:40px;vertical-align:middle;text-align:center;">
+    <input id="btnCommonOK" type="button" class="inbox_btnimg2" value="确 认" onclick="ResumeComfirmCommonLayer()" />
+    <input id="btnCommonCancel" type="button" class="inbox_btnimg2"  value="取 消" onclick="CloseDivMask(\'divInboxCommonLayer\')" />
+ </td>
+</tr>
+</table>
+</div>
+
+
+<div id="divInboxWarningLayer" style="display:none;z-index:501;position:absolute;width:250px;">
+<table cellpadding="0" cellspacing="0" class="inbox_table3">
+<tr>
+ 
+ <td style="background-color:#017dc7;color:#FFFFFF;height:25px;border:1px solid #ffffff;">
+   <p class="inbox_p4">提示</p>
+   <p class="inbox_p5">
+     <img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/inbox/layerClose.gif" onclick="CloseWarningDialog(\'divInboxWarningLayer\')" style="vertical-align:middle;cursor:pointer;" />
+   </p>
+ </td>
+</tr>
+<tr>
+ 
+ <td style="padding:10px;">
+   <span id="spWarnContent"></span>
+ </td>
+</tr>
+
+<tr><td style="background-image:url(http://img01.51jobcdn.com/imehire/ehire2007/default/image/inbox/dot_line_gray.gif);width:100%;height:2px;"></td></tr>
+<tr>
+ 
+ <td style="height:30px;vertical-align:middle;text-align:center;">
+    <input id="btnWarnOk" type="button" class="inbox_btnimg2" value="确 认" onclick="CloseWarningDialog(\'divInboxWarningLayer\')" />
+ </td>
+</tr>
+</table>
+</div>
+
+
+<div id="divMultiResume" style="display:none; width:500px; padding:0px;">
+<table cellpadding="0" cellspacing="0">
+<tr>
+ 
+ <td style="padding:20px; vertical-align:middle;">
+   <img src="http://img01.51jobcdn.com/imehire/ehire2007/default/image/common/multi_send.gif" alt="" align="middle" style="vertical-align:middle; margin-right:5px;" /><span id="MultiResume_header" style="vertical-align:middle;">最近半年内的其他投递记录</span>
+ </td>
+</tr>
+
+<tr>
+    <td align="center" style="width:100%; text-align:center; padding:0px 10px 10px 10px;">
+            <table cellpadding="0" cellspacing="0" style="width:100%; margin-bottom:5px; text-align:center;">
+                <tr style="height:30px;"><th style="width:103px;">职位名称</th><th style="width:103px;">公司名称</th><th style="width:103px;">发布城市</th><th style="width:103px;">投递时间</th><th style="width:50px;">操作</th><th style="width:17px;">&nbsp;</th></tr>
+            </table>
+            <div style="width:100%; height:5px; line-height:5px; border-top:solid 1px #296EBB;"></div>
+            <div id="MultiResume_content" style="width:100%; height:160px; overflow-y:scroll; overflow-x:hidden;">
+            </div>
+    </td>
+</tr>
+</table>
+</div>
+
+<div id="divCtlInviteDialog" style="display: none; margin: 0px; padding: 0px;"></div>
+<div style="display:none; text-align:center;" id="dialogConfirm"><p id="removeConfimTips" style="margin-top:30px;">请确认是否删除？</p><input type="hidden" id="hidMRCvlogId" name="hidMRCvlogId" value="" /><input type="hidden" id="hidMRJobId" name="hidMRJobId" value="" /><input type="hidden" id="hidMRKey" name="hidMRKey" value="" /></div>
+<div style="display:none; text-align:center;" id="dialogMessage"><p id="spnMessage" style="margin-top:30px;"></p></div>
+
+<div style="display:none;"><input type="button" id="btnNoShowview" onclick="ajaxSendRequest(\'../GlobalUserProfileAjax.aspx?action=3\');" /></div>  
+<input type="hidden" name="resumeViewFolderType" id="resumeViewFolderType" value="BAK" />      
+<input name="hidSource" type="hidden" id="hidSource" value="2" />    
+
+<script type="text/javascript">SetCvHeight_folder();</script>
+<script type="text/javascript">
+//<![CDATA[
+RV_InitButton();//]]>
+</script>
+</form>
+</body>
+</html>
+
+<script type="text/javascript" language="javascript">
+document.getElementById(ifFromLoad).style.display = \'none\';
+document.getElementById(divFromLoad).style.display = \'none\';
+RV_InitButton(); 
+var selectReason="提示：请选择举报原因！";
+var selectOtherReason="提示：请输入其他举报原因！";
+var characters200="提示：最多可输入200个字！";
+var emailError="EMAIL格式填写错误!";
+var telError="电话格式填写错误!";
+var maxEmailCharacters="EMAIL不能超过80个字符!";
+var maxTelCharacters="电话不能超过20个字符!";
+var maxContactCharacters="联系人不能超过100个字!";
+
+$(function(){
+	//打开简历多投层
+	$("#divMultiResume").dialog({bgiframe: true,modal: true,autoOpen: false,resizable:false,draggable: false,width:500,title:"简历多投"});
+	
+	//删除多投简历确认对话框
+	$("#dialogConfirm").dialog({bgiframe: true,modal: true,autoOpen: false,resizable:false,draggable: false,title:"提示",
+	    buttons: { "确认": function() { RemoveMultiResumeRecord(); $(this).dialog(\'close\');},
+		           "取消": function() { $(this).dialog(\'close\'); }}
+    });
+	
+	//多投简历信息提示对话框
+	$("#dialogMessage").dialog({bgiframe: true,modal: true,autoOpen: false,resizable:false,draggable:false,width:300,minHeight:150,closeOnEscape:true,title:"提示",
+        buttons: { "确认": function() {$(this).dialog(\'close\'); }}
+    });
+});
+
+try{
+    var v="0",sti;
+    function showSmsTip(){    
+        if(v>0)
+        {
+            var divbg="http://img01.51jobcdn.com/imehire/ehire2007/default/image/candidate/bluespan.gif";
+            //var content="<div>您有可使用的短信产品，可以在这里给您的应聘者发送短信。</div>";
+            var content="<div style=\'padding-top:7px;padding-left:7px;padding-right:7px;color:white;width:200px;\'><span style=\'font-family:宋体;font-weight:bold;line-height:17px;\'>恭喜您！！！<span><br /><span style=\'font-family:宋体;font-weight:normal;\'>免费视频面试体验，快来邀请吧！<span><br><a style=\'text-decoration:underline;color:white;font:9pt 宋体 normal;\' target=\'_blank\' href=\'http://www.51job.com/pm/ehire/interview/demo.html\'>看看怎么玩</a></div>";
+            var divclose= \'http://img01.51jobcdn.com/imehire/ehire2007/default/image/Ehire_Delete.gif\';
+            var noshow="不再显示";
+            //TINY.box.showViaObj(content,216,75,0,0,"view",noshow,"lbtnMsgInbox_SubMenuInBox",355,18,divbg);            
+            //Modified by lisa 2013-08-15(此次视频面试免费试用没有不再显示功能，但以后可能还会有，先注释方便以后恢复该功能使用)TINY.box.showViaObj(content,216,75,0,0,"view",noshow,"vediodTip",365,25,divbg);
+            TINY.box.showViaObj(content,216,75,0,0,"view","","vediodTip",305,25,divbg);
+            sti = setInterval(function(){
+                if(TINY.completed==1){
+                    T$(\'tinyimgcloseview\').src =divclose;
+                    TINY.complete=0;
+                    clearInterval(sti);
+                 }
+            },1);  
+        }
+    }
+    setTimeout("showSmsTip()",50);
+}catch(ex){}
+
+//打开测评报告
+function EM_ViewReport(obj)
+{
+   var rms_TestId=obj.id.replace("ti_","");
+   var rms_Status=$("#"+obj.id).attr("ts");
+   var rms_ServerTime=$("#"+obj.id).attr("st");
+   var rms_UrlType=$("#"+obj.id).attr("ut");
+   var rms_Key=$("#"+obj.id).attr("key");
+   var rand=Math.random();
+   if(rms_ServerTime!="" && rms_Key!="" &&  rms_TestId!="")
+   {
+       window.open("ts="+rms_Status+"&id="+rms_TestId+"&st="+rms_ServerTime+"&key="+rms_Key+"&rand="+rand+"&ut="+rms_UrlType,"_blank","scrollbars=yes,Width=500px,Height=450px,resizable=yes");
+   }
+}
+</script>

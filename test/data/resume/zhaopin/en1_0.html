@@ -1,0 +1,554 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7" />
+    <title>智联简历</title>
+    <link href="http://img00.zhaopin.cn/2012/css/rd/common.css" rel="stylesheet" type="text/css" />
+    <link href="http://img00.zhaopin.cn/2012/css/rd/rdnew_2.css?version=20160421" rel="stylesheet" type="text/css" />
+    <link href="http://img00.zhaopin.cn/2012/css/rd/rdnewlayer.css" rel="stylesheet" type="text/css" />
+    <link href="http://img00.zhaopin.cn/2012/css/ui/jquery.zlzp.popupdiv.css" type="text/css" rel="stylesheet" />
+    <link href="http://img01.zhaopin.cn/2014/rd2/css/feedbackD.css?version=20160421" type="text/css" rel="stylesheet" />
+    <link href="/css/sendinfo.css" type="text/css" rel="stylesheet" />
+    <style media="print">
+        .resume-preview { color: #000; }
+        .resume-body-left { width: auto; }
+        .resume-preview-left { box-shadow: none; border: none; }
+        .resume-preview-right, .nav-body-top { display: none; }
+        h3 { border-bottom: 2px solid #ccc; }
+        .similar-resume { display: none; }
+    </style>
+</head>
+<body>
+    <div class="resume-preview clearfix">
+        
+
+<style type="text/css">
+    .posR { position: relative; border: 1px solid #ccc; height: 32px; }
+    .nameMatching, .nameMatchings { line-height: 32px; font-size: 12px; float: left; font-weight: normal; }
+    .nameMatching { margin-left: 28px; background: url(http://img02.zhaopin.cn/2012/img/rd/Pmatching.png) no-repeat 7px 7px; padding-left: 50px; height: 22px; padding-top: 10px; }
+    .nameMatching .star { width: 50px; height: 9px; display: block; font-size: 0; background: url(http://img02.zhaopin.cn/2012/img/rd/matching-mark.png) no-repeat; }
+    .nameMatching .star5 { background-position: 0 0; }
+    .nameMatching .star4 { background-position: 0 -9px; }
+    .nameMatching .star3 { background-position: 0 -18px; }
+    .nameMatching .star2 { background-position: 0 -27px; }
+    .nameMatching .star1 { background-position: 0 -36px; }
+    .nameMatching .star0 { background-position: 0 -45px; }
+    .nameMatchings { cursor: pointer; margin-left: 10px; background: url(http://img02.zhaopin.cn/2012/img/rd/Pcell.png) no-repeat 0 7px; height: 22px; width: 35px; }
+    /*给我推荐更多相似人才 按钮*/
+    .acceptInvite { width: 100%; overflow: hidden; }
+    .preview3 { float: left; }
+    .preview3 span { font-size: 14px; }
+    .moreRecom { float: left; width: 155px; height: 25px; background-color: #ff6600; border-radius: 3px; margin-left: 5px; margin-top: 25px; font: 12px/25px \'微软雅黑\'; color: #fff; text-align: center; cursor: pointer; }
+    .fbtips { width: 748px; background-color: #fef8e0; line-height: 28px; border: 1px #eeebde solid; border-bottom: 1px #ffd138 solid; padding-left: 20px; font-size: 12px; color: #777; letter-spacing: 1px; height: 100%; overflow: hidden; }
+    .fbtips span { float: left; }
+    .fbtips span.textsty { color: #222; font-weight: bold; }
+    .fbtips span.textstyone { color: #222; font-weight: bold; width: 180px; float: left; word-wrap: break-word; }
+    #kp_num{display:none;}
+    .printcontack{ display: none;width: 400px;margin-top: -80px;*margin-top:15px;}/*jianguo*/
+</style>
+<style media="print">
+    .noprint { display: none; }
+    .feedbackE_show,.feedbackD_show{display: none;}/*jianguo*/
+    .printcontack{display: block;}/*jianguo*/	
+    .preview-table-body-add{margin-top:-80px;*margin-top:0;}/*jianguo*/
+</style>
+
+<script type="text/javascript">
+    function showMatchDesc(id, rootcompanyId, name) {
+        $(".MatchingDescriptionBtn").match({
+            url: "http://rd2.zhaopin.com/s/resuadmi/resumematchingdescription.asp",
+            type: "Get",
+            data: { id: id, rootcompanyId: rootcompanyId, name: name },
+            callback: "matchingcallback"
+        });
+    }
+</script>
+<link type="text/css" rel="stylesheet" href="http://img00.zhaopin.cn/2012/css/rd/rdmatching.css">
+
+<div class="resume-body-left">
+
+
+<div class="resume-preview-head" id="resumeContentHead">
+    <img alt="" src="http://img02.zhaopin.cn/2012/img/rd/logo.png" width="133" height="71" align="right" class="headerlogo" />
+        <div class="resume-preview-title">
+            <span class="resume-preview-list">应聘职位： <strong id="JobTitle">数据库管理员</strong>
+            </span>
+            <br />
+            <span class="resume-preview-list">应聘机构： <strong id="company_name">北京人大金仓信息技术股份有限公司</strong>
+            </span>
+            <br />
+            <span class="resume-preview-list">工作地点： <strong id="work_localtion">北京</strong>
+            </span>
+        </div>
+    <div class="resume-preview-center">
+        <div class="center-left">
+            <div class="resume-left-tips">
+                    <div class="resume-left-tips-span">
+                        <span class="resume-left-tips-id">ID:JR282323384R90250001000</span>
+                    </div>
+                <div class="resume-left-tips-span tips-span-right">
+                        <img id="changeLanguageImg" src="/img/ajaxLoading.gif" alt="loading" style="display: none" />
+                        <span class="resume-left-tips-right"><a href="javascript:;" onclick="switchlang(\'1\');">中文简历</a></span>
+                </div>
+            </div>
+        </div>
+        <!--<div class="center-right">你可能对这些简历感兴趣</div>-->
+        <input type="hidden" value="English" name ="language" id="language" />
+        <input type="hidden" value="English" name ="anotherLanguage" id="anotherLanguage" />
+    </div>
+    <input type="hidden" id="guid" name="guid" value="4396435586" />
+</div>
+    <div id="resumeDetail">
+        
+        
+        <div class="resume-preview-main">
+            <div class="resume-preview-left">
+                <div id="resumeContentBody">
+<div class="resume-preview-main-title">
+        <div id="userName" class="main-title-fl fc6699cc" style="height: 54px;" alt="Xuguang Wang">
+            Xuguang Wang
+        </div>
+        <!--新添加2 开始-->
+        <div class="posRr">
+            <span>给我推荐更多靠谱的人才！</span>
+            <input type="button" value="立即发送橄榄枝" id="btnglzsend" class="__ga__RDresume_MoreCV_001" />
+            <a href="http://rd2.zhaopin.com/s/help/help_rd_oliveDetails.htm" target="_blank">什么是橄榄枝？</a>
+        </div>
+        <!--新添加2 结束-->
+</div>
+<div class="summary">
+    <a target="_blank" href="http://mypics.zhaopin.com/pic/2010/4/8/F7452892F4CA480EA38246F3A608D9FB.jpg">
+        <img alt="" src="http://mypics.zhaopin.com/pic/2010/4/8/F7452892F4CA480EA38246F3A608D9FB.jpg" width="93" height="131" align="right" class="headerImg" /></a>
+    <div class="summary-top">
+        <span>Male&nbsp;&nbsp;&nbsp;&nbsp;Age33(1983.1)&nbsp;&nbsp;&nbsp;&nbsp;8years working experience&nbsp;&nbsp;&nbsp;&nbsp;Bachelor&nbsp;&nbsp;&nbsp;&nbsp;Married</span>
+        <br />
+        Residency：BEIJING Changping | Hukou：HEBEI | Overseas Work/Educational Experience yes
+    </div>
+    <div class="summary-bottom">
+        <!--普通简历显示联系方式-->
+        <!--end显示联系方式-->
+            <!--反馈通-->
+            <!--正常可点击状态 开始-->
+            <div class="feedbackD_show feedbackD1" id="feedbackD1">
+                <p class="feedbackD_tips01"><b>Xuguang Wang</b>&nbsp;&nbsp;希望您给出反馈后才展示联系方式，请点击下方按钮进行反馈</p>
+                <div class="feedbackD_cont">
+                    <div class="feedbackD" id="feedbackD">
+                        <div>
+                            <input class="__ga__searchresultTab_woyaolianxita_001 link" type="button" value="我要联系TA" />
+                            <span>
+                                <em><b>18618242286</b></em>
+                                <em><i class="mail">leowxg@163.com</i></em>
+                            </span>
+                        </div>
+                        <input style="display: none;" class="__ga__searchresultTab_mianshiyaoqing_001 invite" type="button" value="发面试邀请" />
+                        <input class="__ga__searchresultTab_zanbuheshi_001 noMatch" type="button" value="暂不合适" />
+                        <span style="display: none;" class="sendAfer">已发面试邀请</span>
+                        <span style="display: none;" class="refuseAfer">暂不合适 <a href="http://jobads.zhaopin.com/Position/RecommendResumes4Position/CC000595147J90250482000/" target="_blank" class="__ga__JobInviteLU_clickViewInvite2_001">更多靠谱人才精准推荐</a></span>
+                    </div>
+                </div>
+                <p class="feedbackD_tips02" id="dgt_bar">
+                    你刚刚处理的简历已被放在&nbsp;&nbsp;<em>&ldquo;<a href="http://rd2.zhaopin.com/rdapply/resumes/apply/index?SF_1_1_50=2" target="_blank">待沟通</a>&rdquo;</em>&nbsp;&nbsp;列表里啦!
+                                        <span id="kp_num">已匹配出<em class="tips02_num">*</em>位同样靠谱的人才，<a target="_blank" href="http://jobads.zhaopin.com/Position/RecommendResumes4Position/CC000595147J90250482000/" class="__ga__JobInviteLU_clickViewInvite_001">立即查看</a></span>
+                </p>
+            </div>
+            <!--正常可点击状态 结束-->
+            <!--end反馈通-->
+        <!--橄榄枝-->
+        <!--end橄榄枝-->
+    </div>
+</div>
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">Career Objective</h3>
+        <div class="resume-preview-top">
+            <table cellpadding="0" cellspacing="0">
+                    <tr valign="top">
+                        <td width="125">Desired Location：</td>
+                        <td>BEIJING</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="125">Desired Salary：</td>
+                        <td>Confidential (before tax)</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="125">Current Situation：</td>
+                        <td>In 1 months</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="125">Type of Employment：</td>
+                        <td>Full-time</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="125">Desired Position：</td>
+                        <td>IT Technical Support Manager、IT Project Manager/Supervisor、IT Technical Support Engineer</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="125">Desired Industry：</td>
+                        <td>Computer Hardware、IT Service/General IT、Computer Software、Internet/E-Commerce</td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">Self-Assessment</h3>
+        <div class="resume-preview-dl rd-break">To work in a challenging position in the IT industry by using my analytical application skills and project management skill for the growth of the organization and self. </div>
+    </div>   
+
+    <div class="resume-preview-all workExperience">
+        <h3 class="fc6699cc">Work Experience</h3>
+            <h2>2014.12 - 至今&nbsp;&nbsp;Accenture&nbsp;&nbsp;（1 years and 5 months）</h2>
+            <h5>Database Engineer</h5>
+            <div class="resume-preview-dl">
+                IT Service/General IT | Type Of Company：WFOE | Company Size：More than 10000
+            </div>
+            <div class="resume-preview-dl">
+                	Provide Technical support &amp; Maintenance of Production/Development Environment administration, including Access Control, Server Status Monitor and Health Check. <br />     Monitored and deployed SSIS packages and involved in notification services, error handling.<br />     Responsible for Database and Log Backups and Restoration, Backup Strategies and Scheduling Backups. <br />	Work with offshore application support team and provide expertise on DB performance tuning, capacity planning, troubleshooting for infrastructure related system incident <br />     Using SQL (Querying, writing scripts etc) generating various reports by from database as per business needs. <br />    Responsible for deploy and configure new application/DB release(SQL ETL/SSIS Package etc) into consolidation/production and provide technical support.<br />    Administration and Maintenance of SQL Server Instances, SQL Cluster, maintenance Job.<br />    Provide ongoing management and/or improvement of activities related to technical infrastructure (e.g. OS, DB, security, networks, DNS/IP Binding, TCP/IP etc.) <br />   Manage and maintain production system administration including log monitoring, health checks, maintenance and troubleshooting any reported issues. <br />   Manage relationship with customer to ensure the service quality meet client expectation <br />   Root cause analysis and fixing the Windows / IIS Web Server Related issues. <br />   Creating, deploying, renewing and Import &amp; export of the SSL certificates. <br />   Experience in using several troubleshooting /analyzing tools like DebugDiag, Fiddler , Netmon, HTTP Watch, process monitor and other tools.
+
+            </div>    
+            <h2>2012.10 - 2014.11&nbsp;&nbsp;Chinasoft international&nbsp;&nbsp;（2 years and 1 months）</h2>
+            <h5>Database Administrator | 10001-15000RMB/Month</h5>
+            <div class="resume-preview-dl">
+                IT Service/General IT | Type Of Company：PLC | Company Size：1000-9999
+            </div>
+            <div class="resume-preview-dl">
+                Work collaboratively with US team members on BI reporting projects to analyze data, generate business decision supporting reports, and provide reference to business stakeholders for more effective strategic, operational insights and decision-making.<br /><br />Duties and Responsibilities:<br />	Responsible for Installation, Administration and Maintenance of SQL Server Instances, and Setup Test, Dev, Staging and Production Environments.<br />	Managing and optimizing database, creating jobs and schedules so as to avoid dead-locks.<br />	Maintain database and application level security by monitoring/granting and revoking privileges to vendors/users on the Production server. Such as Create Users and assign permissions based on the level of database access<br />	Monitoring and Performance Tuning: Database level (Database settings and options) and query tuning. (Creating and maintaining Indexes, memory settings, monitoring CPU usage and Disk I/O activity etc.) <br />	Troubleshoot various problems that arise in a day-to-day work and fix the issues. (Monitoring SQL Server Error Logs and checking email alert)<br />	Experience in configuration of report server and report manager scheduling, give permissions to different level of users in SQL Server Reporting Services (SSRS).<br />	Configure SMTPHOST mail for SSRS report subscription and scheduling.<br />	Executed effective processes for tuning and review of database structures and code for performance optimization.<br />	Setup and configuring SCOM 2012, and using SCOM monitoring MS Servers and SQL server performance and alerts.<br />	Documenting major changes to the SQL Servers.
+
+            </div>    
+            <h2>2010.04 - 2012.10&nbsp;&nbsp;Chinasoft International&nbsp;&nbsp;（2 years and 6 months）</h2>
+            <h5>Technical Support/Maintenance Engineer | 8001-10000RMB/Month</h5>
+            <div class="resume-preview-dl">
+                IT Service/General IT | Type Of Company：PLC | Company Size：More than 10000
+            </div>
+            <div class="resume-preview-dl">
+                ACT as Project Manager<br />Duties and Responsibilities:<br />  Coordinating closely with team members to ensure continuous improvement on customer satisfaction, team’s technical skills as well as team’s overall professionalism.<br />	Oversight for team’s performance in incident management and work on escalated or high priority user ticket.<br />	Monitoring tickets matrix to ensure all tickets are meet the SLA/Customer Satisfaction required by Microsoft.<br />	Root cause analysis on customer complaints, high volume tickets spikes, potential risk, and prepare improvement plans. <br />	Documenting existing KB articles or Standardized new workarounds on a regular basis with Microsoft internal teams to keep the documents up- to-date.<br />	Manage Shift schedules and Optimizing the 24/7 workforce via scheduling on weekly basis.<br />	Weekly sync up with MS management to review process changes, team’s KPIs and performance status and gathering client’s new business needs.<br />	Developing a client solution or process plan based on clients business needs in a timely manner.   <br /><br />ACT as Senior Support Engineer | During the Project start phase<br /><br />	Represent Microsoft and communicate with customers via telephone, IM, Email, electronic service in a timely manner according to the SLA.<br />	Provide break/fix support for OCS/Lync products and its services which including Lync2010/Lync mobile and Polycom device.<br />	Collaborate on cross-team and cross-product technical issues by working with resources from other groups as needed to resolve complex customer issues.<br />	Responsible for Lync Audio/Video conferencing, enterprise voice deployment <br />	Managing Active Directory with reference to security credentials, Group Policy and server management.<br />	Provide after hour maintenance, coordinate with consultants and manage vendors for MS Server 08/2012 patches and upgrades.<br />	Familiar with VoIP technology/protocols, such as Qos, SIP, RTP/RTCP.<br />	Experience with IPsec, VPN, Load Balancing, Routing Protocols, firewalls, Group policy, AD, DNS and Network Monitoring<br />
+
+            </div>    
+            <h2>2007.12 - 2009.01&nbsp;&nbsp;University Of Otago - New Zealand&nbsp;&nbsp;（1 years and 1 months）</h2>
+            <h5>Technical Support/Maintenance Engineer | 4001-6000RMB/Month</h5>
+            <div class="resume-preview-dl">
+                IT Service/General IT | Type Of Company：State Owned | Company Size：1000-9999
+            </div>
+            <div class="resume-preview-dl">
+                The prime function of this position is to provide technical and general support in the form of information, advice, service administration and problem resolution to students, staff, departments and divisions of the University. <br />The main roles were:<br />	Troubleshot basic software client’s LAN problems. <br />	Setting up new users’ accounts and profiles and manage the access rights for different users;<br />	Managing Active Directory with reference to security credentials, Group Policy and server management.<br />	Write Dynamic query template and generate data from database according to user&#39;s request.<br />	Backing up and restoring databases
+
+            </div>    
+    </div>
+
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">Project Experience</h3>
+            <h2>2007.07 - 2007.10&nbsp;&nbsp;Online shopping system</h2>
+            <div class="resume-preview-dl">
+                <table cellpadding="0" cellspacing="0">
+                        <tr valign="top">
+                            <td width="140">Software Entironment：</td>
+                            <td>Windows XP</td>
+                        </tr>  
+                        <tr valign="top">
+                            <td width="140">Hardware Environment：</td>
+                            <td>PC, Server</td>
+                        </tr>
+
+                        <tr valign="top">
+                            <td width="140">Development Tools：</td>
+                            <td>Eclipse</td>
+                        </tr>
+
+                        <tr valign="top">
+                            <td width="140">Responsibilities：</td>
+                            <td>Development involves interface design and development, Java programming, and software testing.</td>
+                        </tr>
+
+                </table>
+            </div>
+            <h2>2007.06 - 2007.10</h2>
+            <div class="resume-preview-dl">
+                <table cellpadding="0" cellspacing="0">
+
+
+
+                </table>
+            </div>
+    </div>
+
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">Education</h3>
+        <div class="resume-preview-dl educationContent">
+2004.07 - 2007.11&nbsp;,&nbsp;University Of Otago&nbsp;,&nbsp;Information Science&nbsp;,&nbsp;Bachelor<br />
+        </div>
+    </div>
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">Training</h3>
+            <h2>2009.01 - 2009.03&nbsp;&nbsp;CompTIA A+</h2>    
+            <div class="resume-preview-top resume-line-height">
+                <table cellpadding="0" cellspacing="0">
+                        <tr valign="top">
+                            <td width="80">Institution：</td>
+                            <td>AMES IT Academy</td>
+                        </tr>   
+                        <tr valign="top">
+                            <td width="80">Location：</td>
+                            <td>New Zealand</td>
+                        </tr>   
+                        <tr valign="top">
+                            <td width="80">Certificate：</td>
+                            <td>IT Technician</td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="80">Description：</td>
+                            <td>PC assembling, trouble shooting of desktops and laptops, pc servicing.<br />Trouble shooting LAN/WAN<br />Installing and configuring new hardware and its drivers, etc.</td>
+                        </tr>
+                </table>
+            </div> 
+            <h2>2009.01 - 2009.03&nbsp;&nbsp;MCITP/MCTS Training Course</h2>    
+            <div class="resume-preview-top resume-line-height">
+                <table cellpadding="0" cellspacing="0">
+                        <tr valign="top">
+                            <td width="80">Institution：</td>
+                            <td>AMES IT Academy</td>
+                        </tr>   
+                        <tr valign="top">
+                            <td width="80">Location：</td>
+                            <td>New Zealand</td>
+                        </tr>   
+                        <tr valign="top">
+                            <td width="80">Certificate：</td>
+                            <td>Microsoft Certified IT Professional</td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="80">Description：</td>
+                            <td>Server Administrator<br />Windows Server 2008 Active Directory Configuration<br />Windows Server 2008 Network Configuration</td>
+                        </tr>
+                </table>
+            </div> 
+    </div>
+
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">Certificates</h3>
+            <h2>2009.10&nbsp;&nbsp;MCSE</h2>
+            <h2>2009.06</h2>
+            <h2>2009.10&nbsp;&nbsp;MCP</h2>
+            <h2>2009.03&nbsp;&nbsp;CompTIA A+&#160;&#160;Technical support specialist</h2>
+            <h2>2013.12&nbsp;&nbsp;RHCE (Red Hat Certified Engineer)</h2>
+            <h2>2013.12</h2>
+    </div>
+
+
+
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">Language Skills</h3>
+        <div class="resume-preview-dl resume-preview-line-height">
+English：reading&amp;writing proficient | listening&amp;speaking proficient<br />
+        </div>
+    </div>
+
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">Professional Skills</h3>
+        <div class="resume-preview-dl">
+MS SQL Server 2008/2012：proficient | 18months<br />
+MS BI (SSIS, SSRS and SSAS)：proficient | 12months<br />
+SQL：proficient | 24months<br />
+Windows Server 2008/2012：proficient | 60months<br />
+Red Hat Linux：proficient | 12months<br />
+Microsoft Office：proficient | 120months<br />
+Networking: TCP/IP, Reuters, DNS, DHCP, VPN, FTP etc：proficient | 36months<br />
+Java (Eclipse)：average | 12months<br />
+VMware: VSphere：average | 12months<br />
+SCOM 2008/2012：average | 12months<br />
+        </div>
+    </div>
+
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">Interests &amp; Hobbies</h3>
+        <div class="resume-preview-dl">Movies，Soccer， Photography</div>
+    </div>
+
+    <div class="resume-preview-all" style="display: none;" id="coverletterPanel" data="letterid=0&ver=0">
+        <h3 class="fc6699cc">Cover Letter</h3>
+        <div class="resume-preview-dl">
+            <p>{$letter_content$}</p>
+        </div>
+    </div>
+    <div id="commentBlock">
+
+    </div>
+                </div>
+<div class="resume-preview-right">
+        <div class="resume-preview-button previewLayer1 smpevent" data-smpaction="savetocomputer" data-smpposition="resumedetail">
+            <span class="resume-preview-button-span preview-icon1"></span>保存到我的电脑
+        </div>
+        <div class="resume-preview-button previewLayer2 smpevent" data-smpaction="forwardemail" data-smpposition="resumedetail">
+            <span class="resume-preview-button-span preview-icon2"></span>转发简历到邮箱
+        </div>
+        <div class="resume-preview-button previewLayer4 smpevent" data-smpaction="recommendposition" data-smpposition="resumedetail">
+            <span class="resume-preview-button-span preview-icon4"></span>推荐职位
+        </div>
+        <div class="resume-preview-button previewLayer9 smpevent" data-smpaction="addcomments" data-smpposition="resumedetail">
+            <span class="resume-preview-button-span preview-icon9"></span>添加评语
+        </div>
+        <div class="resume-preview-button complaints-resume">
+            <span class="resume-preview-button-span complaints-icon"></span>举报该简历
+        </div>
+        <div class="resume-preview-button previewLayer8 smpevent" data-smpaction="printresume" data-smpposition="resumedetail">
+            <span class="resume-preview-button-span preview-icon8"></span>打印简历
+        </div>
+    <a class="similar-button-gray previewLayer_xsjl" style="display: none" target="_blank">
+        <span class="preview-icon_xsjl resume-preview-button-span preview-icon-similar-gray"></span>
+        <span id="xsjl_count">相似简历(<img id="xsjldd" src="http://img02.zhaopin.cn/2012/img/rd/xsjldd.gif" />)</span>
+        <span class="new-icon"></span>
+    </a>
+    <!--<div class="resume-preview-button previewLayer10"><span class="resume-preview-button-span preview-icon10"></span>返回顶部</div>-->
+</div>
+<div class="back-to">
+</div>
+<div class="szmr_over">
+    <div class="szmr_overts">
+        <div id="subWindowMain" class="tanchuang_main">
+        </div>
+    </div>
+</div>
+<div id="downfile" style="display: none">
+</div>
+            </div>
+        </div>
+    </div>
+
+        <input type="hidden" id="invite_sms_license" value="t2dt6byrQiq0rLGKgngVUdULyEzbQY6oywSi7cv1tM6q2xUVlsAyte+RQBK+bq3fhUJTDBmQmSli1h6fxLkMwWuJKGHCCkXYTYbn72cuoXdnI+Geh4xymqM1UhgmuVHhlOq5s/xgZXP9B+2tfuPJoStSmS+uaDePxUlZiGgLg1i8GgERB4NiShs/OvREGjRHUjzL6szzN6F64aAIPH8e5IbyfwRmBUF92QT+KB9n4bzyiXI4JtZfFV2Ixg5F8LwFk4tm1A/3ryCdBGG2ANEn1PpbljMnXY0Y+UE0EC2z7HkhUjfQtheBs83w0nj/Vj1anROqTJGDY8aocnI5sTVcPrJExVjGUml2aDg9Cjke4116j5gv8v7WM/Qph1ryXf/tRiRQY2IlcB/4y1rbGSGNcRmZs0Yg0hlIgUfKTllA7pfYz7SfXVCRTy499TJaZlYIxwhBfrxP6iFRl7m5reYQ3qdiwm77THTi4mY4y0ykz5kkF/o4bWdyFepuFIJN/OskN4KrfSnGKeKkmbenOZCO5g==" />
+        <input type="checkbox" name="chkid_sendinfo" userinfo_forsend="Xuguang Wang$128232338$leowxg@163.com$18618242286$4396435586$" id="sendNotify" checked="checked" style="display:none;" />
+    <input type="hidden" value="AppId=1&Id=128232338&Timestamp=635991127227748039&Callback=&signature=e49940b9283c89eec97580944516175c&comid=59514&comname=北京人大金仓信息技术股份有限公司" id="neturlparam">
+    <!--随手聘-->
+    <input type="hidden" name="posttype" id="posttype" value="1" />
+    <input type="hidden" name="labeltype" id="labeltype" value="1" />
+    <input type="hidden" name="positionid" id="positionid" value="31101960340" />
+    <!--反馈通D期-->
+    <input type="hidden" name="tt_username" id="tt_username" value="Xuguang Wang" />
+    <input type="hidden" name="tt_sourceid" id="tt_sourceid" value="1" />
+    <input type="hidden" name="resume_id" id="resume_id" value="141989823" />
+    <input type="hidden" name="extId" id="extId" value="JR282323384R90250001000" />
+    <input type="hidden" name="resume_version" id="resume_version" value="1" />
+    <input type="hidden" name="resume_language" id="resume_language" value="2" />
+    <input type="hidden" name="resume_Name" id="resume_Name" value="数据库工程师" />
+    <input type="hidden" name="resumeUserId" id="resumeUserId" value="128232338" />
+    <input type="hidden" name="currentCompanyName" id="currentCompanyName" value="北京人大金仓信息技术股份有限公司" />
+    <input type="hidden" name="currentDepartmentName" value="北京人大金仓信息技术股份有限公司"/>
+    <input type="hidden" name="PositionNumber" id="PositionNumber" value="CC000595147J90250482000" />
+    <input type="hidden" name="gltype" id="gltype" value="0" />
+    <input type="hidden" name="GlStatus" id="GlStatus" value="0" />
+    <input type="hidden" name="ApplyResume" id="ApplyResume" value=",2," />
+    <input type="hidden" name="rootCompanyId" id="rootCompanyId" value="59514" />
+    <!-- Trace Data Block Start -->
+    <input type="hidden" name="dda_kpi" id="dda_kpi" value="M2" />
+    <input type="hidden" name="dda_operatorid" id="dda_operatorid" value="104834498" />
+    <input type="hidden" name="dda_companyid" id="dda_companyid" value="59514" />
+    <input type="hidden" name="dda_custom" id="dda_custom" value="" />
+    <input type="hidden" name="dda_ownerid" id="dda_ownerid" value="4396435586" />
+    <input type="hidden" name="dda_cvid" id="dda_cvid" value="JR282323384R90250001000_1" />
+    <input type="hidden" name="dda_position" id="dda_position" value="resumedetail" />
+    <input type="hidden" name="dda_action" id="dda_action" value="viewdetail" />
+    <input type="hidden" name="dda_xtable" id="dda_xtable" value="1" />
+    <input type="hidden" name="dda_type" id="dda_type" value="cvinterview" />
+    <!-- Trace Data Block End   -->
+    <input type="hidden" name="rewardhrresult" id="rewardhrresult" value="0" data-reward="5" />
+
+    <a id="fileLink" href="" style="display: none"></a>
+
+        <div class="moreTalented noprint" style="display: none;" id="kp_panel">
+            <p class="mtTitle">更多靠谱人才</p>
+            <div class="mtChatCon">
+                <ul></ul>
+            </div>
+            <div class="mtCheckAll"><a target="_blank" href="#" id="kp_linkall" class="__ga__JobInviteLU_clickViewAll$CV_001">查看全部&gt;&gt;</a></div>
+        </div>
+    
+
+    <script type="text/javascript" language="javascript">
+
+        if (typeof (jobTitleInit) != \'undefined\') {
+            jobTitleInit();
+        }
+
+        if (typeof (countKPJL) != \'undefined\') {
+            countKPJL();
+        }
+
+        if (typeof (getKPJL) != \'undefined\') {
+            getKPJL();
+        }
+
+        function switchlang(lang) {
+            $(\'#changeLanguageImg\').show();
+            var href = location.href.replace(/&?lang=\\w*/, \'\');
+            if (href.indexOf(\'?\') == -1) {
+                location.href = href + \'?lang=\' + lang;
+            } else if (href.lastIndexOf(\'?\') == href.length - 1) {
+                location.href = href + \'lang=\' + lang;
+            } else {
+                location.href = href + \'&lang=\' + lang;
+            }
+        }
+    </script>
+</div>
+<input type="hidden" name="viewSource" id="viewSource" value="1" />
+<input type="hidden" name="keyword_search" id="keyword_search" value="" />
+<input type="hidden" name="college_search" id="college_search" value="" />
+<input type="hidden" name="company_search" id="company_search" value="" />
+<input type="hidden" name="dda_source" id="dda_source" value="" />
+
+
+    </div>
+    <div class="editor-layer-add">
+        <div class="editor-layer-icon cvLabelColor1 dev_label_icon_list" dev_classname="cvLabelColor1">
+        </div>
+        <div class="editor-layer-icon cvLabelColor2 dev_label_icon_list" dev_classname="cvLabelColor2">
+        </div>
+        <div class="editor-layer-icon cvLabelColor3 dev_label_icon_list" dev_classname="cvLabelColor3">
+        </div>
+        <div class="editor-layer-icon cvLabelColor4 dev_label_icon_list" dev_classname="cvLabelColor4">
+        </div>
+        <div class="editor-layer-icon cvLabelColor5 dev_label_icon_list" dev_classname="cvLabelColor5">
+        </div>
+        <div class="editor-layer-icon cvLabelColor6 dev_label_icon_list" dev_classname="cvLabelColor6">
+        </div>
+        <div class="editor-layer-icon cvLabelColor7 dev_label_icon_list" dev_classname="cvLabelColor7">
+        </div>
+        <div class="editor-layer-icon cvLabelColor8 dev_label_icon_list" dev_classname="cvLabelColor8">
+        </div>
+        <div class="editor-layer-icon cvLabelColor9 dev_label_icon_list" dev_classname="cvLabelColor9">
+        </div>
+        <div class="editor-layer-icon cvLabelColor10 dev_label_icon_list" dev_classname="cvLabelColor10">
+        </div>
+        <div class="editor-layer-icon cvLabelColor11 dev_label_icon_list" dev_classname="cvLabelColor11">
+        </div>
+        <div class="editor-layer-icon cvLabelColor12 dev_label_icon_list" dev_classname="cvLabelColor12">
+        </div>
+    </div>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/jquery-1.6.4.min.js"></script>
+    <!--script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/arrdata.js"></script-->
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/zlzp.app.js"></script>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/rd/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/ui/jquery.zlzp.popupdiv.js"></script>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/ui/jquery.zlzp.popupbase.js"></script>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/rd/common.js"></script>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/rd/utilscript.js"></script>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/rd/fnresuadmi.js"></script>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/ui/jquery.zlzp.autocomplete.js"></script>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/za/smp.min.js"></script>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2012/js/rd/previewlayer.js?version=20151203"></script>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2014/rd2/js/fktResumeActive.js"></script>
+    <!--反馈通D期-->
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2014/common/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="http://img01.zhaopin.cn/2014/rd2/js/feedbackD.js?version=20160421"></script>
+    <script type="text/javascript" src="http://img00.zpin.net.cn/2014/common/js/za/ga_rd.js"></script>
+    
+    
+    <script src="http://img07.zpin.net.cn/2014/rd2/js/timecountdown.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://img08.zpin.net.cn/2014/rd2/js/rob_time.js"></script>
+
+    
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            //SMP监控
+            smppv.pageView();
+        });
+    </script>
+</body>
+</html>

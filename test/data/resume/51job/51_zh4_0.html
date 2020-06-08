@@ -1,0 +1,1242 @@
+<html>
+
+<head>
+  <meta http-equiv='x-ua-compatible' content='IE=7,8,9,10,edge'>
+</head>
+
+<body>
+  <table width='702' height='62' border='0' align='center' cellpadding='0' cellspacing='0'>
+    <tr>
+      <td width='62%' height='50' align='left' valign='bottom' class='top'><br />更新时间：<span
+          style="color:#256fb8;">2016-07-31</span></td>
+      <td width='37%' align='right' valign='bottom'><img width='120' height='50'
+          src="cid:228def26-fd5a-4b98-b56d-95a251bec36e" /></td>
+    </tr>
+  </table>
+  <table width="703" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td style='border:1px solid #dedede'>
+        <html>
+
+        <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+          <style>
+            #topChart {
+              background-color: #f3f5f4;
+              height: 20px;
+              padding: 14px 0;
+              *height: 42px;
+              *padding: 0;
+              overflow: hidden;
+            }
+
+            .rsfont14 {
+              float: left;
+            }
+
+            .tab_title_line {
+              height: 26px;
+              line-height: 26px;
+            }
+
+            .btnline {
+              position: absolute;
+              right: 10px;
+              top: 12px;
+            }
+
+            .line_body {
+              padding: 2px;
+              width: 286px;
+              border: #e2e2e2 solid 1px;
+              float: left;
+              margin-top: 2px;
+            }
+
+            .line_main {
+              height: 10px;
+              width: 286px;
+              background-color: #fff;
+              position: relative;
+              overflow: hidden;
+            }
+
+            .line_main_green,
+            .line_main_red {
+              position: absolute;
+              height: 10px;
+              top: 0px;
+              left: 0px;
+              display: inline-block;
+            }
+
+            .line_main_green {
+              background-color: #a5dc00;
+            }
+
+            .line_main_red {
+              background-color: #ff0000;
+            }
+
+            .line_num {
+              display: inline-block;
+              float: left;
+              margin-left: 4px;
+            }
+
+            /* add by linsendu 20110902 简历页面页签*/
+            .rview_tab1 p {
+              float: left;
+              margin-left: 2px;
+              position: relative;
+              width: 174px;
+            }
+
+            .rview_tab1_bg {
+              width: 122px;
+              height: 20px;
+              background: #fff;
+              color: #333;
+              padding-top: 5px;
+              padding-left: 1.5px;
+              border: #c5c5c5 solid 1px;
+            }
+
+            .rview_tab1_bg a:link {
+              color: #333;
+              text-decoration: none;
+            }
+
+            .rview_tab1_bg a:visited {
+              color: #333;
+              text-decoration: none;
+            }
+
+            .rview_tab1_bgon {
+              width: 126px;
+              height: 20px;
+              background: #3778bb;
+              color: #FFF;
+              padding-top: 5px;
+              padding-left: 3px;
+            }
+
+            .rview_tab1_bgon a:link {
+              color: #FFF;
+              text-decoration: none;
+            }
+
+            .rview_tab1_bgon a:visited {
+              color: #FFF;
+              text-decoration: none;
+            }
+
+            /*简历详情*/
+
+            html,
+            body,
+            div,
+            p {
+              margin: 0;
+              padding: 0
+            }
+
+            body {
+              font-size: 14px;
+              font-family: Arial, Microsoft YaHei, '宋体';
+              background-color: #ffffff
+            }
+
+            table {
+              border-collapse: collapse;
+              border-spacing: 0;
+              table-layout: fixed;
+            }
+
+            th,
+            td {
+              font-size: 14px;
+              padding-left: 0px
+            }
+
+            a {
+              text-decoration: none
+            }
+
+            img {
+              border: 0 none
+            }
+
+            .blue {
+              text-decoration: none;
+              color: #3c3d5d
+            }
+
+            .column {
+              width: 702px;
+              line-height: 28px;
+            }
+
+            .column .gray {
+              color: #999999;
+              word-break: break-word;
+            }
+
+            .column .gray2 {
+              color: #666666
+            }
+
+            .column .head {
+              display: block;
+              background-color: #fafafa
+            }
+
+            .column .box {
+              width: 100%;
+              background-color: #fff;
+              border-top: 2px solid #f2f3f5;
+              table-layout: flex;
+            }
+
+            .column .box1 {
+              width: 100%;
+              word-wrap: break-word;
+              color: #ffffff;
+              background-color: #3876c1;
+              table-layout: flex;
+            }
+
+            .column .box2 {
+              width: 100%;
+              background-color: #f8f9fa;
+              table-layout: flex;
+            }
+
+            .column .tba {
+              width: 680px;
+              padding: 0 0 15px 10px
+            }
+
+            .column .tbb {
+              width: 680px;
+              padding: 0 15px
+            }
+
+            .column .tbb table {
+              table-layout: auto;
+            }
+
+            .column .tb1 {
+              width: 666px;
+              line-height: 28px;
+              color: #333333;
+              word-break: break-word;
+              padding: 0 7px
+            }
+
+            .column .tb2 {
+              width: 305px;
+              padding: 0 8px;
+            }
+
+            .column.tb_two {
+              width: 305px;
+              float: left;
+            }
+
+            .column .tb3 {
+              width: 660px;
+              padding: 15px 10px 15px 0
+            }
+
+            .column .plate1,
+            .column .plate2 {
+              width: 380px;
+              height: 54px;
+              font-size: 16px;
+              font-weight: bold;
+              color: #3876c1;
+              padding-left: 12px;
+            }
+
+            .column .plate1 {
+              width: 640px;
+              padding: 0 20px
+            }
+
+            .column .plate1 .f16 {
+              font-size: 14px;
+              font-weight: normal;
+              color: #666666
+            }
+
+            .column .plate1 .f12 {
+              font-size: 12px;
+              font-weight: normal;
+              color: #999999
+            }
+
+            .column .keys,
+            .column .keys2 {
+              width: 90px;
+              line-height: 28px;
+              color: #666666;
+            }
+
+            .column .keys2 {
+              width: 110px
+            }
+
+            .column .txt1,
+            .column .txt2,
+            .column .txt3 {
+              width: 545px;
+              line-height: 28px;
+              color: #666666;
+              word-break: break-word;
+            }
+
+            .column .txt2 {
+              width: 290px
+            }
+
+            .column .txt3 {
+              font-size: 14px;
+              font-weight: bold
+            }
+
+            .column .txt4 {
+              font-size: 14px;
+              font-weight: bold
+            }
+
+            .column .txt4 {
+              line-height: 28px;
+              color: #666666;
+              word-break: break-word;
+            }
+
+            .column .infr {
+              color: #ffffff;
+              table-layout: auto
+            }
+
+            .column .vam,
+            .column .grcha {
+              vertical-align: middle;
+              margin-left: 5px
+            }
+
+            .column .box1 .vam {
+              margin-right: 5px;
+              margin-left: 0
+            }
+
+            .column .name {
+              font-size: 24px;
+              padding-bottom: 18px
+            }
+
+            .column .icard {
+              color: #9cbfe8;
+              padding-bottom: 18px
+            }
+
+            .column .con {
+              border-top: 1px dotted #ddd
+            }
+
+            .column .pr20 {
+              width: 185px;
+            }
+
+            .column .time {
+              width: 130px;
+              line-height: 28px;
+              color: #666666;
+              padding-left: 7px
+            }
+
+            .column .rtbox {
+              width: 675px;
+              line-height: 28px;
+              color: #666666;
+              padding: 0 20px 0 15px;
+              word-break: break-word;
+            }
+
+            .column .hai,
+            .column .guan {
+              line-height: 18px;
+              font-size: 12px;
+              color: #fff;
+              vertical-align: text-top;
+              margin-left: 5px;
+              padding: 1px 3px;
+              background-color: #3cbe7f;
+              border-radius: 2px;
+              white-space: nowrap;
+            }
+
+            .column .guan {
+              background-color: #ff9f20
+            }
+
+            .column .tag {
+              display: inline-block;
+              word-break: break-word;
+              #display: inline;
+              #zoom: 1
+            }
+
+            .column .all {
+              color: #666;
+              padding: 10px 4px;
+              background-color: #fafafa
+            }
+
+            .column .tit {
+              width: 700px;
+              height: 40px;
+              color: #666666;
+              padding: 0 20px;
+              background-color: #f5f5f5
+            }
+
+            .column .p15 {
+              padding: 15px 0
+            }
+
+            .column .p5 {
+              display: inline-block;
+              color: #9cbfe8;
+              padding: 0 5px;
+              #display: inline;
+              #zoom: 1
+            }
+
+            .column .cell .skill {
+              width: 120px;
+              text-align: right;
+              ;
+              word-break: break-all;
+            }
+
+            .column .cell .skbg,
+            .column .cell .skco {
+              display: inline-block;
+              width: 184px;
+              height: 18px;
+              line-height: 18px;
+              font-size: 10px;
+              color: #fff;
+              vertical-align: top;
+              margin-top: 6px;
+              background-color: #dddddd;
+              border-radius: 20px;
+              #display: inline;
+              #zoom: 1
+            }
+
+            .column .cell .skco {
+              width: 184px;
+              font-style: normal;
+              margin-top: 0;
+              padding-left: 10px;
+              background-color: #3876c1;
+              z-index: 3
+            }
+
+            .column .sl .skco {
+              width: 138px;
+            }
+
+            .column .lh .skco {
+              width: 92px
+            }
+
+            .column .yb .skco {
+              width: 46px
+            }
+
+            .column .fbox strong {
+              font-size: 14px;
+              font-weight: bold
+            }
+
+            .column .cha {
+              font-size: 12px;
+              font-weight: normal;
+              color: #2d64b3;
+              margin-left: 5px
+            }
+
+            .column .cha:hover {
+              color: #ff6000
+            }
+
+
+            .eng td,
+            .eng .txt3,
+            .eng .fbox strong {
+              font-size: 13px;
+              font-family: 'Arial'
+            }
+
+            .eng .txt1,
+            .eng .rtbox,
+            .eng .phd {
+              width: 575px;
+              font-size: 13px;
+              font-family: 'Arial';
+              line-height: 28px
+            }
+
+            .eng .txt2 {
+              width: 305px
+            }
+
+            .eng .cell .txt3 {
+              width: 120px
+            }
+
+            .eng .time,
+            .eng .keys {
+              width: 110px;
+              font-size: 13px;
+              text-align: right
+            }
+
+            .eng .cell .skill {
+              width: 110px;
+            }
+
+            .eng .phd {
+              padding-left: 145px
+            }
+
+            .eng .keys {
+              padding-right: 15px
+            }
+
+            span.small_lab {
+              font-size: 12px;
+            }
+
+            .small_lab span {
+              color: #fff700;
+            }
+
+            body,
+            a,
+            td,
+            tr,
+            form,
+            select,
+            input,
+            p,
+            table,
+            font,
+            textarea,
+            label,
+            th,
+            span {
+              font-family: Arial, Microsoft YaHei, '宋体';
+              font-size: 14px;
+            }
+
+            span {
+              color: #666666;
+            }
+
+            td.m_com {
+              word-break: break-word;
+              line-height: 30px;
+            }
+
+            .y2 {
+              padding-right: 14px;
+            }
+
+            .qiuzhi {
+              padding: 3px 16px 0 31px;
+              width: 700px;
+              line-height: 28px;
+              color: #333333;
+              word-break: break-word;
+            }
+
+            *table {
+              table-layout: auto;
+            }
+          </style>
+        </head>
+
+        <body topmargin="0" marginheight="0">
+          <table cellpadding="0" cellspacing="0" width="702" align="center" bgcolor="#fff" class="column">
+            <tr>
+              <td valign="top">
+                <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="box1">
+                  <tr>
+                    <td width="120" height="154" align="middle">
+                      <table>
+                        <tr>
+                          <td style="background-color: #fff;width: 85px;height: 104px;"><img class="head"
+                              src="cid:d5be5bd4-2890-42b9-8f89-c22ded362e70" width="85" height="104" alt="头像"></td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td>
+                      <table cellspacing="0" cellpadding="0" border="0" width="560" class="infr">
+                        <tr>
+                          <td class="name" colspan="3">&nbsp;曹菊<span class="small_lab" id="spanProcessStatusHead"
+                              style="display:none;">流程状态：<span id="spanProcessStatus"></span></span><span
+                              id="spanLabelTitleHead" class="small_lab" style="display:none;">&nbsp;&nbsp;&nbsp;&nbsp;
+                              标签：
+                              <span id="spanLabelTitle"></span></span></td>
+                          <td align="right" class="icard">
+                            ID:346422708</td>
+                        </tr>
+                        <tr style="height: 28px;">
+                          <td style="white-space:nowrap;">
+                            <table>
+                              <tr>
+                                <td valign="middle">&nbsp;<img class="vam"
+                                    src="cid:72d25903-899c-4d0b-a9c0-da8d70754adf" width="20" height="20"></td>
+                                <td valign="middle" style="color:#fff;white-space:nowrap;">目前正在找工作</td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td style="white-space:nowrap;">
+                            <table>
+                              <tr>
+                                <td valign="middle">&nbsp;<img class="vam"
+                                    src="cid:1f1d631e-5b8f-449d-a2e6-8235c126dd70" width="20" height="20"></td>
+                                <td valign="middle" style="color:#fff;white-space:nowrap;">15000297086</td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td colspan="2">
+                            <table>
+                              <tr>
+                                <td valign="middle">&nbsp;<img class="vam"
+                                    src="cid:022c6004-6856-43a0-943e-d531f6f8bd41" width="20" height="20"></td>
+                                <td valign="middle" style="color:#fff;word-break:break-all;"><a class="blue"
+                                    style="color:#fff;" href="mailto:702682525@qq.com">702682525@qq.com</a></td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr style="height: 28px;">
+                          <td colspan="4">&nbsp;<img class="vam" width="20" height="20" valign="bottom"
+                              src="cid:7a2ec45b-3639-449d-b10b-b9a1be738309">女<span class="p5"> | </span>26岁
+                            <span class="p5"> | </span>现居住上海-宝山区<span class="p5"> | </span>3年工作经验</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="box2">
+                  <tr>
+                    <td class="tba">
+                      <table width="640" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td valign="top" class="tb2">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                              <tbody>
+                                <tr>
+                                  <td colspan="2" class="plate2">
+                                    最近工作
+                                  </td>
+                                <tr>
+                                  <td valign="top" class="keys">职　位：</td>
+                                  <td valign="top" class="txt2" style="word-break:break-all;">电话销售</td>
+                                </tr>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="keys">公　司：</td>
+                          <td valign="top" class="txt2" style="word-break:break-all;">中国电信外包公司</td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="keys">行　业：</td>
+                          <td valign="top" class="txt2" style="word-break:break-all;">通信/电信/网络设备</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                    <td valign="top" class="tb2">
+                      <table cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td colspan="2" class="plate2">
+                            最高学历/学位
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="keys">专　业：</td>
+                          <td valign="top" class="txt2" style="word-break:break-all;">英语</td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="keys">学　校：</td>
+                          <td valign="top" class="txt2" style="word-break:break-all;">苏州大学应用技术学院</td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="keys">学历/学位：</td>
+                          <td valign="top" class="txt2">本科</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr id="divInfo">
+              <td>
+                <table cellspacing="0" cellpadding="0" border="0" class="box">
+                  <tbody></tbody>
+                </table>
+                <table cellspacing="0" cellpadding="0" border="0" class="box">
+                  <tr>
+                    <td class="plate1">
+                      目前年收入：
+                      <span class="f16">5 万元
+                      </span><span class="f12">(如股票、期权收益、公司分红等)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="tba">
+                      <table cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                          <tr>
+                            <td class="tb1">
+                              <table cellspacing="0" cellpadding="0" border="0">
+                                <tbody></tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" border="0" class="box">
+                  <tr>
+                    <td class="plate1">求职意向</td>
+                  </tr>
+                  <tr>
+                    <td class="tba">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td valign="top" class="tb2">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                              <tbody>
+                                <tr>
+                                  <td valign="top" class="keys">期望薪资：</td>
+                                  <td valign="top" class="txt2">3000-4499元/月</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                          <td valign="top" class="tb2">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                              <tbody>
+                                <tr>
+                                  <td valign="top" class="keys">地点：</td>
+                                  <td valign="top" class="txt2"><span class="tag">上海</span></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="tb2">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                              <tbody>
+                                <tr>
+                                  <td valign="top" class="keys">职能：</td>
+                                  <td valign="top" class="txt2"><span class="tag">行政专员/助理</span></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                          <td valign="top" class="tb2">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                              <tbody>
+                                <tr>
+                                  <td valign="top" class="keys">行业：</td>
+                                  <td valign="top" class="txt2"><span class="tag">专业服务(咨询、人力资源、财会)</span></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="tb2">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                              <tbody>
+                                <tr>
+                                  <td valign="top" class="keys">工作类型：</td>
+                                  <td valign="top" class="txt2">全职</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tb1" colspan="2">
+                            <table cellspacing="0" cellpadding="0" border="0" width="630">
+                              <thead style="height:0">
+                                <tr>
+                                  <td valign="top" class="keys"></td>
+                                  <td valign="top" class="txt1"></td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td valign="top" class="keys">自我评价：</td>
+                                  <td valign="top" class="txt1">本人性格开朗，适应能力强，英语六级，本科毕业，想找份稳定的工作</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" border="0" class="box">
+                  <tr>
+                    <td class="plate1">工作经验</td>
+                  </tr>
+                  <tr>
+                    <td class="tbb">
+                      <table border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td class="p15">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                              <tbody>
+                                <tr>
+                                  <td valign="top" class="time">2013/4-2014/9</td>
+                                  <td valign="top" class="rtbox"><strong class="txt3" title="电话销售">电话销售</strong><span
+                                      class="p5"> | </span><span>终端</span></td>
+                                </tr>
+                                <tr>
+                                  <td class="txt1" style="padding-left:7px;" colspan="2"><span
+                                      title="中国电信外包公司">中国电信外包公司</span><span class="gray">
+                                      [1年
+                                      5个月
+                                      ]
+                                    </span></td>
+                                </tr>
+                                <tr>
+                                  <td class="txt1 gray2" style="padding-left:7px;" colspan="2">通信/电信/网络设备<span
+                                      class="p5">|</span>500-1000人<span class="p5">|</span>民营公司</td>
+                                </tr>
+                                <tr>
+                                  <td class="tb1" colspan="2">
+                                    <table cellspacing="0" cellpadding="0" border="0">
+                                      <tbody>
+                                        <tr>
+                                          <td valign="top" class="keys">工作描述：</td>
+                                          <td valign="top" class="txt1">主要负责手机销售，其次前台业务
+                                            <br>通过销售手机，宽带等套餐，完成手机销售等各项指标</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" border="0" class="box">
+                  <tbody>
+                    <tr>
+                      <td class="plate1">教育经历</td>
+                    </tr>
+                    <tr>
+                      <td class="tba">
+                        <table cellspacing="0" cellpadding="0" border="0">
+                          <tbody>
+                            <tr>
+                              <td class="p15">
+                                <table cellspacing="0" cellpadding="0" border="0">
+                                  <tr>
+                                    <td valign="top" class="time">2009/9-2013/6</td>
+                                    <td valign="top" class="rtbox"><strong class="txt3"
+                                        title="苏州大学应用技术学院">苏州大学应用技术学院</strong></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="txt1" style="padding-left:7px;" colspan="2">本科<span class="p5">|</span>英语
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tb1" colspan="2">
+                                      <table cellspacing="0" cellpadding="0" border="0">
+                                        <tbody>
+                                          <tr>
+                                            <td valign="top" class="keys">专业描述：</td>
+                                            <td valign="top" class="txt1">综合英语，广告英语，英汉互译，中级口译，英美文学，泛读，写作，英语国家概况
+                                              <br>二外（法语）
+                                              <br>毕业设计（论巴黎圣母院中的美与丑）</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table cellspacing="0" cellpadding="0" border="0" class="box">
+                  <tr>
+                    <td class="plate1">在校情况</td>
+                  </tr>
+                  <tr>
+                    <td class="tbb">
+                      <table cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td class="tit">校内荣誉</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td class="tb3">
+                                  <table cellspacing="0" cellpadding="0" border="0">
+                                    <tr>
+                                      <td class="">
+                                        <table cellspacing="0" cellpadding="0" border="0">
+                                          <tbody>
+                                            <tr>
+                                              <td valign="top" class="time">2013/4</td>
+                                              <td valign="top" class="rtbox"><strong class="txt3">人民综合奖学金三等奖</strong>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="border-top:dotted 1px #ddd;"></td>
+                              </tr>
+                              <tr>
+                                <td class="tb3">
+                                  <table cellspacing="0" cellpadding="0" border="0">
+                                    <tr>
+                                      <td class="">
+                                        <table cellspacing="0" cellpadding="0" border="0">
+                                          <tbody>
+                                            <tr>
+                                              <td valign="top" class="time">2012/4</td>
+                                              <td valign="top" class="rtbox"><strong class="txt3">人民综合奖学金二等奖</strong>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="border-top:dotted 1px #ddd;"></td>
+                              </tr>
+                              <tr>
+                                <td class="tb3">
+                                  <table cellspacing="0" cellpadding="0" border="0">
+                                    <tr>
+                                      <td class="">
+                                        <table cellspacing="0" cellpadding="0" border="0">
+                                          <tbody>
+                                            <tr>
+                                              <td valign="top" class="time">2011/6</td>
+                                              <td valign="top" class="rtbox"><strong class="txt3">人民综合奖学金三等奖</strong>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="border-top:dotted 1px #ddd;"></td>
+                              </tr>
+                              <tr>
+                                <td class="tb3">
+                                  <table cellspacing="0" cellpadding="0" border="0">
+                                    <tr>
+                                      <td class="">
+                                        <table cellspacing="0" cellpadding="0" border="0">
+                                          <tbody>
+                                            <tr>
+                                              <td valign="top" class="time">2010/12</td>
+                                              <td valign="top" class="rtbox"><strong class="txt3">计算机一级</strong></td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="border-top:dotted 1px #ddd;"></td>
+                              </tr>
+                              <tr>
+                                <td class="tb3">
+                                  <table cellspacing="0" cellpadding="0" border="0">
+                                    <tr>
+                                      <td class="">
+                                        <table cellspacing="0" cellpadding="0" border="0">
+                                          <tbody>
+                                            <tr>
+                                              <td valign="top" class="time">2010/11</td>
+                                              <td valign="top" class="rtbox"><strong
+                                                  class="txt3">宿舍文化节“最佳室长”入围奖</strong></td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="border-top:dotted 1px #ddd;"></td>
+                              </tr>
+                              <tr>
+                                <td class="tb3">
+                                  <table cellspacing="0" cellpadding="0" border="0">
+                                    <tr>
+                                      <td class="">
+                                        <table cellspacing="0" cellpadding="0" border="0">
+                                          <tbody>
+                                            <tr>
+                                              <td valign="top" class="time">2010/6</td>
+                                              <td valign="top" class="rtbox"><strong class="txt3">人民综合奖学金三等奖</strong>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tit">校内职务</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td class="p15">
+                                  <table cellspacing="0" cellpadding="0" border="0">
+                                    <tbody>
+                                      <tr>
+                                        <td valign="top" class="time">2009/9-2011/6</td>
+                                        <td valign="top" class="rtbox"><strong class="txt3">女生委员</strong></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="tb1" colspan="2">
+                                          <table cellspacing="0" cellpadding="0" border="0">
+                                            <tbody>
+                                              <tr>
+                                                <td valign="top" class="keys">职务描述：</td>
+                                                <td valign="top" class="txt1">负责处理女生之间的问题，协助班主任管理宿舍女生的事物。</td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" border="0" class="box">
+                  <tr>
+                    <td class="plate1">
+                      技能特长
+                      <span class="f12">（包括IT技能、语言能力、证书、成绩、培训经历）</span></td>
+                  </tr>
+                  <tr>
+                    <td class="tbb">
+                      <table cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                          <tr>
+                            <td class="tit">技能/语言</td>
+                          </tr>
+                          <tr>
+                            <td class="tbb">
+                              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td class="p15" width="100%">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tbody>
+                                        <tr>
+                                          <td height="28" style="width: 305px;" class="tb2 cell" valign="top">
+                                            <table cellspacing="0" cellpadding="0" border="0">
+                                              <tbody>
+                                                <tr>
+                                                  <td valign="top" class="skill" style="width:120px;">
+                                                    <table>
+                                                      <tbody>
+                                                        <tr>
+                                                          <td>
+                                                            <table>
+                                                              <tr>
+                                                                <td valign="top"
+                                                                  style="text-align:right;width:120px;font-size:14px;font-weight:bold;color:#666;word-break:break-all;">
+                                                                  英语</td>
+                                                              </tr>
+                                                            </table>
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </td>
+                                                  <td valign="top">
+                                                    <table>
+                                                      <tbody>
+                                                        <tr>
+                                                          <td class="skbg"
+                                                            style="display:inline-block;width:184px;font-size:13px;color:#fff;background-color:#ddd;padding:0px;">
+                                                            <table>
+                                                              <tbody>
+                                                                <tr>
+                                                                  <td class="skco" style="
+                                                padding:0px 0px 0px 10px;color:#fff;font-size:13px;background-color:#3876c1;z-index:3;line-height:18px;width:
+                                                92px;
+                                              ">良好</td>
+                                                                </tr>
+                                                              </tbody>
+                                                            </table>
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="tit">证书</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td class="p15">
+                                    <table cellspacing="0" cellpadding="0" border="0">
+                                      <tr>
+                                        <td valign="top" class="time">2012/6</td>
+                                        <td valign="top" class="rtbox"><strong class="txt3">中级口译证书</strong></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="border-top:dotted 1px #ddd;"></td>
+                                </tr>
+                                <tr>
+                                  <td class="p15">
+                                    <table cellspacing="0" cellpadding="0" border="0">
+                                      <tr>
+                                        <td valign="top" class="time">2011/6</td>
+                                        <td valign="top" class="rtbox"><strong class="txt3">大学英语六级</strong><span>
+                                            （432）
+                                          </span></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="border-top:dotted 1px #ddd;"></td>
+                                </tr>
+                                <tr>
+                                  <td class="p15">
+                                    <table cellspacing="0" cellpadding="0" border="0">
+                                      <tr>
+                                        <td valign="top" class="time">2011/4</td>
+                                        <td valign="top" class="rtbox"><strong class="txt3">英语专业四级</strong></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="border-top:dotted 1px #ddd;"></td>
+                                </tr>
+                                <tr>
+                                  <td class="p15">
+                                    <table cellspacing="0" cellpadding="0" border="0">
+                                      <tr>
+                                        <td valign="top" class="time">2010/6</td>
+                                        <td valign="top" class="rtbox"><strong class="txt3">大学英语四级</strong><span>
+                                            （477）
+                                          </span></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>
+</td>
+</tr>
+</table><br>
+<table align='center' width='700' height='100'>
+  <tr>
+    <td><img width='700' height='100' src='cid:ec52df78-bef3-4536-81b0-440ae642e80d'></td>
+  </tr>
+</table>
+</body>
+
+</html>

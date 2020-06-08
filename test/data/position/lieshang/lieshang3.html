@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<title>高级前端开发工程师—信息安全部/赶集事业部—T5-T7级-58同城-猎上网</title>
+	<meta dynamic-meta name="keywords" content="互联网招聘,找工作,招聘网,人才网，互联网金融，中高端人才" />
+	<meta dynamic-meta name="description" content="中高端人才招聘网站， 找工作上猎上网">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<!-- 让IE浏览器用最高级内核渲染页面 还有用 Chrome 框架的页面用webkit 内核 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<!-- 让双核浏览器用webkit内核渲染页面 -->
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<!-- <meta name="renderer" content="webkit|ie-stand|ie-comp"> -->
+	<!-- 用百度打开网页可能会对其进行转码（比如贴广告），避免转码 -->
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!-- 新浪微博认证 -->
+	<meta property="wb:webmaster" content="b470e80e31725be4" />
+	<!--[if lte IE 8]>
+		<script type="text/javascript">
+			window.location.href = '/browser.html';
+		</script>
+	<![endif]-->
+	<script type="text/javascript">
+	(function(w) {
+		var ua  = w.navigator.userAgent.toLocaleLowerCase();
+		var packUrl=window.location.href;
+		if(packUrl.indexOf('pkgKey=')>0){
+			var packUrlArr=packUrl.split('pkgKey=');
+			var pkgKey=packUrlArr[1];
+		}
+	    var url = '//h5.hunteron.com';
+	    if(packUrl.indexOf('positionpkg/list.htm')>-1){
+	    	url='//h5.hunteron.com/acts/qiaolie/c/#/share/qiaolie/list?pkgKey='+pkgKey;
+	    }else if(packUrl.indexOf('positionpkg/detail/')>-1){
+	    	var packUrlArr2=packUrl.split('.htm');
+			var positionDetailArr=packUrlArr2[0].split('/detail/');
+		    var positionDetailId=positionDetailArr[1];
+	    	url='//h5.hunteron.com/acts/qiaolie/c/#/share/qiaolie/detail/'+positionDetailId+'?pkgKey='+pkgKey;
+	    }
+	    var matchedRE = /iphone|android|symbianos|windows\sphone/g;
+	    if (matchedRE.test(ua)) {
+	        w.location.href = url;
+	    }
+	})(window);
+	</script>
+	<script type="text/javascript">
+        var _hmt = _hmt || [];
+    </script>
+    <script type="text/javascript">
+    	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    	document.write(unescape("%3Cscript src='" + _bdhmProtocol + 
+		"hm.baidu.com/h.js%3F01234567890ABCDEF01234567890ABCDEF' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+	<link rel="icon" href="http://c.static.hunteron.com/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="http://c.static.hunteron.com/common/css/base.min.css?v=2017091401" />
+	<link rel="stylesheet" type="text/css" href="http://c.static.hunteron.com/common/iconfont/iconfont.css?v=2017091401">
+		<!-- <script type="text/javascript" src="http://c.static.hunteron.com/common/js/jquery-1.8.3.min.js"></script>
+		// <script src="//hr.hunteron.com/utils/utils.js"></script>
+		// <script type="text/javascript" src="http://c.static.hunteron.com/common/js/base/base.min.js?v=2017091401"></script> -->
+	<link rel="stylesheet" type="text/css" href="http://c.static.hunteron.com/position/css/detail.css?v=2017091401" />
+</head>
+<body>
+	
+	<div class="header cfix">
+		<div class="header-wrap">
+			<div class="logo fl">
+				<a href="/index.htm"><img src="http://c.static.hunteron.com/common/images/logo.png" /></a>
+			</div>
+			<ul class="top-nav fl cfix">
+				<li><a href="/index.htm">首页</a></li>
+				<li><a  href="/position/index.htm">职位</a></li>
+				<li><a class="last" href="javascript://"  id="myReseme" data-href="/resume/index.htm">我的简历</a></li>
+			</ul>
+			<div class="header-login fr">
+				<div class="bottom-wrap">
+					<div class="unlogin" id="unlogin">  
+						<a class="reg-link" onclick="_hmt.push(['_trackEvent', 'registerLink', 'click', 'topHeader']);Utils.reportData(3,3,$.loginManager.getCookie('userId'), {module: 'registerLink', action: 'topHeader'});" href="javascript://"><i class="iconfont icon-edit"></i>注册</a>
+						<a class="login-link" onclick="_hmt.push(['_trackEvent', 'loginLink', 'click', 'topHeader']);Utils.reportData(3,3,$.loginManager.getCookie('userId'), {module: 'loginLink', action: 'topHeader'});" href="javascript://"><i class="iconfont icon-lock"></i>登录</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="page-banner">
+    <div id="focus">
+        <ul>
+            <li style="background: rgb(233,233,233)  url(http://c.static.hunteron.com/common/images/banner-01.jpg) 50% 50% no-repeat">
+            </li>
+            <li style="background: rgb(243,243,243) url(http://c.static.hunteron.com/common/images/banner-02.jpg) 50% 50% no-repeat">
+            </li>
+            <li style="background: rgb(245,244,239) url(http://c.static.hunteron.com/common/images/banner-03.jpg) 50% 50% no-repeat">
+            </li>
+            <!-- <li style="background: #f5f5f5 url(http://c.static.hunteron.com/common/images/banner-04.jpg) 50% 50% no-repeat">
+            </li> -->
+        </ul>
+      <div class="banner-wrap banner-area">
+        <div class="expand-main-wrap">
+            <div class="fr-side cfix">
+                <div class="field-title">
+                  <span class="title"><i>5秒轻松注册</i>，高薪Offer到手</span>
+                </div>
+                <div class="tool-box-content quick-register">
+                  <!-- <div class="error-tips reg-error-tips"><i class="iconfont icon-gantanhao"></i><span></span></div>
+                  <div class="code-tips" id="codeTips" style="display: none;">
+                    若收不到短信，请拨打客服电话 021-80250824
+                  </div> -->
+                  <div class="register-form">
+                      <div class="field-item">
+                        <input class="reg-phone-ipt" placeholder="请输入手机号" maxlength="11" type="text" >
+                      </div>
+                      <div class="field-item cfix">
+                        <input class="img-vcode-ipt vcode-ipt fl" maxlength="4" placeholder="图片验证码" type="text" >
+                        <img class="img-vcode fl" src="http://c.static.hunteron.com/common/images/default_code.png" />
+                        <a class="change-img-vcode fl" href="javascript:;">看不清换一张</a>
+                      </div>
+                      <div class="field-item cfix">
+                        <input class="text-vcode-ipt vcode-ipt fl" maxlength="6" placeholder="短信验证码" type="text" >
+                        <a class="text-vcode-btn fl" href="javascript:;">获取验证码</a>
+                      </div>
+                      <div class="field-item">
+                        <input class="reg-pwd-ipt" maxlength="16" placeholder="请输入密码" type="password" >
+                      </div>
+                      <div class="field-item user-agree">
+                        <!-- <input type="checkbox" id="agree-check" name="agree" class="check-agree user-agree" /> -->
+                        注册代表你已经同意&nbsp;<a href="http://info.hunteron.com/protocol/pc/c.html" target="_blank">猎上用户协议</a>
+                      </div>
+                      <button class="register-btn">立即注册</button>
+                      <div class="login-link">
+                        已有账号?<a href="javascript:;">马上登录</a>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+          <!-- <div class="banner-qrcode">
+              <p>猎上Offer</p>
+              <div class="info-dlink-apple">
+                  <a href="https://itunes.apple.com/cn/app/lie-shang-jing-ying-zhong/id1029314183?mt=8" target="_blank">iPhone&nbsp;下载</a>
+              </div>
+              <div class="info-dlink-android">
+                  <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.hunteron.hcmobile" target="_blank">安卓&nbsp;下载</a>
+              </div>
+          </div> -->
+      </div>
+    </div>
+
+  </div>		<!-- 未登录状态 链接跳转到注册页 -->
+		<div class="page-login-tips">
+		    <a href="javascript://" class="register-tips">一键注册猎上Offer，与心仪的猎头立即沟通</a>
+		</div>
+	<div class="container cfix">
+		<div class="detail-main">
+			<div class="detail-cont">
+				<!-- 职位详情标题部分 -->
+				<div class="job-title">
+					<div class="j-des">
+						<em>30-60万</em>
+						<div class="j-tags">
+							<span>北京</span>|
+							<span>
+								本科以上
+						</span>|
+					<span>
+							3-5年
+					</span>|
+							<span>
+						 	性别不限
+					</span>
+						</div>
+						<span class="j-time" style="display:none;">
+							发布时间：今天发布
+						</span>
+
+
+			            <div class="j-addfav">
+			              <!-- <a onclick="_hmt.push(['_trackEvent', 'positionDetail', 'click', 'deliver']);
+        Utils.reportData(3, 3,$.loginManager.getCookie('userId'), {module: 'positionDetail', action: 'deliver'});" href="javascript://" class="show-qrcode-pop" id="sendResume">
+			                <i class="iconfont icon-zhifeiji"></i>
+			                投递简历
+			              </a> -->
+				              <!-- <span class="j-fav-line">|</span> -->
+				              <a onclick="_hmt.push(['_trackEvent', 'positionDetail', 'click', 'store']);
+        Utils.reportData(3, 3,$.loginManager.getCookie('userId'), {module: 'positionDetail', action: 'store'});" href="javascript://" id="addPos"> <!-- 收藏的时候 a的 calss="j-pos-cur"  -->
+				                <i class="iconfont icon-star"></i>
+				                <i class="iconfont icon-star-empty"></i>
+				                <span id="jTxt">收藏</span>  <!-- 收藏职位/取消收藏 -->
+				              </a>
+			            </div>
+					</div>
+				</div>
+				
+				<!-- 委托按钮 -->
+				
+				<div class="entrust-btn-warp">
+					<h2 class="postion-title" title="高级前端开发工程师—信息安全部/赶集事业部—T5-T7级" >
+						<span class="title fl">高级前端开发工程师—信息安全部/赶集事业部—T5-T7级</span>
+						<span class="status-icon cfix fl">
+							<!-- 推荐 & hot
+							<img class="fl" src="http://c.static.hunteron.com/common/images/rec_icon.png"/>
+							<img class="fl" src="http://c.static.hunteron.com/common/images/hot_icon.png"/>
+							 
+								<img class="fl" src="http://c.static.hunteron.com/common/images/rec_icon.png"/>
+							-->
+						</span>
+					</h2> 
+					<button id="jEntrust" class="j-abtn">我要面试</button>
+				</div>
+				<div class="detail-items">
+				
+				
+					<div class="job-item">
+						<p class="j-item-tips">发展空间大,弹性工作,领导nice,精英团队,团队大牛多</p>
+					</div>
+					<!-- 职位亮点 -->
+						<div class="job-item">
+							<dl class="j-recom">
+								<dt><i class="iconfont icon-light"></i>职位亮点</dt>
+								<dd class="i-tags cfix">
+										<span>带薪年假</span>
+										<span>期权激励</span>
+										<span>年终奖金</span>
+										<span>通讯津贴</span>
+										<span>午餐补助</span>
+										<span>交通补贴</span>
+										<span>弹性工作</span>
+										<span>妹子多</span>
+										<span>年度旅游</span>
+										<span>定期体检</span>
+										<span>六险一金（商业险）</span>
+								</dd>
+							</dl>
+						</div>
+				<!-- 基本信息 -->
+				<div class="job-item">
+					<dl class="j-base">
+						<dt><i class="iconfont icon-file"></i>基本信息</dt>
+						<dd class="j-blist cfix">
+							<ul>
+								<li><span>所属部门：</span>信息安全部</li>
+								<li><span>汇报对象：</span>部门负责人</li>
+								<li><span>招聘人数：</span>1人</li>
+								<li><span>下属团队：</span>0</li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+				<!-- 职位描述 -->
+				<div class="job-item">
+					<dl class="j-info">
+						<dt><i class="iconfont icon-namecard"></i>职位描述</dt>
+						<dd class="j-detail cfix">
+							<h3 class="j-detail-t">职位描述：</h3>
+							<p class="j-detail-p">1. 根据产品及项目设计，利用HTML5相关技术进行多终端适配开发；
+
+2. 使用HTML5、CSS3及JavaScript完成HTML界面布局开发,编写可复用的用户界面组件；
+
+3. 配合后台工程师制定服务接口并实现交互和调试；
+
+4. 跟踪最新的前端技术和标准（HTML5），持续优化前端，以提高前端的用户体验及性能。</p>
+								<h3 class="j-detail-t">任职要求：</h3>
+								<p class="j-detail-p">1. 理解web语义化，有良好的代码书写习惯，编写可维护的CSS、js；
+2. 精通图像处理及代码编辑工具，常见photoshop、Illstrator切图工具，编辑器sublime、DW、eclipse等；
+3. 精通Web前端跨平台开发技术，如XHTML/XML/CSS/Javascript，理解面向对象编程、ajax；
+4. 对HTML5/CSS3方面有实际的理解和实践经验，有Web Apps开发经验为佳；
+5. 最少熟悉一个前端脚本类库，如jQuery、YUI、mootools、zepto、backone、prototype等；
+6. 对网站性能优化有研究并有相关实践经验，包括代码管理、图片压缩、代码压缩、减少HTTP请求等；
+7. 及时了解业界前瞻信息及应用，并有浓厚的兴趣和深入的见解；
+8. 有团队协作精神，较强的逻辑分析能力、沟通表达能力，善于学习；
+9. 有多终端适配项目开发者优先。</p>
+						</dd>
+					</dl>
+				</div>
+				<!-- 工作地点 -->
+				<div class="job-item job-item-nor">
+					<dl class="j-dd">
+						<dt><i class="iconfont icon-map"></i>工作地点</dt>
+						<dd>
+							<p>北京市&nbsp;朝阳区酒仙桥北路甲10号院105号楼</p>
+							<div class="j-map" id="jMap">
+								
+							</div>
+							
+						</dd>
+					</dl>
+				</div>
+				</div> <!-- detail items end -->
+			</div>
+			
+			<form action="/resume/deliverResume.htm" id="rform">
+				<input type="hidden" id="rpid" /> <!-- 投递id -->
+				<input type="hidden" id="rtype" /> <!-- 投递类型 -->
+			</form>
+			<div class="page-bottom-banner">
+	            <div class="pbb-l">
+	                有超过<span class="red">100万</span>的猎头在这里等你
+	            </div>
+	            <div class="pbb-r">
+	                <p>下载猎上Offer APP</p>
+	                <p>查看更多职位</p>
+	            </div>
+	        </div>
+
+		</div>
+		<div class="detail-side">
+			<div class="side-main">
+				<div class="s-head">
+						<a href="/enterprise/detail/info/29820.htm" target="_blank"><img class="lazy" src="http://c.static.hunteron.com/common/images/company-logo.jpg" data-original="https://ho-prod.oss.aliyuncs.com/company/20161124/22/03888696-48fc-4125-bcdf-59fbc0a79356.jpg?Expires=1802010253&OSSAccessKeyId=4aLE8QGSsmACxcyU&Signature=C%2BI%2BcxRwOIeQeeisGWI9GBYiRKw%3D&x-oss-process=image%2Fresize%2Cw_200" /></a>
+					<p><a href="/enterprise/detail/info/29820.htm" target="_blank">58同城</a></p>
+					<span class="h-tag" style="display:none;">企业直招</span>
+				</div>
+				<div class="s-info">
+					<ul>
+						<li title="本地生活">
+							<span>行业</span>本地生活
+						</li>
+						<li title="100-499">
+							<span>规模</span>100-499人
+						</li>
+						<li title="上市公司">
+							<span>阶段</span>上市公司
+						</li>
+						<li title="外资 欧美">
+							<span>性质</span>外资 欧美
+						</li>
+						<li title="http://www.58.com">
+							<span>主页</span><a target="_blank" href="http://www.58.com">http://www.58.com</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+		
+	</div>
+	
+	<div class="dialog-cpop entrust-confirm-dialog" style="display:none;">
+		<div class="info-pop">
+			<div class="p-tit">
+				<i class="iconfont icon-cancel"></i>
+				<h4>委托猎头帮我推荐</h4>
+			</div>
+			<div class="p-content">
+				委托后我们会为您匹配合适的猎头，猎头会第一时间联系您，您确定现在委托该职位吗？
+			</div>
+			<div class="p-btn">
+				<button class="entrust-btn cur">确定</button>
+				<span class="cancle-btn">取消</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="right-tool-bar">
+		<div class="act-btn back-top cfix">
+			<div class="item-1 fr">
+				<i class="iconfont icon-up"></i>
+			</div>
+			<div class="item-2 fr">
+				顶部 <i class="iconfont icon-up"></i>
+			</div>
+		</div>
+		<div class="act-btn app-dlink cfix">
+			<div class="item-1 fr">
+				<i class="iconfont icon-shouji"></i>
+			</div>
+			<div class="item-2 fr">
+				<a href="http://info.hunteron.com/app/c.html" target="_blank">猎上APP <i class="iconfont icon-shouji"></i></a>
+			</div>
+		</div>
+		<div class="act-btn feedback">
+			<div class="item-1 fr">
+				<i class="iconfont icon-bianji"></i>
+			</div>
+			<div class="item-2 fr">
+				反馈 <i class="iconfont icon-bianji"></i>
+			</div>
+		</div>
+	</div>
+	<div class="feedback-form">
+		<div class="feedback-form-warp">
+			<div class="title cfix">
+				<div class="fl"><em class="iconfont icon-qipao"></em>意见反馈</div>
+				<a class="close-feedback-btn fr" href="javascript:;"><em class="iconfont icon-cancel"></em></a>
+			</div>
+			<div class="content">
+				<textarea class="message" maxlength="999" placeholder="尊敬的用户，您的建议对我非常重要，请在这里输入您的建议，见证我们的成长"></textarea>
+				<p>请留下您的联系方式，方便我们联系您<span>(仅工作人员可见)</span></p>
+				<input class="contact-info" type="text" placeholder="QQ/邮箱/手机号码(选填)" maxlength="100" />
+				<button class="submit-btn">提交</button>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="copyright">
+			<p><a href="/index.htm" target="_blank">我是人才</a><span>|</span><a href="http://info.hunteron.com" target="_blank">我是HR</a><span>|</span><a href="http://info.hunteron.com/headhunter.html" target="_blank">我是猎头</a> <span>|</span><a href="http://marketing.hunteron.com" target="_blank">猎上观察 </a><span>|</span><a href="http://info.hunteron.com/aboutus.html" target="_blank">关于我们</a>
+			<!-- <span>|</span>QQ: 331348536 -->
+			<span>|</span>客服电话: 021-80250888 
+			<!-- <a href="http://wpa.qq.com/msgrd?v=3&uin=331348536&site=qq&menu=yes" target="_blank" class="online"><i class="iconfont icon-qq">
+			 </i>在线客服</a> -->
+			</p>
+			<p class="copyright-info">增值电信业务经营许可证：<a href="http://www.shca.gov.cn/" target="_blank">沪B2-20150145</a><a href="http://www.miitbeian.gov.cn/" target="_blank">沪ICP备13006480号-2</a><img style="vertical-align: bottom;" src="http://c.static.hunteron.com/common/images/beian-icon.png" /><a class="" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011302004261">
+			沪公网安备 31011302004261号</a>Copyright  2015-2020 <a href="http://www.hunteron.com" target="_blank">www.hunteron.com</a></p>
+		</div>
+	</div>
+		<script type="text/javascript" src="http://c.static.hunteron.com/common/js/jquery-1.8.3.min.js"></script>
+		<script src="//hr.hunteron.com/utils/utils.js"></script>
+		<script type="text/javascript" src="http://c.static.hunteron.com/common/js/base/base.min.js?v=2017091401"></script>
+		<script type='text/javascript'>
+			$(document).ready(function(){
+				//growing analytics
+				var _vds = _vds || [];
+				window._vds = _vds;
+				var _vds_user_id=-1;var _vds_resume_integrity;
+				if($.loginManager.getCookie('HUNTERON_C_USERID')){
+					_vds_user_id=$.loginManager.getCookie('HUNTERON_C_USERID');
+					if($.loginManager.getCookie('HUNTERON_C_INTEGRITY')){
+						_vds_resume_integrity=$.loginManager.getCookie('HUNTERON_C_INTEGRITY');
+					}
+				}
+				_vds.push(['setAccountId', '92040500f7ff4ea9a8d98a5e10ecbf03']);
+				if(_vds_user_id>0){
+					_vds.push(['setCS1', 'user_id', _vds_user_id]);
+				}
+				if(_vds_resume_integrity!==''){
+					_vds.push(['setCS2', 'resume_integrity', _vds_resume_integrity]);
+				}
+				_vds.push(['enableHT', true]);
+				(function() {
+					var vds = document.createElement('script');
+					vds.type='text/javascript';
+					vds.async = true;
+					vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+					var s = document.getElementsByTagName('script')[0];
+					s.parentNode.insertBefore(vds, s);
+				})();
+				//baidu analytics
+				var _hmt = _hmt || [];
+				(function() {
+				  var hm = document.createElement("script");
+				  hm.src = "//hm.baidu.com/hm.js?92f0b00faffc9226f1f5cd6685f4375d";
+				  var s = document.getElementsByTagName("script")[0];
+				  s.parentNode.insertBefore(hm, s);
+				})();
+			});
+		</script>	
+	<script>
+		var pageConfig = {
+			fav_url:'/position/interest/addPosition.json',//感兴趣接口URL(POST)
+			positionId:'86318',//感兴趣职位编号
+			remove_fav_url:'/position/interest/removePosition.json',//移除感兴趣接口URL(POST)
+			isCollect:'',
+			isFullCv:'',//是否简历完整度
+			provinceId:'北京',//省区
+			cityId:'北京',//城市
+			location:'朝阳区酒仙桥北路甲10号院105号楼',//所在区域
+			upload_url:'/resume/uploadJobhunterResume.json',  //上传url
+			updateJobhunterPostWay:'/resume/updateJobhunterPostWay.json',//默认简历
+			resume_url:'/resume/deliverResume.htm',//投递简历跳的页面
+			postWay_online:'0',//在线
+			postWay_resume:'1',//附件简历
+			delivery_url:'/sendRecord/addSendRecord.json', //投递接口(POST)
+			companyId:'29820'  // 公司id
+			/*
+			投递简历URL:'/resume/deliverResume'
+			类型（POST请求）
+			参数未定
+			*/
+		}
+	</script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=VvByY2VkLMyoGAuS5iKPCTul"></script>
+	
+	<script type="text/javascript" src="http://c.static.hunteron.com/position/js/detail.js?v=2017091401"></script>
+	<script type="text/javascript" src="http://c.static.hunteron.com/position/js/positions_banner.js?v=2017091401"></script>
+	<!-- // <script type="text/javascript" src="http://c.static.hunteron.com/common/js/base/md5.js"></script> -->
+	
+</body>
+</html>

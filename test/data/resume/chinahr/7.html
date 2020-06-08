@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>简历预览</title>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<style type="text/css">
+/*public begin*/
+*{margin:0;padding:0;}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {margin:0;padding:0;}
+body {font:14px/24px Microsoft YaHei,Helvetica,Tahoma;line-height:20px;background:#f8f8f8;color:#666}
+h1, h2, h3, h4, h5, h6 {font-size:100%;font-weight:normal;}
+table {border-collapse:collapse;border-spacing:0;}
+li {list-style:none;}
+img, fieldset,iframe {border:0;}
+input, button, textarea, select {font-family:inherit;font-size:inherit;font-weight:inherit;*font-size:100%;outline:none}
+input, select,img{vertical-align:middle}
+em,i,font{font-style:normal;}
+
+a,a:hover,a:visited { text-decoration: none; }
+a:hover{color:#f85659}
+.mallright img{display:block;}
+.margin_{margin-top:10px;}
+
+.clear{-zoom:1;clear:both;}
+.clear2{-zoom:1;clear:both;overflow: hidden;}
+.clear:after{content: "";display:block;height:0;clear:both;visibility: hidden;}
+.clear_{clear:both;height:0;overflow:hidden}
+.clear_no:after{content: "";display:block;height:0;clear:both;visibility: hidden;}
+
+.left{float:left;}
+.right{float:right}
+.pos_rel{position:relative}
+.hide{display:none}
+
+::-ms-clear, ::-ms-reveal{display: none;}
+a{ color:#666;}
+a:hover{ color:#f85659;}
+h1,h2,h3,h4,h5,h6{font-family: 微软雅黑,"Microsoft YaHei" ! important;}
+.box-myResume i.m-icon{ width: 14px; height:14px; display: inline-block; background: url(/img/myResume.png) no-repeat; vertical-align: middle;}
+.box-myResume i.i-on{width:38px; height: 20px; background-position:-195px -60px; margin-right: 10px; margin-top:-2px;}
+.box-myResume i.i-minPen{width:12px; height: 15px; background-position:-63px 0px; margin-top:-2px;}
+.box-myResume i.i-break{width:13px; height: 13px; background-position:-89px 0px; margin-top:-2px;}
+.box-myResume i.i-more{ width:25px; height: 22px; background-position:-251px -60px;}
+
+.box-myResume i.p-icon{width:83px; height: 83px; display: inline-block; background: url(/img/degree.png) no-repeat; vertical-align: middle;}
+.box-myResume i.i-boy{width:21px; height:21px;background-position:-120px -100px; margin-right:6px; }
+.box-myResume i.i-girl{width:21px; height:21px;background-position:-157px -100px; margin-right: 6px;}
+.box-myResume i.i-person{width:15px; height:15px;background-position:-116px 0px;}
+.box-myResume i.i-file{width:15px; height:15px;background-position:-144px 0px;}
+.box-myResume i.i-target{width:15px; height:15px;background-position:-172px 0px;}
+.box-myResume i.i-phone{width:15px; height:15px;background-position:-200px 0px;}
+.box-myResume i.i-mail{width:15px; height:15px;background-position:-227px 0px; margin-top: 10px;}
+.box-myResume i.i-web{width:17px; height:17px;background-position:-254px 0px;}
+.box-myResume i.i-pen{width:17px; height:19px;background-position:-282px 0px;}
+.box-myResume i.i-addBlue{width:15px; height:15px;background-position:-63px -25px; margin-top: -2px; margin-right:8px; }
+.box-myResume i.i-minCir{width:4px; height:4px;background-position:-275px -25px;display: block;}
+.box-myResume i.i-maxCir{width:16px; height:16px;background-position:-235px -25px; display: block;}
+.box-myResume i.i-plusBlue{width:12px; height:13px;background-position:-95px -100px; margin-right: 12px; margin-top: -2px;}
+.box-myResume i.i-bluePen{width:12px; height:17px;background-position:-99px -25px; margin-right: 12px; margin-top: -2px;}
+.box-myResume i.choice{width:13px; height:13px;background-position:-56px -100px; margin-right: 1px; margin-top: -2px;}
+.box-myResume i.choiced{width:13px; height:13px;background-position:-75px -100px;}
+.box-myResume i.i-delBlue{width:15px; height:15px;background-position:-38px -25px; margin-right:8px; margin-top: -2px;}
+.box-myResume i.i-trophy1{width:19px; height:26px;background-position:-130px -25px;}
+.box-myResume i.i-trophy2{width:19px; height:26px;background-position:-164px -25px;}
+.box-myResume i.i-upload{width:75px; height:54px;background-position:-30px -130px;}
+.box-myResume i.i-link{width:23px; height:25px;background-position:-292px -25px; margin-right:20px;}
+
+.box-myResume i.l-icon{ display: block; width:110px; height: 110px; background: url(/img/special.png) no-repeat;}
+.box-myResume i.level01{ background-position: 0 0;}
+.box-myResume i.level02{ background-position: -120px 0;}
+.box-myResume i.level03{ background-position: -240px 0;}
+.box-myResume i.level04{ background-position: -360px 0;}
+/*标题*/
+.tilPart{ width:100%; height:40px; line-height: 40px; position: relative; text-align: center;}
+.tilPart .wzPart{ width:100%; height: 40px; position: absolute; left:0; top:0;}
+.tilPart span{ padding:0 5px; background:#fff; font-size:20px;}
+.tilPart .dashed{ height: 21px; width:100%; border-bottom:1px dashed #eee;}
+
+.box-myResume{width:769px; margin:0 auto;}
+
+/*个人简历主体*/
+.main-myResume{ width:100%; margin-top: 15px; background: #fff;}
+.main-myResume .name-mr{ height: 186px; position: relative;}
+.main-myResume .bg-name{ width:100%; height: 115px; background: #f95659; border-bottom: 1px solid #eee;}
+.main-myResume .pro-name{ height: 138px; padding-left: 111px; position: absolute; left:0; top:0;}
+.main-myResume .pro-name .wz-name{ float:left; margin-top: 75px;}
+.main-myResume .pro-name .wz-name h3{ font-size: 22px; color:#fff; line-height: 40px; overflow: hidden; font-weight: bold;}
+.main-myResume .pro-name .wz-name p{ padding-top: 10px; line-height: 22px; font-size: 15px;}
+
+.main-myResume .pro-name .perPhoto{width:138px; height: 138px; border-radius: 50%; background: #fff; float:left; margin-right: 50px; margin-top: 48px; position: relative; cursor: pointer;}
+.main-myResume .pro-name .perPhoto img{display: block; width:128px; height: 128px; border:5px solid #fff; border-radius: 50%;}
+
+/*基本信息显示*/
+.inforBase{ margin-top: 20px; overflow: hidden;}
+.inforBase .lfInBase,.inforBase .rtInBase{width:328px; padding-left:56px; float:left; line-height: 28px;}
+.inforBase li{ margin-top: 7px; overflow: hidden;}
+.inforBase li i.m-icon{ float:left; margin-top: 7px;}
+.inforBase li i.m-icon.i-mail{ margin-top: 10px;}
+.inforBase li .conInBase{ margin-left: 33px;}
+.inforBase li .conInBase em{ margin-right: 15px;}
+
+/*工作经历*/
+.work-mr{ margin-top: 30px;}
+.inforWork{ padding-left:48px; margin-top: 35px;}
+.minCir{ margin-left: 6px; height: 4px; width:4px;}
+.maxCir{ height: 16px; width: 16px; position: relative; z-index: 2;}
+.tilEdit{ border-left:2px solid #eee; margin-left: 7px; padding-left:32px; line-height: 20px; padding-top:15px; padding-bottom: 20px;}
+.tilEdit i{ float:right; margin-right: 30px; cursor: pointer; margin-top: 8px;}
+.tilEdit h3{ font-size:16px; }
+
+.conWork{ margin-left: 7px; border-left:2px solid #eee; padding-left: 32px; line-height:22px; color:#999; font-size: 14px; padding-bottom: 20px;}
+.conWork .jobTime{float:right;margin-right:30px;}
+.conWork .conCom,.conWork .conJob{ width:480px; margin-top: 10px;white-space: pre-line;word-break: break-word;}
+.conWork .conCom{ margin-top: -20px;}
+.work-mr .conWork .conCom p{ margin-left: -9px;}
+.work-mr .conWork .conCom p em{ border-right:1px solid #bcbcbc; padding:0 10px;}
+.work-mr .conWork .conCom p em:last-child{ border-right:none;}
+.work-mr .conWork .conCom p:last-child em{ border:none;}
+
+/*教育经历*/
+.edu-mr{ margin-top: 30px;}
+.edu-mr .inforWork .conCom em{ margin-right: 13px;}
+
+/*求职意向*/
+.inten-mr{margin-top: 30px;}
+.inten-mr .inforInten{ padding:20px 90px 20px;}
+.inten-mr .inforInten>div{ margin-top: 10px;}
+.inten-mr .inforInten .boxInInten01 span{ float:left;}
+.inten-mr .inforInten .boxInInten01 .rtInInten01{ padding-left: 72px; color:#999; line-height: 22px;}
+
+/*项目经历*/
+.project-mr{ margin-top: 30px;}
+
+/*培训经历*/
+.train-mr{ margin-top: 30px;}
+
+/*专业技能*/
+.special-mr{ margin-top: 30px;}
+.inforSpecial{ padding:30px 50px 15px; overflow: hidden;}
+.inforSpecial li{ width:25%; float:left; overflow: hidden; line-height: 50px; text-align: center; margin-top: 35px;}
+.inforSpecial li i{ text-align: center;line-height: 110px; font-size:18px; margin:0 auto;}
+.inforSpecial li p{ height: 50px; text-overflow:ellipsis; white-space:nowrap; overflow: hidden;}
+
+/*语言技能*/
+.lang-mr{ margin-top: 30px;}
+.inforLang{ padding:40px 170px 10px;line-height: 56px; font-size: 16px; overflow: hidden;}
+.inforLang li{width:50%; float:left;}
+.inforLang li span{ display: inline-block; width:100px;}
+.inforLang em{ color:#999;}
+.inforLang .otherLang{ clear: both;}
+.inforLang .otherLang span{ margin-right:40px; }
+
+/*证书及奖项*/
+.cert-mr{ margin-top: 30px;}
+.inforCert{ padding:30px 0 20px 50px; overflow: hidden;}
+.inforCert .inCert01{ margin-top:25px; line-height: 26px; }
+.inforCert .conInCert{ margin-left:40px; }
+.inforCert i.i-trophy1,.inforCert i.i-trophy2{ float:left; margin-top: 5px;}
+.inforCert .boxInCert i{ float:right; margin-right: 30px;}
+.inforCert .wordInCert,.inforCert h3{ max-width:550px; }
+.inforCert .wordInCert{ color:#999;}
+.inforCert i{color:#999; margin-top: 5px;}
+.inforCert h3{ font-size: 16px;}
+ 
+/*作品展示*/
+.achiev-mr{ margin-top: 30px;}
+.tiledAch ul{ text-align: center; font-size: 0;}
+.tiledAch li{ display: inline-block; font-size: 17px; padding:0 28px; line-height: 39px; line-height: 39px; border-bottom:3px solid #fff; background: #fff; border-right: 1px dashed #eee; color:#999; cursor: pointer;}
+.tiledAch li.on,.tiledAch li:hover{ border-bottom-color:#f95659; color:#f95659;}
+.tabedAch{ margin-top:15px; }
+.edAch01{ width:608px; height:398px; border:1px solid #ddd;background: #fff; text-align: center; display: table; margin:10px 0 10px 15px;}
+.edAch01 .upload{ display: table-cell; vertical-align: middle; line-height:34px; font-size: 14px; color:#999; }
+.tabedAch .itemedAch{ display: none;}
+.tabedAch .itemedAch .linkAch{ width:578px; background: url(/img/myResume.png) no-repeat #fff; background-position: -294px -118px;}
+
+.inforAchiev{ padding:0 30px; overflow: hidden;}
+.inforAchiev .inAchiev01{ border-top: 1px dashed #eee; margin-top: -1px; line-height: 34px; padding-top:40px; padding-bottom: 50px; overflow: hidden;}
+.inforAchiev .inAchiev01 .picInAch{ margin-top: 15px; text-align: center;}
+.inforAchiev .inAchiev01 ul{ font-size: 0;}
+.inforAchiev .inAchiev01 li{ display: inline-block;*display: inline;*zoom:1;}
+.inforAchiev .inAchiev01 .tilInAch{ color:#aaa; padding-left:25px;}
+.inforAchiev .inAchiev01 .tilInAch i{ float:right;}
+.inforAchiev .inAchiev01 .tilInAch span{ font-size: 16px; margin-right: 10px; color:#666;}
+.inforAchiev .inAchiev01 .tilInAch em{ color:#999; margin-left: 10px; font-size: 14px;}
+.inforAchiev .inAchiev01 .wordInAch{ font-size: 14px; color:#999; line-height: 22px; padding:0 25px;}
+.inforAchiev .inAchiev01 .linkInAch{width:610px; padding:0 30px; line-height: 70px; background: #f95659; color:#fff; font-size: 20px; margin:15px auto 0;}
+
+/*个人评价*/
+.evalue-mr{ margin-top: 20px;}
+.inforEvalue{ padding:20px 60px 70px; color:#999; line-height: 20px; text-indent: 2em;}
+
+.footer-mr{ text-align: center; color:#999; line-height:50px; margin-top:130px; overflow: hidden;}
+
+</style>
+
+</head>
+<body>
+<!-- 个人中心右侧 -->
+<div class="box-myResume">
+	<!-- 简历主体 -->
+	<div class="main-myResume">
+		<div class="name-mr">
+			<div class="bg-name"><img src="http://static.chinahr.com/themes/pcchinahr/img/resumeBg.jpg"></div>
+			<div class="pro-name">
+				<div class="perPhoto">
+									    	<img src="http://static.chinahr.com/themes/bchinahr/img/photo.png" />
+				    				</div>
+				<div class="wz-name">
+					<h3>王春生</h3>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 基本信息 -->
+		<div class="base-mr">
+			<!-- 基本信息内容 -->
+			<div class="inforBase">
+			    <!-- <div class="changeBase"><i class="m-icon i-pen"></i></div> -->
+				<div class="lfInBase">
+					<ul>
+						<li><i class="m-icon i-person"></i>
+						    <div class="conInBase">
+						    	<p>
+						    		<em>男</em>						    	    <em>23岁</em>						    	    <em>中国</em>						    	</p>
+						    	<p>
+						    								    		<em>未婚</em>						    	</p>
+					    		
+						    </div>
+						</li>
+						<li><i class="m-icon i-file"></i>
+						    <div class="conInBase">
+						    	<p>
+						    		<em>大专</em>
+						    		<em> 1年工作经验  </em>
+						    	</p>
+						    							    							    </div>
+						</li>
+					</ul>
+				</div>
+				<div class="rtInBase">
+					<ul>
+						<li><i class="m-icon i-target"></i>
+						    <div class="conInBase">
+						    	<p>
+						    		<em>目前居住地：上海-嘉定区</em>						    		<em>户口所在地：上海市</em>						    	</p>
+						    </div>
+						</li>
+						<li><i class="m-icon i-phone"></i>
+						    <div class="conInBase">
+						    	<p><em>13061578425</em></p><!-- 手机 -->
+						    	<!-- 电话 -->
+						    </div>
+						</li>
+						
+												
+											</ul>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- 工作经历 -->
+					<div class="work-mr">
+				<div class="tilPart">
+				    <div class="dashed"></div>
+					<div class="wzPart"><span>工作经历</span></div>
+				</div> 
+				<!-- 工作经历信息 -->
+				<div class="inforWork">
+					<div class="minCir"><i class="m-icon i-minCir"></i></div>
+										<div class="ctInfor">
+					    <div class="tilEdit">
+					    	<h3>保险电销</h3>
+					    </div>
+					    <div class="boxWork01">
+					    	<div class="maxCir"><i class="m-icon i-maxCir"></i></div>
+					    	<div class="conWork">
+					    	    <!-- <div class="jobTime">2015.10 － 2016.09</div> -->
+					    	    <div class="jobTime">2015.10 - 2016.09</div>
+					    	    <div class="conCom">
+						    		<p>
+						    			<em>招商信诺人寿保险有限公司</em>						    			<em>其他</em>						    									    		</p>
+						    		<p>
+						    			<em>所属行业：保险 </em>						    		</p>
+						    		<p>
+						    			<em>TM</em>						    			<em>保险电销</em>						    		</p>
+						    		<p>
+						    									    			<em>下属人数：  </em>
+						    		</p>
+					    		</div>
+					    		<div class="conJob">具有丰富的电话销售经验，获得“新人王”称号。经理助手</div>					    	</div>
+					    </div>
+					</div>
+										<div class="minCir"><i class="m-icon i-minCir"></i></div>
+				</div>
+			</div>
+				
+		
+		<!-- 教育经历 -->
+				<div class="edu-mr">
+			<div class="tilPart">
+			    <div class="dashed"></div>
+				<div class="wzPart"><span>教育经历</span></div>
+			</div> 
+			<!-- 教育经历信息 -->
+			<div class="inforWork">
+				<div class="minCir"><i class="m-icon i-minCir"></i></div>
+								<div class="ctInfor">
+				    <div class="tilEdit">
+				    	<h3>七台河职业学院</h3>
+				    </div>
+				    <div class="boxWork01">
+				    	<div class="maxCir"><i class="m-icon i-maxCir"></i></div>
+				    	<div class="conWork">
+				    	    <!-- <div class="jobTime">2010.09 － 2013.07</div> -->
+				    	    <div class="jobTime">2010.09 - 2013.07</div>
+				    	    <div class="conCom">
+					    		<p>
+					    			<em>大专</em>					    			<em>建筑工程</em>					    		</p>
+				    		</div>
+				    						    	</div>
+				    </div>
+				</div>
+								<div class="minCir"><i class="m-icon i-minCir"></i></div>
+			</div>
+		</div>
+				
+		
+		<!-- 求职意向 -->
+				<div class="inten-mr">
+			<div class="tilPart">
+			    <div class="dashed"></div>
+				<div class="wzPart"><span>求职意向</span></div>
+			</div>
+			<!-- 求职意向信息 -->
+			<div class="inforInten">
+								<div class="boxInInten01">
+					<span>期望工作：</span>
+					<div class="rtInInten01">
+						销售/客服/技术支持
+					</div>
+				</div>
+								
+								
+								<div class="boxInInten01">
+					<span>求职性质：</span>
+					<div class="rtInInten01">
+						全职
+					</div>
+				</div>
+												<div class="boxInInten01">
+					<span>目前工作状态：</span>
+					<div class="rtInInten01">
+						在职
+					</div>
+				</div>
+												<div class="boxInInten01">
+					<span>期望地点：</span>
+					<div class="rtInInten01">
+						上海
+					</div>
+				</div>
+																<div class="boxInInten01">
+					<span>期望薪水：</span>
+					<div class="rtInInten01">
+						7999.0
+					</div>
+				</div>
+							</div> 
+		</div>
+				
+		
+		<!-- 项目经历 -->
+		
+
+
+		<!-- 培训经历 -->
+				
+		
+		
+		<!-- 专业技能 -->
+				
+		
+		<!-- 语言技能 -->
+				
+		
+		
+		<!-- 证书及奖项 -->
+		
+
+		<!-- 作品展示 -->
+		
+		
+		<!-- 个人评价 -->
+				<div class="evalue-mr">
+			<div class="tilPart">
+			    <div class="dashed"></div>
+				<div class="wzPart"><span>个人评价</span></div>
+			</div> 
+			<!-- 个人评价信息 -->
+			<div class="inforEvalue">
+				一年的保险销售，有较强的学习能力，和团队协作能力。一年销售经验退伍军人有驾照大专学历
+			</div>
+		</div>
+			</div>
+</div>
+<div class="footer-mr">http://www.ChinaHR.com Email:feedback@corp.chinahr.com 客服热线：400 050 8080</div>
+</body>
+</html>

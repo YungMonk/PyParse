@@ -78,9 +78,21 @@
 #     from tornado.ioloop import IOLoop
 #     IOLoop.instance().run_sync(lambda : http_curl(url="https://www.jianshu.com"))
 
+import os,json
+from utils import strings 
+if __name__ == '__main__':
+    filename = os.getcwd() + '/test/data/51job/1.1.html'
+    with open(filename, 'r') as f:
+        fileContext = f.read()
+        f.close()
 
-if __name__ == "__main__":
-    import re
-    args = "202-06-01"
-    isMatch = re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args))
-    print(isMatch)
+    post_args = strings.rpc_params({
+        'c':'apis/logic_parse',
+        'm':'parsers_engine',
+        'p':{
+            'site_id':2,
+            'type':1,
+            'body':fileContext,
+        }
+    })
+    print(json.dumps(post_args, ensure_ascii=False))

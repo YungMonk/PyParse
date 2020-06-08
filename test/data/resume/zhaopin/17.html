@@ -1,0 +1,504 @@
+
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <title>智联简历</title>
+    <link href="//img00.zhaopin.cn/2012/css/rd/common.css" rel="stylesheet" type="text/css" />
+    <link href="//img00.zhaopin.cn/2012/css/rd/rdnew_2.css?version=20160421" rel="stylesheet" type="text/css" />
+    <link href="//img00.zhaopin.cn/2012/css/rd/rdnewlayer.css" rel="stylesheet" type="text/css" />
+    <link href="//img00.zhaopin.cn/2012/css/ui/jquery.zlzp.popupdiv.css" type="text/css" rel="stylesheet" />
+    <link href="//img01.zhaopin.cn/2014/rd2/css/feedbackD.css?version=20160421" type="text/css" rel="stylesheet" />
+    <link href="/css/sendinfo.css" type="text/css" rel="stylesheet" />
+    <style media="print">
+        .resume-preview { color: #000; }
+        .resume-body-left { width: auto; }
+        .resume-preview-left { box-shadow: none; border: none; }
+        .resume-preview-right, .nav-body-top { display: none; }
+        h3 { border-bottom: 2px solid #ccc; }
+        .similar-resume { display: none; }
+    </style>
+</head>
+<body>
+    <div class="resume-preview clearfix">
+        
+
+<style type="text/css">
+    .posR { position: relative; border: 1px solid #ccc; height: 32px; }
+    .nameMatching, .nameMatchings { line-height: 32px; font-size: 12px; float: left; font-weight: normal; }
+    .nameMatching { margin-left: 28px; background: url(//img02.zhaopin.cn/2012/img/rd/Pmatching.png) no-repeat 7px 7px; padding-left: 50px; height: 22px; padding-top: 10px; }
+    .nameMatching .star { width: 50px; height: 9px; display: block; font-size: 0; background: url(//img02.zhaopin.cn/2012/img/rd/matching-mark.png) no-repeat; }
+    .nameMatching .star5 { background-position: 0 0; }
+    .nameMatching .star4 { background-position: 0 -9px; }
+    .nameMatching .star3 { background-position: 0 -18px; }
+    .nameMatching .star2 { background-position: 0 -27px; }
+    .nameMatching .star1 { background-position: 0 -36px; }
+    .nameMatching .star0 { background-position: 0 -45px; }
+    .nameMatchings { cursor: pointer; margin-left: 10px; background: url(//img02.zhaopin.cn/2012/img/rd/Pcell.png) no-repeat 0 7px; height: 22px; width: 35px; }
+    /*给我推荐更多相似人才 按钮*/
+    .acceptInvite { width: 100%; overflow: hidden; }
+    .preview3 { float: left; }
+    .preview3 span { font-size: 14px; }
+    .moreRecom { float: left; width: 155px; height: 25px; background-color: #ff6600; border-radius: 3px; margin-left: 5px; margin-top: 25px; font: 12px/25px '微软雅黑'; color: #fff; text-align: center; cursor: pointer; }
+    .fbtips { width: 748px; background-color: #fef8e0; line-height: 28px; border: 1px #eeebde solid; border-bottom: 1px #ffd138 solid; padding-left: 20px; font-size: 12px; color: #777; letter-spacing: 1px; height: 100%; overflow: hidden; }
+    .fbtips span { float: left; }
+    .fbtips span.textsty { color: #222; font-weight: bold; }
+    .fbtips span.textstyone { color: #222; font-weight: bold; width: 180px; float: left; word-wrap: break-word; }
+    #kp_num{display:none;}
+    .printcontack{ display: none;width: 400px;margin-top: -80px;*margin-top:15px;}/*jianguo*/
+</style>
+<style media="print">
+    .noprint { display: none; }
+    .feedbackE_show,.feedbackD_show{display: none;}/*jianguo*/
+    .printcontack{display: block;}/*jianguo*/	
+    .preview-table-body-add{margin-top:-80px;*margin-top:0;}/*jianguo*/
+</style>
+
+<script type="text/javascript">
+    function showMatchDesc(id, rootcompanyId, name) {
+        $(".MatchingDescriptionBtn").match({
+            url: "//rd2.zhaopin.com/s/resuadmi/resumematchingdescription.asp",
+            type: "Get",
+            data: { id: id, rootcompanyId: rootcompanyId, name: name },
+            callback: "matchingcallback"
+        });
+    }
+</script>
+<link type="text/css" rel="stylesheet" href="//img00.zhaopin.cn/2012/css/rd/rdmatching.css">
+
+<div class="resume-body-left">
+
+
+<div class="resume-preview-head" id="resumeContentHead">
+    <img alt="" src="//img02.zhaopin.cn/2012/img/rd/logo.png" width="133" height="71" align="right" class="headerlogo" />
+        <div class="intro-span-right">
+            还有<span>0</span>份简历下载余额
+        </div>
+        <input type="hidden" name="resumeDownloadNum" id="resumeDownloadNum" value="1" />
+        <div class="resume-preview-title">
+            <span class="resume-preview-list">简历名称： <strong id="resumeName">复制电工 .电焊工.司机.空调制冷.12年 上海</strong></span>
+            <br />
+            <span class="resume-preview-list">期望从事职业： <strong id="desireIndustry">电工、空调工/电梯工/锅炉工、电焊工/铆焊工、铲车/叉车工</strong></span>
+            <br />
+            <span class="resume-preview-list">简历更新时间： <strong id="resumeUpdateTime">2017年09月14日</strong></span>
+        </div>
+    <div class="resume-preview-center">
+        <div class="center-left">
+            <div class="resume-left-tips">
+                    <div class="resume-left-tips-span">
+                        <span class="resume-left-tips-id">ID:&nbsp;qK(NkPe4EU47KgNFuSg76g</span>
+                    </div>
+                <div class="resume-left-tips-span tips-span-right">
+                </div>
+            </div>
+        </div>
+        <!--<div class="center-right">你可能对这些简历感兴趣</div>-->
+        <input type="hidden" value="Chinese" name ="language" id="language" />
+        <input type="hidden" value="Chinese" name ="anotherLanguage" id="anotherLanguage" />
+    </div>
+    <input type="hidden" id="guid" name="guid" value="-1" />
+</div>
+    <div id="resumeDetail">
+        
+        
+        <div class="resume-preview-main">
+            <div class="resume-preview-left">
+                <div id="resumeContentBody">
+<div class="resume-preview-main-title">
+        <div class="main-title-fl fc6699cc" style="height: 54px;">
+            个人信息
+        </div>
+</div>
+<div class="summary" test="elitestatus:-2,other:0">
+
+    <a target="_blank" href="//rd.zhaopin.com/img/lookResumes.jpg">
+        <img alt="" src="//rd.zhaopin.com/img/lookResumes.jpg" width="93" height="131" align="right" class="headerImg" /></a>
+    <div class="summary-top">
+        <span>男&nbsp;&nbsp;&nbsp;&nbsp;46岁(1971年10月)&nbsp;&nbsp;&nbsp;&nbsp;17年工作经验&nbsp;&nbsp;&nbsp;&nbsp;高中</span>
+        <br />
+        现居住地：上海 金山区 | 户口：四川 |  | 有海外工作/学习经验
+    </div>
+    <div class="summary-bottom">
+        <!--普通简历显示联系方式-->
+        <!--end显示联系方式-->
+    <!--橄榄枝-->
+        <!--end橄榄枝-->
+            <div class="preview-table-body-add add_bgColor">如需联系方式请下载该简历</div>
+    </div>
+</div>
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">求职意向</h3>
+        <div class="resume-preview-top">
+            <table cellpadding="0" cellspacing="0">
+                    <tr valign="top">
+                        <td width="85" align="right">期望工作地区：</td>
+                        <td>上海</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="85" align="right">期望月薪：</td>
+                        <td>4001-6000元/月</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="85" align="right">目前状况：</td>
+                        <td>我目前处于离职状态，可立即上岗</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="85" align="right">期望工作性质：</td>
+                        <td>全职</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="85" align="right">期望从事职业：</td>
+                        <td>电工、空调工/电梯工/锅炉工、电焊工/铆焊工、铲车/叉车工</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="85" align="right">期望从事行业：</td>
+                        <td>电子技术/半导体/集成电路、加工制造（原料加工/模具）、酒店/餐饮、广告/会展/公关</td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">自我评价</h3>
+        <div class="resume-preview-dl rd-break">六年维修电工经验，主要从事设备维修、空调制冷，厨房设备维修，车间设备控制线路维修、厂房布线、安装维修、电动工具维修、马达重绕及车间所有设备的保养工作。五年家电门店维修工作，从事空调制冷、安装维修、彩电冰箱、风扇微波炉及一切小家电维修。五年不锈钢制作安装，从事氩氟焊、电焊、能独立完成不锈钢焊接及安装工作，与领导有较强的沟通能力，五年以上C照驾龄，从事接送老板及客户自上海两大机场，有时也送员工去外面工作，对上海道路比较熟悉，还在韵达快递公司干过两年快递工作，主要从事收发件业务。</div>
+    </div>   
+
+    <div class="resume-preview-all workExperience">
+        <h3 class="fc6699cc">工作经历</h3>
+            <h2>2015.09 - 2017.09&nbsp;&nbsp;乐天（上海）食品有限公司&nbsp;&nbsp;（2年）</h2>
+            <h5>技工 | 6001-8000元/月</h5>
+            <div class="resume-preview-dl">
+                快速消费品（食品/饮料/烟酒/日化）
+            </div>
+            <div class="resume-preview-dl">
+                <table cellpadding="0" cellspacing="0">
+                    <tr valign="top">
+                        <td width="60">工作描述：</td>
+                        <td>从事冷冻空调维修，工务维修，空压机保养操作，家电维修，办公设备维修<br /></td>
+                    </tr>
+                </table>
+            </div>    
+            <h2>2013.09 - 2014.09&nbsp;&nbsp;班尔奇家具上海有限公司&nbsp;&nbsp;（1年）</h2>
+            <h5>电工 | 4001-6000元/月</h5>
+            <div class="resume-preview-dl">
+                加工制造（原料加工/模具）
+            </div>
+            <div class="resume-preview-dl">
+                <table cellpadding="0" cellspacing="0">
+                    <tr valign="top">
+                        <td width="60">工作描述：</td>
+                        <td>主要从事车间设备维修保养，工厂制冷空调维修，保养，员工宿舍线路制冷维修。</td>
+                    </tr>
+                </table>
+            </div>    
+            <h2>2012.09 - 2013.08&nbsp;&nbsp;上海宝羽自动化系统有限公司&nbsp;&nbsp;（11个月）</h2>
+            <h5>工程部 | 电工 | 4001-6000元/月</h5>
+            <div class="resume-preview-dl">
+                物业管理/商业中心 | 企业性质：民营 | 规模：20-99人
+            </div>
+            <div class="resume-preview-dl">
+                <table cellpadding="0" cellspacing="0">
+                    <tr valign="top">
+                        <td width="60">工作描述：</td>
+                        <td>本人到宝羽自动化系统有限公司主要从事设备的安装与维修，厂内办公区员工宿舍制冷设备及线路维修，车间设备控制线路维修，水电安装维修，输送设备维修，有时也开车送员工上下班及去外地安装设备</td>
+                    </tr>
+                </table>
+            </div>    
+            <h2>2008.03 - 2011.09&nbsp;&nbsp;上海隆齐不锈钢装潢有限公司&nbsp;&nbsp;（3年6个月）</h2>
+            <h5>维修部 | 电工 | 2001-4000元/月</h5>
+            <div class="resume-preview-dl">
+                加工制造（原料加工/模具） | 企业性质：民营 | 规模：100-499人
+            </div>
+            <div class="resume-preview-dl">
+                <table cellpadding="0" cellspacing="0">
+                    <tr valign="top">
+                        <td width="60">工作描述：</td>
+                        <td>我在隆齐不锈钢装潢公司从事维修电工工作，主要负责车间设备办公电器、厨房电器、员工宿舍线路及全厂空调制冷维修和保养工作、车间线路及照明维修，生活用排水水管安装，也接送老板及客户，驾驶技术熟练。</td>
+                    </tr>
+                </table>
+            </div>    
+            <h2>2003.02 - 2008.01&nbsp;&nbsp;广东肇庆昆庆毛绒有限公司&nbsp;&nbsp;（4年11个月）</h2>
+            <h5>维修部 | 电工主管 | 2001-4000元/月</h5>
+            <div class="resume-preview-dl">
+                耐用消费品（服饰/纺织/皮革/家具/家电） | 企业性质：外商独资
+            </div>
+            <div class="resume-preview-dl">
+                <table cellpadding="0" cellspacing="0">
+                    <tr valign="top">
+                        <td width="60">工作描述：</td>
+                        <td>主要负责车间设备保养维修、控制线路维修、流水线维修、两台160千瓦柴油发电机保养维修和发电工作、厂内深井出水管道维修、办公区域空调保养维修、员工宿舍线路维修管理，配合好厂务总管，做好员工的后勤工作、设备维修的配件采购工作，厂内重大电气安装更换的决策如添加380千瓦调压器等。</td>
+                    </tr>
+                </table>
+            </div>    
+            <h2>2000.02 - 2002.12&nbsp;&nbsp;韵达快递&nbsp;&nbsp;（2年10个月）</h2>
+            <h5>业务部 | 业务员 | 2001-4000元/月</h5>
+            <div class="resume-preview-dl">
+                其他 | 企业性质：民营 | 规模：100-499人
+            </div>
+            <div class="resume-preview-dl">
+                <table cellpadding="0" cellspacing="0">
+                    <tr valign="top">
+                        <td width="60">工作描述：</td>
+                        <td>收发件业务，计件制多劳多得</td>
+                    </tr>
+                </table>
+            </div>    
+            <h2>1994.07 - 2000.01&nbsp;&nbsp;利民家电维修部&nbsp;&nbsp;（5年6个月）</h2>
+            <h5>维修部 | 老板 | 6001-8000元/月</h5>
+            <div class="resume-preview-dl">
+                其他 | 企业性质：其它 | 规模：20人以下
+            </div>
+            <div class="resume-preview-dl">
+                <table cellpadding="0" cellspacing="0">
+                    <tr valign="top">
+                        <td width="60">工作描述：</td>
+                        <td>空调移机、加冷冻液、维修保养。彩电、冰箱、录音机、VCD、音响设备、洗衣机、吸尘器、热水器、取暖器、电脑、电水壶、电饭煲、电热锅、微波炉、脱排油烟机、排气扇。双捅洗衣机换外壳，承接宾馆、餐厅各单位电器保养安装业务及室内外装潢工程。机械地板打蜡，水电安装维修等。献爱心，为体现爱心，对孤寡残疾老人80岁高龄老人特困户，公益事业免费服务系列活动。</td>
+                    </tr>
+                </table>
+            </div>    
+    </div>
+
+
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">教育经历</h3>
+        <div class="resume-preview-dl educationContent">
+1990.09 - 2003.06&nbsp;&nbsp;楠木中学&nbsp;&nbsp;电子信息科学与技术&nbsp;&nbsp;高中<br />
+        </div>
+    </div>
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">培训经历</h3>
+            <h2>2010.03 - 2011.04&nbsp;&nbsp;强弱电，高低压安装，运行与维修</h2>    
+            <div class="resume-preview-top resume-line-height">
+                <table cellpadding="0" cellspacing="0">
+                        <tr valign="top">
+                            <td width="60">培训机构：</td>
+                            <td>怀化市安全生产监督管理局</td>
+                        </tr>   
+                        <tr valign="top">
+                            <td width="60">培训地点：</td>
+                            <td>怀化市二环路326号</td>
+                        </tr>   
+                        <tr valign="top">
+                            <td width="60">所获证书：</td>
+                            <td>高低压电工证书</td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="60">培训描述：</td>
+                            <td>主要的题目出自电工基础、电子技术基础、电力拖动、电机与变压器、电工仪表、PLC方面的，还有很多外线题、高压操作题目，电工安全技术、电力拖动控制线路、照明电路及室内外线路安、配线路先观知识、电子线路的焊接等。</td>
+                        </tr>
+                </table>
+            </div> 
+            <h2>1991.11 - 1992.04&nbsp;&nbsp;机电班</h2>    
+            <div class="resume-preview-top resume-line-height">
+                <table cellpadding="0" cellspacing="0">
+                        <tr valign="top">
+                            <td width="60">培训机构：</td>
+                            <td>西南职校</td>
+                        </tr>   
+                        <tr valign="top">
+                            <td width="60">培训地点：</td>
+                            <td>南充市北湖路41号职业培训学校</td>
+                        </tr>   
+                        <tr valign="top">
+                            <td width="60">所获证书：</td>
+                            <td>机电一体化证书</td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="60">培训描述：</td>
+                            <td>主要培训电动机的启动，运行维修，星三角启动，线圈重绕。220伏电动机抽头调速绕发，维修布线，组装星三角配电箱及日常维护保养工作</td>
+                        </tr>
+                </table>
+            </div> 
+    </div>
+
+    <div class="resume-preview-all">
+        <h3 class="fc6699cc">证书</h3>
+            <h2>2005.08&nbsp;&nbsp;C照驾驶证</h2>
+            <h2>2011.03&nbsp;&nbsp;电工证</h2>
+            <h2>2012.11&nbsp;&nbsp;电焊工证</h2>
+    </div>
+
+
+
+
+
+
+                        <div class="previewLayer11 rd_button smpevent" data-smpaction="downloadresume" data-smpposition="resumedetail"></div>
+                </div>
+<div class="resume-preview-right">
+        <div class="resume-preview-button previewLayer11 smpevent" data-smpaction="downloadresume" data-smpposition="resumedetail">
+            <span class="resume-preview-button-span preview-icon11"></span>下载简历
+        </div>
+        <div class="resume-preview-button previewLayer12 smpevent" data-smpaction="savetemporaryresume" data-smpposition="resumedetail">
+            <span class="resume-preview-button-span preview-icon12"></span>暂存简历
+        </div>
+        <div class="resume-preview-button previewLayer8 smpevent" data-smpaction="printresume" data-smpposition="resumedetail">
+            <span class="resume-preview-button-span preview-icon8"></span>打印简历
+        </div>
+        <div class="resume-preview-button previewLayer1 smpevent" data-smpaction="savetocomputer" data-smpposition="resumedetail">
+            <span class="resume-preview-button-span preview-icon1"></span>保存到我的电脑
+        </div>
+        <div class="resume-preview-button previewLayer2 smpevent" data-smpaction="forwardemail" data-smpposition="resumedetail">
+            <span class="resume-preview-button-span preview-icon2"></span>转发简历到邮箱
+        </div>
+    <a class="similar-button-gray previewLayer_xsjl" style="display: none" target="_blank">
+        <span class="preview-icon_xsjl resume-preview-button-span preview-icon-similar-gray"></span>
+        <span id="xsjl_count">相似简历(<img id="xsjldd" src="//img02.zhaopin.cn/2012/img/rd/xsjldd.gif" />)</span>
+        <span class="new-icon"></span>
+    </a>
+    <!--<div class="resume-preview-button previewLayer10"><span class="resume-preview-button-span preview-icon10"></span>返回顶部</div>-->
+</div>
+<div class="back-to">
+</div>
+<div class="szmr_over">
+    <div class="szmr_overts">
+        <div id="subWindowMain" class="tanchuang_main">
+        </div>
+    </div>
+</div>
+<div id="downfile" style="display: none">
+</div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" value="AppId=1&Id=608745405&Timestamp=636445247541485025&Callback=&signature=dfbbbb116ebeeb35b8f808d0374127bc&comid=46230372&comname=毕德恪(上海)贸易有限公司" id="neturlparam">
+    <!--随手聘-->
+    <input type="hidden" name="posttype" id="posttype" value="0" />
+    <input type="hidden" name="labeltype" id="labeltype" value="0" />
+    <input type="hidden" name="positionid" id="positionid" value="0" />
+    <!--反馈通D期-->
+    <input type="hidden" name="tt_username" id="tt_username" value="冯明财" />
+    <input type="hidden" name="tt_sourceid" id="tt_sourceid" value="3" />
+    <input type="hidden" name="resume_id" id="resume_id" value="231657925" />
+    <input type="hidden" name="extId" id="extId" value="qK(NkPe4EU47KgNFuSg76g" />
+    <input type="hidden" name="resume_version" id="resume_version" value="1" />
+    <input type="hidden" name="resume_language" id="resume_language" value="1" />
+    <input type="hidden" name="resume_Name" id="resume_Name" value="复制电工 .电焊工.司机.空调制冷.12年 上海" />
+    <input type="hidden" name="resumeUserId" id="resumeUserId" value="608745405" />
+    <input type="hidden" name="currentCompanyName" id="currentCompanyName" value="毕德恪(上海)贸易有限公司" />
+    <input type="hidden" name="currentDepartmentName" value="毕德恪(上海)贸易有限公司"/>
+    <input type="hidden" name="PositionNumber" id="PositionNumber" value="" />
+    <input type="hidden" name="gltype" id="gltype" value="0" />
+    <input type="hidden" name="GlStatus" id="GlStatus" value="0" />
+    <input type="hidden" name="ApplyResume" id="ApplyResume" value="" />
+    <input type="hidden" name="rootCompanyId" id="rootCompanyId" value="46230372" />
+    <input type="hidden" id="userbehavior" value="1"/>
+    <!-- Trace Data Block Start -->
+    <input type="hidden" name="dda_kpi" id="dda_kpi" value="M1" />
+    <input type="hidden" name="dda_operatorid" id="dda_operatorid" value="689036207" />
+    <input type="hidden" name="dda_companyid" id="dda_companyid" value="46230372" />
+    <input type="hidden" name="dda_custom" id="dda_custom" value="" />
+    <input type="hidden" name="dda_ownerid" id="dda_ownerid" value="" />
+    <input type="hidden" name="dda_cvid" id="dda_cvid" value="qK(NkPe4EU47KgNFuSg76g_1" />
+    <input type="hidden" name="dda_position" id="dda_position" value="resumedetail" />
+    <input type="hidden" name="dda_action" id="dda_action" value="viewdetail" />
+    <input type="hidden" name="dda_xtable" id="dda_xtable" value="" />
+    <input type="hidden" name="dda_type" id="dda_type" value="cvdownload" />
+    <!-- Trace Data Block End   -->
+    <input type="hidden" name="rewardhrresult" id="rewardhrresult" value="0" data-reward="5" />
+
+    <a id="fileLink" href="" style="display: none"></a>
+
+        <div class="moreTalented noprint" style="display: none;" id="kp_panel">
+            <p class="mtTitle">更多靠谱人才</p>
+            <div class="mtChatCon">
+                <ul></ul>
+            </div>
+        </div>
+
+    <script type="text/javascript" language="javascript">
+
+        if (typeof (jobTitleInit) != 'undefined') {
+            jobTitleInit();
+        }
+
+        if (typeof (countKPJL) != 'undefined') {
+            countKPJL();
+        }
+
+        if (typeof (getKPJL) != 'undefined') {
+            getKPJL();
+        }
+
+        function switchlang(lang) {
+            $('#changeLanguageImg').show();
+            var href = location.href.replace(/&?lang=\w*/, '');
+            if (href.indexOf('?') == -1) {
+                location.href = href + '?lang=' + lang;
+            } else if (href.lastIndexOf('?') == href.length - 1) {
+                location.href = href + 'lang=' + lang;
+            } else {
+                location.href = href + '&lang=' + lang;
+            }
+        }
+    </script>
+</div>
+<input type="hidden" name="viewSource" id="viewSource" value="2" />
+<input type="hidden" name="keyword_search" id="keyword_search" value="叉车工" />
+<input type="hidden" name="college_search" id="college_search" value="" />
+<input type="hidden" name="company_search" id="company_search" value="COMPANY_NAME_ALL:韵达快递有限公司" />
+<input type="hidden" name="dda_source" id="dda_source" value="2" />
+
+
+    </div>
+    <div class="editor-layer-add">
+        <div class="editor-layer-icon cvLabelColor1 dev_label_icon_list" dev_classname="cvLabelColor1">
+        </div>
+        <div class="editor-layer-icon cvLabelColor2 dev_label_icon_list" dev_classname="cvLabelColor2">
+        </div>
+        <div class="editor-layer-icon cvLabelColor3 dev_label_icon_list" dev_classname="cvLabelColor3">
+        </div>
+        <div class="editor-layer-icon cvLabelColor4 dev_label_icon_list" dev_classname="cvLabelColor4">
+        </div>
+        <div class="editor-layer-icon cvLabelColor5 dev_label_icon_list" dev_classname="cvLabelColor5">
+        </div>
+        <div class="editor-layer-icon cvLabelColor6 dev_label_icon_list" dev_classname="cvLabelColor6">
+        </div>
+        <div class="editor-layer-icon cvLabelColor7 dev_label_icon_list" dev_classname="cvLabelColor7">
+        </div>
+        <div class="editor-layer-icon cvLabelColor8 dev_label_icon_list" dev_classname="cvLabelColor8">
+        </div>
+        <div class="editor-layer-icon cvLabelColor9 dev_label_icon_list" dev_classname="cvLabelColor9">
+        </div>
+        <div class="editor-layer-icon cvLabelColor10 dev_label_icon_list" dev_classname="cvLabelColor10">
+        </div>
+        <div class="editor-layer-icon cvLabelColor11 dev_label_icon_list" dev_classname="cvLabelColor11">
+        </div>
+        <div class="editor-layer-icon cvLabelColor12 dev_label_icon_list" dev_classname="cvLabelColor12">
+        </div>
+    </div>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2012/js/jquery-1.6.4.min.js"></script>
+    <!--script type="text/javascript" src="//img01.zhaopin.cn/2012/js/arrdata.js"></script-->
+    <script type="text/javascript" src="//img01.zhaopin.cn/2012/js/zlzp.app.js"></script>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2012/js/rd/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2012/js/ui/jquery.zlzp.popupdiv.js"></script>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2012/js/ui/jquery.zlzp.popupbase.js"></script>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2012/js/rd/common.js"></script>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2012/js/rd/utilscript.js"></script>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2012/js/rd/fnresuadmi.js"></script>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2012/js/ui/jquery.zlzp.autocomplete.js"></script>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2012/js/za/smp.min.js"></script>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2012/js/rd/previewlayer.js?version=20161031"></script>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2014/rd2/js/fktResumeActive.js"></script>
+    <!--反馈通D期-->
+    <script type="text/javascript" src="//img01.zhaopin.cn/2014/common/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="//img01.zhaopin.cn/2014/rd2/js/feedbackD.js?version=20160421"></script>
+    <script type="text/javascript" src="//img00.zhaopin.cn/2014/common/js/za/ga_rd.js"></script>
+    
+    
+    <script src="//img07.zhaopin.cn/2014/rd2/js/timecountdown.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="//img08.zhaopin.cn/2014/rd2/js/rob_time.js"></script>
+
+    
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            //SMP监控
+            smppv.pageView();
+        });
+    </script>
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+    </script>
+</body>
+</html>
