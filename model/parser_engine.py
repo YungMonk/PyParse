@@ -83,8 +83,6 @@ class ParserEngine(object):
     async def parse(self, maps, etreehtml):
         tmp = {}
         for key, value in maps.items():
-            if key == 'project':
-                print(value)
 
             # 处理默认值
             if 'value' in value and value['value']:
@@ -151,7 +149,7 @@ class ParserEngine(object):
                 # 子项处理后对html文本数据进行处理
                 if tmp[key] and len(arr) > 1:
                     tmp[key] = await helper.optimize(tmp[key], arr[1:])
-                    
+
         return tmp
 
 
