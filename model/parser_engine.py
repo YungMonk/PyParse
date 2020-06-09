@@ -83,6 +83,8 @@ class ParserEngine(object):
     async def parse(self, maps, etreehtml):
         tmp = {}
         for key, value in maps.items():
+            if key == 'project':
+                print(value)
 
             # 处理默认值
             if 'value' in value and value['value']:
@@ -100,13 +102,16 @@ class ParserEngine(object):
 
             # 子项处理前对html文本数据进行处理
             expath = etreehtml.xpath(helper.placeholder(arr[0]))
-            if len(expath) > 0 and len(arr) > 1 and arr[1] == 'call_prev' and len(arr[1:]) > 2:
-                htmltext =etree.tostring(expath[0], encoding="utf-8", pretty_print=True, method="html").decode()# self.xpath_to_html(expath)
-                expath = await helper.optimize(htmltext, arr[1:])
+            if len(expath) > 0  and len(arr[1:]) > 1 and arr[1] == 'call_prev':
+                _html = ""
+                for _etree in expath:
+                    _html = _html + self.xpath_to_html(_etree)
+                expath = await helper.optimize(_html, arr[1:])
 
             if 'child' in value and isinstance(value['child'], dict) and len(value['child']):
                 # 有子项
                 if 'lists' in value and value['lists'] and len(expath):
+                    # 子项是列表,父项有值
                     t = []
                     for sign in expath:
                         tmp_child = await self.parse(value['child'], sign)
@@ -117,12 +122,16 @@ class ParserEngine(object):
                             t.append(tmp_child)
                         
                     tmp[key] = t
+                elif 'lists' in value and value['lists'] and not expath:
+                    # 子项是列表,父项没有值
+                    tmp[key] = []
                 else:
+                    # 子项不是列表
                     if len(expath):
-                        # 本级规则不为空
+                        # 父项有值
                         tmp[key] = await self.parse(value['child'], expath[0])
                     else:
-                        # 本级规则为空
+                        # 父项没有值
                         tmp[key] = await self.parse(value['child'], etreehtml)
 
                     if 'application_rules' in value and value['application_rules']:
@@ -137,11 +146,12 @@ class ParserEngine(object):
                 elif isinstance(expath[0], str):
                     tmp[key] = expath[0]
                 else:
-                    tmp[key] = expath[0].text
+                    tmp[key] = expath[0].text if expath[0].text else ""
 
                 # 子项处理后对html文本数据进行处理
                 if tmp[key] and len(arr) > 1:
                     tmp[key] = await helper.optimize(tmp[key], arr[1:])
+                    
         return tmp
 
 
@@ -165,7 +175,7 @@ class ParserEngine(object):
 
 
     def xpath_to_html(self, xpath_list:list):
-        return etree.tostring(xpath_list[0], encoding="utf-8", pretty_print=True, method="html").decode()
+        return etree.tostring(xpath_list, encoding="utf-8", pretty_print=True, method="html").decode()
 
         
         

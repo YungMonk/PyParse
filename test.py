@@ -50,7 +50,7 @@
 
 # async def http_curl(**kwargs):
 #     from tornado.httpclient import AsyncHTTPClient,HTTPRequest,HTTPError
-    
+
 #     http_client = AsyncHTTPClient()
 #     http_request = HTTPRequest(
 #         url=kwargs['url'],
@@ -78,21 +78,27 @@
 #     from tornado.ioloop import IOLoop
 #     IOLoop.instance().run_sync(lambda : http_curl(url="https://www.jianshu.com"))
 
-import os,json
-from utils import strings 
-if __name__ == '__main__':
-    filename = os.getcwd() + '/test/data/51job/1.1.html'
-    with open(filename, 'r') as f:
-        fileContext = f.read()
-        f.close()
+import os
+import re
+import json
+from utils import strings
 
-    post_args = strings.rpc_params({
-        'c':'apis/logic_parse',
-        'm':'parsers_engine',
-        'p':{
-            'site_id':2,
-            'type':1,
-            'body':fileContext,
-        }
-    })
-    print(json.dumps(post_args, ensure_ascii=False))
+if __name__ == '__main__':
+    matches = re.search(r'(外资\(欧美\)|外资\(非欧美\)|合资|国企|民营公司|民营|上市公司|创业公司|外企代表处|政府机关|事业单位|非营利机构)', '民营dkdkddkk')
+    print(matches.group())
+
+    # filename = os.getcwd() + '/test/data/resume/zhaopin/2.html'
+    # with open(filename, 'r') as f:
+    #     fileContext = f.read()
+    #     f.close()
+
+    # post_args = strings.rpc_params({
+    #     'c': 'apis/logic_parse',
+    #     'm': 'parsers_engine',
+    #     'p': {
+    #         'site_id': 1,
+    #         'type': 1,
+    #         'body': fileContext,
+    #     }
+    # })
+    # print(json.dumps(post_args, ensure_ascii=False))

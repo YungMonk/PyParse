@@ -36,7 +36,6 @@ async def optimize(args, funcs=[]):
                 tmp = cres[idx_1]
                 if idx_2 < len(tmp):
                     args = tmp[idx_2]
-
         elif (tmp := re.search(r'(.*)\[(.*)\],(\d+)', func)):
             call_info = tmp.groups()
 
@@ -51,9 +50,11 @@ async def optimize(args, funcs=[]):
             cres = func(args, *params)
 
             idx_1 = int(call_info[2])
-            if idx_1 < len(cres):
+            if cres and idx_1 < len(cres):
                 args = cres[idx_1]
-        elif (tmp :=re.search(r'(.*?)\[(.*)\]', func)):
+            else:
+                args = ""
+        elif (tmp := re.search(r'(.*?)\[(.*)\]', func)):
             call_info = tmp.groups()
 
             params = call_info[1].split(',')
@@ -69,13 +70,13 @@ async def optimize(args, funcs=[]):
 
             idx_1 = int(call_info[1])
             args = ""
-            if idx_1 < len(cres):
+            if cres and idx_1 < len(cres):
                 args = cres[idx_1]
         elif (tmp := re.search(r'(\S+)', func)):
             call_info = tmp.groups()
 
             func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
-            if call_info[0] == "handle_address_city":
+            if call_info[0] in ["handle_address_city", "handl_except_citys"]:
                 args = await func(args)
             else :
                 args = func(args)
@@ -234,6 +235,25 @@ def w2k(args="", *extra):
     return strings.salary_to_k(args, 'W')
 
 
+# 正则分割
+def handle_regualr(args="", *extra):
+    if not args:
+        return args
+    args = re.sub('\n', '', args)
+    repl = re.sub(extra[0], extra[1], args, re.I | re.S)
+    _arr = repl.split(extra[2])
+    preTag = '<div>' if len(extra) < 4 else extra[3]
+    endTag = '</div>' if len(extra) < 5 else extra[4]
+    xpath = []
+    for _val in _arr:
+        if not _val:
+            continue
+        _html = preTag + _val + endTag
+        xpath.append(etree.HTML(_html))
+
+    return xpath
+
+
 # xpath处理
 def handle_xpath(args="", *extra):
     return etree.HTML(args).xpath(placeholder(extra[0]))
@@ -355,6 +375,26 @@ def handle_experience(args="", *extra):
 
     return result
 
+
+# 当前状态
+def handle_current_status(args="", *extra):
+    status = 0
+    if re.search(r'在岗|在职|机会', args, re.S|re.I):
+        status = 3
+    elif re.search(r'离职|找工作', args, re.S|re.I):
+        status = 1
+
+    return status
+
+
+# 政治背景
+def handle_political(args="", *extra) -> str:
+    parrten = r'(中共党员|预备党员|团员|民主党派|无党派人士|群众|其他)'
+    if matches := re.findall(parrten, args, re.S | re.I):
+        return matches[0]
+    else:
+        return ""
+
  
 # 处理时间
 def handle_time(args="", *extra):
@@ -363,7 +403,7 @@ def handle_time(args="", *extra):
         return matches[0]
 
 
-#  处理时间间隔
+# 处理时间间隔
 def handle_interval(args="", *extra):
     args['start_time'] = ""
     args['end_time'] = ""
@@ -444,6 +484,24 @@ def handle_expect_salary(args="", *extra):
     return args
 
 
+# 公司类型
+def handle_corp_type(args="", *extra):
+    matches = re.search(r'(外资\(欧美\)|外资\(非欧美\)|合资|国企|民营公司|民营|上市公司|创业公司|外企代表处|政府机关|事业单位|非营利机构)', args)
+    if matches:
+        return matches.group(0)
+    else:
+        return ""
+
+
+# 公司规模
+def handle_corp_scale(args="", *extra):
+    matches = re.search(r'(少于\d+|\d+[-,~]\d+|\d+.*?以上)', args)
+    if matches:
+        return matches.group(0)
+    else:
+        return ""
+    
+
 # 清洗技能
 def wash_skill(args, *extra):
     parrten = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它)'
@@ -506,12 +564,39 @@ async def handle_address_city(args, *extra) -> dict:
     return args
 
 
+# 处理期望城市
+async def handl_except_citys(args, *extra):
+    if not isinstance(args, dict):
+        return args
+    else:
+        # 籍贯所在地的市级ID
+        args['expect_city_ids'] = ""
+
+        import json
+        if "expect_city_names" in args and args['expect_city_names']:
+            citys = args['expect_city_names'].split(',')
+            city_sets = []
+            for _city in citys:
+                gsys = await http_curl(url=conf.config.get('rcp_service', None)['gsystem'], city=_city)
+                _tmp = max(gsys.split(','))
+                city_sets.append(_tmp)
+
+            args['expect_city_ids'] = strings.trim(','.join(city_sets))
+        
+    return args
+
+
+global_citys = {}
+# Gsystme 城市 ID 化
 async def http_curl(**kwargs):
     if "city" not in kwargs or not kwargs['city']:
         return ""
 
     if "url" not in kwargs or not kwargs['url']:
         return ""
+
+    if kwargs['city'] in global_citys:
+        return global_citys[kwargs['city']]
 
     from tornado.httpclient import AsyncHTTPClient,HTTPRequest,HTTPError
     import json
@@ -540,6 +625,7 @@ async def http_curl(**kwargs):
         respdata = json.loads(response.body)
         if 'response' in respdata and 'err_no' in respdata['response'] and not respdata['response']['err_no']:
             result = respdata['response']['results']
+            global_citys[kwargs['city']] = result
     except HTTPError as e:
         # HTTPError is raised for non-200 responses; the response
         # can be found in e.response.
