@@ -407,20 +407,20 @@
     },
     "skill": {
         "label": "技能",
-        "rules": "//td[contains(text(),'技能/语言')]/../following-sibling::tr//td[contains(@class,'tb2')]",
+        "rules": "//h3[text()='专业技能']/following-sibling::*/text()",
         "lists": true,
         "child": {
             "name": {
                 "label": "语言名称",
-                "rules": ".//strong"
+                "rules": "./|trim|preg_match[(.*?)：],0"
             },
             "level": {
                 "label": "掌握程度",
-                "rules": ".//span[@class='skco']"
+                "rules": "./|preg_match[：(.*?)\\@或@],0|trim"
             },
             "period": {
                 "label": "使用时间",
-                "rules": ""
+                "rules": "./|preg_match[\\@或@(.*)],0|trim"
             }
         },
         "application_rules": "wash_skill"

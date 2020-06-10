@@ -1,14 +1,16 @@
 #!/usr/bin/python3.8
 # -*- coding: utf-8 -*-
 
+from lxml import etree
+
 import re
 import time
 
-from lxml import etree
-
 from lib.configer import conf
 from utils import strings
+from lib import log
 
+logger = log.Log().getLog()
 
 # 回调函数处理
 async def optimize(args, funcs=[]):
@@ -505,7 +507,9 @@ def handle_corp_scale(args="", *extra):
 # 清洗技能
 def wash_skill(args, *extra):
     parrten = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它)'
-    if "name" in args and re.findall(parrten, args['name'], re.S | re.I):
+    if "name" not in args or not args['name']:
+        return None
+    elif "name" in args and re.findall(parrten, args['name'], re.S | re.I):
         return None
     else:
         return args
@@ -514,7 +518,7 @@ def wash_skill(args, *extra):
 # 清洗语言
 def wash_langue(args, *extra):
     parrten = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它)'
-    if "name" in args and re.findall(parrten, args['name'], re.S | re.I):
+    if "name" in args and args['name']  and re.findall(parrten, args['name'], re.S | re.I):
         return args
     else:
         return None

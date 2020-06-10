@@ -114,7 +114,7 @@ class MainHandler(tornado.web.RequestHandler):
     def on_finish(self):
         tornado.log.logging.info("---on_finish---：结束，释放资源")
 
-# 记录请示日志
+# 记录请求日志
 def log_request(handler) :
     if handler.get_status() < 400:
         log_method = tornado.log.access_log.info

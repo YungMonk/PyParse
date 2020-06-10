@@ -35,7 +35,7 @@ class ParserEngine(object):
         self.__type = args['type']
 
         global logger
-        logger = log.Log().getLog()
+        logger = helper.logger
 
 
     async def dispatch(self):
@@ -84,6 +84,10 @@ class ParserEngine(object):
         tmp = {}
         for key, value in maps.items():
 
+            # 用来调试
+            # if key == 'skill':
+            #     print(etreehtml)
+
             # 处理默认值
             if 'value' in value and value['value']:
                 tmp[key] = value['value']
@@ -98,8 +102,13 @@ class ParserEngine(object):
             # 分割规则
             arr = rules.split('|')
 
+            # 选项是否是字符串
+            if isinstance(etreehtml, str):
+                expath = etreehtml
+            else:
+                expath = etreehtml.xpath(helper.placeholder(arr[0]))
+            
             # 子项处理前对html文本数据进行处理
-            expath = etreehtml.xpath(helper.placeholder(arr[0]))
             if len(expath) > 0  and len(arr[1:]) > 1 and arr[1] == 'call_prev':
                 _html = ""
                 for _etree in expath:
@@ -159,36 +168,22 @@ class ParserEngine(object):
 
         filepath = path._TEMPLATE + '/' + siteName + '/' + static_param.parserType[
             self.__type] + '/' + filename
+        
+        logger.warn("loading file: %s" % filepath)
+
         if os.path.exists(filepath) is False:
-            print(filepath + " is not found")
+            logger.fatal("Not Found file: %s" % filepath)
+            raise HTTPError(80012, "Not Found the template file !!!")
 
         with open(filepath, 'r') as fopen:
             content = fopen.read()
             fopen.close()
 
             if fopen.closed == False:
-                print("file is not closed")
+                logger.fatal("File is not closed: %s" % filepath)
 
         return content
 
 
     def xpath_to_html(self, xpath_list:list):
         return etree.tostring(xpath_list, encoding="utf-8", pretty_print=True, method="html").decode()
-
-        
-        
-
-if __name__ == '__main__':
-    print(os.getcwd())
-    filename = os.getcwd() + '/test/data/51job/1.1.html'
-    with open(filename, 'r') as f:
-        fileContext = f.read()
-        f.close()
-
-    try :
-
-        obj = ParserEngine(site_id=2, body=fileContext, type=1)
-        obj.dispatch()
-    except Exception as exp :
-        print(exp)
-    
