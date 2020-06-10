@@ -78,6 +78,7 @@ async def optimize(args, funcs=[]):
             call_info = tmp.groups()
 
             func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
+            # 协同方法特殊处理
             if call_info[0] in ["handle_address_city", "handl_except_citys", "fetch_head"]:
                 args = await func(args)
             else :
