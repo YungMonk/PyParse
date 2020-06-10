@@ -33,7 +33,7 @@
             },
             "photo": {
                 "label": "头像url",
-                "value": ""
+                "rules": "//div[@class='summary']/a/img/@src|fetch_head"
             },
             "photo_type": {
                 "label": "头像类型",

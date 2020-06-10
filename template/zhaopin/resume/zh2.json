@@ -29,7 +29,7 @@
             },
             "photo2": {
                 "label": "头像base64数据流",
-                "value": ""
+                "value": "//div[@class='summary']/a/img/@src|fetch_head"
             },
             "photo": {
                 "label": "头像url",

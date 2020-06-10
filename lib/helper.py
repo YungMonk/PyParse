@@ -78,7 +78,7 @@ async def optimize(args, funcs=[]):
             call_info = tmp.groups()
 
             func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
-            if call_info[0] in ["handle_address_city", "handl_except_citys"]:
+            if call_info[0] in ["handle_address_city", "handl_except_citys", "fetch_head"]:
                 args = await func(args)
             else :
                 args = func(args)
@@ -637,6 +637,48 @@ async def http_curl(**kwargs):
     except Exception as e:
         # Other errors are possible, such as IOError.
         print("Error: " + str(e))
+    finally :
+        http_client.close()
+
+    return result
+
+
+# 抓取头像
+async def fetch_head(args:str="", *extra) -> str:
+    if not args:
+        return ""
+
+    from tornado.httpclient import HTTPRequest,HTTPError
+    from tornado.curl_httpclient import AsyncHTTPClient
+    import pycurl,base64
+    
+    AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient")
+    http_client = AsyncHTTPClient()
+    http_request = HTTPRequest(
+        url=args,
+        method='GET',
+        headers={
+            "Accept-Ranges": "bytes",
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "image/jpeg",
+        },
+        proxy_host='http://http-pro.abuyun.com',
+        proxy_port=9010,
+        proxy_username='HWZ4K0025R7161XP',
+        proxy_password='373904A5540BC8BA',
+    )
+
+    result = ""
+    try:
+        response = await AsyncHTTPClient().fetch(http_request)
+        result = base64.encodebytes(response.body).decode()
+    except HTTPError as e:
+        # HTTPError is raised for non-200 responses; the response
+        # can be found in e.response.
+        logger.warn("fetch_head HTTPError: " + str(e))
+    except Exception as e:
+        # Other errors are possible, such as IOError.
+        logger.warn("fetch_head Exception: " + str(e))
     finally :
         http_client.close()
 
