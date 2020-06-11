@@ -5,6 +5,7 @@ import re
 import array
 import os,sys
 import json
+import hashlib
 
 curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
@@ -12,7 +13,7 @@ sys.path.append(rootPath)
 
 from tornado.web import HTTPError
 
-from lib import helper, path, log
+from lib import helper, path, route
 from lxml import etree
 from config import static_param
 
@@ -35,7 +36,8 @@ class ParserEngine(object):
         self.__type = args['type']
 
         global logger
-        logger = helper.logger
+        logger = route.logger
+        self.__cache = route.lfu_cache
 
 
     async def dispatch(self):
@@ -43,6 +45,12 @@ class ParserEngine(object):
 
         # result = etreehtml.xpath("string(//table[@class='infr'])")
         # print(result)
+
+        tmp_key = hashlib.new('md5', self.__text.encode("utf-8")).hexdigest()
+
+        # 读取内存缓存
+        if p_result := self.__cache.get(tmp_key):
+            return p_result
 
         # 读取配置信息
         tplConf = json.loads(self.readFile("config.json"))
@@ -76,7 +84,12 @@ class ParserEngine(object):
         templateContent = json.loads(self.readFile(templateName))
         cv = await self.parse(templateContent, etreehtml)
 
-        return json.dumps(cv, ensure_ascii=False)
+        p_result = json.dumps(cv, ensure_ascii=False)
+
+        # 写入内存缓存
+        self.__cache.set(tmp_key, p_result, ttl=30)
+
+        return p_result
 
 
     # 内容解析

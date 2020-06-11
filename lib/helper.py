@@ -8,9 +8,10 @@ import time
 
 from lib.configer import conf
 from utils import strings
-from lib import log
+# from lib import log
+from lib import route
 
-logger = log.Log().getLog()
+logger = route.logger
 
 # 回调函数处理
 async def optimize(args, funcs=[]):
@@ -644,7 +645,7 @@ async def http_curl(**kwargs):
     return result
 
 
-# 抓取头像
+# 抓取头像（注：抓取头像会）
 async def fetch_head(args:str="", *extra) -> str:
     if not args:
         return ""

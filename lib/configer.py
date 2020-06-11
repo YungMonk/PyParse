@@ -83,6 +83,7 @@ class ConfigParserFromFile(ConfigParser):
             #去掉多行注释
             raw_escape_comment = re.sub(r'[\s\t\n]+/\*[\s\S]+?\*/', '', raw)
             cfg = json.loads(raw_escape_comment)
+            
         if cfg.get('$includes'):
             for include in cfg['$includes']:
                 include_conf_file = os.path.join(pather._CONF_PATH, include)

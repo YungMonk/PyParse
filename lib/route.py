@@ -12,6 +12,7 @@ import time
 from concurrent import futures
 
 import tornado
+from cacheout import LFUCache
 
 from lib import configer
 from lib import log
@@ -30,6 +31,10 @@ def set_up():
 
     global logger
     logger = log.Log().getLog()
+    
+    global lfu_cache
+    lfu_cache = LFUCache(maxsize=256)
+    
 
     files_list = os.listdir(path._CONTROLLER_PATH)
     files_list = set(['controller.'+x[:x.rfind('.')] for x in files_list if x.endswith('.py')])
