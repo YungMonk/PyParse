@@ -6,10 +6,19 @@ import os
 import re
 import sys
 import traceback
-from abc import abstractmethod
 
 import lib.path as pather
 
+
+class load_func(object):
+    ''' 
+        loading the method by liunx-channel model.
+    '''
+    def __init__(self, func):
+        self.func = func
+
+    def __ror__(self, inputs):
+        return self.func(inputs)
 
 class configer(object):
     '''
@@ -56,27 +65,7 @@ class configer(object):
                 traceback.print_exc()
                 sys.exit(1)
 
-
-conf = configer()
-
-
-
-class ConfigParser(object):
-    '''
-        This abstract class provides a strategy of how to get those configurations
-        through a file or remote config ?
-    '''
-    @abstractmethod
-    def parseall(self, *args):
-        pass
-
-
-# 加载配置文件
-class ConfigParserFromFile(ConfigParser):
-    '''
-        via Config Files
-    '''
-    def parseall(self, fullpath):
+    def load(self, fullpath):
         cfg = {}
         with open(fullpath, 'r') as f:
             raw = f.read()
@@ -87,14 +76,11 @@ class ConfigParserFromFile(ConfigParser):
         if cfg.get('$includes'):
             for include in cfg['$includes']:
                 include_conf_file = os.path.join(pather._CONF_PATH, include)
-                icfg = self.parseall(include_conf_file)
+                icfg = self.load(include_conf_file)
                 cfg.update(icfg)
+    
         return cfg
+    
 
-class E(object):
-    def __init__(self, func):
-        self.func = func
-
-    def __ror__(self, inputs):
-        return self.func(inputs)
+instance = configer()
 

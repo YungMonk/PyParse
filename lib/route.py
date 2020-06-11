@@ -22,7 +22,7 @@ MAX_WORKERS = 16
 
 executor = futures.ThreadPoolExecutor(max_workers=MAX_WORKERS)
 
-@configer.conf.register(level=2)
+@configer.instance.register(level=2)
 def set_up():
 
     ''' erase all nodes
@@ -41,26 +41,6 @@ def set_up():
     list(map(__import__, files_list))
     
     router.pre_check()
-
-
-# 线程池调用@todo
-async def _call_wrap(call, params):
-    request_handler = params[0]
-    try:
-        ret = await call(*params)
-        if isinstance(ret, dict):
-            ret = json.dumps(ret)
-        else:
-            ret = str(ret)
-        print(ret)
-        request_handler.finish(ret)
-        tornado.ioloop.IOLoop.instance().add_callback(lambda: request_handler.finish(ret))
-    except Exception as ex:
-
-        logger.exception(ex)
-        request_handler.finish(ex)
-        tornado.ioloop.IOLoop.instance().add_callback(lambda: request_handler.send_error())
-
 
 class router(object):
     '''dispather and decortor'''

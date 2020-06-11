@@ -54,7 +54,7 @@ class ParserEngine(object):
 
         # 读取配置信息
         tplConf = json.loads(self.readFile("config.json"))
-        configParser = await self.parse(tplConf, etreehtml)
+        config_tpl = await self.parse(tplConf, etreehtml)
 
         # 递归遍历字典
         def recursive(dictOlist):
@@ -73,7 +73,7 @@ class ParserEngine(object):
 
         # 选择模板文件
         configKey = ''
-        for key, maps in configParser.items():
+        for key, maps in config_tpl.items():
             if recursive(maps):
                 configKey = key
         if configKey == '':

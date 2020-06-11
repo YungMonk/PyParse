@@ -6,7 +6,7 @@ from lxml import etree
 import re
 import time
 
-from lib.configer import conf
+from lib.configer import instance
 from utils import strings
 # from lib import log
 from lib import route
@@ -559,9 +559,9 @@ async def handle_address_city(args, *extra) -> dict:
 
         import json
         if "account_address" in args and args['account_address']:
-            args['account'] = await http_curl(url=conf.config.get('rcp_service', None)['gsystem'], city=args['account_address'])
+            args['account'] = await http_curl(url=instance.config.get('rcp_service', None)['gsystem'], city=args['account_address'])
         if "address_detail" in args and args['address_detail']:
-            args['address'] = await http_curl(url=conf.config.get('rcp_service', None)['gsystem'], city=args['address_detail'])
+            args['address'] = await http_curl(url=instance.config.get('rcp_service', None)['gsystem'], city=args['address_detail'])
                 
         
         args['account_district'] = args['account'] # 灵活用工使用
@@ -583,7 +583,7 @@ async def handl_except_citys(args, *extra):
             citys = args['expect_city_names'].split(',')
             city_sets = []
             for _city in citys:
-                gsys = await http_curl(url=conf.config.get('rcp_service', None)['gsystem'], city=_city)
+                gsys = await http_curl(url=instance.config.get('rcp_service', None)['gsystem'], city=_city)
                 _tmp = max(gsys.split(','))
                 city_sets.append(_tmp)
 

@@ -182,19 +182,18 @@ if __name__ == "__main__":
         env_config = os.path.join(path._CONF_PATH, 'development/config.json')
         print("no configuration found!,will use [%s] instead" % env_config)
 
-    conf = configer.ConfigParserFromFile()
-    env_config | configer.E(conf.parseall) | configer.E(configer.conf.setup)
+    # 加载配置文件
+    env_config | configer.load_func(configer.instance.load) | configer.load_func(configer.instance.setup)
 
     app = tornado.web.Application([
         (r"^(/[^\.|]*)(?!\.\w+)$", MainHandler),  # 路由
     ], log_function=log_request)  # 创建一个应用对象
-
-    # app.listen(8880)    # 设置端口
-
     server = tornado.httpserver.HTTPServer(app)
 
+    # 绑定的端口
     server.bind(8880)
 
+    # 开启的进程数量
     server.start(2)  
 
     # 信号注册
