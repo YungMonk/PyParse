@@ -8,13 +8,12 @@ import time
 
 from lib.configer import instance
 from utils import strings
-# from lib import log
 from lib import route
 
-logger = route.logger
-
-# 回调函数处理
 async def optimize(args, funcs=[]):
+    '''
+        回调函数处理
+    '''
 
     for func in funcs:
         if not args:
@@ -88,114 +87,24 @@ async def optimize(args, funcs=[]):
     return args
 
 
-# 占位符还原
 def placeholder(str=''):
+    '''
+        占位符还原
+    '''
     return str.replace('@或@', '|').replace('逗号', ',').replace('左中括号', '[').replace('右中括号', ']').replace('右括号', '(').replace('左括号', ')').replace('\\n', '\n')
 
 
-# 中文数字转阿拉伯数字
 def cn2dig(cn):
-    CN_NUM = {
-        u'〇': 0,
-        u'一': 1,
-        u'二': 2,
-        u'三': 3,
-        u'四': 4,
-        u'五': 5,
-        u'六': 6,
-        u'七': 7,
-        u'八': 8,
-        u'九': 9,
-    
-        u'零': 0,
-        u'壹': 1,
-        u'贰': 2,
-        u'叁': 3,
-        u'肆': 4,
-        u'伍': 5,
-        u'陆': 6,
-        u'柒': 7,
-        u'捌': 8,
-        u'玖': 9,
-    
-        u'貮': 2,
-        u'两': 2,
-    }
+    '''
+        中文数字转阿拉伯数字
+    '''
+    return strings.cn2dig(cn)
 
-    CN_UNIT = {
-        u'十': 10,
-        u'拾': 10,
-        u'百': 100,
-        u'佰': 100,
-        u'千': 1000,
-        u'仟': 1000,
-        u'万': 10000,
-        u'萬': 10000,
-        u'亿': 100000000,
-        u'億': 100000000,
-        u'兆': 1000000000000,
-    }
 
-    lcn = list(cn)
-    unit = 0  # 当前的单位
-    ldig = []  # 临时数组
- 
-    while lcn:
-        cndig = lcn.pop()
- 
-        if cndig in CN_UNIT:
-            unit = CN_UNIT.get(cndig)
-            if unit == 10000:
-                ldig.append('w')  # 标示万位
-                unit = 1
-            elif unit == 100000000:
-                ldig.append('y')  # 标示亿位
-                unit = 1
-            elif unit == 1000000000000:  # 标示兆位
-                ldig.append('z')
-                unit = 1
-            continue
-        else:
-            dig = CN_NUM.get(cndig)
-            if unit:
-                dig = dig * unit
-                unit = 0
- 
-            ldig.append(dig)
- 
-    if unit == 10:  # 处理10-19的数字
-        ldig.append(10)
- 
-    ret = 0
-    tmp = 0
- 
-    while ldig:
-        x = ldig.pop()
- 
-        if x == 'w':
-            tmp *= 10000
-            ret += tmp
-            tmp = 0
- 
-        elif x == 'y':
-            tmp *= 100000000
-            ret += tmp
-            tmp = 0
- 
-        elif x == 'z':
-            tmp *= 1000000000000
-            ret += tmp
-            tmp = 0
- 
-        else:
-            tmp += x
- 
-    ret += tmp
-    return ret
-   
-
-# 去除字符串首尾处的空白字符（或者其他字符）
 def trim(args="", *extra):
+    '''
+        去除字符串首尾处的空白字符（或者其他字符）
+    '''
     return strings.trim(args, *extra)
 
 
@@ -677,10 +586,10 @@ async def fetch_head(args:str="", *extra) -> str:
     except HTTPError as e:
         # HTTPError is raised for non-200 responses; the response
         # can be found in e.response.
-        logger.warn("fetch_head HTTPError: " + str(e))
+        route.logger.warn("fetch_head HTTPError: " + str(e))
     except Exception as e:
         # Other errors are possible, such as IOError.
-        logger.warn("fetch_head Exception: " + str(e))
+        route.logger.warn("fetch_head Exception: " + str(e))
     finally :
         http_client.close()
 

@@ -31,7 +31,7 @@ class MLStripper(HTMLParser):
         return ''.join(self.fed)
 
 
-def _strip_once(value):
+def _strip_once(value: str):
     """
     Internal tag stripping utility used by strip_tags.
     """
@@ -41,11 +41,12 @@ def _strip_once(value):
     return s.get_data()
 
 
-# 去除html文本中的所有标签
-def strip_tags(value="") -> str:
-    """Return the given HTML with all tags stripped."""
-    # Note: in typical case this loop executes _strip_once once. Loop condition
-    # is redundant, but helps to reduce number of executions of _strip_once.
+def strip_tags(value: str = "") -> str:
+    """
+        Return the given HTML with all tags stripped.
+        Note: in typical case this loop executes _strip_once once. Loop condition
+        is redundant, but helps to reduce number of executions of _strip_once.
+    """
     value = str(value)
     while '<' in value and '>' in value:
         new_value = _strip_once(value)
@@ -56,19 +57,26 @@ def strip_tags(value="") -> str:
     return value
 
 
-def trim(args="", *extra) -> str:
-    # 去除字符串首尾处的空白字符（或者其他字符）
-    """Strip whitespace (or other characters) from the beginning and end of a string"""
+def trim(args: str = "", *extra: Any) -> str:
+    """
+        Strip whitespace (or other characters) from the beginning and end of a string
+    """
     return args.strip(extra[0] if len(extra) else " \t\n\r\0\x0B")
 
 
 def host_name() -> str:
-    """Return the current host name."""
+    """
+        Return the current host name.
+    """
+
     return socket.gethostname()
 
 
 def host_address() -> str:
-    """Return the current host address."""
+    """
+        Return the current host address.
+    """
+
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(('8.8.8.8', 80))
@@ -79,7 +87,10 @@ def host_address() -> str:
 
 
 def rpc_params(request: dict, **header: Any) -> dict:
-    """merge the params for rpc request."""
+    """
+        merge the params for rpc request.
+    """
+
     ip = host_address()
     params = {
         "header": {
@@ -99,14 +110,120 @@ def rpc_params(request: dict, **header: Any) -> dict:
     return params
 
 
-def salary_to_k(args:str, flag:str="") -> str:
-    """Salary unit converted to thousand."""
+def salary_to_k(args: str, flag: str = "") -> str:
+    """
+        Salary unit converted to thousand.
+    """
+
     if '千' in flag or 'K' in flag:
         return '%.2f' % (int(args))
     elif '万' in flag or 'W' in flag:
         return '%.2f' % (int(args)*10)
     else:
         return '%.2f' % (int(args)*0.001)
+
+
+def cn2dig(cn: str):
+    """
+        中文数字转拉丁字母
+    """
+    CN_NUM = {
+        u'〇': 0,
+        u'一': 1,
+        u'二': 2,
+        u'三': 3,
+        u'四': 4,
+        u'五': 5,
+        u'六': 6,
+        u'七': 7,
+        u'八': 8,
+        u'九': 9,
+
+        u'零': 0,
+        u'壹': 1,
+        u'贰': 2,
+        u'叁': 3,
+        u'肆': 4,
+        u'伍': 5,
+        u'陆': 6,
+        u'柒': 7,
+        u'捌': 8,
+        u'玖': 9,
+
+        u'貮': 2,
+        u'两': 2,
+    }
+
+    CN_UNIT = {
+        u'十': 10,
+        u'拾': 10,
+        u'百': 100,
+        u'佰': 100,
+        u'千': 1000,
+        u'仟': 1000,
+        u'万': 10000,
+        u'萬': 10000,
+        u'亿': 100000000,
+        u'億': 100000000,
+        u'兆': 1000000000000,
+    }
+
+    lcn = list(cn)
+    unit = 0  # 当前的单位
+    ldig = []  # 临时数组
+
+    while lcn:
+        cndig = lcn.pop()
+
+        if cndig in CN_UNIT:
+            unit = CN_UNIT.get(cndig)
+            if unit == 10000:
+                ldig.append('w')  # 标示万位
+                unit = 1
+            elif unit == 100000000:
+                ldig.append('y')  # 标示亿位
+                unit = 1
+            elif unit == 1000000000000:  # 标示兆位
+                ldig.append('z')
+                unit = 1
+            continue
+        else:
+            dig = CN_NUM.get(cndig)
+            if unit:
+                dig = dig * unit
+                unit = 0
+
+            ldig.append(dig)
+
+    if unit == 10:  # 处理10-19的数字
+        ldig.append(10)
+
+    ret = 0
+    tmp = 0
+
+    while ldig:
+        x = ldig.pop()
+
+        if x == 'w':
+            tmp *= 10000
+            ret += tmp
+            tmp = 0
+
+        elif x == 'y':
+            tmp *= 100000000
+            ret += tmp
+            tmp = 0
+
+        elif x == 'z':
+            tmp *= 1000000000000
+            ret += tmp
+            tmp = 0
+
+        else:
+            tmp += x
+
+    ret += tmp
+    return ret
 
 
 if __name__ == "__main__":

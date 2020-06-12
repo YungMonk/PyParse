@@ -1,15 +1,13 @@
 #!/usr/bin/python3.8
 # -*- coding: utf-8 -*-
 
-import os
 import json
 import random
-import re
 import inspect
-import itertools
+import re
+import os
 import sys
 import time
-from concurrent import futures
 
 import tornado
 from cacheout import LFUCache
@@ -18,10 +16,6 @@ from lib import configer
 from lib import log
 from lib import path
 
-MAX_WORKERS = 16
-
-executor = futures.ThreadPoolExecutor(max_workers=MAX_WORKERS)
-
 @configer.instance.register(level=2)
 def set_up():
 
@@ -29,9 +23,11 @@ def set_up():
         this function maybe called for hot deployment
     '''
 
+    # 加载日志
     global logger
     logger = log.Log().getLog()
     
+    # 加载缓存
     global lfu_cache
     lfu_cache = LFUCache(maxsize=256)
     
@@ -66,6 +62,9 @@ class router(object):
 
     @classmethod
     def lookup_suitable_node(cls, prev, sentry, url, method, assert_wrong_method=False):
+        '''
+            循环加载所有路由
+        '''
         if not sentry:
 
             if assert_wrong_method:
@@ -93,6 +92,10 @@ class router(object):
 
     @classmethod
     def pre_check(cls):
+        '''
+            路由检查
+        '''
+
         check_mapper_list = []
 
         for item in set(router.mapper) :
@@ -110,6 +113,9 @@ class router(object):
 
     @classmethod
     def route(cls, **deco):
+        '''
+            用以注册路由的装饰器
+        '''
         def foo(func):
             url = deco.get('url') or '/'
             eUrl = re.compile('^' + url + '$', re.IGNORECASE)
@@ -148,7 +154,9 @@ class router(object):
 
     @classmethod
     async def emit(cls, path, request_handler, method_flag):
-        
+        '''
+            路由分发
+        '''
         mapper_node, m = router.lookup_suitable_node(None, router.mapper_sentry, path, method_flag)
 
         if mapper_node and m:
@@ -169,10 +177,6 @@ class router(object):
                 pass
 
             call = getattr(obj, callName)
-
-            # maybe as asynchronous
-            # executor.submit(_call_wrap, call, params)
-
             ret = await call(*params)
             request_handler.finish(ret)
 
