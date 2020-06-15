@@ -1,0 +1,24 @@
+{
+    "20200615": {
+        "label": "中文简历--邮件简历解析",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "table-divResume": {
+                "label": "定位标志是h2标签中包含有「基本信息」",
+                "rules": "//h2[contains(text(),'基本信息')]"
+            }
+        }
+    },
+    "20200616": {
+        "label": "中文简历--个人简历解析",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "table-divResume": {
+                "label": "定位标志是h2标签中包含有「基本信息」",
+                "rules": "//h2[contains(text(),'基本信息')]"
+            }
+        }
+    }
+}

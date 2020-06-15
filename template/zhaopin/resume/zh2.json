@@ -204,7 +204,7 @@
                 "value": ""
             }
         },
-        "application_rules": "handle_address_city|handle_expect_salary|handle_basic_salary|handl_except_citys"
+        "application_rules": "handle_address_city|handle_expect_salary|handle_basic_salary|handle_except_citys"
     },
     "contact": {
         "label": "联系方式",

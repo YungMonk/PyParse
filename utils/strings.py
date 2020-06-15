@@ -114,13 +114,17 @@ def salary_to_k(args: str, flag: str = "") -> str:
     """
         Salary unit converted to thousand.
     """
+    if '.' in args:
+        args = float(args)
+    else:
+        args = int(args)
 
     if '千' in flag or 'K' in flag:
-        return '%.2f' % (int(args))
+        return '%.2f' % (args)
     elif '万' in flag or 'W' in flag:
-        return '%.2f' % (int(args)*10)
+        return '%.2f' % (args*10)
     else:
-        return '%.2f' % (int(args)*0.001)
+        return '%.2f' % (args*0.001)
 
 
 def cn2dig(cn: str):
@@ -224,6 +228,41 @@ def cn2dig(cn: str):
 
     ret += tmp
     return ret
+
+def atoi(str:str="") -> int:
+    """
+    :type str: str
+    :rtype: int
+    """
+    s = str.lstrip()
+    if not s:
+        return 0
+    a = s[0]
+    num = 0
+    if a.isdigit():
+        flag = 1
+        num = int(a)
+    elif a == '+':
+        flag = 1
+    elif a == '-':
+        flag = -1
+    else:
+        return 0
+    for i in range(1,len(s)):
+        j = s[i]
+        if j.isdigit():
+            num = num * 10 + int(j)
+        else:
+            break
+    num = flag * num
+    int_max = 2 ** 31 -1
+    int_min = -2 ** 31
+    if num > int_max:
+        return int_max
+    elif num < int_min:
+        return int_min
+    else:
+        return num
 
 
 if __name__ == "__main__":

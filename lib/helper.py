@@ -79,7 +79,7 @@ async def optimize(args, funcs=[]):
 
             func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
             # 协同方法特殊处理
-            if call_info[0] in ["handle_address_city", "handl_except_citys", "fetch_head"]:
+            if call_info[0] in ["handle_address_city", "handle_except_citys", "handle_citys", "fetch_head"]:
                 args = await func(args)
             else :
                 args = func(args)
@@ -180,6 +180,8 @@ def handle_birthday(args="", *extra):
     elif (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})', args)):
         string = "{}年{}月".format(matchObj.group(1), matchObj.group(3))
     elif (matchObj := re.search(r'(\d+)\s*岁', args)):
+        string = "{}年".format(time.localtime(time.time()).tm_year - int(matchObj.group(1)))
+    elif (matchObj := re.search(r'(\d{2})', args)):
         string = "{}年".format(time.localtime(time.time()).tm_year - int(matchObj.group(1)))
     return string if string else args
 
@@ -289,6 +291,57 @@ def handle_experience(args="", *extra):
     return result
 
 
+def handle_basic_experience(args="", *extra):
+    args["work_experience"]= ""
+    args["working_seniority_from"]= ""
+    args["working_seniority_to"]= ""
+
+    if "experience" not in args or not args["experience"]:
+        return args
+
+    experience = args["experience"]
+
+    if (isMatch := re.search(r'(\d+)年以下(工作经验|经验)*', experience)):
+        # 10年以下工作经验，8年以下经验
+        args["working_seniority_to"] = isMatch.group(1)
+        args["work_experience"] = args["working_seniority_to"]
+    elif (isMatch := re.search(r'(\d+)(\s|\.0)*年以上(工作经验|经验)*', experience)):
+        # 10以上工作经验，10.0年以上工作经验，8年以上经验
+        args["working_seniority_from"] = isMatch.group(1)
+        args["work_experience"] = args["working_seniority_from"]
+    elif (isMatch := re.search(r'(\S+)年以上', experience)):
+        # 十年以上工作经验
+        args["working_seniority_from"] = cn2dig(isMatch.group(1))
+        args["work_experience"] = args["working_seniority_from"]
+    elif (isMatch := re.search(r'(\d+)-(\d+)年(工作经验|经验)*', experience)):
+        # 8-10年工作经验，8-10年经验
+        args["working_seniority_from"] = isMatch.group(1)
+        args["working_seniority_to"] = isMatch.group(2)
+        args["work_experience"] = args["working_seniority_to"]
+    elif (isMatch := re.search(r'(\d+)年(工作经验|经验)', experience)):
+        # 8年工作经验
+        args["working_seniority_to"] = isMatch.group(1)
+        args["working_seniority_from"] = args["working_seniority_to"]
+        args["work_experience"] = args["working_seniority_to"]
+    elif (isMatch := re.search(r'(\d+)years', experience)):
+        # 10years
+        args["working_seniority_to"] = isMatch.group(1)
+        args["working_seniority_from"] = args["working_seniority_to"]
+        args["work_experience"] = args["working_seniority_to"]
+    elif (isMatch := re.search(r'(\d+)\s*年(?!\d)', experience)):
+        # 10 年，10年
+        args["working_seniority_to"] = isMatch.group(1)
+        args["working_seniority_from"] = args["working_seniority_to"]
+        args["work_experience"] = args["working_seniority_to"]
+    elif (isMatch := re.search(r'(\S+)年', experience)):
+        # 八年
+        args["working_seniority_to"] = cn2dig(isMatch.group(1))
+        args["working_seniority_from"] = args["working_seniority_to"]
+        args["work_experience"] = args["working_seniority_to"]
+
+    return args
+
+
 # 当前状态
 def handle_current_status(args="", *extra):
     status = 0
@@ -375,8 +428,8 @@ def handle_expect_salary(args="", *extra):
 
     if "expect_salary" in args:
         salary = args['expect_salary']
-        # 年薪
         if '年' in salary and (matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S)):
+        # 年薪
             if len(matches) == 1:
                 args['expect_annual_salary_from'] = strings.salary_to_k(matches[0], salary)
                 args['expect_annual_salary_to']   = strings.salary_to_k(matches[0], salary)
@@ -386,6 +439,15 @@ def handle_expect_salary(args="", *extra):
 
             args['expect_salary_from'] = '%.2f' % (args['expect_annual_salary_from']/12)
             args['expect_salary_to']   = '%.2f' % (args['expect_annual_salary_to']/12)
+        elif '个月' in salary and (matches := re.findall(r'(\d+.*)万（(\d+)元/月\s*\*\s*(\d+)个月）', salary, re.I | re.S)):
+        # 年薪 19.60万（14000元/月 * 14个月）
+            if len(matches) == 1:
+                args['expect_annual_salary_from'] = strings.salary_to_k(matches[0][0], 'W')
+                args['expect_annual_salary_to']   = strings.salary_to_k(matches[0][0], 'W')
+                args['expect_salary_from']        = strings.salary_to_k(matches[0][1])
+                args['expect_salary_to']          = strings.salary_to_k(matches[0][1])
+                args['basic_salary_month']        = matches[0][2]
+
         elif matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S):
             if len(matches) == 1:
                 args['expect_salary_from'] = strings.salary_to_k(matches[0], salary)
@@ -395,6 +457,28 @@ def handle_expect_salary(args="", *extra):
                 args['expect_salary_to']   = strings.salary_to_k(matches[1], salary)
 
     return args
+
+
+def handle_phone(args="", *extra):
+    """
+    match the phone number.
+    """
+    matches = re.search(r'(\d+)', args)
+    if matches:
+        return matches.group(0)
+    else:
+        return ""
+
+
+def handle_email(args="", *extra):
+    """
+    match the email.
+    """
+    matches = re.search(r'(\S*@\S*)', args)
+    if matches:
+        return matches.group(0)
+    else:
+        return ""
 
 
 # 公司类型
@@ -480,7 +564,7 @@ async def handle_address_city(args, *extra) -> dict:
 
 
 # 处理期望城市
-async def handl_except_citys(args, *extra):
+async def handle_except_citys(args, *extra):
     if not isinstance(args, dict):
         return args
     else:
@@ -497,6 +581,26 @@ async def handl_except_citys(args, *extra):
                 city_sets.append(_tmp)
 
             args['expect_city_ids'] = strings.trim(','.join(city_sets))
+        
+    return args
+
+
+async def handle_citys(args, *extra):
+    """
+        城市ID化
+    """
+    if not args:
+        return ""
+
+    import json
+    citys = args.split(',')
+    city_sets = []
+    for _city in citys:
+        gsys = await http_curl(url=instance.config.get('rcp_service', None)['gsystem'], city=_city)
+        _tmp = max(gsys.split(','))
+        city_sets.append(_tmp)
+
+    args = strings.trim(','.join(city_sets))
         
     return args
 
@@ -544,10 +648,10 @@ async def http_curl(**kwargs):
     except HTTPError as e:
         # HTTPError is raised for non-200 responses; the response
         # can be found in e.response.
-        print("Error: " + str(e))
+        route.logger.warn("request gsystem HTTPError: " + str(e))
     except Exception as e:
         # Other errors are possible, such as IOError.
-        print("Error: " + str(e))
+        route.logger.warn("request gsystem Exception: " + str(e))
     finally :
         http_client.close()
 
