@@ -332,19 +332,19 @@
             },
             "school_name": {
                 "label": "学校名称",
-                "rules": "string(.//*[@class='float-left relative'])|explode[·],0|trim"
+                "rules": "string(.//*[@class='float-left relative']//span[1])|explode[·],0|trim"
             },
             "discipline_name": {
                 "label": "专业",
-                "rules": "string(.//*[@class='float-left relative']/span[1])|explode[·],1|trim"
+                "rules": "string(.//*[@class='float-left relative']//span[1])|explode[·],1|trim"
             },
             "degree": {
                 "label": "学历",
-                "rules": "string(.//*[@class='float-left relative']/span[1])|explode[·],2|trim|handle_degree"
+                "rules": "string(.//*[@class='float-left relative']//span[1])|explode[·],2|trim|handle_degree"
             },
             "degree_origin": {
                 "label": "学历",
-                "rules": "string(.//*[@class='float-left relative']/span[1])|explode[·],2|trim"
+                "rules": "string(.//*[@class='float-left relative']//span[1])|explode[·],2|trim"
             },
             "discipline_desc": {
                 "label": "专业描述",
