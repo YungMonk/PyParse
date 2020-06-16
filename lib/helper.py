@@ -440,13 +440,21 @@ def handle_expect_salary(args="", *extra):
             args['expect_salary_from'] = '%.2f' % (args['expect_annual_salary_from']/12)
             args['expect_salary_to']   = '%.2f' % (args['expect_annual_salary_to']/12)
         elif '个月' in salary and (matches := re.findall(r'(\d+.*)万（(\d+)元/月\s*\*\s*(\d+)个月）', salary, re.I | re.S)):
-        # 年薪 19.60万（14000元/月 * 14个月）
+        # 年薪 19.60万（14000元/月 * 14个月）猎聘邮件
             if len(matches) == 1:
                 args['expect_annual_salary_from'] = strings.salary_to_k(matches[0][0], 'W')
                 args['expect_annual_salary_to']   = strings.salary_to_k(matches[0][0], 'W')
                 args['expect_salary_from']        = strings.salary_to_k(matches[0][1])
                 args['expect_salary_to']          = strings.salary_to_k(matches[0][1])
-                args['basic_salary_month']        = matches[0][2]
+                args['expect_salary_month']        = matches[0][2]
+        elif '薪' in salary and (matches := re.findall(r'(\d+\.\d+)万-(\d+\.\d+)万（(\d+)K/月-(\d+)K/月\*(\d+)薪）', salary, re.I | re.S)):
+        # 年薪 13.20万-15.60万（11K/月-13K/月*12薪）猎聘通
+            if len(matches) == 1:
+                args['expect_annual_salary_from'] = strings.salary_to_k(matches[0][0], 'W')
+                args['expect_annual_salary_to']   = strings.salary_to_k(matches[0][1], 'W')
+                args['expect_salary_from']        = strings.salary_to_k(matches[0][2], 'K')
+                args['expect_salary_to']          = strings.salary_to_k(matches[0][3], 'K')
+                args['expect_salary_month']       = matches[0][4]
 
         elif matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S):
             if len(matches) == 1:

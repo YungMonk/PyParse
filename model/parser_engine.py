@@ -49,8 +49,8 @@ class ParserEngine(object):
         tmp_key = hashlib.new('md5', self.__text.encode("utf-8")).hexdigest()
 
         # 读取内存缓存
-        if p_result := self.__cache.get(tmp_key):
-            return p_result
+        # if p_result := self.__cache.get(tmp_key):
+        #     return p_result
 
         # 读取配置信息
         tplConf = json.loads(self.readFile("config.json"))
@@ -102,7 +102,7 @@ class ParserEngine(object):
             #     print(etreehtml)
 
             # 处理默认值
-            if 'value' in value and value['value']:
+            if 'value' in value:
                 tmp[key] = value['value']
                 continue
 

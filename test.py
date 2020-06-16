@@ -8,13 +8,11 @@ import sys
 import string
 from utils import strings
 
-if __name__ == '__main__':
-    # arr =  {"a":"10", "b":"8", "c":""}
-    # arr = [strings.atoi(x) for x in arr.values()]
-    # print(max(arr))
-    # sys.exit(0)
+import lxml.html
 
-    filename = os.getcwd() + '/test/data/resume/liepin/赵女士.html'
+if __name__ == '__main__':
+
+    filename = os.getcwd() + '/test/data/resume/liepin/lpt.html'
     with open(filename, 'r') as f:
         fileContext = f.read()
         f.close()
