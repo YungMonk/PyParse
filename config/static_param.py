@@ -63,3 +63,4 @@ parserType = {
     1: "resume",
     2: "position"
 }
+
