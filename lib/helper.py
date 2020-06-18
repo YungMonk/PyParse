@@ -706,3 +706,99 @@ async def fetch_head(args:str="", *extra) -> str:
         http_client.close()
 
     return result
+
+
+def font_decrypt(args: str = "", *extra) -> str:
+    """58同城字体解密"""
+
+    from fontTools.ttLib import TTFont
+    import io
+    import os
+    import base64
+    import hashlib
+    from lib import path
+
+    font_dict = {
+        "uniE0A3": "硕", "uniE103": "A", "uniE108": "士", "uniE17A": "女", "uniE29E": "M",
+        "uniE2D9": "专", "uniE32C": "8", "uniE413": "科", "uniE470": "验", "uniE53C": "6",
+        "uniE5D0": "赵", "uniE713": "1",  "uniE724": "高", "uniE73B": "大", "uniE869": "E",
+        "uniE9B3": "下", "uniE9EA": "校", "uniEA12": "届", "uniEA43": "7", "uniEAED": "男",
+        "uniEB29": "5", "uniEB71": "3", "uniEBBD": "2", "uniEBD6": "经", "uniED6C": "中",
+        "uniEE32": "9", "uniEE47": "技", "uniEE8F": "周", "uniEF06": "本", "uniEFA9": "0",
+        "uniEFCA": "博", "uniF02F": "4", "uniF031": "生", "uniF16F": "杨", "uniF19B": "王",
+        "uniF38D": "陈", "uniF3E6": "张", "uniF484": "刘", "uniF48A": "以", "uniF696": "应",
+        "uniF729": "吴", "uniF77D": "黄", "uniF84C": "无", "uniF874": "B", "uniF885": "李",
+    }
+
+    matches = re.search(r'\(data:application/font-woff;charset=utf-8;base64,(.*?)\)', args)
+    if matches:
+        font_chart = matches.group(1)
+        font_temp = base64.b64decode(font_chart)
+
+        # 当前的字体是否已经存在，不存在保存
+        key_temp = hashlib.new('md5', font_chart.encode("utf-8")).hexdigest()
+        new_font_name = os.path.join(path._SCRIPT_FONT, key_temp+".woff")
+        if not os.path.exists(new_font_name):
+            with open(new_font_name, 'wb') as f:
+                f.write(font_temp)
+                f.close()
+
+        # 得到基准字体的编码
+        font_base = TTFont(os.path.join(path._SCRIPT_FONT, "base.woff"))
+        font_base_order = font_base.getGlyphOrder()[1:]
+
+        # 得到当前字体的编码
+        font_curr = TTFont(io.BytesIO(font_temp))
+        font_curr_order = font_curr.getGlyphOrder()[1:]
+
+        result = {}
+        for curr_i in font_curr_order:
+            if curr_i == 'x':
+                continue
+
+            curr_ttglyph = font_curr['glyf'][curr_i]
+            for base_i in font_base_order:
+                if base_i == 'x':
+                    continue
+
+                base_ttglyph = font_base['glyf'][base_i]
+
+                # 字体的组成部分个数是否相同
+                if curr_ttglyph.numberOfContours != base_ttglyph.numberOfContours:
+                    continue
+
+                base_xOffset = min([x[0] for x in base_ttglyph.coordinates])
+                base_yOffset = min([x[1] for x in base_ttglyph.coordinates])
+
+                curr_xOffset = min([x[0] for x in curr_ttglyph.coordinates])
+                curr_yOffset = min([x[1] for x in curr_ttglyph.coordinates])
+
+                re_base_coordinates = []
+                for base_contours in base_ttglyph.coordinates:
+                    re_base_coordinates.append(
+                        str(base_contours[0] - base_xOffset) + '-' + 
+                        str(base_contours[1] - base_yOffset)
+                    )
+                
+
+                re_curr_coordinates = []
+                for curr_contours in curr_ttglyph.coordinates:
+                    re_curr_coordinates.append(
+                        str(curr_contours[0] - curr_xOffset) + '-' +
+                        str(curr_contours[1] - curr_yOffset)
+                    )
+                
+                instan = list(set(re_base_coordinates) & set(re_curr_coordinates))
+
+                if not len(instan) or len(instan) / len(re_base_coordinates) < 0.5 :
+                    continue
+                
+                result[curr_i] = font_dict[base_i]
+            
+        result = {re.sub('uni(.*)','&#x\\1;', key):value for key, value in result.items()}
+        print(result)
+
+        for key,val in result.items():
+            args = args.replace(key,val)
+
+    return args

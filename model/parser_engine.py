@@ -41,6 +41,10 @@ class ParserEngine(object):
 
 
     async def dispatch(self):
+        # 58同城的简历内容需要字体解码
+        # if self.__site == 12:
+            
+
         etreehtml = etree.HTML(self.__text)
 
         # result = etreehtml.xpath("string(//table[@class='infr'])")
@@ -77,7 +81,7 @@ class ParserEngine(object):
             if recursive(maps):
                 configKey = key
         if configKey == '':
-            raise HTTPError(80012, "not found the template!!!")
+            raise HTTPError(500003, "渠道的简历格式发生了变化")
 
         templateName = tplConf[configKey]['fname']
 
@@ -179,14 +183,16 @@ class ParserEngine(object):
         content = ""
         siteName = static_param.channelMap[self.__site]
 
-        filepath = path._TEMPLATE + '/' + siteName + '/' + static_param.parserType[
+        filepath = path._TEMPLATE + siteName + '/' + static_param.parserType[
             self.__type] + '/' + filename
         
         logger.warn("loading file: %s" % filepath)
-
+        
         if os.path.exists(filepath) is False:
-            logger.fatal("Not Found file: %s" % filepath)
-            raise HTTPError(80012, "Not Found the template file !!!")
+            if filename == 'config.json':
+                raise HTTPError(500001, "渠道不支持")
+            else:
+                raise HTTPError(500002, "解析模板未找到")
 
         with open(filepath, 'r') as fopen:
             content = fopen.read()
