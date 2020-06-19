@@ -347,7 +347,7 @@ def handle_current_status(args="", *extra):
     status = 0
     if re.search(r'在岗|在职|机会', args, re.S|re.I):
         status = 3
-    elif re.search(r'离职|找工作', args, re.S|re.I):
+    elif re.search(r'离职|找工作|求职中', args, re.S|re.I):
         status = 1
 
     return status
@@ -387,6 +387,25 @@ def handle_interval(args="", *extra):
     args.pop('time','')
     return args
 
+# 处理教育时间间隔
+def handle_education(args="", *extra):
+    args['start_time'] = ""
+    args['end_time'] = ""
+    args['so_far'] = "N"
+
+    isMatch = re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args['time']))
+    if len(isMatch) == 1 and '毕业' in args['time']:
+        args['end_time'] = isMatch[0]
+    elif len(isMatch) == 1:
+        args['start_time'] = isMatch[0]
+    elif len(isMatch) == 2:
+        args['start_time'] = isMatch[0] 
+        args['end_time'] = isMatch[1]
+
+    args = handle_sofar(args, *extra)
+
+    args.pop('time','')
+    return args
 
 # 处理基本薪资
 def handle_basic_salary(args="", *extra):
@@ -668,7 +687,7 @@ async def http_curl(**kwargs):
 
 # 抓取头像（注：抓取头像会）
 async def fetch_head(args:str="", *extra) -> str:
-    if not args:
+    if not args or re.search(r'img\.58cdn\.com\.cn/m58', args):
         return ""
 
     from tornado.httpclient import HTTPRequest,HTTPError
@@ -796,7 +815,6 @@ def font_decrypt(args: str = "", *extra) -> str:
                 result[curr_i] = font_dict[base_i]
             
         result = {re.sub('uni(.*)','&#x\\1;', key):value for key, value in result.items()}
-        print(result)
 
         for key,val in result.items():
             args = args.replace(key,val)

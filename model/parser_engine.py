@@ -42,17 +42,16 @@ class ParserEngine(object):
 
     async def dispatch(self):
         # 58同城的简历内容需要字体解码
-        # if self.__site == 12:
-            
+        if self.__site == 12:
+            self.__text = helper.font_decrypt(self.__text) 
 
         etreehtml = etree.HTML(self.__text)
 
         # result = etreehtml.xpath("string(//table[@class='infr'])")
         # print(result)
 
-        tmp_key = hashlib.new('md5', self.__text.encode("utf-8")).hexdigest()
-
         # 读取内存缓存
+        tmp_key = hashlib.new('md5', self.__text.encode("utf-8")).hexdigest()
         # if p_result := self.__cache.get(tmp_key):
         #     return p_result
 
