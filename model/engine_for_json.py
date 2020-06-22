@@ -8,6 +8,7 @@ from tornado.web import HTTPError
 
 from utils import strings
 
+import hashlib
 import json
 import os
 import sys
@@ -33,10 +34,48 @@ class jEngine(object):
         except Exception as e:
             raise HTTPError(100002, "format wrong:%s" % e)
 
+        # 读取内存缓存
+        tmp_key = hashlib.new('md5', self.text.encode("utf-8")).hexdigest()
+        # if p_result := lfu_cache.get(tmp_key):
+        #     return p_result
+
         # 配置文件读取
         tpl_conf = json.loads(self.get_config_ctx('config.json'))
         res_list = await self.parse(tpl_conf, ctx)
-        print(res_list)
+        # 递归遍历字典
+        def recursive(dictOlist):
+            res = True
+            for ele in dictOlist.values():
+                if isinstance(ele, dict):
+                    tmp = recursive(ele)
+                    if tmp is not True:
+                        res = tmp
+                else:
+                    if len(ele):
+                        pass
+                    else:
+                        res = False
+            return res
+
+        # 选择模板文件
+        configKey = ''
+        for key, maps in res_list.items():
+            if recursive(maps):
+                configKey = key
+        if configKey == '':
+            raise HTTPError(500003, "渠道的简历格式发生了变化")
+
+        templateName = tpl_conf[configKey]['fname']
+
+        templateContent = json.loads(self.get_config_ctx(templateName))
+        cv = await self.parse(templateContent, ctx)
+
+        p_result = json.dumps(cv, ensure_ascii=False)
+
+        # 写入内存缓存
+        lfu_cache.set(tmp_key, p_result, ttl=30)
+
+        return p_result
 
     async def parse(self, rule_map: dict, ctx: dict) -> dict:
         """解析主逻辑"""
@@ -55,7 +94,7 @@ class jEngine(object):
                     if isinstance(tmp_res, str):
                         result[key] = await helper.optimize(tmp_res, tmp_arr[1:])
                     else:
-                        result[key] = tmp_res
+                        result[key] = json.dumps(tmp_res, ensure_ascii=False)
                 else:
                     result[key] = ""
                 continue

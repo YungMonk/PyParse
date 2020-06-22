@@ -7,18 +7,20 @@ import json
 from utils import strings
 
 if __name__ == '__main__':
+    tmp = ""
+    print()
     
-    filename = os.getcwd() + '/test/data/resume/zhaopin/5.txt'
-    with open(filename, 'r') as f:
-        fileContext = f.read()
-        f.close()
-    post_args = strings.rpc_params({
-        'c': 'apis/logic_parse',
-        'm': 'parsers_engine',
-        'p': {
-            'site_id': 1,
-            'type': 1,
-            'body': fileContext,
-        }
-    })
-    print(json.dumps(post_args, ensure_ascii=False))
+    # filename = os.getcwd() + '/test/data/resume/zhaopin/5.txt'
+    # with open(filename, 'r') as f:
+    #     fileContext = f.read()
+    #     f.close()
+    # post_args = strings.rpc_params({
+    #     'c': 'apis/logic_parse',
+    #     'm': 'parsers_engine',
+    #     'p': {
+    #         'site_id': 1,
+    #         'type': 1,
+    #         'body': fileContext,
+    #     }
+    # })
+    # print(json.dumps(post_args, ensure_ascii=False))
