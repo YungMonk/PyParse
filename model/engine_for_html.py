@@ -18,7 +18,7 @@ from lxml import etree
 from config import static_param
 
 
-class ParserEngine(object):
+class hEngine(object):
 
     __site = 0
     __type = 0  # 1:简历 2:职位
@@ -182,12 +182,12 @@ class ParserEngine(object):
         content = ""
         siteName = static_param.channelMap[self.__site]
 
-        filepath = path._TEMPLATE + siteName + '/' + static_param.parserType[
-            self.__type] + '/' + filename
-        
+        filepath = os.path.join(path._TEMPLATE, siteName, static_param.parserType[
+            self.__type], 'html', filename)
+
         logger.warn("loading file: %s" % filepath)
-        
-        if os.path.exists(filepath) is False:
+
+        if not os.path.exists(filepath):
             if filename == 'config.json':
                 raise HTTPError(500001, "渠道不支持")
             else:
@@ -197,8 +197,8 @@ class ParserEngine(object):
             content = fopen.read()
             fopen.close()
 
-            if fopen.closed == False:
-                logger.fatal("File is not closed: %s" % filepath)
+            if not fopen.closed:
+                logger.fatal("file is not closed: %s" % filepath)
 
         return content
 

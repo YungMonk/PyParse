@@ -180,7 +180,6 @@ class router(object):
             ret = await call(*params)
             request_handler.finish(ret)
 
-
     @classmethod
     async def get(cls, path, request_handler):
         await router.emit(path, request_handler, router._GET)

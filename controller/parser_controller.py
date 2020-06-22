@@ -5,7 +5,7 @@ import time
 from tornado.web import HTTPError
 
 from lib import route, path
-from model import parser_engine
+from model.engine import engine as eng
 from config import static_param
 
 
@@ -38,4 +38,4 @@ class HelloTest(object):
         if req.json_args['request']['p']['type'] not in static_param.parserType:
             raise HTTPError(100002, "Params is error, type is no support!")
 
-        return await parser_engine.ParserEngine(**req.json_args['request']['p']).dispatch()
+        return await eng.dispatch(**req.json_args['request']['p'])

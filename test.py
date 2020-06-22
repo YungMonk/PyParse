@@ -7,8 +7,8 @@ import json
 from utils import strings
 
 if __name__ == '__main__':
-
-    filename = os.getcwd() + '/test/data/resume/58/niu.html'
+    
+    filename = os.getcwd() + '/test/data/resume/zhaopin/5.txt'
     with open(filename, 'r') as f:
         fileContext = f.read()
         f.close()
@@ -16,7 +16,7 @@ if __name__ == '__main__':
         'c': 'apis/logic_parse',
         'm': 'parsers_engine',
         'p': {
-            'site_id': 12,
+            'site_id': 1,
             'type': 1,
             'body': fileContext,
         }

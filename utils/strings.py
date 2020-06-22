@@ -229,7 +229,8 @@ def cn2dig(cn: str):
     ret += tmp
     return ret
 
-def atoi(str:str="") -> int:
+
+def atoi(str: str = "") -> int:
     """
     :type str: str
     :rtype: int
@@ -248,14 +249,14 @@ def atoi(str:str="") -> int:
         flag = -1
     else:
         return 0
-    for i in range(1,len(s)):
+    for i in range(1, len(s)):
         j = s[i]
         if j.isdigit():
             num = num * 10 + int(j)
         else:
             break
     num = flag * num
-    int_max = 2 ** 31 -1
+    int_max = 2 ** 31 - 1
     int_min = -2 ** 31
     if num > int_max:
         return int_max
@@ -263,6 +264,41 @@ def atoi(str:str="") -> int:
         return int_min
     else:
         return num
+
+
+def get_val_by_keys(keys: str = "", ctx: dict = {}) -> Any:
+    r"""get a value for dict or list by a string
+
+    >>> dt = {
+    >>>     "name": {
+    >>>         "real": "yung",
+    >>>         "last": "monk",
+    >>>     }
+    >>>     "work": [
+    >>>         1, 2
+    >>>     ]
+    >>> }
+    >>> print(get_val_by_keys('work.0', dt))
+    >>> 1
+
+    """
+    arr_key = keys.split(".")
+    for key in arr_key:
+        if isinstance(ctx, list) and key.isdigit():
+            idx = int(key)
+            if len(ctx) < idx:
+                return ""
+            else:
+                ctx = ctx[idx]
+        elif isinstance(ctx, dict):
+            if key not in ctx:
+                return ""
+            else:
+                ctx = ctx[key]
+        else:
+            return ""
+
+    return ctx
 
 
 if __name__ == "__main__":
