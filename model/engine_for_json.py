@@ -42,8 +42,9 @@ class jEngine(object):
         # 配置文件读取
         tpl_conf = json.loads(self.get_config_ctx('config.json'))
         res_list = await self.parse(tpl_conf, ctx)
-        # 递归遍历字典
+
         def recursive(dictOlist):
+            # 递归遍历字典
             res = True
             for ele in dictOlist.values():
                 if isinstance(ele, dict):
