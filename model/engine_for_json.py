@@ -105,12 +105,13 @@ class jEngine(object):
                 # 过滤规则不为空
                 tmp_arr = val['rules'].split('|')
                 tmp_res = strings.get_val_by_keys(tmp_arr[0], ctx)
-                if 'list' in val and val['list'] and isinstance(tmp_res, list):
-                    # 子项返回值要求是列表
+                if 'lists' in val and val['lists']:
                     tmp = []
-                    for _val in tmp_res:
-                        _tmp = await self.parse(val['child'], tmp_res)
-                        tmp.append(_tmp)
+                    if isinstance(tmp_res, list):
+                        # 子项返回值要求是列表
+                        for _val in tmp_res:
+                            _tmp = await self.parse(val['child'], tmp_res)
+                            tmp.append(_tmp)
                     result[key] = tmp
                 else:
                     # 子项返回值要求是字典
