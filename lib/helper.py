@@ -167,13 +167,26 @@ def handle_regualr(args="", *extra):
     return xpath
 
 
-# xpath处理
 def handle_xpath(args="", *extra):
+    """xpath处理"""
     return etree.HTML(args).xpath(placeholder(extra[0]))
 
+def handle_birth(args="", *extra):
+    """拼接出生日期"""
+    birth = ""
+    if 'birth_year' in args and args['birth_year']:
+        birth = args['birth_year'] + '年'
+        # print(birth, args['birth_day'])
+        if 'birth_month' in args and args['birth_month']:
+            birth = birth + args['birth_month'] + '月'
+            if 'birth_day' in args and args['birth_day']:
+                birth = birth + args['birth_day'] + '日'
+        args['birth'] = birth
 
-# 匹配出生日
+    return args
+
 def handle_birthday(args="", *extra):
+    """匹配出生日"""
     string = ""
     if (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})\s*(月|-|\.){1}\s*([0-3]{0,1}[0-9]{1})',args)):
         string = "{}年{}月{}日".format(matchObj.group(1), matchObj.group(3), matchObj.group(5))
@@ -197,8 +210,10 @@ def handle_age(args="", *extra):
 
 # 匹配性别
 def handle_gender(args="", *extra):
-    sexs = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F', '1': 'M', '0': 'F'}
+    sexs = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F'}
     if (isMatch := re.search(r'(男|女|male|female)', args)):
+        return sexs[isMatch.group(1)]
+    elif (isMatch := re.search(r'(\d)', args)):
         return sexs[isMatch.group(1)]
 
 
@@ -291,6 +306,14 @@ def handle_experience(args="", *extra):
     return result
 
 
+def handle_experience_by_years(args:str="", *extra) -> str:
+    if not args or not args.isdigit():
+        return ""
+
+    year_start = args[:4]
+    return time.localtime().tm_year - strings.atoi(year_start) + 1
+
+
 def handle_basic_experience(args="", *extra):
     args["work_experience"]= ""
     args["working_seniority_from"]= ""
@@ -364,10 +387,11 @@ def handle_political(args="", *extra) -> str:
  
 # 处理时间
 def handle_time(args="", *extra):
-    matches = re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args))
-    if matches:
+    if matches := re.findall(r'(\d{10})(\d{3})*', args):
+        return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(matches[0][0])))
+    elif matches := re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})', '\\1年\\2月', args)):
         return matches[0]
-
+    
 
 # 处理时间间隔
 def handle_interval(args="", *extra):
@@ -524,7 +548,7 @@ def handle_corp_scale(args="", *extra):
         return matches.group(0)
     else:
         return ""
-    
+
 
 # 清洗技能
 def wash_skill(args, *extra):
@@ -689,6 +713,9 @@ async def http_curl(**kwargs):
 async def fetch_head(args:str="", *extra) -> str:
     if not args or re.search(r'img\.58cdn\.com\.cn/m58', args):
         return ""
+    
+    if re.search(r'^//', args):
+        args = 'http:' + args
 
     from tornado.httpclient import HTTPRequest,HTTPError
     from tornado.curl_httpclient import AsyncHTTPClient
@@ -820,3 +847,24 @@ def font_decrypt(args: str = "", *extra) -> str:
             args = args.replace(key,val)
 
     return args
+
+
+def get_info_by_id(args: str = "", *extra) -> str:
+    if not args or len(extra) < 1 or not extra[0]:
+        return ""
+
+    pkg = __import__('config.static_zhaopin', fromlist=['static_zhaopin'])
+    if not hasattr(pkg, extra[0]):
+        return ""
+
+    tmp_set = getattr(pkg, extra[0])
+    tmp_map = {val[0]: {"parent_id": val[1], "name": val[2], } for val in tmp_set}
+
+    result = ""
+    temp = args.split(',')
+    for tmp_id in temp:
+        if tmp_id not in tmp_map:
+            continue
+        result = result + ',' + tmp_map[tmp_id]['name']
+
+    return strings.trim(result, ',')

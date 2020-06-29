@@ -82,6 +82,9 @@ class jEngine(object):
         """解析主逻辑"""
         result = {}
         for key, val in rule_map.items():
+            if key == "work":
+                print(111)
+
             """有默认值"""
             if 'value' in val:
                 result[key] = val['value']
@@ -94,6 +97,8 @@ class jEngine(object):
                     tmp_res = strings.get_val_by_keys(tmp_arr[0], ctx)
                     if isinstance(tmp_res, str):
                         result[key] = await helper.optimize(tmp_res, tmp_arr[1:])
+                    elif isinstance(tmp_res, int):
+                        result[key] = await helper.optimize(str(tmp_res), tmp_arr[1:])
                     else:
                         result[key] = json.dumps(tmp_res, ensure_ascii=False)
                 else:
@@ -110,15 +115,27 @@ class jEngine(object):
                     if isinstance(tmp_res, list):
                         # 子项返回值要求是列表
                         for _val in tmp_res:
-                            _tmp = await self.parse(val['child'], tmp_res)
+                            _tmp = await self.parse(val['child'], _val)
+                            if not _tmp:
+                                continue
+
+                            if 'application_rules' in val and val['application_rules']:
+                                _tmp = await helper.optimize(_tmp, val['application_rules'].split('|'))
+                            
                             tmp.append(_tmp)
                     result[key] = tmp
                 else:
                     # 子项返回值要求是字典
                     result[key] = await self.parse(val['child'], tmp_res)
+                    if 'application_rules' in val and val['application_rules']:
+                        result[key] = await helper.optimize(result[key], val['application_rules'].split('|'))
             else:
                 # 过滤规则为空
                 result[key] = await self.parse(val['child'], ctx)
+                if 'application_rules' in val and val['application_rules']:
+                    result[key] = await helper.optimize(result[key], val['application_rules'].split('|'))
+
+            # result[key] = await helper.optimize(tmp_res, tmp_arr[1:])
 
         return result
 
