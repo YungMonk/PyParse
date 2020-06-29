@@ -82,9 +82,6 @@ class jEngine(object):
         """解析主逻辑"""
         result = {}
         for key, val in rule_map.items():
-            if key == "work":
-                print(111)
-
             """有默认值"""
             if 'value' in val:
                 result[key] = val['value']
