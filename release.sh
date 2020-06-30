@@ -11,6 +11,9 @@ git tag $VERSION
 git push origin master --tag
 
 docker build -t hub.ifchange.com/data_group/$dockerName:$VERSION .
-docker tag hub.ifchange.com/data_group/$dockerName:$VERSION docker.ifchange.com/data_group/$dockerName:latest
+docker tag hub.ifchange.com/data_group/$dockerName:$VERSION hub.ifchange.com/data_group/$dockerName:latest
 docker push hub.ifchange.com/data_group/$dockerName:$VERSION
 docker push hub.ifchange.com/data_group/$dockerName:latest
+
+# 运行容器
+docker run --rm -d -it --name=data_engine hub.ifchange.com/data_group/data_engine:latest
