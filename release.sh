@@ -5,15 +5,21 @@ set -e
 dockerName='data_engine'
 VERSION=v$(date "+%Y%m%d%H%M")
 
-git checkout master
-git pull
-git tag $VERSION
-git push origin master --tag
+# 使用最新的代码构建
+# git checkout master
+# git pull
 
+# 创建版本的节点
+# git tag $VERSION
+# git push origin master --tag
+
+# 构建容器
 docker build -t hub.ifchange.com/data_group/$dockerName:$VERSION .
 docker tag hub.ifchange.com/data_group/$dockerName:$VERSION hub.ifchange.com/data_group/$dockerName:latest
-docker push hub.ifchange.com/data_group/$dockerName:$VERSION
-docker push hub.ifchange.com/data_group/$dockerName:latest
+
+# 推送到远程
+# docker push hub.ifchange.com/data_group/$dockerName:$VERSION
+# docker push hub.ifchange.com/data_group/$dockerName:latest
 
 # 运行容器
-docker run --rm -d -it --name=data_engine hub.ifchange.com/data_group/data_engine:latest
+docker run --rm -it -p 8880:8880 --name=data_engine hub.ifchange.com/data_group/data_engine:latest
