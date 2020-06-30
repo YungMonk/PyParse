@@ -1,6 +1,6 @@
 {
     "$includes": [
-        "redis.json"
+        "testing/redis.json"
     ],
     "logging": {
         "config_file": "testing/log.conf",

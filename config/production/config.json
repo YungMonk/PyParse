@@ -1,9 +1,9 @@
 {
     "$includes": [
-        "redis.json"
+        "production/redis.json"
     ],
     "logging": {
-        "config_file": "dev_log.conf",
+        "config_file": "production/log.conf",
         "default_logger": "simple"
     },
     "rcp_service":{
