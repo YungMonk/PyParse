@@ -29,7 +29,7 @@
             },
             "photo2": {
                 "label": "头像base64数据流",
-                "rules": "data.candidate.photo"
+                "rules": "data.candidate.photo|fetch_head"
             },
             "name": {
                 "label": "姓名",
