@@ -22,4 +22,8 @@ docker tag hub.ifchange.com/data_group/$dockerName:$VERSION hub.ifchange.com/dat
 # docker push hub.ifchange.com/data_group/$dockerName:latest
 
 # 运行容器
-docker run --rm -it -p 8880:8880 --name=data_engine hub.ifchange.com/data_group/data_engine:latest
+docker run --rm -it -p 8880:8880 \
+-v /opt/log/data_engine_1:/opt/log/data_engine \
+--add-host dev.gsystem.rpc:192.168.1.66 \
+--name=data_engine \
+hub.ifchange.com/data_group/data_engine:latest
