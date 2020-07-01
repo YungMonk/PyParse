@@ -38,7 +38,7 @@ async def optimize(args, funcs=[]):
                 tmp = cres[idx_1]
                 if idx_2 < len(tmp):
                     args = tmp[idx_2]
-        elif (tmp := re.search(r'(.*)\[(.*)\],(\d+)', func)):
+        elif (tmp := re.search(r'(.*)\[(.*)\],(-*\d+)', func)):
             call_info = tmp.groups()
 
             if call_info[0] == "preg_match" or call_info[0] == "preg_match_all":
@@ -378,7 +378,7 @@ def handle_current_status(args="", *extra):
 
 # 政治背景
 def handle_political(args="", *extra) -> str:
-    parrten = r'(中共党员|预备党员|团员|民主党派|无党派人士|群众|其他)'
+    parrten = r'(中共党员|预备党员|团员|民主党派|无党派人士|无党派民主人士|群众|其他)'
     if matches := re.findall(parrten, args, re.S | re.I):
         return matches[0]
     else:
