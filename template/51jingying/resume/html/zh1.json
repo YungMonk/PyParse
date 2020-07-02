@@ -347,24 +347,24 @@
     },
     "training": {
         "label": "培训经历",
-        "rules": "//*[contains(text(),'培训经历')]/following-sibling::*//td[contains(@class,'p15')]",
+        "rules": "//*[contains(text(),'技能特长')]/following-sibling::*|call_prev|preg_match[<h6>培训经历</h6>(.*?)(<h6>@或@</div>)],0|handle_regualr[(<p class=\"yy_jobP\">.*?</p>),\\1#####,#####,<div>,</div>]",
         "lists": true,
         "child": {
             "time": {
                 "label": "开始时间",
-                "rules": ".//td[@class='time']"
+                "rules": ".//font/parent::*/preceding-sibling::*"
             },
             "name": {
                 "label": "培训课程名称",
-                "rules": ".//strong"
+                "rules": ".//font"
             },
             "authority": {
                 "label": "培训机构名称",
-                "rules": "string(.//td[contains(text(),'培训机构：')]/following-sibling::*)"
+                "rules": "string(.//*[contains(text(),'培训机构：')]/following-sibling::*)"
             },
             "city": {
                 "label": "培训地点",
-                "rules": "string(.//td[contains(text(),'培训地点：')]/following-sibling::*)"
+                "rules": "string(.//*[contains(text(),'培训地点：')]/following-sibling::*)"
             },
             "certificate": {
                 "label": "获得证书名称",
@@ -372,19 +372,19 @@
             },
             "description": {
                 "label": "培训描述",
-                "rules": "string(.//td[contains(text(),'培训描述：')]/following-sibling::*)"
+                "rules": "string(.//*[contains(text(),'详细描述：')]/following-sibling::*)"
             }
         },
         "application_rules": "handle_interval|wash_name_null"
     },
     "language": {
         "label": "语言能力",
-        "rules": "//td[contains(text(),'技能/语言')]/../following-sibling::tr//td[contains(@class,'tb2')]",
+        "rules": "//*[contains(text(),'技能特长')]/following-sibling::*|call_prev|preg_match[<h6>培训经历</h6>(.*?)(<h6>@或@</div>)],0|handle_xpath[//div左中括号@class='yy_jobBoxHead'右中括号]",
         "lists": true,
         "child": {
             "name": {
                 "label": "语言名称",
-                "rules": ".//strong"
+                "rules": ".//font"
             },
             "certificate": {
                 "label": "相关证书",
@@ -399,12 +399,12 @@
     },
     "skill": {
         "label": "技能",
-        "rules": "//td[contains(text(),'技能/语言')]/../following-sibling::tr//td[contains(@class,'tb2')]",
+        "rules": "//*[contains(text(),'技能特长')]/following-sibling::*|call_prev|preg_match[<h6>证书/成绩</h6>(.*?)<h6>],0|handle_xpath[//div左中括号@class='yy_jobBoxHead'右中括号]",
         "lists": true,
         "child": {
             "name": {
                 "label": "语言名称",
-                "rules": ".//strong"
+                "rules": ".//font"
             },
             "level": {
                 "label": "掌握程度",
@@ -419,12 +419,12 @@
     },
     "certificate": {
         "label": "证书",
-        "rules": "//td[contains(text(),'技能特长')]/../following-sibling::tr//td[contains(text(),'证书')]/../following-sibling::tr//td[contains(@class,'tb3')]",
+        "rules": "//*[contains(text(),'技能特长')]/following-sibling::*|call_prev|preg_match[<h6>证书/成绩</h6>(.*?)<h6>],0|handle_xpath[//*左中括号@class='yy_jobBoxHead'右中括号]",
         "lists": true,
         "child": {
             "name": {
                 "label": "名称",
-                "rules": ".//strong"
+                "rules": ".//font"
             },
             "description": {
                 "label": "描述",
@@ -432,7 +432,7 @@
             },
             "start_time": {
                 "label": "证书获得时间",
-                "rules": ".//td[@class='time']|handle_time"
+                "rules": ".//span|handle_time"
             }
         },
         "application_rules": "wash_name_null"

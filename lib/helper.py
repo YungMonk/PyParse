@@ -120,13 +120,13 @@ def explode(args="", *extra):
 
 # 正则使用
 def preg_match(args="", *extra):
-    if len(extra) and extra[0] and (matches := re.search(extra[0], args)):
+    if len(extra) and extra[0] and (matches := re.search(extra[0], args, re.S | re.I)):
         return matches.groups()
 
 
 # 正则全匹配
 def preg_match_all(args="", *extra):
-    if len(extra) and extra[0] and (matches := re.findall(extra[0], args)):
+    if len(extra) and extra[0] and (matches := re.findall(extra[0], args, re.S | re.I)):
         return matches
 
 
