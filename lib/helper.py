@@ -267,7 +267,7 @@ def handle_sofar(args="", *extra):
 
 # 婚姻状态
 def handle_marital(args="", *extra):
-    marital = {'已婚': 'Y', '未婚': 'N', 'single': 'N', 'married': 'Y', 'unmarried': 'N'}
+    marital = {'已婚': 'Y', '未婚': 'N', '保密':'U', 'single': 'N', 'married': 'Y', 'unmarried': 'N'}
     if (isMatch := re.search(r'(已婚|未婚|single|married|unmarried)', args)):
         return marital[isMatch.group(1)]
     else:
