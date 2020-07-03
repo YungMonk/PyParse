@@ -356,7 +356,7 @@ def handle_basic_experience(args="", *extra):
         args["working_seniority_to"] = isMatch.group(1)
         args["working_seniority_from"] = args["working_seniority_to"]
         args["work_experience"] = args["working_seniority_to"]
-    elif (isMatch := re.search(r'(\S+)年', experience)):
+    elif (isMatch := re.search(r'([\u4e00-\u9fa5]+)年', experience)):
         # 八年
         args["working_seniority_to"] = cn2dig(isMatch.group(1))
         args["working_seniority_from"] = args["working_seniority_to"]
