@@ -378,7 +378,7 @@ def handle_current_status(args="", *extra):
 
 # 政治背景
 def handle_political(args="", *extra) -> str:
-    parrten = r'(中共党员|预备党员|团员|民主党派|无党派人士|无党派民主人士|群众|其他)'
+    parrten = r'(中共党员|共产党员|预备党员|团员|民主党派|无党派人士|无党派民主人士|群众|其他)'
     if matches := re.findall(parrten, args, re.S | re.I):
         return matches[0]
     else:
@@ -390,6 +390,8 @@ def handle_time(args="", *extra):
     if matches := re.findall(r'(\d{10})(\d{3})*', args):
         return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(matches[0][0])))
     elif matches := re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})', '\\1年\\2月', args)):
+        return matches[0]
+    elif matches := re.findall(r'(\d{4}年)', args):
         return matches[0]
     
 
