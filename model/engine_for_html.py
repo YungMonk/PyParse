@@ -101,8 +101,7 @@ class hEngine(object):
         for key, value in maps.items():
 
             # 用来调试
-            # if key == 'certificate':
-            #     print(etreehtml)
+            logger.debug("current key is: %s" % key)
 
             # 处理默认值
             if 'value' in value:

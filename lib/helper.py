@@ -91,7 +91,7 @@ def placeholder(str=''):
     '''
         占位符还原
     '''
-    return str.replace('@或@', '|').replace('逗号', ',').replace('左中括号', '[').replace('右中括号', ']').replace('右括号', '(').replace('左括号', ')').replace('\\n', '\n')
+    return str.replace('@或@', '|').replace('逗号', ',').replace('左中括号', '[').replace('右中括号', ']').replace('左括号', '(').replace('右括号', ')').replace('\\n', '\n')
 
 
 def cn2dig(cn):
@@ -536,7 +536,7 @@ def handle_email(args="", *extra):
 
 # 公司类型
 def handle_corp_type(args="", *extra):
-    matches = re.search(r'(外资\(欧美\)|外资\(非欧美\)|合资|国企|民营公司|民营|上市公司|创业公司|外企代表处|政府机关|事业单位|非营利机构)', args)
+    matches = re.search(r'(外资\(欧美\)|外资\(非欧美\)|合资|国企|私营\/民营|民营公司|民营|上市公司|创业公司|外企代表处|政府机关|国有企业|事业单位|非营利机构)', args)
     if matches:
         return matches.group(0)
     else:
@@ -545,7 +545,7 @@ def handle_corp_type(args="", *extra):
 
 # 公司规模
 def handle_corp_scale(args="", *extra):
-    matches = re.search(r'(少于\d+|\d+[-,~]\d+|\d+.*?以上)', args)
+    matches = re.search(r'(少于\d+|\d+\s*[-,~]\s*\d+|\d+人以上)', args, re.S|re.I)
     if matches:
         return matches.group(0)
     else:
@@ -718,6 +718,9 @@ async def fetch_head(args:str="", *extra) -> str:
     
     if re.search(r'^//', args):
         args = 'http:' + args
+
+    if not re.search(r'^http', args):
+        return ""
 
     from tornado.httpclient import HTTPRequest,HTTPError
     from tornado.curl_httpclient import AsyncHTTPClient

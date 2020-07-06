@@ -105,7 +105,7 @@ class MainHandler(tornado.web.RequestHandler):
                 reason = exception.log_message
 
             tracebackinfo = kwargs.get('exc_info')[2]
-            for filename, linenum, funcname, source in traceback.extract_tb(tracebackinfo):
+            for filename, linenum, funcname, source in traceback.extract_tb(tracebackinfo, -1):
                 tornado.log.access_log.warning("%-23s:%s '%s' in %s()", filename, linenum, source, funcname) 
 
         self.set_status(200)
