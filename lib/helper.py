@@ -715,6 +715,9 @@ async def http_curl(**kwargs):
 async def fetch_head(args:str="", *extra) -> str:
     if not args or re.search(r'img\.58cdn\.com\.cn/m58', args):
         return ""
+
+    if "man" in args:
+        return ""
     
     if re.search(r'^//', args):
         args = 'http:' + args

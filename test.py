@@ -9,15 +9,16 @@ from utils import strings
 
 
 if __name__ == '__main__':
-    filename = os.getcwd() + '/test/data/resume/buildhr/zh2_0.html'
+    filename = os.getcwd() + '/test/data/resume/cfw/zh1_1.html'
     with open(filename, 'r') as f:
         fileContext = f.read()
         f.close()
+
     post_args = strings.rpc_params({
         'c': 'apis/logic_parse',
         'm': 'parsers_engine',
         'p': {
-            'site_id': 34,
+            'site_id': 48,
             'type': 1,
             'body': fileContext,
         }

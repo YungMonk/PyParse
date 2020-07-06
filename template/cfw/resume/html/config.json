@@ -1,0 +1,13 @@
+{
+    "20200318": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "name": {
+                "label": "用户名",
+                "rules": "//*[@id='resumeName']"
+            }
+        }
+    }
+}
