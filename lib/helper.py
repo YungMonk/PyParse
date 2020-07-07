@@ -307,6 +307,7 @@ def handle_experience(args="", *extra):
 
 
 def handle_experience_by_years(args:str="", *extra) -> str:
+    """通过年获取工作经验"""
     if not args or not args.isdigit():
         return ""
 
@@ -315,6 +316,7 @@ def handle_experience_by_years(args:str="", *extra) -> str:
 
 
 def handle_basic_experience(args="", *extra):
+    """工作经验"""
     args["work_experience"]= ""
     args["working_seniority_from"]= ""
     args["working_seniority_to"]= ""
