@@ -115,6 +115,8 @@ def strip_tags(args="", *extra):
 
 # 字符串分割
 def explode(args="", *extra):
+    t = args.split(extra[0] if len(extra) else " ")
+    print(f"explode args:{args} -> t:{t}")
     return args.split(extra[0] if len(extra) else " ")
 
 
@@ -133,6 +135,8 @@ def preg_match_all(args="", *extra):
 # 正则替换
 def preg_replace(args="", *extra):
     if len(extra) and extra[0]:
+        t = re.sub(extra[0], extra[1] if len(extra) > 1 else "", args)
+        print(f"preg_replace args:{args} -> t:{t}")
         return re.sub(extra[0], extra[1] if len(extra) > 1 else "", args)
     else:
         return args
@@ -219,6 +223,7 @@ def handle_gender(args="", *extra):
 
 # 匹配学历
 def handle_degree(args="", *extra):
+    print(f"handle_degree args:{args}")
     degrees = {
         '本科及以上': 1,
         '本科': 1,
@@ -367,6 +372,7 @@ def handle_basic_experience(args="", *extra):
 
 # 当前状态
 def handle_current_status(args="", *extra):
+    print(f"handle_current_status args:{args}")
     status = 0
     if re.search(r'在岗|在职|机会', args, re.S|re.I):
         status = 3
