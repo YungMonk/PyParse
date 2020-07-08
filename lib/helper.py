@@ -205,7 +205,9 @@ def handle_age(args="", *extra):
     string = ""
     if (matchObj := re.search(r'(\d+)\s*岁', args)):
         string = matchObj.group(1)
-
+    elif (matchObj := re.search(r'(\d{4})\s*年*', args)):
+        birt_year = matchObj.group(1)
+        string = time.localtime().tm_year - strings.atoi(birt_year) + 1
     return string
 
 
@@ -308,6 +310,7 @@ def handle_experience(args="", *extra):
 
 
 def handle_experience_by_years(args:str="", *extra) -> str:
+    """通过年获取工作经验"""
     if not args or not args.isdigit():
         return ""
 
@@ -316,6 +319,7 @@ def handle_experience_by_years(args:str="", *extra) -> str:
 
 
 def handle_basic_experience(args="", *extra):
+    """工作经验"""
     args["work_experience"]= ""
     args["working_seniority_from"]= ""
     args["working_seniority_to"]= ""
