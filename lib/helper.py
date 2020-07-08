@@ -204,7 +204,9 @@ def handle_age(args="", *extra):
     string = ""
     if (matchObj := re.search(r'(\d+)\s*岁', args)):
         string = matchObj.group(1)
-    
+    elif (matchObj := re.search(r'(\d{4})\s*年*', args)):
+        birt_year = matchObj.group(1)
+        string = time.localtime().tm_year - strings.atoi(birt_year) + 1
     return string
 
 
