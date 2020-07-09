@@ -122,6 +122,8 @@ def explode(args="", *extra):
 
 # 正则使用
 def preg_match(args="", *extra):
+    t = re.search(extra[0], args, re.S | re.I).groups()
+    print(f"preg_match args:{args} -> t:{t}")
     if len(extra) and extra[0] and (matches := re.search(extra[0], args, re.S | re.I)):
         return matches.groups()
 
