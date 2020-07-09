@@ -1,5 +1,5 @@
 {
-    "20200318": {
+    "20200708": {
         "label": "中文简历--PC网页简历",
         "rules": "",
         "fname": "zh1.json",
@@ -7,6 +7,17 @@
             "table-divResume": {
                 "label": "dom树中含有 用户基本信息",
                 "rules": "string(//*[contains(text(),'基本情况')]/ancestor::tr[1]/following-sibling::*[2])"
+            }
+        }
+    },
+    "20200709": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh2.json",
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有 简历ID",
+                "rules": "//*[contains(text(),'Resume Number：')]"
             }
         }
     }

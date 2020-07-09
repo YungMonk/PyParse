@@ -9,7 +9,7 @@ from utils import strings
 
 
 if __name__ == '__main__':
-    filename = os.getcwd() + '/test/data/resume/veryeast/zh1_0.html'
+    filename = os.getcwd() + '/test/data/resume/veryeast/zh2_0.html'
     with open(filename, 'r') as f:
         fileContext = f.read()
         f.close()
