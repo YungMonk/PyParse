@@ -9,7 +9,7 @@ from utils import strings
 
 
 if __name__ == '__main__':
-    filename = os.getcwd() + '/test/data/resume/dingxiangyuan/mail.html'
+    filename = os.getcwd() + '/test/data/resume/veryeast/zh2_0.html'
     with open(filename, 'r') as f:
         fileContext = f.read()
         f.close()
@@ -18,7 +18,7 @@ if __name__ == '__main__':
         'c': 'apis/logic_parse',
         'm': 'parsers_engine',
         'p': {
-            'site_id': 10003,
+            'site_id': 10021,
             'type': 1,
             'body': fileContext,
         }

@@ -170,6 +170,7 @@ def handle_regualr(args="", *extra):
         _html = preTag + _val + endTag
         xpath.append(etree.HTML(_html))
 
+
     return xpath
 
 
@@ -210,7 +211,9 @@ def handle_age(args="", *extra):
     string = ""
     if (matchObj := re.search(r'(\d+)\s*岁', args)):
         string = matchObj.group(1)
-    
+    elif (matchObj := re.search(r'(\d{4})\s*年*', args)):
+        birt_year = matchObj.group(1)
+        string = time.localtime().tm_year - strings.atoi(birt_year) + 1
     return string
 
 
@@ -314,6 +317,7 @@ def handle_experience(args="", *extra):
 
 
 def handle_experience_by_years(args:str="", *extra) -> str:
+    """通过年获取工作经验"""
     if not args or not args.isdigit():
         return ""
 
@@ -322,6 +326,7 @@ def handle_experience_by_years(args:str="", *extra) -> str:
 
 
 def handle_basic_experience(args="", *extra):
+    """工作经验"""
     args["work_experience"]= ""
     args["working_seniority_from"]= ""
     args["working_seniority_to"]= ""
@@ -616,7 +621,7 @@ async def handle_address_city(args, *extra) -> dict:
             args['account'] = await http_curl(url=instance.config.get('rcp_service', None)['gsystem'], city=args['account_address'])
         if "address_detail" in args and args['address_detail']:
             args['address'] = await http_curl(url=instance.config.get('rcp_service', None)['gsystem'], city=args['address_detail'])
-                
+
         
         args['account_district'] = args['account'] # 灵活用工使用
         args['address_district'] = args['address'] # 灵活用工使用
@@ -726,6 +731,10 @@ async def fetch_head(args:str="", *extra) -> str:
 
     if "man" in args:
         return ""
+
+    # chinahr 中华英才网默认头像
+    if "img/photo.png" in args:
+        return ""
     
     if re.search(r'^//', args):
         args = 'http:' + args
@@ -756,7 +765,7 @@ async def fetch_head(args:str="", *extra) -> str:
     result = ""
     try:
         response = await AsyncHTTPClient().fetch(http_request)
-        result = base64.encodebytes(response.body).decode()
+        result = base64.b64encode(response.body).decode()
     except HTTPError as e:
         # HTTPError is raised for non-200 responses; the response
         # can be found in e.response.
