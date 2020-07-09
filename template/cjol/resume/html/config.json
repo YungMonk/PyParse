@@ -1,0 +1,13 @@
+{
+    "20200318": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "user_name": {
+                "label": "dom树中含有 用户名 在 简历编号： 的上边",
+                "rules": "string(//*[contains(text(),'简历编号：')]/ancestor::td/preceding-sibling::*)"
+            }
+        }
+    }
+}
