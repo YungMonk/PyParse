@@ -76,6 +76,7 @@ class hEngine(object):
 
         # 选择模板文件
         configKey = ''
+        print(f"config.json:{config_tpl}")
         for key, maps in config_tpl.items():
             if recursive(maps):
                 configKey = key
