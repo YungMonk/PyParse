@@ -256,30 +256,30 @@
             },
             "scale": {
                 "label": "规模",
-                "rules": ""
+                "rules": "string(.//span[contains(text(),'单位规模：')])|preg_replace[单位规模：,]|trim"
             },
             "industry_name": {
                 "label": "所属行业",
-                "rules": "string(.//*[@class='item-tit']/span[1])|preg_match[（(.*?)）]"
+                "rules": "string(.//span[contains(text(),'单位行业：')])|preg_replace[单位行业：,]|trim"
             },
             "corporation_type": {
                 "label": "公司性质",
-                "rules": ""
+                "rules": "string(.//span[contains(text(),'单位性质：')])|preg_replace[单位性质：,]|trim"
             },
             "position_name": {
                 "label": "职位",
-                "rules": "string(.//*[@class='item-tit']/text())"
+                "rules": "string(.//li[@class='Jl_Fwb']/span[4])|trim"
             },
             "responsibilities": {
                 "label": "工作职责",
-                "rules": "string(.//*[@class='item-des'])|preg_replace[\\n● ,]|preg_replace[\\n,]|trim"
+                "rules": "string(.//span[@class='JlMsTxt']/text())|trim"
             }
         },
         "application_rules": "handle_interval|wash_name_null"
     },
     "project": {
         "label": "项目经验",
-        "rules": "//*[contains(text(),'项目经验')]/../following-sibling::*[1]//tr",
+        "rules": "",
         "lists": true,
         "child": {
             "time": {
@@ -288,7 +288,7 @@
             },
             "name": {
                 "label": "项目名称",
-                "rules": "string(.//*[@class='item-tit']/text())"
+                "rules": ""
             },
             "corporation_name": {
                 "label": "公司名称",
@@ -296,15 +296,15 @@
             },
             "position_name": {
                 "label": "职位名称",
-                "rules": "string(.//*[@class='item-tit']/span/text())"
+                "rules": ""
             },
             "describe": {
                 "label": "项目描述",
-                "rules": "string(.//*[@class='indent-wrap'])|preg_replace[\\n,]|preg_replace[ 简介：,]|trim"
+                "rules": ""
             },
             "achivement": {
                 "label": "工作业绩",
-                "rules": "string(.//*[@class='indent-wrap'][2])|preg_replace[\\n,]|preg_replace[成果：,]|preg_replace[•\\t,]|trim"
+                "rules": ""
             },
             "responsibilities": {
                 "label": "职责",
@@ -315,28 +315,28 @@
     },
     "education": {
         "label": "教育经历",
-        "rules": "//*[contains(text(),'教育经历')]/../following-sibling::*[1]//tr",
+        "rules": "//div[@id='eduUl']/div",
         "lists": true,
         "child": {
             "time": {
                 "label": "开始时间",
-                "rules": ".//th"
+                "rules": ".//li/span[1]"
             },
             "school_name": {
                 "label": "学校名称",
-                "rules": "string(.//*[@class='item-tit']/span/text())"
+                "rules": "string(.//li/span[2]/text())"
             },
             "discipline_name": {
                 "label": "专业",
-                "rules": "string(.//*[@class='item-tit']/text())"
+                "rules": "string(.//li/span[4]/text())"
             },
             "degree": {
                 "label": "学历",
-                "rules": ".//td/p[2]|trim"
+                "rules": "string(.//li/span[3]/text())"
             },
             "degree_origin": {
                 "label": "学历",
-                "rules": ""
+                "rules": "string(.//li/span[3]/text())"
             },
             "discipline_desc": {
                 "label": "专业描述",
@@ -347,20 +347,20 @@
     },
     "training": {
         "label": "培训经历",
-        "rules": "",
+        "rules": "//div[@id='trainUl']/div",
         "lists": true,
         "child": {
             "time": {
                 "label": "开始时间",
-                "rules": ""
+                "rules": "string(.//li/span[1]/text())"
             },
             "name": {
                 "label": "培训课程名称",
-                "rules": ""
+                "rules": "string(.//li/span[2]/text())"
             },
             "authority": {
                 "label": "培训机构名称",
-                "rules": ""
+                "rules": "string(.//li/span[3]/text())"
             },
             "city": {
                 "label": "培训地点",
@@ -368,7 +368,7 @@
             },
             "certificate": {
                 "label": "获得证书名称",
-                "rules": ""
+                "rules": "string(.//li/span[4]/text())"
             },
             "description": {
                 "label": "培训描述",
