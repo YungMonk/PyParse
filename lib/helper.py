@@ -130,6 +130,8 @@ def preg_match(args="", *extra):
 
 # 正则全匹配
 def preg_match_all(args="", *extra):
+    t = re.findall(extra[0], args, re.S | re.I)
+    print(f"preg_match_all args:{args} -> t:{t}")
     if len(extra) and extra[0] and (matches := re.findall(extra[0], args, re.S | re.I)):
         return matches
 
@@ -407,6 +409,25 @@ def handle_time(args="", *extra):
     elif matches := re.findall(r'(\d{4}年)', args):
         return matches[0]
     
+# 处理时间间隔
+def handle_inter_year(args="", *extra):
+    args['start_time'] = ""
+    args['end_time'] = ""
+    args['so_far'] = "N"
+
+    isMatch = re.findall(r'(\d{4}年)', re.sub(r'(\d{4})','\\1年', args['time']))
+    sub = re.sub(r'(\d{4})','\\1年', args['time'])
+    print(f"handle_inter_year args:{args} sub:{sub} isMatch:{isMatch}")
+    if len(isMatch) == 1:
+        args['start_time'] = isMatch[0]
+    elif len(isMatch) == 2:
+        args['start_time'] = isMatch[0]
+        args['end_time'] = isMatch[1]
+
+    args = handle_sofar(args, *extra)
+
+    args.pop('time','')
+    return args
 
 # 处理时间间隔
 def handle_interval(args="", *extra):
