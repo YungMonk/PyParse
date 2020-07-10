@@ -322,6 +322,10 @@
                 "label": "开始时间",
                 "rules": ".//*[@class='graduate-time']"
             },
+            "is_grad": {
+                "label": "毕业时间",
+                "value": 1
+            },
             "school_name": {
                 "label": "学校名称",
                 "rules": ".//*[@class='college-name']"

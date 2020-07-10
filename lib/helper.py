@@ -115,13 +115,11 @@ def strip_tags(args="", *extra):
 
 # 字符串分割
 def explode(args="", *extra):
-    t = args.split(extra[0] if len(extra) else " ")
     return args.split(extra[0] if len(extra) else " ")
 
 
 # 正则使用
 def preg_match(args="", *extra):
-    t = re.search(extra[0], args, re.S | re.I).groups()
     if len(extra) and extra[0] and (matches := re.search(extra[0], args, re.S | re.I)):
         return matches.groups()
 
@@ -135,7 +133,6 @@ def preg_match_all(args="", *extra):
 # 正则替换
 def preg_replace(args="", *extra):
     if len(extra) and extra[0]:
-        t = re.sub(extra[0], extra[1] if len(extra) > 1 else "", args)
         return re.sub(extra[0], extra[1] if len(extra) > 1 else "", args)
     else:
         return args
@@ -208,6 +205,9 @@ def handle_age(args="", *extra):
     if (matchObj := re.search(r'(\d+)\s*岁', args)):
         string = matchObj.group(1)
     elif (matchObj := re.search(r'(\d{4})\s*年*', args)):
+        birt_year = matchObj.group(1)
+        string = time.localtime().tm_year - strings.atoi(birt_year) + 1
+    elif (matchObj := re.search(r'(\d{4}).*?\d{1,2}', args)):
         birt_year = matchObj.group(1)
         string = time.localtime().tm_year - strings.atoi(birt_year) + 1
     return string
@@ -382,16 +382,20 @@ def handle_current_status(args="", *extra):
 
     return status
 
-
-# 政治背景
 def handle_political(args="", *extra) -> str:
+    """政治背景"""
     parrten = r'(中共党员|共产党员|预备党员|团员|民主党派|无党派人士|无党派民主人士|群众|其他)'
     if matches := re.findall(parrten, args, re.S | re.I):
         return matches[0]
     else:
         return ""
 
- 
+
+def handle_update(args="", *extra) -> str:
+    """简历更新时间"""
+    return time.strftime("%Y-%m-%d", time.localtime(strings.str_to_time(args)))
+
+
 # 处理时间
 def handle_time(args="", *extra):
     if matches := re.findall(r'(\d{10})(\d{3})*', args):
@@ -426,17 +430,19 @@ def handle_education(args="", *extra):
     args['end_time'] = ""
     args['so_far'] = "N"
 
-    isMatch = re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args['time']))
-    if len(isMatch) == 1 and '毕业' in args['time']:
-        args['end_time'] = isMatch[0]
-    elif len(isMatch) == 1:
-        args['start_time'] = isMatch[0]
-    elif len(isMatch) == 2:
-        args['start_time'] = isMatch[0] 
-        args['end_time'] = isMatch[1]
+    isMatch = re.findall(r'(\d{4}).*?(\d{1,2})', args['time'])
+    edu_time = '{}年{}月'.format(isMatch[0][0],isMatch[0][1])
+    years = 4 if args['degree'] == 1 else 3
+    if 'is_grad' in args and args['is_grad']:
+        args['end_time'] = edu_time
+        args['start_time'] = '{}年{}月'.format(strings.atoi(isMatch[0][0]) - years, "09")
+    if 'is_grad' in args and not args['is_grad']:
+        args['end_time'] = '{}年{}月'.format(strings.atoi(isMatch[0][0]) + years, "07")
+        args['start_time'] = edu_time
 
     args = handle_sofar(args, *extra)
 
+    args.pop('is_grad','')
     args.pop('time','')
     return args
 
