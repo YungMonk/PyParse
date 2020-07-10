@@ -410,6 +410,8 @@ def handle_interval(args="", *extra):
     args['so_far'] = "N"
 
     isMatch = re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args['time']))
+    sub = re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args['time'])
+    print(f"handle_interval args:{args} sub:{sub} isMatch:{isMatch}")
     if len(isMatch) == 1:
         args['start_time'] = isMatch[0]
     elif len(isMatch) == 2:

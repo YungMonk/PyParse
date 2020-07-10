@@ -1,0 +1,24 @@
+{
+    "20200710": {
+        "label": "中文简历--邮件",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "Resume_flag": {
+                "label": "有‘牧通人才网版权所有’字样",
+                "rules": "//*[contains(text(),'牧通人才网版权所有')]"
+            }
+        }
+    },
+    "20200711": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh2.json",
+        "child": {
+            "Resume_flag": {
+                "label": "有‘中国畜牧兽医专业人才网’字样",
+                "rules": "//*[contains(text(),'中国畜牧兽医专业人才网')]"
+            }
+        }
+    }
+}
