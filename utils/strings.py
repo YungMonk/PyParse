@@ -1,6 +1,8 @@
 import struct
 import fcntl
 import socket
+import time
+import re
 from typing import (
     TypeVar, Iterator, Iterable, NoReturn, overload, Container,
     Sequence, MutableSequence, Mapping, MutableMapping, Tuple, List, Any, Dict, Callable, Generic,
@@ -299,6 +301,24 @@ def get_val_by_keys(keys: str = "", ctx: dict = {}) -> Any:
             return ""
 
     return ctx
+
+
+def str_to_time(args: str = "") -> int:
+    """时间转时间戳"""
+    if matches := re.findall(r'(\d{4})[-,/,年](\d{1,2})[-,/,月](\d{1,2})', args, re.I | re.S):
+        timeArray = time.strptime(
+            "{}/{}/{}".format(matches[0][0], matches[0][1], matches[0][2]), "%Y/%m/%d"
+        )
+        # 转换成时间戳
+        return int(time.mktime(timeArray))
+    
+    if matches := re.findall(r'(\d{4}).*?(\d{1,2})', args, re.I | re.S):
+        # 转换成时间数组
+        timeArray = time.strptime(
+            "{}/{}".format(matches[0][0], matches[0][1]), "%Y/%m"
+        )
+        # 转换成时间戳
+        return int(time.mktime(timeArray))
 
 
 if __name__ == "__main__":

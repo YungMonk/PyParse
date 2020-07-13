@@ -1,0 +1,24 @@
+{
+    "20200710": {
+        "label": "中文简历--邮件简历",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有 用户基本信息",
+                "rules": "//*[contains(text(),'我的基本资料')]"
+            }
+        }
+    },
+    "20200711": {
+        "label": "中文简历--邮件简历",
+        "rules": "",
+        "fname": "zh2.json",
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有 简历更新日期",
+                "rules": "//*[contains(text(),'更新日期：')]"
+            }
+        }
+    }
+}
