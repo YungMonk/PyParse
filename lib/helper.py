@@ -122,9 +122,10 @@ def explode(args="", *extra):
 
 # 正则使用
 def preg_match(args="", *extra):
-    t = re.search(extra[0], args, re.S | re.I).groups()
-    print(f"preg_match args:{args} -> t:{t}")
+    print(f"preg_match extra:{extra} args:{args}")
     if len(extra) and extra[0] and (matches := re.search(extra[0], args, re.S | re.I)):
+        t = re.search(extra[0], args, re.S | re.I).groups()
+        print(f"preg_match args:{args} -> t:{t}")
         return matches.groups()
 
 
@@ -568,6 +569,12 @@ def handle_email(args="", *extra):
         return matches.group(0)
     else:
         return ""
+
+def handle_corp_name_merge(args="", *extra):
+    args['corporation_name'] = "{}{}".format(args['corporation_name_1'],args['corporation_name_2'])
+    args.pop('corporation_name_1','')
+    args.pop('corporation_name_2', '')
+    return  args
 
 
 # 公司类型

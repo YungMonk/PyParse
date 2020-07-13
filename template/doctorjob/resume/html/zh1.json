@@ -93,7 +93,7 @@
             },
             "marital": {
                 "label": "婚姻状况",
-                "rules": "U"
+                "value": "U"
             },
             "political_status": {
                 "label": "政治面貌",
