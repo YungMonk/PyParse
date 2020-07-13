@@ -119,9 +119,9 @@ def salary_to_k(args: str, flag: str = "") -> str:
     else:
         args = int(args)
 
-    if '千' in flag or 'K' in flag:
+    if '千' in flag or 'K' in flag or 'k' in flag:
         return '%.2f' % (args)
-    elif '万' in flag or 'W' in flag:
+    elif '万' in flag or 'W' in flag or 'w' in flag:
         return '%.2f' % (args*10)
     else:
         return '%.2f' % (args*0.001)

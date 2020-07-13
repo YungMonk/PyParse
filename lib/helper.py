@@ -45,7 +45,7 @@ async def optimize(args, funcs=[]):
                 params.append(call_info[1])
             else:
                 params = call_info[1].split(',')
-            
+
             params = [placeholder(str(x)) for x in params]
 
             func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
@@ -215,8 +215,8 @@ def handle_age(args="", *extra):
 
 # 匹配性别
 def handle_gender(args="", *extra):
-    sexs = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F'}
-    if (isMatch := re.search(r'(男|女|male|female)', args)):
+    sexs = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F', 'woman': 'F', 'man': 'M'}
+    if (isMatch := re.search(r'(男|女|male|female|wuman|man)', args)):
         return sexs[isMatch.group(1)]
     elif (isMatch := re.search(r'(\d)', args)):
         return sexs[isMatch.group(1)]
@@ -391,7 +391,7 @@ def handle_political(args="", *extra) -> str:
     else:
         return ""
 
- 
+
 # 处理时间
 def handle_time(args="", *extra):
     if matches := re.findall(r'(\d{10})(\d{3})*', args):
@@ -400,7 +400,7 @@ def handle_time(args="", *extra):
         return matches[0]
     elif matches := re.findall(r'(\d{4}年)', args):
         return matches[0]
-    
+
 
 # 处理时间间隔
 def handle_interval(args="", *extra):
@@ -412,7 +412,7 @@ def handle_interval(args="", *extra):
     if len(isMatch) == 1:
         args['start_time'] = isMatch[0]
     elif len(isMatch) == 2:
-        args['start_time'] = isMatch[0] 
+        args['start_time'] = isMatch[0]
         args['end_time'] = isMatch[1]
 
     args = handle_sofar(args, *extra)
@@ -432,7 +432,7 @@ def handle_education(args="", *extra):
     elif len(isMatch) == 1:
         args['start_time'] = isMatch[0]
     elif len(isMatch) == 2:
-        args['start_time'] = isMatch[0] 
+        args['start_time'] = isMatch[0]
         args['end_time'] = isMatch[1]
 
     args = handle_sofar(args, *extra)
@@ -508,7 +508,16 @@ def handle_expect_salary(args="", *extra):
                 args['expect_salary_to']          = strings.salary_to_k(matches[0][3], 'K')
                 args['expect_salary_month']       = matches[0][4]
 
+        elif 'k' in salary and (matches := re.findall(r'(\d+)', salary, re.I | re.S)):
+            # 拉钩的薪资5k-10k
+            if len(matches) == 1:
+                args['expect_salary_from'] = strings.salary_to_k(matches[0], salary)
+                args['expect_salary_to']   = strings.salary_to_k(matches[0], salary)
+            elif len(matches) == 2:
+                args['expect_salary_from'] = strings.salary_to_k(matches[0], salary)
+                args['expect_salary_to']   = strings.salary_to_k(matches[1], salary)
         elif matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S):
+            # 匹配薪资float  12.0
             if len(matches) == 1:
                 args['expect_salary_from'] = strings.salary_to_k(matches[0], salary)
                 args['expect_salary_to']   = strings.salary_to_k(matches[0], salary)
@@ -592,7 +601,7 @@ def wash_name_null(args, *extra):
 
 
 """"异步方法调用"""
-# 户籍，现居住地相关 
+# 户籍，现居住地相关
 async def handle_address_city(args, *extra) -> dict:
     if not isinstance(args, dict):
         return args
@@ -616,7 +625,7 @@ async def handle_address_city(args, *extra) -> dict:
         if "address_detail" in args and args['address_detail']:
             args['address'] = await http_curl(url=instance.config.get('rcp_service', None)['gsystem'], city=args['address_detail'])
 
-        
+
         args['account_district'] = args['account'] # 灵活用工使用
         args['address_district'] = args['address'] # 灵活用工使用
 
@@ -641,7 +650,7 @@ async def handle_except_citys(args, *extra):
                 city_sets.append(_tmp)
 
             args['expect_city_ids'] = strings.trim(','.join(city_sets))
-        
+
     return args
 
 
@@ -661,7 +670,7 @@ async def handle_citys(args, *extra):
         city_sets.append(_tmp)
 
     args = strings.trim(','.join(city_sets))
-        
+
     return args
 
 
@@ -679,7 +688,7 @@ async def http_curl(**kwargs):
 
     from tornado.httpclient import AsyncHTTPClient,HTTPRequest,HTTPError
     import json
-    
+
     http_client = AsyncHTTPClient()
     http_request = HTTPRequest(
         url=kwargs['url'],
@@ -729,7 +738,11 @@ async def fetch_head(args:str="", *extra) -> str:
     # chinahr 中华英才网默认头像
     if "img/photo.png" in args:
         return ""
-    
+
+    # 拉钩默认头像
+    if "myresume/default_headpic.png" in args or 'image/pc/default' in args:
+        return ""
+
     if re.search(r'^//', args):
         args = 'http:' + args
 
@@ -739,7 +752,7 @@ async def fetch_head(args:str="", *extra) -> str:
     from tornado.httpclient import HTTPRequest,HTTPError
     from tornado.curl_httpclient import AsyncHTTPClient
     import pycurl,base64
-    
+
     AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient")
     http_client = AsyncHTTPClient()
     http_request = HTTPRequest(
@@ -841,10 +854,10 @@ def font_decrypt(args: str = "", *extra) -> str:
                 re_base_coordinates = []
                 for base_contours in base_ttglyph.coordinates:
                     re_base_coordinates.append(
-                        str(base_contours[0] - base_xOffset) + '-' + 
+                        str(base_contours[0] - base_xOffset) + '-' +
                         str(base_contours[1] - base_yOffset)
                     )
-                
+
 
                 re_curr_coordinates = []
                 for curr_contours in curr_ttglyph.coordinates:
@@ -852,14 +865,14 @@ def font_decrypt(args: str = "", *extra) -> str:
                         str(curr_contours[0] - curr_xOffset) + '-' +
                         str(curr_contours[1] - curr_yOffset)
                     )
-                
+
                 instan = list(set(re_base_coordinates) & set(re_curr_coordinates))
 
                 if not len(instan) or len(instan) / len(re_base_coordinates) < 0.5 :
                     continue
-                
+
                 result[curr_i] = font_dict[base_i]
-            
+
         result = {re.sub('uni(.*)','&#x\\1;', key):value for key, value in result.items()}
 
         for key,val in result.items():
