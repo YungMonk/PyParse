@@ -118,6 +118,10 @@ def explode(args="", *extra):
     return args.split(extra[0] if len(extra) else " ")
 
 
+def implode(args="", *extra):
+    """字符串拼接"""
+    return ",".join(args)
+
 # 正则使用
 def preg_match(args="", *extra):
     if len(extra) and extra[0] and (matches := re.search(extra[0], args, re.S | re.I)):
@@ -136,6 +140,12 @@ def preg_replace(args="", *extra):
         return re.sub(extra[0], extra[1] if len(extra) > 1 else "", args)
     else:
         return args
+
+
+def json_encode(args="", *extra):
+    """josn序列化"""
+    import json
+    return json.dumps(args, ensure_ascii=False)
 
 
 # 单位（千）转换
