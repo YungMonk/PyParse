@@ -21,7 +21,7 @@
         "child": {
             "photo2": {
                 "label": "头像base64数据流",
-                "rules": "//*[@id='sImg']/@src"
+                "rules": "//*[@id='sImg']/@src|fetch_head"
             },
             "name": {
                 "label": "姓名",
