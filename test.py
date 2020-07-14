@@ -8,7 +8,7 @@ import time
 from utils import strings
 if __name__ == '__main__':
 
-    filename = os.getcwd() + '/test/data/resume/goodjobs/mail_0.html'
+    filename = os.getcwd() + '/test/data/resume/gxrc/1.html'
     with open(filename, 'r') as f:
         fileContext = f.read()
         f.close()
@@ -17,7 +17,7 @@ if __name__ == '__main__':
         'c': 'apis/logic_parse',
         'm': 'parsers_engine',
         'p': {
-            'site_id': 22,
+            'site_id': 10009,
             'type': 1,
             'body': fileContext,
         }
