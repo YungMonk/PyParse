@@ -376,11 +376,11 @@
             },
             "level": {
                 "label": "掌握程度",
-                "rules": "string(.//td[contains(@class,'w2')]//*[contains(@class,'blue')])|trim"
+                "rules": "string(.//*[contains(text(),'掌握程度：')]/following-sibling::*)|trim"
             },
             "period": {
                 "label": "使用时间",
-                "rules": ""
+                "rules": "string(.//td[contains(@class,'w2')]//*[contains(@class,'blue')])|trim"
             }
         },
         "application_rules": "wash_skill"
