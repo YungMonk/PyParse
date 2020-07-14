@@ -735,20 +735,17 @@ async def http_curl(**kwargs):
 
 # 抓取头像（注：抓取头像会）
 async def fetch_head(args:str="", *extra) -> str:
-    if not args or re.search(r'img\.58cdn\.com\.cn/m58', args):
+    if not args:
         return ""
 
-    if "man" in args:
-        return ""
-
-    # chinahr 中华英才网默认头像
-    if "img/photo.png" in args:
+    if re.search(r'man|male|female|user_female|img/photo\.png|img\.58cdn\.com\.cn/m58', args):
         return ""
 
     # 拉钩默认头像
     if "myresume/default_headpic.png" in args or 'image/pc/default' in args:
         return ""
 
+    # 补全链接
     if re.search(r'^//', args):
         args = 'http:' + args
 
