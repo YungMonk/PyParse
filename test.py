@@ -10,7 +10,7 @@ from utils import strings
 
 if __name__ == '__main__':
 
-    filename = os.getcwd() + '/test/data/resume/rc114/1.html'
+    filename = os.getcwd() + '/test/data/resume/xmrc/zh_2_2.html'
 
     with open(filename, 'r') as f:
         fileContext = f.read()
@@ -20,7 +20,7 @@ if __name__ == '__main__':
         'c': 'apis/logic_parse',
         'm': 'parsers_engine',
         'p': {
-            'site_id': 23,
+            'site_id': 60,
             'type': 1,
             'body': fileContext,
         }
