@@ -1,0 +1,25 @@
+{
+    "2020071302": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh2.json",
+        "child": {
+            "Resume_flag": {
+                "label": "name",
+                "rules": "//*[contains(text(),'应聘职位：')]"
+            }
+        }
+    },
+    "2020071301": {
+        "label": "中文简历--邮件",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "Resume_flag": {
+                "label": "简历有‘工作描述：’字样",
+                "rules": "//*[contains(text(),'工作描述：')]"
+            }
+        }
+    }
+
+}

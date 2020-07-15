@@ -1,0 +1,456 @@
+{
+    "source": {
+        "label": "基础信息",
+        "rules": "",
+        "lists": false,
+        "child": {
+            "src": {
+                "label": "渠道ID",
+                "value": 11
+            },
+            "src_no": {
+                "label": "外网简历ID",
+                "rules": ""
+            }
+        }
+    },
+    "basic": {
+        "label": "基础信息",
+        "rules": "",
+        "lists": false,
+        "child": {
+            "resume_name": {
+                "label": "简历名",
+                "rules": "string(//p[@class='p-name'])|trim"
+            },
+            "update_at": {
+                "label": "简历更新时间",
+                "rules": ""
+            },
+            "photo2": {
+                "label": "头像base64数据流",
+                "rules": "//img[@class='user-logo']/img/@src|fetch_head"
+            },
+            "photo": {
+                "label": "头像url",
+                "rules": ""
+            },
+            "photo_type": {
+                "label": "头像类型",
+                "value": ""
+            },
+            "name": {
+                "label": "姓名",
+                "rules": "string(//p[@class='p-name'])|trim"
+            },
+            "age": {
+                "label": "年龄",
+                "rules": "string(//div[@class='basic-info'])|trim|handle_age"
+            },
+            "age_orgin": {
+                "label": "年龄",
+                "rules": "string(//div[@class='basic-info'])|trim|handle_age"
+            },
+            "birth": {
+                "label": "出生日期",
+                "rules": ""
+            },
+            "gender": {
+                "label": "性别",
+                "rules": "//p[@class='p-name']//i/@class|trim|handle_gender"
+            },
+            "height": {
+                "label": "身高",
+                "rules": ""
+            },
+            "weight": {
+                "label": "体重",
+                "value": ""
+            },
+            "degree": {
+                "label": "学历",
+                "rules": "string(//div[@class='basic-info'])|trim|handle_degree"
+            },
+            "card": {
+                "label": "身份证ID",
+                "rules": ""
+            },
+            "nation": {
+                "label": "民族",
+                "value": ""
+            },
+            "account_address": {
+                "label": "户口所在地的详细地址",
+                "rules": ""
+            },
+            "address_detail": {
+                "label": "现居住地详细地址",
+                "rules": ""
+            },
+            "marital": {
+                "label": "婚姻状况",
+                "rules": ""
+            },
+            "political_status": {
+                "label": "政治面貌",
+                "rules": ""
+            },
+            "current_status": {
+                "label": "当前状态",
+                "rules": "string(//span[@class='expect-item']/following-sibling::*)|handle_current_status"
+            },
+            "work_experience": {
+                "label": "工作经历年限",
+                "rules": "string(//em[contains(text(),'年工作经验')])|preg_match[(\\d+)年工作经验],0"
+            },
+            "working_seniority_from": {
+                "label": "工作年限最小值",
+                "rules": "string(//em[contains(text(),'年工作经验')])|preg_match[(\\d+)年工作经验],0"
+            },
+            "working_seniority_to": {
+                "label": "工作年限最大值",
+                "rules": "string(//em[contains(text(),'年工作经验')])|preg_match[(\\d+)年工作经验],0"
+            },
+            "self_remark": {
+                "label": "自我评价",
+                "rules": "string(//div[contains(text(), '自我描述')]/following-sibling::*//div//div[contains(@class, 'content-area')])|trim"
+            },
+            "expect_type": {
+                "label": "期望工作性质",
+                "rules": "string(//*[@id='icon_resume_time']//parent::*//parent::*//parent::*)|trim|preg_replace[\\n,]|explode[Created with Sketch.],1|trim"
+            },
+            "expect_city_names": {
+                "label": "期望城市的名称列表",
+                "rules": "string(//*[@id='icon_resume_address']//parent::*//parent::*//parent::*)|trim|preg_replace[\\n,]|explode[Created with Sketch.],1|trim"
+            },
+            "expect_industry_name": {
+                "label": "期望从事行业",
+                "rules": ""
+            },
+            "expect_position_name": {
+                "label": "期望从事职业",
+                "rules": "string(//*[@id='icon_resume_position']//parent::*//parent::*//parent::*)|trim|preg_replace[\\n,]|explode[Created with Sketch.],1|trim"
+            },
+            "expect_salary": {
+                "label": "期望薪资,原始字符串",
+                "rules": "string(//*[@id='icon_resume_money']//parent::*//parent::*//parent::*)|trim|preg_replace[\\n,]|explode[Created with Sketch.],1|trim"
+            },
+            "expect_salary_month": {
+                "label": "期望薪资月数",
+                "value": "12"
+            },
+            "expect_bonus": {
+                "label": "期望其它收入",
+                "value": ""
+            },
+            "expect_work_at": {
+                "label": "期望到岗时间",
+                "value": ""
+            },
+            "overseas": {
+                "label": "是否有海外经历",
+                "value": "N"
+            },
+            "is_house": {
+                "label": "居住地是否有住房",
+                "value": "U"
+            },
+            "is_fertility": {
+                "label": "生育状况",
+                "value": "U"
+            },
+            "live_family": {
+                "label": "是否与家人同住",
+                "value": "U"
+            },
+            "project_info": {
+                "label": "无法解析的项目经历",
+                "value": ""
+            },
+            "basic_salary": {
+                "label": "当前薪资",
+                "value": ""
+            },
+            "basic_salary_month": {
+                "label": "当前薪资月数",
+                "value": "12"
+            },
+            "not_expect_corporation_name": {
+                "label": "勿推荐企业的名称列表",
+                "value": ""
+            },
+            "not_expect_corporation_ids": {
+                "label": "勿推荐企业的id列表",
+                "value": ""
+            },
+            "not_expect_corporation_status": {
+                "label": "勿推荐企业的开关",
+                "value": ""
+            },
+            "focused_corporations": {
+                "label": "关注的公司",
+                "value": ""
+            },
+            "focused_feelings": {
+                "label": "关注的点",
+                "value": ""
+            },
+            "interests": {
+                "label": "兴趣",
+                "rules": ""
+            },
+            "other_info": {
+                "label": "其他信息",
+                "value": ""
+            }
+        },
+        "application_rules": "handle_address_city|handle_expect_salary|handle_basic_salary|handle_except_citys"
+    },
+    "contact": {
+        "label": "联系方式",
+        "rules": "",
+        "lists": false,
+        "child": {
+            "phone": {
+                "label": "手机号码",
+                "rules": ""
+            },
+            "phone_area": {
+                "label": "手机号码所属区域",
+                "value": 1
+            },
+            "email": {
+                "label": "电子邮件地址",
+                "rules": ""
+            },
+            "qq": {
+                "label": "QQ号码",
+                "value": ""
+            },
+            "wechat": {
+                "label": "微信号码",
+                "value": ""
+            },
+            "tel": {
+                "label": "电话号码",
+                "value": 1
+            },
+            "sina": {
+                "label": "新浪微博",
+                "value": ""
+            },
+            "ten": {
+                "label": "腾讯微博",
+                "value": ""
+            },
+            "msn": {
+                "label": "MSN",
+                "value": ""
+            }
+        }
+    },
+    "work": {
+        "label": "工作经历",
+        "rules": "//div[@class='resume-info']//div[@class='resume-section'][1]//div[@class='exp-single']",
+        "lists": true,
+        "child": {
+            "time": {
+                "label": "工作时间",
+                "rules": "string(.//*[@class='main-info']//p//span[@class='time'])"
+            },
+            "corporation_name": {
+                "label": "公司",
+                "rules": "string(.//div[@class='main-info']//p//span[1])|explode[左括号],0|trim"
+            },
+            "scale": {
+                "label": "规模",
+                "rules": ""
+            },
+            "industry_name": {
+                "label": "所属行业",
+                "rules": ""
+            },
+            "corporation_type": {
+                "label": "公司性质",
+                "rules": ""
+            },
+            "position_name": {
+                "label": "职位",
+                "rules": "string(.//*[@class='main-info']//p[2])|trim"
+            },
+            "responsibilities": {
+                "label": "工作职责",
+                "rules": "string(.//*[@class='content-area'])|trim"
+            }
+        },
+        "application_rules": "handle_interval|wash_name_null"
+    },
+    "project": {
+        "label": "项目经验",
+        "rules": "//*[contains(text(),'项目经验')]/parent::*//div[@class='project']",
+        "lists": true,
+        "child": {
+            "time": {
+                "label": "开始时间",
+                "rules": ".//*[@class='jobTime']|trim|preg_replace[\\s+-\\s+,-]|preg_replace[\\s+,逗号]|explode[逗号],0"
+            },
+            "name": {
+                "label": "项目名称",
+                "rules": ".//*[@class='tilEdit']//h3|trim"
+            },
+            "corporation_name": {
+                "label": "公司名称",
+                "rules": ""
+            },
+            "position_name": {
+                "label": "职位名称",
+                "rules": ""
+            },
+            "describe": {
+                "label": "项目描述",
+                "rules": ".//*[@class='conJob']|trim"
+            },
+            "achivement": {
+                "label": "工作业绩",
+                "rules": ""
+            },
+            "responsibilities": {
+                "label": "职责",
+                "rules": "string(.//*[@class='conCom'])|trim"
+            }
+        },
+        "application_rules": "handle_interval|wash_name_null"
+    },
+    "education": {
+        "label": "教育经历",
+        "rules": "//*[contains(text(),'教育经历')]/parent::*//div[@class='section-content']//div[@class='exp-single']",
+        "lists": true,
+        "child": {
+            "time": {
+                "label": "开始时间",
+                "rules": ".//*[@class='main-info']//p[1]//span[@class='time']"
+            },
+            "start_time": {
+                "label": "开始时间",
+                "rules": ".//*[@class='main-info']//p[1]//span[@class='time']|explode[-],0|trim|preg_replace[(\\d+),\\1年]"
+            },
+            "end_time": {
+                "label": "开始时间",
+                "rules": ".//*[@class='main-info']//p[1]//span[@class='time']|explode[-],1|trim||preg_replace[(\\d+),\\1年]"
+            },
+            "school_name": {
+                "label": "学校名称",
+                "rules": ".//*[@class='main-info']//p[1]//span[1]|trim"
+            },
+            "discipline_name": {
+                "label": "专业",
+                "rules": "string(.//*[@class='main-info']//p[2])|explode[/],1|trim"
+            },
+            "degree": {
+                "label": "学历",
+                "rules": "string(.//*[@class='main-info']//p[2])|explode[/],0|trim"
+            },
+            "degree_origin": {
+                "label": "学历",
+                "rules": "string(.//*[@class='main-info']//p[2])"
+            },
+            "discipline_desc": {
+                "label": "专业描述",
+                "rules": ""
+            }
+        },
+        "application_rules": "handle_sofar|wash_name_null"
+    },
+    "training": {
+        "label": "培训经历",
+        "rules": "//*[contains(text(),'培训经历')]/parent::*//div[@class='project']",
+        "lists": true,
+        "child": {
+            "time": {
+                "label": "开始时间",
+                "rules": ".//*[contains(@class, 'timespan')]|trim|preg_replace[\\(,]|preg_replace[\\),]|preg_replace[\\s+-\\s+,-]|preg_replace[\\s+,逗号]|explode[逗号],0"
+            },
+            "name": {
+                "label": "培训课程名称",
+                "rules": "string(.//div[1])|explode[（],0|trim"
+            },
+            "authority": {
+                "label": "培训机构名称",
+                "rules": "string(.//*[contains(text(),'培训机构：')]/following-sibling::*)|trim"
+            },
+            "city": {
+                "label": "培训地点",
+                "rules": ""
+            },
+            "certificate": {
+                "label": "获得证书名称",
+                "rules": ""
+            },
+            "description": {
+                "label": "培训描述",
+                "rules": "string(.//*[@class='conJob'])"
+            }
+        },
+        "application_rules": "handle_interval|wash_name_null"
+    },
+    "language": {
+        "label": "语言能力",
+        "rules": "//div[@class='skill']/ul/li",
+        "lists": true,
+        "child": {
+            "name": {
+                "label": "语言名称",
+                "rules": ".|explode[\\@或@],0|trim"
+            },
+            "certificate": {
+                "label": "相关证书",
+                "rules": ""
+            },
+            "level": {
+                "label": "语言掌握程度",
+                "rules": ".//*[@class='level']"
+            }
+        },
+        "application_rules": "wash_langue"
+    },
+    "skill": {
+        "label": "技能",
+        "rules": "//div[@class='special-mr']//div[@class='inforSpecial']/ul/li",
+        "lists": true,
+        "child": {
+            "name": {
+                "label": "语言名称",
+                "rules": ".//p|trim"
+            },
+            "level": {
+                "label": "掌握程度",
+                "rules": ".//i|trim"
+            },
+            "period": {
+                "label": "使用时间",
+                "rules": ""
+            }
+        },
+        "application_rules": "wash_skill"
+    },
+    "certificate": {
+        "label": "证书",
+        "rules": "//div[@class='cert-mr']//div[@class='inforCert']//div[@class='conInCert']",
+        "lists": true,
+        "child": {
+            "name": {
+                "label": "名称",
+                "rules": ".//h3|trim"
+            },
+            "description": {
+                "label": "描述",
+                "rules": ".//*[@class='wordInCert']|trim"
+            },
+            "start_time": {
+                "label": "证书获得时间",
+                "rules": ".//*[@class='boxInCert']/i|trim|preg_replace[\\s+,逗号]|explode[逗号],0|handle_time"
+            }
+        },
+        "application_rules": "wash_name_null"
+    }
+}

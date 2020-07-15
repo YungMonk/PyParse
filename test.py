@@ -1,15 +1,14 @@
 #!/usr/bin/env python3.8.2
 # -*- coding:utf-8 -*-
 
-import os,re
+import os
+import re
 import json
 import time
-
 from utils import strings
-
-
 if __name__ == '__main__':
-    filename = os.getcwd() + '/test/data/resume/huibo/huibo_zh1_1.html'
+
+    filename = os.getcwd() + '/test/data/resume/tianjihr/3.txt'
     with open(filename, 'r') as f:
         fileContext = f.read()
         f.close()
@@ -18,7 +17,7 @@ if __name__ == '__main__':
         'c': 'apis/logic_parse',
         'm': 'parsers_engine',
         'p': {
-            'site_id': 46,
+            'site_id': 10023,
             'type': 1,
             'body': fileContext,
         }

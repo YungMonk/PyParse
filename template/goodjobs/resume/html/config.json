@@ -1,0 +1,24 @@
+{
+    "20200713": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "resume_info": {
+                "label": "用户基本信息",
+                "rules": "string(//*[@class='m-resume-info f-relative'])"
+            }
+        }
+    },
+    "20200714": {
+        "label": "中文简历--邮件简历",
+        "rules": "",
+        "fname": "zh2.json",
+        "child": {
+            "resume_info": {
+                "label": "用户基本信息",
+                "rules": "string(//td[@valign='top' and @colspan='2']//ancestor::table[1])"
+            }
+        }
+    }
+}
