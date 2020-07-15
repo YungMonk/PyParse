@@ -29,7 +29,7 @@
             },
             "photo2": {
                 "label": "头像base64数据流",
-                "rules": "//*[@class='numberName']/img/@src|preg_replace[//,https://]"
+                "rules": "//*[@class='numberName']/img/@src|preg_replace[//,https://]|fetch_head"
             },
             "photo": {
                 "label": "头像url",
@@ -341,7 +341,7 @@
             },
             "degree": {
                 "label": "学历",
-                "rules": "./p[@class='nberTit2']/b"
+                "rules": "./p[@class='nberTit2']/b|handle_degree"
             },
             "degree_origin": {
                 "label": "学历",

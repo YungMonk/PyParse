@@ -332,7 +332,7 @@
             },
             "degree": {
                 "label": "学历",
-                "rules": "./div[2]/span[2]|preg_replace[学历：,]"
+                "rules": "./div[2]/span[2]|preg_replace[学历：,]|handle_degree"
             },
             "degree_origin": {
                 "label": "学历",
