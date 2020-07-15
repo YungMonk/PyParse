@@ -57,10 +57,10 @@ channelMap = {
     10017: "o-hr",     # 圆才网
     10021: "veryeast",     # 最佳东方
     10022: "jianzhimao",     # 兼职猫
+    10023: "tianjihr",  # 天基人才网
 }
 
 parserType = {
     1: "resume",
     2: "position"
 }
-

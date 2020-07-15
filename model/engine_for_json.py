@@ -92,12 +92,10 @@ class jEngine(object):
                 if 'rules' in val and val['rules']:
                     tmp_arr = val['rules'].split('|')
                     tmp_res = strings.get_val_by_keys(tmp_arr[0], ctx)
-                    if isinstance(tmp_res, str):
-                        result[key] = await helper.optimize(tmp_res, tmp_arr[1:])
-                    elif isinstance(tmp_res, int):
+                    if isinstance(tmp_res, int):
                         result[key] = await helper.optimize(str(tmp_res), tmp_arr[1:])
                     else:
-                        result[key] = json.dumps(tmp_res, ensure_ascii=False)
+                        result[key] = await helper.optimize(tmp_res, tmp_arr[1:])
                 else:
                     result[key] = ""
                 continue
@@ -113,11 +111,12 @@ class jEngine(object):
                         # 子项返回值要求是列表
                         for _val in tmp_res:
                             _tmp = await self.parse(val['child'], _val)
-                            if not _tmp:
-                                continue
 
                             if 'application_rules' in val and val['application_rules']:
                                 _tmp = await helper.optimize(_tmp, val['application_rules'].split('|'))
+
+                            if not _tmp:
+                                continue
                             
                             tmp.append(_tmp)
                     result[key] = tmp

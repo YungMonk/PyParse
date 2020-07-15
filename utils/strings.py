@@ -1,6 +1,8 @@
 import struct
 import fcntl
 import socket
+import time
+import re
 from typing import (
     TypeVar, Iterator, Iterable, NoReturn, overload, Container,
     Sequence, MutableSequence, Mapping, MutableMapping, Tuple, List, Any, Dict, Callable, Generic,
@@ -119,9 +121,9 @@ def salary_to_k(args: str, flag: str = "") -> str:
     else:
         args = int(args)
 
-    if '千' in flag or 'K' in flag:
+    if '千' in flag or 'K' in flag or 'k' in flag:
         return '%.2f' % (args)
-    elif '万' in flag or 'W' in flag:
+    elif '万' in flag or 'W' in flag or 'w' in flag:
         return '%.2f' % (args*10)
     else:
         return '%.2f' % (args*0.001)
@@ -299,6 +301,24 @@ def get_val_by_keys(keys: str = "", ctx: dict = {}) -> Any:
             return ""
 
     return ctx
+
+
+def str_to_time(args: str = "") -> int:
+    """时间转时间戳"""
+    if matches := re.findall(r'(\d{4})[-,/,年](\d{1,2})[-,/,月](\d{1,2})', args, re.I | re.S):
+        timeArray = time.strptime(
+            "{}/{}/{}".format(matches[0][0], matches[0][1], matches[0][2]), "%Y/%m/%d"
+        )
+        # 转换成时间戳
+        return int(time.mktime(timeArray))
+    
+    if matches := re.findall(r'(\d{4}).*?(\d{1,2})', args, re.I | re.S):
+        # 转换成时间数组
+        timeArray = time.strptime(
+            "{}/{}".format(matches[0][0], matches[0][1]), "%Y/%m"
+        )
+        # 转换成时间戳
+        return int(time.mktime(timeArray))
 
 
 if __name__ == "__main__":

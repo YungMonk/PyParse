@@ -1,0 +1,24 @@
+{
+    "20200707": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有 用户基本信息 的table中的class=mr_myresume_l",
+                "rules": "string(//div[contains(@class, 'mr_myresume_l')])"
+            }
+        }
+    },
+    "20200708": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh2.json",
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有 用户基本信息 的table中的class=resume-basic",
+                "rules": "string(//div[@class='resume-basic'])"
+            }
+        }
+    }
+}
