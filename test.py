@@ -7,20 +7,19 @@ import json
 import time
 from utils import strings
 if __name__ == '__main__':
-    print(re.findall(r'(\d+)','2016-2019'))
 
-    # filename = os.getcwd() + '/test/data/resume/zhipin/goutong.html'
-    # with open(filename, 'r') as f:
-    #     fileContext = f.read()
-    #     f.close()
+    filename = os.getcwd() + '/test/data/resume/tianjihr/3.txt'
+    with open(filename, 'r') as f:
+        fileContext = f.read()
+        f.close()
 
-    # post_args = strings.rpc_params({
-    #     'c': 'apis/logic_parse',
-    #     'm': 'parsers_engine',
-    #     'p': {
-    #         'site_id': 33,
-    #         'type': 1,
-    #         'body': fileContext,
-    #     }
-    # })
-    # print(json.dumps(post_args, ensure_ascii=False))
+    post_args = strings.rpc_params({
+        'c': 'apis/logic_parse',
+        'm': 'parsers_engine',
+        'p': {
+            'site_id': 10023,
+            'type': 1,
+            'body': fileContext,
+        }
+    })
+    print(json.dumps(post_args, ensure_ascii=False))
