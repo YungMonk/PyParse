@@ -187,6 +187,7 @@ class hEngine(object):
         logger.warn("loading file: %s" % filepath)
 
         if not os.path.exists(filepath):
+            print(f"191,filename:{filename}")
             if filename == 'config.json':
                 raise HTTPError(500001, "渠道不支持")
             else:

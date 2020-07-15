@@ -125,11 +125,13 @@ def implode(args="", *extra):
 # 正则使用
 def preg_match(args="", *extra):
     if len(extra) and extra[0] and (matches := re.search(extra[0], args, re.S | re.I)):
+        t = re.search(extra[0], args, re.S | re.I).groups()
         return matches.groups()
 
 
 # 正则全匹配
 def preg_match_all(args="", *extra):
+    t = re.findall(extra[0], args, re.S | re.I)
     if len(extra) and extra[0] and (matches := re.findall(extra[0], args, re.S | re.I)):
         return matches
 
@@ -425,6 +427,7 @@ def handle_interval(args="", *extra):
     args['so_far'] = "N"
 
     isMatch = re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args['time']))
+    sub = re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args['time'])
     if len(isMatch) == 1:
         args['start_time'] = isMatch[0]
     elif len(isMatch) == 2:
@@ -566,6 +569,49 @@ def handle_email(args="", *extra):
         return matches.group(0)
     else:
         return ""
+
+
+# 公司名称合并
+def handle_corp_name_merge(args="", *extra):
+    args['corporation_name'] = "{}{}".format(args['corporation_name_1'],args['corporation_name_2'])
+    args.pop('corporation_name_1','')
+    args.pop('corporation_name_2', '')
+    return args
+
+
+# 联系方式_email_pc合并
+def handle_contact_merge(args="", *extra):
+    if args['phone1']:
+        args['phone'] = args['phone1']
+    else:
+        args['phone'] = args['phone2']
+    if args['email1']:
+        args['email'] = args['email1']
+    else:
+        args['email'] = args['email2']
+    args.pop('phone1','')
+    args.pop('phone2', '')
+    args.pop('email1', '')
+    args.pop('email2', '')
+    return args
+
+
+# 教育培训，筛除培训经历
+def delete_training_name(args="", *extra):
+    if isinstance(args, (dict,)) and args['other_information'] == '培训':
+        args.pop('name', '')
+        args.pop('corporation_name', '')
+        args.pop('school_name', '')
+    return args
+
+
+# 清洗培训经历
+def handle_training_experience(args="", *extra):
+    if isinstance(args, (dict,)) and args['other_information'] != '培训':
+        args.pop('name', '')
+        args.pop('corporation_name', '')
+        args.pop('school_name', '')
+    return args
 
 
 # 公司类型
