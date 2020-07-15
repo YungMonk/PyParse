@@ -570,11 +570,52 @@ def handle_email(args="", *extra):
     else:
         return ""
 
+
+# 公司名称合并
 def handle_corp_name_merge(args="", *extra):
     args['corporation_name'] = "{}{}".format(args['corporation_name_1'],args['corporation_name_2'])
     args.pop('corporation_name_1','')
     args.pop('corporation_name_2', '')
-    return  args
+    return args
+
+
+# 联系方式_email_pc合并
+def handle_contact_merge(args="", *extra):
+    if args['phone1']:
+        args['phone'] = args['phone1']
+    else:
+        args['phone'] = args['phone2']
+    if args['email1']:
+        args['email'] = args['email1']
+    else:
+        args['email'] = args['email2']
+    args.pop('phone1','')
+    args.pop('phone2', '')
+    args.pop('email1', '')
+    args.pop('email2', '')
+    return args
+
+
+# 教育培训，筛除培训经历
+def delete_training_name(args="", *extra):
+    print(f"delete_training_name args_before:{args}")
+    if isinstance(args, (dict,)) and args['other_information'] == '培训':
+        args.pop('name', '')
+        args.pop('corporation_name', '')
+        args.pop('school_name', '')
+    print(f"delete_training_name args_after:{args}")
+    return args
+
+
+# 清洗培训经历
+def handle_training_experience(args="", *extra):
+    print(f"handle_training_experience args_before:{args}")
+    if isinstance(args, (dict,)) and args['other_information'] != '培训':
+        args.pop('name', '')
+        args.pop('corporation_name', '')
+        args.pop('school_name', '')
+    print(f"handle_training_experience args_after:{args}")
+    return args
 
 
 # 公司类型

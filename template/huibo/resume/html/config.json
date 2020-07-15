@@ -1,0 +1,13 @@
+{
+    "20200713": {
+        "label": "中文简历--邮箱",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "photo": {
+                "label": "简历编号：",
+                "rules": "//*[contains(text(),'简历编号：')]"
+            }
+        }
+    }
+}

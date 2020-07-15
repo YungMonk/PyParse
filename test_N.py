@@ -1,5 +1,6 @@
-import re
-
-args = "                                                      期望月薪：                             4000-5000                                                                               期望地区：                             江苏省/南京市|北京市|浙江省/杭州市|重庆市|上海市                                                                                期望岗位：                             饲料研发专家,研发专家,储备干部                                                                               目前工作状态：                             我目前处于离职状态，可立即上岗"
-sub = re.search(r'期望月薪：(.*?)\\s ', args, re.I|re.S).group(1)
-print(sub)
+args = {'name': 'y'}
+print(args)
+args.clear()
+print(args)
+if isinstance(args, (dict,)):
+    print('yes')
