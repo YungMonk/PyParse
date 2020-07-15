@@ -225,8 +225,8 @@ def handle_age(args="", *extra):
 
 # 匹配性别
 def handle_gender(args="", *extra):
-    sexs = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F', 'woman': 'F', 'man': 'M'}
-    if (isMatch := re.search(r'(男|女|male|female|wuman|man)', args)):
+    sexs = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F', 'women': 'F', 'men': 'M','woman': 'F', 'man': 'M'}
+    if (isMatch := re.search(r'(男|女|male|female|women|men|woman|man)', args)):
         return sexs[isMatch.group(1)]
     elif (isMatch := re.search(r'(\d)', args)):
         return sexs[isMatch.group(1)]
@@ -414,6 +414,8 @@ def handle_time(args="", *extra):
         return matches[0]
     elif matches := re.findall(r'(\d{4}年)', args):
         return matches[0]
+    else:
+        return ""
 
 
 # 处理时间间隔

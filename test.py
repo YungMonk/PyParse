@@ -7,14 +7,9 @@ import json
 import time
 from utils import strings
 if __name__ == '__main__':
-    arr = [
-      "读书",
-      "逛技术论坛"
-    ]
+    print(re.findall(r'(\d+)','2016-2019'))
 
-    print(",".join(arr))
-
-    # filename = os.getcwd() + '/test/data/resume/shixiseng/1.txt'
+    # filename = os.getcwd() + '/test/data/resume/zhipin/goutong.html'
     # with open(filename, 'r') as f:
     #     fileContext = f.read()
     #     f.close()
@@ -23,7 +18,7 @@ if __name__ == '__main__':
     #     'c': 'apis/logic_parse',
     #     'm': 'parsers_engine',
     #     'p': {
-    #         'site_id': 45,
+    #         'site_id': 33,
     #         'type': 1,
     #         'body': fileContext,
     #     }

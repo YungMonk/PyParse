@@ -6,7 +6,7 @@
         "child": {
             "src": {
                 "label": "渠道ID",
-                "value": 45
+                "value": 33
             },
             "src_no": {
                 "label": "外网简历ID",
@@ -16,7 +16,7 @@
     },
     "basic": {
         "label": "基础信息",
-        "rules": "",
+        "rules": "zpData.geekDetailInfo",
         "lists": false,
         "child": {
             "resume_name": {
@@ -25,27 +25,27 @@
             },
             "update_at": {
                 "label": "简历更新时间",
-                "rules": "data.base.0.report_way|handle_time"
+                "rules": ""
             },
             "photo2": {
                 "label": "头像base64数据流",
-                "rules": "data.base.0.headUrl|fetch_head"
+                "rules": "geekBaseInfo.large|fetch_head"
             },
             "name": {
                 "label": "姓名",
-                "rules": "data.base.0.nickname"
+                "rules": "geekBaseInfo.name"
             },
             "age": {
                 "label": "年龄",
-                "rules": "data.base.0.age"
+                "rules": "geekBaseInfo.ageDesc"
             },
             "birth": {
                 "label": "出生日",
-                "rules": "data.base.0.birth|handle_birthday"
+                "rules": "geekBaseInfo.ageDesc|handle_birthday"
             },
             "gender": {
                 "label": "性别",
-                "rules": "data.base.0.sex|get_info_by_id[gender_status_set]|handle_gender"
+                "rules": "geekBaseInfo.gender|get_info_by_id[gender_status_set_33]|handle_gender"
             },
             "height": {
                 "label": "身高",
@@ -57,7 +57,7 @@
             },
             "degree": {
                 "label": "学历",
-                "rules": ""
+                "rules": "geekBaseInfo.degreeCategory|handle_degree"
             },
             "card": {
                 "label": "身份证ID",
@@ -73,7 +73,7 @@
             },
             "address_detail": {
                 "label": "现居住地详细地址",
-                "rules": "data.base.0.city"
+                "rules": ""
             },
             "marital": {
                 "label": "婚姻状况",
@@ -85,23 +85,15 @@
             },
             "current_status": {
                 "label": "当前状态",
-                "rules": ""
+                "rules": "geekBaseInfo.applyStatusDesc"
             },
-            "work_experience": {
+            "experience": {
                 "label": "工作经历年限",
-                "rules": ""
-            },
-            "working_seniority_from": {
-                "label": "工作年限最小值",
-                "rules": ""
-            },
-            "working_seniority_to": {
-                "label": "工作年限最大值",
-                "rules": ""
+                "rules": "geekBaseInfo.workYearDesc"
             },
             "self_remark": {
                 "label": "自我评价",
-                "rules": "data.description"
+                "rules": "geekBaseInfo.userDescription"
             },
             "expect_type": {
                 "label": "期望工作性质",
@@ -109,19 +101,19 @@
             },
             "expect_city_names": {
                 "label": "期望城市的名称列表",
-                "rules": "data.base.0.hope_city"
+                "rules": "geekExpPosList.0.locationName"
             },
             "expect_industry_name": {
                 "label": "期望从事行业",
-                "rules": ""
+                "rules": "geekExpPosList.0.industryDesc"
             },
             "expect_position_name": {
                 "label": "期望从事职业",
-                "rules": ""
+                "rules": "geekExpPosList.0.positionName"
             },
             "expect_salary": {
                 "label": "期望薪资,原始字符串",
-                "rules": ""
+                "rules": "geekExpPosList.0.salaryDesc"
             },
             "expect_salary_month": {
                 "label": "期望薪资月数",
@@ -185,42 +177,42 @@
             },
             "interests": {
                 "label": "兴趣",
-                "rules": "data.interest|implode"
+                "rules": ""
             },
             "other_info": {
                 "label": "其他信息",
-                "value": ""
+                "rules": "model.0.url"
             }
         },
-        "application_rules": "handle_address_city|handle_expect_salary|handle_basic_salary|handle_except_citys"
+        "application_rules": "handle_address_city|handle_expect_salary|handle_basic_salary|handle_except_citys|handle_basic_experience"
     },
     "contact": {
         "label": "联系方式",
-        "rules": "",
+        "rules": "zpData.geekDetailInfo.geekBaseInfo",
         "lists": false,
         "child": {
             "phone": {
                 "label": "手机号码",
-                "rules": "data.base.0.phone"
+                "rules": "phone"
             },
             "email": {
                 "label": "电子邮件地址",
-                "rules": "data.base.0.email"
+                "rules": "email"
             }
         }
     },
     "work": {
         "label": "工作经历",
-        "rules": "data.experience",
+        "rules": "zpData.geekDetailInfo.geekWorkExpList",
         "lists": true,
         "child": {
             "start_time": {
                 "label": "工作时间",
-                "rules": "date.0|handle_time"
+                "rules": "startYearMonStr|handle_time"
             },
             "end_time": {
                 "label": "工作时间",
-                "rules": "date.1|handle_time"
+                "rules": "endYearMonStr|handle_time"
             },
             "corporation_name": {
                 "label": "公司",
@@ -232,7 +224,7 @@
             },
             "industry_name": {
                 "label": "所属行业",
-                "rules": "industry"
+                "rules": ""
             },
             "corporation_type": {
                 "label": "公司性质",
@@ -240,31 +232,31 @@
             },
             "position_name": {
                 "label": "职位",
-                "rules": "post"
+                "rules": "positionName"
             },
             "responsibilities": {
                 "label": "工作职责",
-                "rules": "desc"
+                "rules": "responsibility"
             }
         },
         "application_rules": "handle_sofar|wash_name_null"
     },
     "project": {
         "label": "项目经验",
-        "rules": "data.prac",
+        "rules": "zpData.geekDetailInfo.geekProjExpList",
         "lists": true,
         "child": {
             "start_time": {
                 "label": "工作时间",
-                "rules": "date.0|handle_time"
+                "rules": "startDateDesc|handle_time"
             },
             "end_time": {
                 "label": "工作时间",
-                "rules": "date.1|handle_time"
+                "rules": "endDateDesc|handle_time"
             },
             "name": {
                 "label": "项目名称",
-                "rules": "project"
+                "rules": "name"
             },
             "corporation_name": {
                 "label": "公司名称",
@@ -272,11 +264,11 @@
             },
             "position_name": {
                 "label": "职位名称",
-                "rules": "job"
+                "rules": "roleName"
             },
             "describe": {
                 "label": "项目描述",
-                "rules": "desc"
+                "rules": "projectDescription"
             },
             "achivement": {
                 "label": "工作业绩",
@@ -284,23 +276,23 @@
             },
             "responsibilities": {
                 "label": "职责",
-                "rules": ""
+                "rules": "performance"
             }
         },
         "application_rules": "handle_sofar|wash_name_null"
     },
     "education": {
         "label": "教育经历",
-        "rules": "data.education",
+        "rules": "zpData.geekDetailInfo.geekEduExpList",
         "lists": true,
         "child": {
             "start_time": {
                 "label": "工作时间",
-                "rules": "date.0|handle_time"
+                "rules": "startDate|handle_time"
             },
             "end_time": {
                 "label": "工作时间",
-                "rules": "date.1|handle_time"
+                "rules": "endDate|handle_time"
             },
             "school_name": {
                 "label": "学校名称",
@@ -312,58 +304,58 @@
             },
             "degree": {
                 "label": "学历",
-                "rules": "degree|handle_degree"
+                "rules": "degreeName|handle_degree"
             },
             "degree_origin": {
                 "label": "学历",
-                "rules": "degree"
+                "rules": "degreeName"
             },
             "discipline_desc": {
                 "label": "专业描述",
-                "rules": "course"
+                "rules": "eduDescription"
             }
         },
         "application_rules": "handle_sofar|wash_name_null"
     },
     "training": {
         "label": "培训经历",
-        "rules": "data.detail.Training",
+        "rules": "data.training",
         "lists": true,
         "child": {
             "start_time": {
                 "label": "工作时间",
-                "rules": "DateStart|handle_time"
+                "rules": "StartDate|handle_time"
             },
             "end_time": {
                 "label": "工作时间",
-                "rules": "DateEnd|handle_time"
+                "rules": "EndDate|handle_time"
             },
             "name": {
                 "label": "培训课程名称",
-                "rules": "TrainingName"
+                "rules": "TrainCourse"
             },
             "authority": {
                 "label": "培训机构名称",
-                "rules": "Machinery"
+                "rules": ""
             },
             "city": {
                 "label": "培训地点",
-                "rules": "CityName"
+                "rules": ""
             },
             "certificate": {
                 "label": "获得证书名称",
-                "rules": "CertificateName"
+                "rules": "GetCertificate"
             },
             "description": {
                 "label": "培训描述",
-                "rules": "TrainingDescription"
+                "rules": "TrainDescirbe"
             }
         },
         "application_rules": "handle_sofar|wash_name_null"
     },
     "language": {
         "label": "语言能力",
-        "rules": "data.skill",
+        "rules": "data.language_list",
         "lists": true,
         "child": {
             "name": {
@@ -376,14 +368,14 @@
             },
             "level": {
                 "label": "语言掌握程度",
-                "rules": "desc"
+                "rules": "level"
             }
         },
         "application_rules": "wash_langue"
     },
     "skill": {
         "label": "技能",
-        "rules": "data.skill",
+        "rules": "data.specialit_list",
         "lists": true,
         "child": {
             "name": {
@@ -392,7 +384,7 @@
             },
             "level": {
                 "label": "掌握程度",
-                "rules": "desc"
+                "rules": "describe"
             },
             "period": {
                 "label": "使用时间",
