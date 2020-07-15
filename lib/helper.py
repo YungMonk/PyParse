@@ -599,7 +599,7 @@ def wash_skill(args, *extra):
 
 # 清洗语言
 def wash_langue(args, *extra):
-    parrten = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它)'
+    parrten = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它|English|Chinese)'
     if "name" in args and args['name']  and re.findall(parrten, args['name'], re.S | re.I):
         return args
     else:

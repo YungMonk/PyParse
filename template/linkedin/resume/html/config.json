@@ -1,0 +1,24 @@
+{
+    "20200608": {
+        "label": "中文简历--联系人简历",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有 用户基本信息 的table中的id=smartbanner-wormhole",
+                "rules": "string(//div[@id='smartbanner-wormhole'])"
+            }
+        }
+    },
+    "20200610": {
+        "label": "中文简历--企业版简历",
+        "rules": "",
+        "fname": "zh2.json",
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有 用户基本信息 的table中的id=profile",
+                "rules": "string(//div[@id='profile'])"
+            }
+        }
+    }
+}
