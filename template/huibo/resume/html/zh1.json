@@ -29,7 +29,7 @@
             },
             "photo2": {
                 "label": "头像base64数据流",
-                "rules": "//*[@class='numberName']/img/@src|preg_replace[//,https://]"
+                "rules": "//*[@class='numberName']/img/@src|preg_replace[//,https://]|fetch_head"
             },
             "photo": {
                 "label": "头像url",
