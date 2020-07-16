@@ -336,6 +336,64 @@ def handle_experience_by_years(args:str="", *extra) -> str:
     return time.localtime().tm_year - strings.atoi(year_start) + 1
 
 
+def handle_position_experience(args="", *extra):
+    '''
+        职位工作经验
+    '''
+    args['experience_begin'] = 0
+    args['experience_end'] = 0
+    args['experience_above'] = "N"
+
+    if "experience" not in args or not args["experience"]:
+        return args
+    
+    experience = args["experience"]
+    if re.search(r'不限|无要求', experience):
+        # 不限
+        args['experience_begin'] = 0
+        args['experience_end'] = 0
+    elif re.search(r'应届毕业生|无经验', experience):
+        # 应届毕业生,无经验
+        args['experience_begin'] = 0
+        args['experience_end'] = -1
+    elif re.search(r'在读', experience):
+        # 在读学生,在读生
+        args['experience_begin'] = 0
+        args['experience_end'] = -2
+    elif (isMatch := re.search(r'(\d{1,2})年以下(工作经验|经验)*', experience)):
+        # 10年以下工作经验，8年以下经验
+        args["experience_end"] = isMatch.group(1)
+    elif (isMatch := re.search(r'(\d{1,2})(\s|\.0)*年以上(工作经验|经验)*', experience)):
+        # 10以上工作经验，10.0年以上工作经验，8年以上经验
+        args["experience_begin"] = isMatch.group(1)
+        args['experience_above'] = "Y"
+    elif (isMatch := re.search(r'(\d{1,2})-(\d{1,2})年(工作经验|经验)*', experience)):
+        # 8-10年工作经验，8-10年经验
+        args["experience_begin"] = isMatch.group(1)
+        args["experience_end"]   = isMatch.group(2)
+    elif (isMatch := re.search(r'(\d{1,2})年(工作经验|经验)', experience)):
+        # 8年工作经验
+        args["experience_begin"] = isMatch.group(1)
+        args["experience_end"]   = args["experience_begin"]
+    elif (isMatch := re.search(r'(\d{1,2})years', experience)):
+        # 10years
+        args["experience_begin"] = isMatch.group(1)
+        args["experience_end"]   = args["experience_begin"]
+    elif (isMatch := re.search(r'(\d{1,2})\s*年(?!\d)', experience)):
+        # 10 年，10年
+        args["experience_begin"] = isMatch.group(1)
+        args["experience_end"]   = args["experience_begin"]
+    elif (isMatch := re.search(r'([\u4e00-\u9fa5]+)年以上', experience)):
+        # 十年以上工作经验
+        args["experience_begin"] = cn2dig(isMatch.group(1))
+        args['experience_above'] = "Y"
+    elif (isMatch := re.search(r'([\u4e00-\u9fa5]+)年', experience)):
+        # 八年
+        args["experience_begin"] = cn2dig(isMatch.group(1))
+        args["experience_end"]   = args["experience_begin"]
+
+    return args
+
 def handle_basic_experience(args="", *extra):
     '''
         工作经验
@@ -623,8 +681,10 @@ def handle_contact_merge(args="", *extra):
     return args
 
 
-# 公司类型
 def handle_corp_type(args="", *extra):
+    '''
+        公司类型
+    '''
     matches = re.search(r'(外资\(欧美\)|外资\(非欧美\)|合资|国企|私营\/民营|民营公司|民营|上市公司|创业公司|外企代表处|政府机关|国有企业|事业单位|非营利机构)', args)
     if matches:
         return matches.group(0)
@@ -641,6 +701,53 @@ def handle_corp_scale(args="", *extra):
         return matches.group(0)
     else:
         return ""
+
+
+def handle_position_delete(args="", *extra):
+    '''
+        职位已删除
+    '''
+    if 'is_delete' not in args:
+        args['is_delete'] = 'N'
+    elif re.search(r'停止|暂停|过期|expired|company_gq|结束|error-404|火星|删除|404|301|暂时', args['is_delete']):
+        args['is_delete'] = 'Y'
+    else:
+        args['is_delete'] = 'N'
+
+    return args
+
+
+def handle_position_publish(args="", *extra):
+    '''
+        职位发布时间
+    '''
+    import datetime
+    from dateutil.relativedelta import relativedelta
+
+    if 'created' not in args:
+        args['create'] = ''
+    elif isMatch := re.findall(r'(\d{4})[-,/,年](\d{1,2})[-,/,月](\d{1,2})', args['created']):
+        args['create'] = "-".join(isMatch[0])
+    elif isMatch := re.findall(r'(\d{4})[-,/,年](\d{1,2})', args['created']):
+        args['create'] = "-".join(isMatch[0])
+    elif isMatch := re.findall(r'(\d{1,2})[-,/,月](\d{1,2})', args['created']):
+        args['create'] = "{}-{}".format(time.localtime().tm_year, "-".join(isMatch[0]))
+    elif re.findall(r'刚刚|分钟前|小时前|今天', args['created']):
+        args['create'] = datetime.date.today()
+    elif re.findall(r'昨天', args['created']):
+        args['create'] = datetime.date.today() - relativedelta(days=1)
+    elif re.findall(r'前天', args['created']):
+        args['create'] = datetime.date.today() - relativedelta(days=2)
+    elif isMatch := re.findall(r'(\d{1,2})个*月前', args['created']):
+        m = strings.atoi(isMatch[0])
+        args['create'] = datetime.date.today() - relativedelta(month=m)
+    elif isMatch := re.findall(r'(\d{1,2})天前', args['created']):
+        d = strings.atoi(isMatch[0])
+        args['create'] = datetime.date.today() - relativedelta(days=d)
+    else:
+        args['create'] = ''
+
+    return args
 
 
 def wash_education(args="", *extra):
