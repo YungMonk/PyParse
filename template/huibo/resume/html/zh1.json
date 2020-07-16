@@ -29,7 +29,7 @@
             },
             "photo2": {
                 "label": "头像base64数据流",
-                "rules": "//*[@class='numberName']/img/@src|preg_replace[//,https://]|fetch_head"
+                "rules": "//*[@class='numberName']/img/@src|preg_replace[//,https://]"
             },
             "photo": {
                 "label": "头像url",
@@ -203,25 +203,25 @@
         "rules": "",
         "lists": false,
         "child": {
-            "phone1": {
+            "phone_num1": {
                 "label": "手机号码",
                 "rules": "//*[@id='spnBasicMobilePhone']/@data-phone"
             },
-            "phone2": {
+            "phone_num2": {
                 "label": "手机号码",
-                "rules": "string(//*[contains(@class,'nberN04')])|handle_phone"
+                "rules": "//*[@id='phoneAddr']/preceding-sibling::span"
             },
             "phone_area": {
                 "label": "手机号码所属区域",
                 "value": 1
             },
-            "email1": {
+            "email_num1": {
                 "label": "电子邮件地址",
-                "rules": "//*[@id='linkwayContainer']/span[@class='show_email']/@data-email|handle_email"
+                "rules": "//*[@id='linkwayContainer']/span[@class='show_email']/@data-email"
             },
-            "email2": {
+            "email_num2": {
                 "label": "电子邮件地址",
-                "rules": "string(//*[contains(@class,'nberN04')])|handle_email"
+                "rules": "//*[@id='phoneAddr']/following-sibling::span"
             },
             "qq": {
                 "label": "QQ号码",
