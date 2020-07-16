@@ -406,6 +406,7 @@ def handle_time(args="", *extra):
     if matches := re.findall(r'(\d{10})(\d{3})*', args):
         return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(matches[0][0])))
     elif matches := re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})', '\\1年\\2月', args)):
+        print(f"handle_time args:{args} -> matches:{matches}")
         return matches[0]
     elif matches := re.findall(r'(\d{4}年)', args):
         return matches[0]
