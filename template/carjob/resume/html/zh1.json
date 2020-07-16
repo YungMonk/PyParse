@@ -2,7 +2,6 @@
     "source": {
         "label": "基础信息",
         "rules": "",
-        "lists": false,
         "child": {
             "src": {
                 "label": "渠道ID",
@@ -17,7 +16,6 @@
     "basic": {
         "label": "基础信息",
         "rules": "",
-        "lists": false,
         "child": {
             "resume_name": {
                 "label": "简历名",
@@ -127,17 +125,9 @@
                 "label": "当前状态",
                 "value": ""
             },
-            "work_experience": {
+            "experience": {
                 "label": "工作经历年限",
-                "rules": ".//span[contains(text(),'工作经验')]/following-sibling::*|preg_match[(\\d+)],0"
-            },
-            "working_seniority_from": {
-                "label": "工作年限最小值",
-                "rules": ".//span[contains(text(),'工作经验')]/following-sibling::*|handle_experience,0"
-            },
-            "working_seniority_to": {
-                "label": "工作年限最大值",
-                "rules": ".//span[contains(text(),'工作经验')]/following-sibling::*|handle_experience,1"
+                "rules": ".//span[contains(text(),'工作经验')]/following-sibling::*"
             },
             "self_remark": {
                 "label": "自我评价",
@@ -276,7 +266,7 @@
                 "value": ""
             }
         },
-        "cback": []
+        "application_rules": "handle_basic_experience"
     },
     "contact": {
         "label": "联系方式",

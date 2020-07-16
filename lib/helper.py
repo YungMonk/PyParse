@@ -14,7 +14,6 @@ async def optimize(args, funcs=[]):
     '''
         回调函数处理
     '''
-
     for func in funcs:
         if not args:
             return args
@@ -79,7 +78,7 @@ async def optimize(args, funcs=[]):
 
             func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
             # 协同方法特殊处理
-            if call_info[0] in ["handle_address_city", "handle_except_citys", "handle_citys", "fetch_head"]:
+            if call_info[0] in ["handle_address_city", "handle_except_citys", "fetch_head"]:
                 args = await func(args)
             else :
                 args = func(args)
@@ -108,36 +107,46 @@ def trim(args="", *extra):
     return strings.trim(args, *extra)
 
 
-# 去除html文本中的所有标签
 def strip_tags(args="", *extra):
+    '''
+        去除html文本中的所有标签
+    '''
     return strings.strip_tags(args)
 
 
-# 字符串分割
 def explode(args="", *extra):
+    '''
+        字符串分割
+    '''
     return args.split(extra[0] if len(extra) else " ")
 
 
 def implode(args="", *extra):
-    """字符串拼接"""
+    '''
+        字符串拼接
+    '''
     return ",".join(args)
 
-# 正则使用
 def preg_match(args="", *extra):
+    '''
+        正则使用
+    '''
     if len(extra) and extra[0] and (matches := re.search(extra[0], args, re.S | re.I)):
-        t = re.search(extra[0], args, re.S | re.I).groups()
         return matches.groups()
 
 
-# 正则全匹配
 def preg_match_all(args="", *extra):
-    t = re.findall(extra[0], args, re.S | re.I)
+    '''
+        正则全匹配
+    '''
     if len(extra) and extra[0] and (matches := re.findall(extra[0], args, re.S | re.I)):
         return matches
 
 
-# 正则替换
 def preg_replace(args="", *extra):
+    '''
+        正则替换
+    '''
     if len(extra) and extra[0]:
         return re.sub(extra[0], extra[1] if len(extra) > 1 else "", args)
     else:
@@ -145,23 +154,31 @@ def preg_replace(args="", *extra):
 
 
 def json_encode(args="", *extra):
-    """josn序列化"""
+    '''
+        josn序列化
+    '''
     import json
     return json.dumps(args, ensure_ascii=False)
 
 
-# 单位（千）转换
 def k2k(args="", *extra):
+    '''
+        单位（千）转换
+    '''
     return strings.salary_to_k(args)
 
 
-# 单位（万）转换
 def w2k(args="", *extra):
+    '''
+        单位（万）转换
+    '''
     return strings.salary_to_k(args, 'W')
 
 
-# 正则分割
 def handle_regualr(args="", *extra):
+    '''
+        正则分割
+    '''
     if not args:
         return args
     args = re.sub('\n', '', args)
@@ -181,11 +198,15 @@ def handle_regualr(args="", *extra):
 
 
 def handle_xpath(args="", *extra):
-    """xpath处理"""
+    '''
+        xpath处理
+    '''
     return etree.HTML(args).xpath(placeholder(extra[0]))
 
 def handle_birth(args="", *extra):
-    """拼接出生日期"""
+    '''
+        拼接出生日期
+    '''
     birth = ""
     if 'birth_year' in args and args['birth_year']:
         birth = args['birth_year'] + '年'
@@ -198,7 +219,9 @@ def handle_birth(args="", *extra):
     return args
 
 def handle_birthday(args="", *extra):
-    """匹配出生日"""
+    '''
+        匹配出生日
+    '''
     string = ""
     if (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})\s*(月|-|\.){1}\s*([0-3]{0,1}[0-9]{1})',args)):
         string = "{}年{}月{}日".format(matchObj.group(1), matchObj.group(3), matchObj.group(5))
@@ -211,8 +234,10 @@ def handle_birthday(args="", *extra):
     return string if string else args
 
 
-# 匹配年龄
 def handle_age(args="", *extra):
+    '''
+        匹配年龄
+    '''
     string = ""
     if (matchObj := re.search(r'(\d+)\s*岁', args)):
         string = matchObj.group(1)
@@ -225,8 +250,10 @@ def handle_age(args="", *extra):
     return string
 
 
-# 匹配性别
 def handle_gender(args="", *extra):
+    '''
+        匹配性别
+    '''
     sexs = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F', 'women': 'F', 'men': 'M','woman': 'F', 'man': 'M'}
     if (isMatch := re.search(r'(男|女|male|female|women|men|woman|man)', args)):
         return sexs[isMatch.group(1)]
@@ -234,8 +261,10 @@ def handle_gender(args="", *extra):
         return sexs[isMatch.group(1)]
 
 
-# 匹配学历
 def handle_degree(args="", *extra):
+    '''
+        匹配学历
+    '''
     degrees = {
         '本科及以上': 1,
         '本科': 1,
@@ -265,16 +294,20 @@ def handle_degree(args="", *extra):
         return 99
 
 
-# 语言匹配
 def handle_langue(args="", *extra):
+    '''
+        语言匹配
+    '''
     if (isMatch := re.search(r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语/朝鲜语|普通话|粤语|闽南语|上海话|其它)', args)):
         return isMatch.group(1)
     else:
         return ""
 
 
-# 是否最近
 def handle_sofar(args="", *extra):
+    '''
+        是否最近
+    '''
     if 'start_time' in args and 'end_time' in args and args['end_time'] == '':
         args['so_far'] = 'Y'
     else:
@@ -282,8 +315,10 @@ def handle_sofar(args="", *extra):
     return args
 
 
-# 婚姻状态
 def handle_marital(args="", *extra):
+    '''
+        婚姻状态
+    '''
     marital = {'已婚': 'Y', '未婚': 'N', '保密':'U', 'single': 'N', 'married': 'Y', 'unmarried': 'N'}
     if (isMatch := re.search(r'(已婚|未婚|single|married|unmarried)', args)):
         return marital[isMatch.group(1)]
@@ -291,40 +326,10 @@ def handle_marital(args="", *extra):
         return "U"
 
 
-# 工作经验
-def handle_experience(args="", *extra):
-    result = ["", ""]
-    if (isMatch := re.search(r'(\d+)年以下(工作经验|经验)*', args)):
-        # 10年以下工作经验，8年以下经验
-        result[1] = isMatch.group(1)
-    elif (isMatch := re.search(r'(\d+)(\s|\.0)*年以上(工作经验|经验)*', args)):
-        # 10以上工作经验，10.0年以上工作经验，8年以上经验
-        result[0] = isMatch.group(1)
-    elif (isMatch := re.search(r'(\S+)年以上', args)):
-        # 十年以上工作经验
-        result[0] = cn2dig(isMatch.group(1))
-    elif (isMatch := re.search(r'(\d+)-(\d+)年(工作经验|经验)*', args)):
-        # 8-10年工作经验，8-10年经验
-        result[0] = isMatch.group(1)
-        result[1] = isMatch.group(2)
-    elif (isMatch := re.search(r'(\d+)年(工作经验|经验)', args)):
-        # 8年工作经验
-        result[1] = result[0] = isMatch.group(1)
-    elif (isMatch := re.search(r'(\d+)years', args)):
-        # 10years
-        result[1] = result[0] = isMatch.group(1)
-    elif (isMatch := re.search(r'(\d+)\s*年(?!\d)', args)):
-        # 10 年，10年
-        result[1] = result[0] = isMatch.group(1)
-    elif (isMatch := re.search(r'(\S+)年', args)):
-        # 八年
-        result[1] = result[0] = cn2dig(isMatch.group(1))
-
-    return result
-
-
 def handle_experience_by_years(args:str="", *extra) -> str:
-    """通过年获取工作经验"""
+    '''
+        通过参加工作年获取工作经验
+    '''
     if not args or not args.isdigit():
         return ""
 
@@ -333,7 +338,9 @@ def handle_experience_by_years(args:str="", *extra) -> str:
 
 
 def handle_basic_experience(args="", *extra):
-    """工作经验"""
+    '''
+        工作经验
+    '''
     args["work_experience"]= ""
     args["working_seniority_from"]= ""
     args["working_seniority_to"]= ""
@@ -384,8 +391,10 @@ def handle_basic_experience(args="", *extra):
     return args
 
 
-# 当前状态
 def handle_current_status(args="", *extra):
+    '''
+        当前状态
+    '''
     status = 0
     if re.search(r'在岗|在职|机会', args, re.S|re.I):
         status = 3
@@ -395,7 +404,9 @@ def handle_current_status(args="", *extra):
     return status
 
 def handle_political(args="", *extra) -> str:
-    """政治背景"""
+    '''
+        政治背景
+    '''
     parrten = r'(中共党员|共产党员|预备党员|团员|民主党派|无党派人士|无党派民主人士|群众|其他)'
     if matches := re.findall(parrten, args, re.S | re.I):
         return matches[0]
@@ -404,15 +415,17 @@ def handle_political(args="", *extra) -> str:
 
 
 def handle_update(args="", *extra) -> str:
-    """简历更新时间"""
+    '''
+        简历更新时间
+    '''
     return time.strftime("%Y-%m-%d", time.localtime(strings.str_to_time(args)))
 
 
-# 处理时间
 def handle_time(args="", *extra):
-    if matches := re.findall(r'(\d{10})(\d{3})*', args):
-        return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(matches[0][0])))
-    elif matches := re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})', '\\1年\\2月', args)):
+    '''
+        处理时间
+    '''
+    if matches := re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})', '\\1年\\2月', args)):
         return matches[0]
     elif matches := re.findall(r'(\d{4}年)', args):
         return matches[0]
@@ -420,14 +433,15 @@ def handle_time(args="", *extra):
         return ""
 
 
-# 处理时间间隔
 def handle_interval(args="", *extra):
+    '''
+        处理时间间隔
+    '''
     args['start_time'] = ""
     args['end_time'] = ""
     args['so_far'] = "N"
 
     isMatch = re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args['time']))
-    sub = re.sub(r'(\d{4}).*?(\d{1,2})','\\1年\\2月', args['time'])
     if len(isMatch) == 1:
         args['start_time'] = isMatch[0]
     elif len(isMatch) == 2:
@@ -439,8 +453,11 @@ def handle_interval(args="", *extra):
     args.pop('time','')
     return args
 
-# 处理教育时间间隔
+
 def handle_education(args="", *extra):
+    '''
+        通过毕业时间和学位，获取学历时间
+    '''
     args['start_time'] = ""
     args['end_time'] = ""
     args['so_far'] = "N"
@@ -461,8 +478,11 @@ def handle_education(args="", *extra):
     args.pop('time','')
     return args
 
-# 处理基本薪资
+
 def handle_basic_salary(args="", *extra):
+    '''
+        处理基本薪资
+    '''
     args['basic_salary_from'] = ""
     args['basic_salary_to'] = ""
 
@@ -488,8 +508,10 @@ def handle_basic_salary(args="", *extra):
     return args
 
 
-# 处理期望薪资
 def handle_expect_salary(args="", *extra):
+    '''
+        处理期望薪资
+    '''
     args['expect_salary_from'] = ""
     args['expect_salary_to'] = ""
     args['expect_annual_salary_from'] = ""
@@ -550,9 +572,9 @@ def handle_expect_salary(args="", *extra):
 
 
 def handle_phone(args="", *extra):
-    """
-    match the phone number.
-    """
+    '''
+        匹配手机号
+    '''
     matches = re.search(r'(\d+)', args)
     if matches:
         return matches.group(0)
@@ -561,9 +583,9 @@ def handle_phone(args="", *extra):
 
 
 def handle_email(args="", *extra):
-    """
-    match the email.
-    """
+    '''
+        匹配邮箱号
+    '''
     matches = re.search(r'(\S*@\S*)', args)
     if matches:
         return matches.group(0)
@@ -571,46 +593,34 @@ def handle_email(args="", *extra):
         return ""
 
 
-# 公司名称合并
 def handle_corp_name_merge(args="", *extra):
+    '''
+        公司名称合并
+    '''
     args['corporation_name'] = "{}{}".format(args['corporation_name_1'],args['corporation_name_2'])
     args.pop('corporation_name_1','')
     args.pop('corporation_name_2', '')
     return args
 
 
-# 联系方式_email_pc合并
 def handle_contact_merge(args="", *extra):
+    '''
+        联系方式合并
+    '''
     if args['phone1']:
         args['phone'] = args['phone1']
     else:
         args['phone'] = args['phone2']
+
     if args['email1']:
         args['email'] = args['email1']
     else:
         args['email'] = args['email2']
+
     args.pop('phone1','')
     args.pop('phone2', '')
     args.pop('email1', '')
     args.pop('email2', '')
-    return args
-
-
-# 教育培训，筛除培训经历
-def delete_training_name(args="", *extra):
-    if isinstance(args, (dict,)) and args['other_information'] == '培训':
-        args.pop('name', '')
-        args.pop('corporation_name', '')
-        args.pop('school_name', '')
-    return args
-
-
-# 清洗培训经历
-def handle_training_experience(args="", *extra):
-    if isinstance(args, (dict,)) and args['other_information'] != '培训':
-        args.pop('name', '')
-        args.pop('corporation_name', '')
-        args.pop('school_name', '')
     return args
 
 
@@ -623,8 +633,10 @@ def handle_corp_type(args="", *extra):
         return ""
 
 
-# 公司规模
 def handle_corp_scale(args="", *extra):
+    '''
+        公司规模
+    '''
     matches = re.search(r'(少于\d+|\d+\s*[-,~]\s*\d+|\d+人以上)', args, re.S|re.I)
     if matches:
         return matches.group(0)
@@ -632,8 +644,32 @@ def handle_corp_scale(args="", *extra):
         return ""
 
 
-# 清洗技能
+def wash_education(args="", *extra):
+    '''
+        清洗教育经历
+    '''
+    if isinstance(args, (dict,)) and args['other_information'] == '培训':
+        args.pop('name', '')
+        args.pop('corporation_name', '')
+        args.pop('school_name', '')
+    return args
+
+
+def wash_training(args="", *extra):
+    '''
+        清洗培训经历
+    '''
+    if isinstance(args, (dict,)) and args['other_information'] != '培训':
+        args.pop('name', '')
+        args.pop('corporation_name', '')
+        args.pop('school_name', '')
+    return args
+
+
 def wash_skill(args, *extra):
+    '''
+        清洗技能
+    '''
     parrten = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它)'
     if "name" not in args or not args['name']:
         return None
@@ -643,8 +679,10 @@ def wash_skill(args, *extra):
         return args
 
 
-# 清洗语言
 def wash_langue(args, *extra):
+    '''
+        清洗语言
+    '''
     parrten = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它|English|Chinese)'
     if "name" in args and args['name']  and re.findall(parrten, args['name'], re.S | re.I):
         return args
@@ -652,8 +690,10 @@ def wash_langue(args, *extra):
         return None
 
 
-# 清洗名称为空的
 def wash_name_null(args, *extra):
+    '''
+        清洗名称为空的
+    '''
     if "name" in args and args['name']:
         return args
     elif "corporation_name" in args and args['corporation_name']:
@@ -664,9 +704,13 @@ def wash_name_null(args, *extra):
         return None
 
 
-""""异步方法调用"""
-# 户籍，现居住地相关
+#################################################################
+######################### 异步方法调用  ###########################
+#################################################################
 async def handle_address_city(args, *extra) -> dict:
+    '''
+        户籍，现居住地相关（单个城市）
+    '''
     if not isinstance(args, dict):
         return args
     else:
@@ -685,9 +729,9 @@ async def handle_address_city(args, *extra) -> dict:
 
         import json
         if "account_address" in args and args['account_address']:
-            args['account'] = await http_curl(url=instance.config.get('rcp_service', None)['gsystem'], city=args['account_address'])
+            args['account'] = await http_gsystem(url=instance.config.get('rcp_service', None)['gsystem'], city=args['account_address'])
         if "address_detail" in args and args['address_detail']:
-            args['address'] = await http_curl(url=instance.config.get('rcp_service', None)['gsystem'], city=args['address_detail'])
+            args['address'] = await http_gsystem(url=instance.config.get('rcp_service', None)['gsystem'], city=args['address_detail'])
 
 
         args['account_district'] = args['account'] # 灵活用工使用
@@ -696,8 +740,10 @@ async def handle_address_city(args, *extra) -> dict:
     return args
 
 
-# 处理期望城市
 async def handle_except_citys(args, *extra):
+    '''
+        处理期望城市（多个城市）
+    '''
     if not isinstance(args, dict):
         return args
     else:
@@ -709,7 +755,7 @@ async def handle_except_citys(args, *extra):
             citys = args['expect_city_names'].split(',')
             city_sets = []
             for _city in citys:
-                gsys = await http_curl(url=instance.config.get('rcp_service', None)['gsystem'], city=_city)
+                gsys = await http_gsystem(url=instance.config.get('rcp_service', None)['gsystem'], city=_city)
                 _tmp = max(gsys.split(','))
                 city_sets.append(_tmp)
 
@@ -718,29 +764,11 @@ async def handle_except_citys(args, *extra):
     return args
 
 
-async def handle_citys(args, *extra):
-    """
-        城市ID化
-    """
-    if not args:
-        return ""
-
-    import json
-    citys = args.split(',')
-    city_sets = []
-    for _city in citys:
-        gsys = await http_curl(url=instance.config.get('rcp_service', None)['gsystem'], city=_city)
-        _tmp = max(gsys.split(','))
-        city_sets.append(_tmp)
-
-    args = strings.trim(','.join(city_sets))
-
-    return args
-
-
 global_citys = {}
-# Gsystme 城市 ID 化
-async def http_curl(**kwargs):
+async def http_gsystem(**kwargs):
+    '''
+        请求第三方服务 gsystem
+    '''
     if "city" not in kwargs or not kwargs['city']:
         return ""
 
@@ -791,8 +819,10 @@ async def http_curl(**kwargs):
     return result
 
 
-# 抓取头像（注：抓取头像会）
 async def fetch_head(args:str="", *extra) -> str:
+    '''
+        抓取头像（注：抓取头像会）
+    '''
     if not args:
         return ""
 
@@ -846,10 +876,13 @@ async def fetch_head(args:str="", *extra) -> str:
 
     return result
 
-
+#################################################################
+######################### 其它过滤方法  ###########################
+#################################################################
 def font_decrypt(args: str = "", *extra) -> str:
-    """58同城字体解密"""
-
+    '''
+        58同城字体解密
+    '''
     from fontTools.ttLib import TTFont
     import io
     import os
@@ -943,6 +976,9 @@ def font_decrypt(args: str = "", *extra) -> str:
 
 
 def get_info_by_id(args: str = "", *extra) -> str:
+    '''
+        通过id获取值
+    '''
     if not args or len(extra) < 1 or not extra[0]:
         return ""
 

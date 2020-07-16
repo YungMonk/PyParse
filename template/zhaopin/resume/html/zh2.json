@@ -99,17 +99,9 @@
                 "label": "当前状态",
                 "rules": "//td[contains(text(),'目前状况')]/following-sibling::td|handle_current_status"
             },
-            "work_experience": {
+            "experience": {
                 "label": "工作经历年限",
                 "rules": "string(//div[contains(@class,'summary-top')]/span)|preg_match[(\\d+)年工作经验],0"
-            },
-            "working_seniority_from": {
-                "label": "工作年限最小值",
-                "rules": "string(//div[contains(@class,'summary-top')]/span)|handle_experience,0"
-            },
-            "working_seniority_to": {
-                "label": "工作年限最大值",
-                "rules": "string(//div[contains(@class,'summary-top')]/span)|handle_experience,1"
             },
             "self_remark": {
                 "label": "自我评价",
@@ -204,7 +196,7 @@
                 "value": ""
             }
         },
-        "application_rules": "handle_address_city|handle_expect_salary|handle_basic_salary|handle_except_citys"
+        "application_rules": "handle_address_city|handle_expect_salary|handle_basic_salary|handle_except_citys|handle_basic_experience"
     },
     "contact": {
         "label": "联系方式",
