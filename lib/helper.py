@@ -193,7 +193,6 @@ def handle_regualr(args="", *extra):
         _html = preTag + _val + endTag
         xpath.append(etree.HTML(_html))
 
-
     return xpath
 
 
@@ -831,6 +830,10 @@ async def fetch_head(args:str="", *extra) -> str:
 
     # 拉钩默认头像
     if "myresume/default_headpic.png" in args or 'image/pc/default' in args:
+        return ""
+
+    # jobcn默认头像
+    if 'photoBlankV3_men2' in args or 'photoBlankV3_women2' in args:
         return ""
 
     # 补全链接

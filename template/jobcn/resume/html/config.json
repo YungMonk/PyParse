@@ -1,0 +1,28 @@
+{
+    "20200608": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有 用户基本信息 的table中的class=resume_item_bd",
+                "rules": "string(//div[@class='resume_item_bd'])"
+            }
+        }
+    },
+    "20200610": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh2.json",
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有 用户基本信息 的table中的class=summary",
+                "rules": "string(//div[@class='summary'])"
+            },
+            "tmp-skill": {
+                "label": "技能的处于标签「专业技能」下",
+                "rules": "string(//h3[contains(text(),'专业技能')])"
+            }
+        }
+    }
+}
