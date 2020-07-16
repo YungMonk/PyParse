@@ -1,0 +1,112 @@
+{
+    "position": {
+        "label": "职位基本信息",
+        "rules": "",
+        "child": {
+            "source": {
+                "label": "来源网站",
+                "value": ""
+            },
+            "source_unique": {
+                "label": "唯一标志（入口处处理）",
+                "rules": ""
+            },
+            "name": {
+                "label": "职位名称",
+                "rules": "->find('section#r_content h1.job-name')|trim|strip_tags"
+            },
+            "corporation_name": {
+                "label": "公司名称",
+                "rules": "->find('section#r_content .about-position div.comp-name')|strip_tags|trim"
+            },
+            "degree": {
+                "label": "学历id",
+                "rules": "->find(section#r_content .job-detail div.box1>span:eq(2))|preg_match[/(初中@或@高中@或@中技@或@中专@或@大专@或@本科@或@硕士@或@博士@或@其他@或@MBA@或@EMBA)/mi],1|trim|strip_tags|str_to_degree[1]"
+            },
+            "degree_name": {
+                "label": "学历名称",
+                "rules": "->find(section#r_content .job-detail div.box1>span:eq(2))|preg_match[/(初中@或@高中@或@中技@或@中专@或@大专@或@本科@或@硕士@或@博士@或@其他@或@MBA@或@EMBA)/mi],1|trim|strip_tags"
+            },
+            "degree_above": {
+                "label": "学历及以上",
+                "rules": "",
+                "default": "Y"
+            },
+            "experience": {
+                "label": "工作经验及以上",
+                "rules": "->find(section#r_content .job-detail div.box1 span.exp)|str_replace[经验,]|trim|strip_tags"
+            },
+            "salary": {
+                "label": "薪资",
+                "rules": "->find(.r_jobdetails div.title-info>div.job-sal)|trim|strip_tags"
+            },
+            "real_salary": {
+                "label": "薪资",
+                "rules": "->find(.r_jobdetails div.title-info>div.job-sal)|trim|strip_tags"
+            },
+            "number": {
+                "label": "招聘人数",
+                "rules": ""
+            },
+            "number_up": {
+                "label": "招聘人数及以上",
+                "rules": ""
+            },
+            "tags": {
+                "label": "薪酬福利",
+                "rules": "->find(.r_jobdetails .tag-list)|str_replace[</span>,逗号]|strip_tags|trim"
+            },
+            "requirement": {
+                "label": "职位要求",
+                "rules": "->find(div.about-main)|preg_replace[/\\n+/,]|str_replace[<p>,\\n]|str_replace[</p>,\\n]|str_replace[<br>,\\n]|preg_replace[/\\n+/,\\n]|strip_tags|trim"
+            },
+            "workplace": {
+                "label": "工作地点",
+                "rules": "->find(.r_jobdetails .job-detail div.box1 span.ads)|trim|strip_tags"
+            },
+            "address": {
+                "label": "工作地址",
+                "rules": "->find('.r_jobdetails .companyAdd .add')|strip_tags|trim"
+            },
+            "functions": {
+                "label": "职能类别",
+                "rules": ""
+            },
+            "is_deleted": {
+                "label": "是否删除",
+                "rules": "html"
+            },
+            "created": {
+                "label": "创建时间",
+                "rules": "->find(.r_jobdetails .job-detail .time)|trim|strip_tags"
+            }
+        },
+        "application_rules": "handle_experience[1]|handle_is_deleted[1]|handle_date[1]|handle_salary[1]|handle_city[1]|handle_language[1]|handle_date[1]"
+    },
+    "corporation": {
+        "label": "公司信息",
+        "rules": "",
+        "fields": {
+            "name": {
+                "label": "公司名称",
+                "rules": "->find('section#r_content .about-position div.comp-name')|strip_tags|trim"
+            },
+            "industry": {
+                "label": "行业",
+                "rules": "->find('.jobP-info p:eq(0)')|strip_tags|trim"
+            },
+            "scale": {
+                "label": "公司规模",
+                "rules": "->find('.jobP-info p:eq(1) span:eq(0)')|strip_tags|trim"
+            },
+            "homepage": {
+                "label": "公司网站",
+                "rules": ""
+            },
+            "description": {
+                "label": "公司介绍",
+                "rules": ""
+            }
+        }
+    }
+}
