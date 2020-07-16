@@ -1,0 +1,13 @@
+{
+    "20200318": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有 用户基本信息",
+                "rules": "string(//*[@class='resume-item-content'])"
+            }
+        }
+    }
+}

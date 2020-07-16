@@ -1,13 +1,11 @@
 #!/usr/bin/env python3.8.2
 # -*- coding:utf-8 -*-
 
-import os,re
+import os
+import re
 import json
 import time
-
 from utils import strings
-
-
 if __name__ == '__main__':
     filename = os.getcwd() + '/test/data/resume/zhuopin/1.html'
     with open(filename, 'r') as f:

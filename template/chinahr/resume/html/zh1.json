@@ -6,7 +6,7 @@
         "child": {
             "src": {
                 "label": "渠道ID",
-                "value": 1
+                "value": 9
             },
             "src_no": {
                 "label": "外网简历ID",
