@@ -1,0 +1,13 @@
+{
+    "20200716": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "base_info": {
+                "label": "name",
+                "rules": "data.name"
+            }
+        }
+    }
+}
