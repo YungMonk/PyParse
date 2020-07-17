@@ -606,20 +606,24 @@ def handle_contact_merge(args="", *extra):
     '''
         联系方式合并
     '''
-    if args['phone1']:
-        args['phone'] = args['phone1']
-    else:
-        args['phone'] = args['phone2']
+    phone = ''
+    email = ''
+    delete_key = []
+    if isinstance(args,(dict,)):
+        for k,v in args.items():
+            if 'phone_num' in k:
+                delete_key.append(k)
+                if match_phone := re.search(r'([1][3578]\d{9})', v):
+                    phone = match_phone.group(1)
+            if 'email_num' in k:
+                delete_key.append(k)
+                if match_email := re.search(r'(^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$)',v):
+                    email = match_email.group(1)
+    args['phone'] = phone
+    args['email'] = email
+    for key in delete_key:
+        args.pop(key, '')
 
-    if args['email1']:
-        args['email'] = args['email1']
-    else:
-        args['email'] = args['email2']
-
-    args.pop('phone1','')
-    args.pop('phone2', '')
-    args.pop('email1', '')
-    args.pop('email2', '')
     return args
 
 
