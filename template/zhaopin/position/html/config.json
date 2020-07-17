@@ -6,7 +6,7 @@
         "child": {
             "table-divResume": {
                 "label": "dom树中含有 用户基本信息 的table中的class=summary",
-                "rules": "string(//div[@class='summary'])"
+                "rules": "//*[@class='summary-plane__title']"
             }
         }
     }

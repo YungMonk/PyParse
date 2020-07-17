@@ -78,7 +78,7 @@ async def optimize(args, funcs=[]):
 
             func = getattr(__import__('lib.helper', fromlist='helper'), call_info[0])
             # 协同方法特殊处理
-            if call_info[0] in ["handle_address_city", "handle_except_citys", "fetch_head"]:
+            if call_info[0] in ["handle_address_city", "handle_except_citys", "handle_position_city", "fetch_head"]:
                 args = await func(args)
             else :
                 args = func(args)
@@ -762,12 +762,12 @@ def handle_position_delete(args="", *extra):
     '''
         职位已删除
     '''
-    if 'is_delete' not in args:
-        args['is_delete'] = 'N'
-    elif re.search(r'停止|暂停|过期|expired|company_gq|结束|error-404|火星|删除|404|301|暂时', args['is_delete']):
-        args['is_delete'] = 'Y'
+    if 'is_deleted' not in args:
+        args['is_deleted'] = 'N'
+    elif re.search(r'停止|暂停|过期|expired|company_gq|结束|error-404|火星|删除|404|301|暂时', args['is_deleted']):
+        args['is_deleted'] = 'Y'
     else:
-        args['is_delete'] = 'N'
+        args['is_deleted'] = 'N'
 
     return args
 
@@ -780,27 +780,27 @@ def handle_position_publish(args="", *extra):
     from dateutil.relativedelta import relativedelta
 
     if 'created' not in args:
-        args['create'] = ''
+        args['created'] = ''
     elif isMatch := re.findall(r'(\d{4})[-,/,年](\d{1,2})[-,/,月](\d{1,2})', args['created']):
-        args['create'] = "-".join(isMatch[0])
+        args['created'] = "-".join(isMatch[0])
     elif isMatch := re.findall(r'(\d{4})[-,/,年](\d{1,2})', args['created']):
-        args['create'] = "-".join(isMatch[0])
+        args['created'] = "-".join(isMatch[0])
     elif isMatch := re.findall(r'(\d{1,2})[-,/,月](\d{1,2})', args['created']):
-        args['create'] = "{}-{}".format(time.localtime().tm_year, "-".join(isMatch[0]))
+        args['created'] = "{}-{}".format(time.localtime().tm_year, "-".join(isMatch[0]))
     elif re.findall(r'刚刚|分钟前|小时前|今天', args['created']):
-        args['create'] = datetime.date.today()
+        args['created'] = datetime.date.today()
     elif re.findall(r'昨天', args['created']):
-        args['create'] = datetime.date.today() - relativedelta(days=1)
+        args['created'] = datetime.date.today() - relativedelta(days=1)
     elif re.findall(r'前天', args['created']):
-        args['create'] = datetime.date.today() - relativedelta(days=2)
+        args['created'] = datetime.date.today() - relativedelta(days=2)
     elif isMatch := re.findall(r'(\d{1,2})个*月前', args['created']):
         m = strings.atoi(isMatch[0])
-        args['create'] = datetime.date.today() - relativedelta(month=m)
+        args['created'] = datetime.date.today() - relativedelta(month=m)
     elif isMatch := re.findall(r'(\d{1,2})天前', args['created']):
         d = strings.atoi(isMatch[0])
-        args['create'] = datetime.date.today() - relativedelta(days=d)
+        args['created'] = datetime.date.today() - relativedelta(days=d)
     else:
-        args['create'] = ''
+        args['created'] = ''
 
     return args
 

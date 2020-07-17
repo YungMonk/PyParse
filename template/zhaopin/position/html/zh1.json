@@ -13,60 +13,63 @@
             },
             "name": {
                 "label": "职位名称",
-                "rules": "->find('section#r_content h1.job-name')|trim|strip_tags"
+                "rules": "//*[@class='summary-plane__title']"
             },
             "corporation_name": {
                 "label": "公司名称",
-                "rules": "->find('section#r_content .about-position div.comp-name')|strip_tags|trim"
+                "rules": "//*[@class='company']/*[@class='company__title']"
             },
             "degree": {
                 "label": "学历id",
-                "rules": "->find(section#r_content .job-detail div.box1>span:eq(2))|preg_match[/(初中@或@高中@或@中技@或@中专@或@大专@或@本科@或@硕士@或@博士@或@其他@或@MBA@或@EMBA)/mi],1|trim|strip_tags|str_to_degree[1]"
+                "rules": "string(//*[@class='summary-plane__info'])|handle_degree"
             },
             "degree_name": {
                 "label": "学历名称",
-                "rules": "->find(section#r_content .job-detail div.box1>span:eq(2))|preg_match[/(初中@或@高中@或@中技@或@中专@或@大专@或@本科@或@硕士@或@博士@或@其他@或@MBA@或@EMBA)/mi],1|trim|strip_tags"
+                "rules": "string(//*[@class='summary-plane__info'])|preg_match[(初中@或@高中@或@中技@或@中专@或@大专@或@本科@或@硕士@或@博士@或@其他@或@MBA@或@EMBA)],0"
             },
             "degree_above": {
                 "label": "学历及以上",
-                "rules": "",
-                "default": "Y"
+                "value": "Y"
             },
             "experience": {
                 "label": "工作经验及以上",
-                "rules": "->find(section#r_content .job-detail div.box1 span.exp)|str_replace[经验,]|trim|strip_tags"
+                "rules": "string(//*[@class='summary-plane__info'])|trim|preg_replace[\\s+,逗号]"
             },
             "salary": {
                 "label": "薪资",
-                "rules": "->find(.r_jobdetails div.title-info>div.job-sal)|trim|strip_tags"
+                "rules": "//*[@class='summary-plane__salary']"
             },
             "real_salary": {
                 "label": "薪资",
-                "rules": "->find(.r_jobdetails div.title-info>div.job-sal)|trim|strip_tags"
+                "rules": "//*[@class='summary-plane__salary']"
             },
             "number": {
                 "label": "招聘人数",
-                "rules": ""
+                "rules": "string(//*[@class='summary-plane__info'])|trim|preg_replace[\\s+,逗号]|preg_match[(\\d+)人],0"
             },
             "number_up": {
                 "label": "招聘人数及以上",
-                "rules": ""
+                "value": "N"
             },
             "tags": {
                 "label": "薪酬福利",
-                "rules": "->find(.r_jobdetails .tag-list)|str_replace[</span>,逗号]|strip_tags|trim"
+                "rules": "string(//*[@class='highlights__content'])"
+            },
+            "description": {
+                "label": "职位描述(工作职责)",
+                "rules": "//li[contains(text(),'职位描述：')]/div"
             },
             "requirement": {
-                "label": "职位要求",
-                "rules": "->find(div.about-main)|preg_replace[/\\n+/,]|str_replace[<p>,\\n]|str_replace[</p>,\\n]|str_replace[<br>,\\n]|preg_replace[/\\n+/,\\n]|strip_tags|trim"
+                "label": "任职要求",
+                "rules": "//li[contains(text(),'任职要求：')]/div"
             },
             "city": {
                 "label": "工作地点",
-                "rules": "->find(.r_jobdetails .job-detail div.box1 span.ads)|trim|strip_tags"
+                "rules": "string(//*[@class='summary-plane__info']/li[1])|trim|preg_replace[\\s+,逗号]"
             },
             "address": {
                 "label": "工作地址",
-                "rules": "->find('.r_jobdetails .companyAdd .add')|strip_tags|trim"
+                "rules": "//*[@class='job-address__content-text']/text()"
             },
             "functions": {
                 "label": "职能类别",
@@ -74,11 +77,11 @@
             },
             "is_deleted": {
                 "label": "是否删除",
-                "rules": "html"
+                "rules": "string(/*)"
             },
             "created": {
                 "label": "创建时间",
-                "rules": "->find(.r_jobdetails .job-detail .time)|trim|strip_tags"
+                "rules": "//*[@class='summary-plane__time']/text()"
             }
         },
         "application_rules": "handle_position_experience|handle_position_delete|handle_position_publish|handle_position_salary|handle_position_city"
@@ -86,26 +89,26 @@
     "corporation": {
         "label": "公司信息",
         "rules": "",
-        "fields": {
+        "child": {
             "name": {
                 "label": "公司名称",
-                "rules": "->find('section#r_content .about-position div.comp-name')|strip_tags|trim"
+                "rules": "//*[@class='company']/*[@class='company__title']"
             },
             "industry": {
                 "label": "行业",
-                "rules": "->find('.jobP-info p:eq(0)')|strip_tags|trim"
+                "rules": "//*[@class='company__industry']/text()"
             },
             "scale": {
                 "label": "公司规模",
-                "rules": "->find('.jobP-info p:eq(1) span:eq(0)')|strip_tags|trim"
+                "rules": "//*[@class='company__size']/text()"
             },
             "homepage": {
                 "label": "公司网站",
-                "rules": ""
+                "rules": "//*[@class='company__page-site']/@href"
             },
             "description": {
                 "label": "公司介绍",
-                "rules": ""
+                "rules": "//*[@class='company__description']"
             }
         }
     }
