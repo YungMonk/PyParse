@@ -60,7 +60,7 @@
                 "label": "职位要求",
                 "rules": "->find(div.about-main)|preg_replace[/\\n+/,]|str_replace[<p>,\\n]|str_replace[</p>,\\n]|str_replace[<br>,\\n]|preg_replace[/\\n+/,\\n]|strip_tags|trim"
             },
-            "workplace": {
+            "city": {
                 "label": "工作地点",
                 "rules": "->find(.r_jobdetails .job-detail div.box1 span.ads)|trim|strip_tags"
             },
@@ -81,7 +81,7 @@
                 "rules": "->find(.r_jobdetails .job-detail .time)|trim|strip_tags"
             }
         },
-        "application_rules": "handle_experience[1]|handle_is_deleted[1]|handle_date[1]|handle_salary[1]|handle_city[1]|handle_language[1]|handle_date[1]"
+        "application_rules": "handle_position_experience|handle_position_delete|handle_position_publish|handle_position_salary|handle_position_city"
     },
     "corporation": {
         "label": "公司信息",
