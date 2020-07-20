@@ -670,9 +670,12 @@ def handle_position_language(args="", *extra):
     
     args["languages"] = []
     args["language"] = ""
+    lan_tmp = []
 
     if 'language' not in args or not args['language']:
         return args
+
+    params = args['language']
 
     if not extra:
         split_tag_1 = '\n'
@@ -684,27 +687,29 @@ def handle_position_language(args="", *extra):
         split_tag_1 = extra[0]
         split_tag_2 = extra[1]
 
-    languages = args.split(split_tag_1)
+    languages = params.split(split_tag_1)
     for lan in languages:
         array = lan.split(split_tag_2)
         tmp = {"id": "","name":"","level":""}
         if len(array) == 2:
             tmp["id"] = lans[strings.trim(array[0])] if strings.trim(array[0]) in lans else ""
-            tmp["name"] = array[0]
+            tmp["name"] = strings.trim(array[0])
             tmp["level"] = level[strings.trim(array[1])] if strings.trim(array[1]) in level else ""
+            lan_tmp.append({"l":strings.trim(array[0]), "c":strings.trim(array[1])})
         else :
             tmp["id"] = lans[strings.trim(array[0])] if strings.trim(array[0]) in lans else ""
-            tmp["name"] = array[0]
+            tmp["name"] = strings.trim(array[0])
             tmp["level"] = "" 
+            lan_tmp.append({"l":strings.trim(array[0]) , "c":""})
 
         if not tmp["id"]:
             continue
         args["languages"].append(tmp)
 
-    if not args["languages"]:
+    if not lan_tmp:
         args["language"] = ""
     else:
-        args["language"] = json_encode(args["languages"])
+        args["language"] = json_encode(lan_tmp)
 
     return args
 
@@ -713,18 +718,23 @@ def handle_position_number(args="", *extra):
     '''
         匹配招聘人数
     '''
-    args['number'] = ''
-    args['number_up'] = 'N'
-
     if 'number' not in args:
+        args['number'] = ''
+        args['number_up'] = 'N'
         return args
 
-    if '以上' in args['number']:
+    params = args['number']
+    
+    if '以上' in params:
         args['number_up'] = 'Y'
+    else:
+        args['number_up'] = 'N'
         
-    isMatch = re.search(r'(\d+\s*)(?=人)', args['number'])
+    isMatch = re.search(r'(\d+\s*)(?=人)', params)
     if isMatch:
-        args['number'] = isMatch[0]
+        args['number'] = strings.trim(isMatch[0])
+    else:
+        args['number'] = ''
 
     return args
 
@@ -814,6 +824,8 @@ def handle_position_salary(args="", *extra):
                 args['salary_begin'] = strings.salary_to_k(matches[0], salary)
                 args['salary_end']   = strings.salary_to_k(matches[1], salary)
 
+    args.pop('salary', '')
+
     return args
 
 
@@ -833,7 +845,7 @@ def handle_position_experience(args="", *extra):
         # 不限
         args['experience_begin'] = 0
         args['experience_end'] = 0
-    elif re.search(r'应届毕业生|无经验', experience):
+    elif re.search(r'应届毕业生|无经验|应届生', experience):
         # 应届毕业生,无经验
         args['experience_begin'] = 0
         args['experience_end'] = -1
@@ -872,6 +884,8 @@ def handle_position_experience(args="", *extra):
         # 八年
         args["experience_begin"] = cn2dig(isMatch.group(1))
         args["experience_end"]   = args["experience_begin"]
+
+    args.pop('experience', '')
 
     return args
 
