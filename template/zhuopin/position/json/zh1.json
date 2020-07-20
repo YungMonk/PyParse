@@ -1,0 +1,103 @@
+{
+    "position": {
+        "label": "职位基本信息",
+        "rules": "body",
+        "child": {
+            "source": {
+                "label": "来源网站",
+                "value": "31"
+            },
+            "source_unique": {
+                "label": "唯一标志（入口处处理）",
+                "rules": "ID"
+            },
+            "name": {
+                "label": "职位名称",
+                "rules": "Name"
+            },
+            "corporation_name": {
+                "label": "公司名称",
+                "rules": "Company.AliasName"
+            },
+            "degree_name": {
+                "label": "学历名称",
+                "rules": "Degree"
+            },
+            "experience": {
+                "label": "工作经验及以上",
+                "rules": "WorkExperienceStr"
+            },
+            "salary": {
+                "label": "薪资",
+                "rules": "YearlySalary|preg_replace[(.*),\\1/年]"
+            },
+            "real_salary": {
+                "label": "薪资",
+                "rules": "YearlySalary"
+            },
+            "number": {
+                "label": "招聘人数",
+                "rules": "RecruitCount"
+            },
+            "tags": {
+                "label": "薪酬福利",
+                "rules": "JobTags|implode[逗号]"
+            },
+            "description": {
+                "label": "职位描述(工作职责)",
+                "rules": "Responsibility"
+            },
+            "requirement": {
+                "label": "任职要求",
+                "rules": ""
+            },
+            "city": {
+                "label": "工作地点",
+                "rules": "Area"
+            },
+            "address": {
+                "label": "工作地址",
+                "rules": "JobAddress"
+            },
+            "functions": {
+                "label": "职能类别",
+                "rules": ""
+            },
+            "is_deleted": {
+                "label": "是否删除",
+                "rules": "string(/*)"
+            },
+            "created": {
+                "label": "创建时间",
+                "rules": ""
+            }
+        },
+        "application_rules": "handle_position_experience|handle_position_delete|handle_position_publish|handle_position_salary|handle_position_city|handle_position_degree"
+    },
+    "corporation": {
+        "label": "公司信息",
+        "rules": "body.Company",
+        "child": {
+            "name": {
+                "label": "公司名称",
+                "rules": "AliasName"
+            },
+            "industry": {
+                "label": "行业",
+                "rules": "Type"
+            },
+            "scale": {
+                "label": "公司规模",
+                "rules": "Scale"
+            },
+            "homepage": {
+                "label": "公司网站",
+                "rules": ""
+            },
+            "description": {
+                "label": "公司介绍",
+                "rules": "Introduction"
+            }
+        }
+    }
+}
