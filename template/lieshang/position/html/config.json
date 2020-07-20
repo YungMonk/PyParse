@@ -1,0 +1,13 @@
+{
+    "20200720": {
+        "label": "中文简历--PC网页职位",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "table-divResume": {
+                "label": "dom树中含有 用户基本信息 的table中的class=job-title",
+                "rules": "//*[@class='job-title']"
+            }
+        }
+    }
+}
