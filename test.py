@@ -9,6 +9,7 @@ from datetime import datetime
 from utils import strings
 from dateutil.relativedelta import relativedelta
 if __name__ == '__main__':
+
     # isMatch = re.search(r'(\d+\s*)(?=人)', '上海,5-10年,本科,招1人')
     # print(isMatch[0])
 

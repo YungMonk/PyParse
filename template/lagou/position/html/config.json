@@ -1,0 +1,13 @@
+{
+    "20200608": {
+        "label": "中文简历--PC网页简历",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "table-divResume": {
+                "label": "职位名称",
+                "rules": "//div[@class='job-name']/@title"
+            }
+        }
+    }
+}
