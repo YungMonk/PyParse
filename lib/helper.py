@@ -785,7 +785,7 @@ def handle_position_salary(args="", *extra):
 
     if "salary" in args:
         salary = args['salary']
-        if '年' in salary and (matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S)):
+        if '年' in salary and (matches := re.findall(r'(\d+\.*\d*)', salary, re.I | re.S)):
         # 年薪 10万，10.5万，10-15万，10万-15万
             if len(matches) == 1:
                 salary_begin = strings.salary_to_k(matches[0], salary)
@@ -793,9 +793,8 @@ def handle_position_salary(args="", *extra):
             elif len(matches) == 2:
                 salary_begin = strings.salary_to_k(matches[0], salary)
                 salary_end   = strings.salary_to_k(matches[1], salary)
-
-            args['salary_begin'] = '%.2f' % (salary_begin/12)
-            args['salary_end']   = '%.2f' % (salary_end/12)
+            args['salary_begin'] = '%.2f' % (float(salary_begin) / 12)
+            args['salary_end']   = '%.2f' % (float(salary_end) / 12)
         elif '个月' in salary and (matches := re.findall(r'(\d+.*)万（(\d+)元/月\s*\*\s*(\d+)个月）', salary, re.I | re.S)):
         # 年薪 19.60万（14000元/月 * 14个月）猎聘邮件
             if len(matches) == 1:
