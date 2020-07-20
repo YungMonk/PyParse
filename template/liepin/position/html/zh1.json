@@ -5,59 +5,59 @@
         "child": {
             "source": {
                 "label": "来源网站",
-                "value": "1"
+                "value": "3"
             },
             "source_unique": {
                 "label": "唯一标志（入口处处理）",
-                "rules": ""
+                "rules": "//link[@rel='canonical']/@href|preg_match[job/(\\d+)\\.shtml],0|trim"
             },
             "name": {
                 "label": "职位名称",
-                "rules": "//*[@class='summary-plane__title']"
+                "rules": "//div[@id='job-view-enterprise']//h1[@title]|trim"
             },
             "corporation_name": {
                 "label": "公司名称",
-                "rules": "//*[@class='company']/*[@class='company__title']"
+                "rules": "//div[@id='job-view-enterprise']//h3/a[@title]|trim"
             },
             "degree_name": {
                 "label": "学历名称",
-                "rules": "string(//*[@class='summary-plane__info'])|preg_match[(初中@或@高中@或@中技@或@中专@或@大专@或@本科@或@硕士@或@博士@或@其他@或@MBA@或@EMBA)],0"
+                "rules": "string(//div[@class='job-qualifications'])|preg_match[(初中@或@高中@或@中技@或@中专@或@大专@或@本科@或@硕士@或@博士@或@其他@或@MBA@或@EMBA)],0"
             },
             "experience": {
                 "label": "工作经验及以上",
-                "rules": "string(//*[@class='summary-plane__info'])|trim|preg_replace[\\s+,逗号]"
+                "rules": "string(//div[@class='job-qualifications'])|preg_match[(\\d+年)],0|trim"
             },
             "salary": {
                 "label": "薪资",
-                "rules": "//*[@class='summary-plane__salary']"
+                "rules": "string(//p[@class='job-item-title'])|explode[\\n],0|trim"
             },
             "real_salary": {
                 "label": "薪资",
-                "rules": "//*[@class='summary-plane__salary']"
+                "rules": "//p[@class='job-item-title']|trim"
             },
             "number": {
                 "label": "招聘人数",
-                "rules": "string(//*[@class='summary-plane__info'])|trim|preg_replace[\\s+,逗号]|preg_match[(\\d+)人],0"
+                "rules": ""
             },
             "tags": {
                 "label": "薪酬福利",
-                "rules": "string(//*[@class='highlights__content'])"
+                "rules": ""
             },
             "description": {
                 "label": "职位描述(工作职责)",
-                "rules": "//li[contains(text(),'职位描述：')]/div"
+                "rules": "string(//*[contains(text(),'职位描述：')]/following-sibling::div)|trim"
             },
             "requirement": {
                 "label": "任职要求",
-                "rules": "//li[contains(text(),'任职要求：')]/div"
+                "rules": ""
             },
             "city": {
                 "label": "工作地点",
-                "rules": "string(//*[@class='summary-plane__info']/li[1])|trim|preg_replace[\\s+,逗号]"
+                "rules": "string(//p[@class='basic-infor']/span[1])|trim"
             },
             "address": {
                 "label": "工作地址",
-                "rules": "//*[@class='job-address__content-text']/text()"
+                "rules": ""
             },
             "functions": {
                 "label": "职能类别",
@@ -65,11 +65,11 @@
             },
             "is_deleted": {
                 "label": "是否删除",
-                "rules": "string(/*)"
+                "rules": ""
             },
             "created": {
                 "label": "创建时间",
-                "rules": "//*[@class='summary-plane__time']/text()"
+                "rules": "//p[@class='job-item-title']/span/text()"
             }
         },
         "application_rules": "handle_position_experience|handle_position_delete|handle_position_publish|handle_position_salary|handle_position_city|handle_position_degree|handle_position_number"
@@ -80,23 +80,23 @@
         "child": {
             "name": {
                 "label": "公司名称",
-                "rules": "//*[@class='company']/*[@class='company__title']"
+                "rules": "//div[@class='company-logo']/p/a|trim"
             },
             "industry": {
                 "label": "行业",
-                "rules": "//*[@class='company__industry']/text()"
+                "rules": "string(//ul[@class='new-compintro'])|preg_match[行业：(.*?)\\n],0|trim"
             },
             "scale": {
                 "label": "公司规模",
-                "rules": "//*[@class='company__size']/text()"
+                "rules": "string(//ul[@class='new-compintro'])|preg_match[公司规模：(.*?)\\n],0|trim"
             },
             "homepage": {
                 "label": "公司网站",
-                "rules": "//*[@class='company__page-site']/@href"
+                "rules": "//div[@class='company-logo']/p/a/@href|trim"
             },
             "description": {
                 "label": "公司介绍",
-                "rules": "//*[@class='company__description']"
+                "rules": "string(//div[@class='info-word'])|preg_replace[ ,]|trim"
             }
         }
     }
