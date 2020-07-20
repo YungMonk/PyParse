@@ -84,7 +84,7 @@
             },
             "industry": {
                 "label": "行业",
-                "rules": "string(//*[@class='i_trade']//parent::*)|trim"
+                "rules": "string(//*[@class='i_trade']//parent::*)|trim|preg_replace[\\n\\s+,逗号]"
             },
             "scale": {
                 "label": "公司规模",
