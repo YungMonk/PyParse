@@ -847,17 +847,17 @@ def handle_position_publish(args="", *extra):
     elif isMatch := re.findall(r'(\d{1,2})[-,/,月](\d{1,2})', args['created']):
         args['created'] = "{}-{}".format(time.localtime().tm_year, "-".join(isMatch[0]))
     elif re.findall(r'刚刚|分钟前|小时前|今天', args['created']):
-        args['created'] = datetime.date.today()
+        args['created'] = str(datetime.date.today())
     elif re.findall(r'昨天', args['created']):
-        args['created'] = datetime.date.today() - relativedelta(days=1)
+        args['created'] = str(datetime.date.today() - relativedelta(days=1))
     elif re.findall(r'前天', args['created']):
-        args['created'] = datetime.date.today() - relativedelta(days=2)
+        args['created'] = str(datetime.date.today() - relativedelta(days=2))
     elif isMatch := re.findall(r'(\d{1,2})个*月前', args['created']):
         m = strings.atoi(isMatch[0])
-        args['created'] = datetime.date.today() - relativedelta(month=m)
+        args['created'] = str(datetime.date.today() - relativedelta(month=m))
     elif isMatch := re.findall(r'(\d{1,2})天前', args['created']):
         d = strings.atoi(isMatch[0])
-        args['created'] = datetime.date.today() - relativedelta(days=d)
+        args['created'] = str(datetime.date.today() - relativedelta(days=d))
     else:
         args['created'] = ''
 
