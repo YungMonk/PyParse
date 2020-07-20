@@ -19,17 +19,9 @@
                 "label": "公司名称",
                 "rules": "//*[@class='company']/*[@class='company__title']"
             },
-            "degree": {
-                "label": "学历id",
-                "rules": "string(//*[@class='summary-plane__info'])|handle_degree"
-            },
             "degree_name": {
                 "label": "学历名称",
                 "rules": "string(//*[@class='summary-plane__info'])|preg_match[(初中@或@高中@或@中技@或@中专@或@大专@或@本科@或@硕士@或@博士@或@其他@或@MBA@或@EMBA)],0"
-            },
-            "degree_above": {
-                "label": "学历及以上",
-                "value": "Y"
             },
             "experience": {
                 "label": "工作经验及以上",
@@ -46,10 +38,6 @@
             "number": {
                 "label": "招聘人数",
                 "rules": "string(//*[@class='summary-plane__info'])|trim|preg_replace[\\s+,逗号]|preg_match[(\\d+)人],0"
-            },
-            "number_up": {
-                "label": "招聘人数及以上",
-                "value": "N"
             },
             "tags": {
                 "label": "薪酬福利",
@@ -84,7 +72,7 @@
                 "rules": "//*[@class='summary-plane__time']/text()"
             }
         },
-        "application_rules": "handle_position_experience|handle_position_delete|handle_position_publish|handle_position_salary|handle_position_city"
+        "application_rules": "handle_position_experience|handle_position_delete|handle_position_publish|handle_position_salary|handle_position_city|handle_position_degree|handle_position_number"
     },
     "corporation": {
         "label": "公司信息",

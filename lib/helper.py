@@ -649,6 +649,73 @@ def handle_corp_scale(args="", *extra):
         return ""
 
 
+def handle_position_number(args="", *extra):
+    '''
+        匹配招聘人数
+    '''
+    args['number'] = ''
+    args['number_up'] = 'N'
+
+    if 'number' not in args:
+        return args
+
+    if '以上' in args['number']:
+        args['number_up'] = 'Y'
+        
+    isMatch = re.search(r'(\d+\s*)(?=人)', args['number'])
+    if isMatch:
+        args['number'] = isMatch[0]
+
+    return args
+
+
+def handle_position_degree(args="", *extra):
+    '''
+        匹配学历
+    '''
+    degrees = {
+        '本科及以上': 1,
+        '本科': 1,
+        '硕士及以上': 2,
+        '硕士': 2,
+        '博士及以上': 3,
+        '博士': 3,
+        '大专及以上': 4,
+        '专科': 4,
+        '大专': 4,
+        'MBA': 6,
+        'MBA&EMBA': 6,
+        'EMBA': 6,
+        '博士后': 10,
+        '初中': 86,
+        '高中': 89,
+        '高中/中专': 89,
+        '中专': 90,
+        '中技': 91,
+        '学历不限': 99,
+        '其他': 99,
+        '不限': 99,
+    }
+    if 'degree_name' not in args:
+        args['degree_name'] = '不限'
+        args['degree'] = 99
+        args['degree_above'] = 'N'
+        return args
+    
+    if '以上' in args['degree_name']:
+        args['degree_above'] = 'Y'
+    else:
+        args['degree_above'] = 'N'
+    
+    if (isMatch := re.search(r'(初中|高中|中专|中技|专科|大专|本科|硕士|博士|MBA)', args['degree_name'])):
+        args['degree_name'] = isMatch.group(1)
+        args['degree'] = degrees[isMatch.group(1)]
+    else:
+        args['degree_name'] = '不限'
+        args['degree'] = 99
+    
+    return args
+
 def handle_position_salary(args="", *extra):
     '''
         处理期望薪资
@@ -656,45 +723,37 @@ def handle_position_salary(args="", *extra):
     args['salary_begin'] = 0
     args['salary_end'] = 500
 
-    # if "salary" in args:
-    #     salary = args['salary']
-    #     if '年' in salary and (matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S)):
-    #     # 年薪 10万，10.5万，10-15万，10万-15万
-    #         if len(matches) == 1:
-    #             salary_begin = strings.salary_to_k(matches[0], salary)
-    #             salary_end   = strings.salary_to_k(matches[0], salary)
-    #         elif len(matches) == 2:
-    #             salary_begin = strings.salary_to_k(matches[0], salary)
-    #             salary_end   = strings.salary_to_k(matches[1], salary)
+    if "salary" in args:
+        salary = args['salary']
+        if '年' in salary and (matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S)):
+        # 年薪 10万，10.5万，10-15万，10万-15万
+            if len(matches) == 1:
+                salary_begin = strings.salary_to_k(matches[0], salary)
+                salary_end   = strings.salary_to_k(matches[0], salary)
+            elif len(matches) == 2:
+                salary_begin = strings.salary_to_k(matches[0], salary)
+                salary_end   = strings.salary_to_k(matches[1], salary)
 
-    #         args['salary_begin'] = '%.2f' % (salary_begin/12)
-    #         args['salary_end']   = '%.2f' % (salary_end/12)
-    #     elif '个月' in salary and (matches := re.findall(r'(\d+.*)万（(\d+)元/月\s*\*\s*(\d+)个月）', salary, re.I | re.S)):
-    #     # 年薪 19.60万（14000元/月 * 14个月）猎聘邮件
-    #         if len(matches) == 1:
-    #             args['salary_begin']        = strings.salary_to_k(matches[0][1])
-    #             args['salary_end']          = strings.salary_to_k(matches[0][1])
-    #     elif '薪' in salary and (matches := re.findall(r'(\d+\.\d+)万-(\d+\.\d+)万（(\d+)K/月-(\d+)K/月\*(\d+)薪）', salary, re.I | re.S)):
-    #     # 年薪 13.20万-15.60万（11K/月-13K/月*12薪）猎聘通
-    #         if len(matches) == 1:
-    #             args['salary_begin']        = strings.salary_to_k(matches[0][2], 'K')
-    #             args['salary_end']          = strings.salary_to_k(matches[0][3], 'K')
-    #     elif 'k' in salary and (matches := re.findall(r'(\d+)', salary, re.I | re.S)):
-    #         # 拉钩的薪资5k-10k
-    #         if len(matches) == 1:
-    #             args['salary_begin'] = strings.salary_to_k(matches[0], salary)
-    #             args['salary_end']   = strings.salary_to_k(matches[0], salary)
-    #         elif len(matches) == 2:
-    #             args['salary_begin'] = strings.salary_to_k(matches[0], salary)
-    #             args['salary_end']   = strings.salary_to_k(matches[1], salary)
-    #     elif matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S):
-    #         # 匹配薪资float  12.0
-    #         if len(matches) == 1:
-    #             args['salary_begin'] = strings.salary_to_k(matches[0], salary)
-    #             args['salary_end']   = strings.salary_to_k(matches[0], salary)
-    #         elif len(matches) == 2:
-    #             args['salary_begin'] = strings.salary_to_k(matches[0], salary)
-    #             args['salary_end']   = strings.salary_to_k(matches[1], salary)
+            args['salary_begin'] = '%.2f' % (salary_begin/12)
+            args['salary_end']   = '%.2f' % (salary_end/12)
+        elif '个月' in salary and (matches := re.findall(r'(\d+.*)万（(\d+)元/月\s*\*\s*(\d+)个月）', salary, re.I | re.S)):
+        # 年薪 19.60万（14000元/月 * 14个月）猎聘邮件
+            if len(matches) == 1:
+                args['salary_begin']        = strings.salary_to_k(matches[0][1])
+                args['salary_end']          = strings.salary_to_k(matches[0][1])
+        elif '薪' in salary and (matches := re.findall(r'(\d+\.\d+)万-(\d+\.\d+)万（(\d+)K/月-(\d+)K/月\*(\d+)薪）', salary, re.I | re.S)):
+        # 年薪 13.20万-15.60万（11K/月-13K/月*12薪）猎聘通
+            if len(matches) == 1:
+                args['salary_begin']        = strings.salary_to_k(matches[0][2], 'K')
+                args['salary_end']          = strings.salary_to_k(matches[0][3], 'K')
+        elif matches := re.findall(r'(\d+\.*\d*)', salary, re.I | re.S):
+            # 匹配薪资float  12.0
+            if len(matches) == 1:
+                args['salary_begin'] = strings.salary_to_k(matches[0], salary)
+                args['salary_end']   = strings.salary_to_k(matches[0], salary)
+            elif len(matches) == 2:
+                args['salary_begin'] = strings.salary_to_k(matches[0], salary)
+                args['salary_end']   = strings.salary_to_k(matches[1], salary)
 
     return args
 
