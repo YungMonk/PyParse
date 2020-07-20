@@ -1,0 +1,103 @@
+{
+    "position": {
+        "label": "职位基本信息",
+        "rules": "",
+        "child": {
+            "source": {
+                "label": "来源网站",
+                "value": "3"
+            },
+            "source_unique": {
+                "label": "唯一标志（入口处处理）",
+                "rules": "//link[@rel='canonical']/@href|preg_match[job/(\\d+)\\.shtml],0|trim"
+            },
+            "name": {
+                "label": "职位名称",
+                "rules": "//div[@id='job-view-enterprise']//h1[@title]|trim"
+            },
+            "corporation_name": {
+                "label": "公司名称",
+                "rules": "//div[@id='job-view-enterprise']//h3/a[@title]|trim"
+            },
+            "degree_name": {
+                "label": "学历名称",
+                "rules": "string(//div[@class='job-qualifications'])|preg_match[(初中@或@高中@或@中技@或@中专@或@大专@或@本科@或@硕士@或@博士@或@其他@或@MBA@或@EMBA)],0"
+            },
+            "experience": {
+                "label": "工作经验及以上",
+                "rules": "string(//div[@class='job-qualifications'])|preg_match[(\\d+年)],0|trim"
+            },
+            "salary": {
+                "label": "薪资",
+                "rules": "string(//p[@class='job-item-title'])|explode[\\n],0|trim"
+            },
+            "real_salary": {
+                "label": "薪资",
+                "rules": "//p[@class='job-item-title']|trim"
+            },
+            "number": {
+                "label": "招聘人数",
+                "rules": ""
+            },
+            "tags": {
+                "label": "薪酬福利",
+                "rules": ""
+            },
+            "description": {
+                "label": "职位描述(工作职责)",
+                "rules": "string(//*[contains(text(),'职位描述：')]/following-sibling::div)|trim"
+            },
+            "requirement": {
+                "label": "任职要求",
+                "rules": ""
+            },
+            "city": {
+                "label": "工作地点",
+                "rules": "string(//p[@class='basic-infor']/span[1])|trim"
+            },
+            "address": {
+                "label": "工作地址",
+                "rules": ""
+            },
+            "functions": {
+                "label": "职能类别",
+                "rules": ""
+            },
+            "is_deleted": {
+                "label": "是否删除",
+                "rules": ""
+            },
+            "created": {
+                "label": "创建时间",
+                "rules": "//p[@class='job-item-title']/span/text()"
+            }
+        },
+        "application_rules": "handle_position_experience|handle_position_delete|handle_position_publish|handle_position_salary|handle_position_city|handle_position_degree|handle_position_number"
+    },
+    "corporation": {
+        "label": "公司信息",
+        "rules": "",
+        "child": {
+            "name": {
+                "label": "公司名称",
+                "rules": "//div[@class='company-logo']/p/a|trim"
+            },
+            "industry": {
+                "label": "行业",
+                "rules": "string(//ul[@class='new-compintro'])|preg_match[行业：(.*?)\\n],0|trim"
+            },
+            "scale": {
+                "label": "公司规模",
+                "rules": "string(//ul[@class='new-compintro'])|preg_match[公司规模：(.*?)\\n],0|trim"
+            },
+            "homepage": {
+                "label": "公司网站",
+                "rules": "//div[@class='company-logo']/p/a/@href|trim"
+            },
+            "description": {
+                "label": "公司介绍",
+                "rules": "string(//div[@class='info-word'])|preg_replace[ ,]|trim"
+            }
+        }
+    }
+}
