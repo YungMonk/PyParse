@@ -12,6 +12,8 @@ if __name__ == '__main__':
     # isMatch = re.search(r'(\d+\s*)(?=人)', '上海,5-10年,本科,招1人')
     # print(isMatch[0])
 
+    # isMatch = re.search(r'(\d+\s*)(?=人)', '上海,5-10年,本科,招1人')
+    # print(isMatch[0])
 
     filename = os.getcwd() + '/test/data/position/liepin/liepin_1.html'
     with open(filename, 'r') as f:
