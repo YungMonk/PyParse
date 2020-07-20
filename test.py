@@ -9,22 +9,22 @@ from datetime import datetime
 from utils import strings
 from dateutil.relativedelta import relativedelta
 if __name__ == '__main__':
-    isMatch = re.search(r'(\d+\s*)(?=人)', '上海,5-10年,本科,招1人')
-    print(isMatch[0])
+    # isMatch = re.search(r'(\d+\s*)(?=人)', '上海,5-10年,本科,招1人')
+    # print(isMatch[0])
 
 
-    # filename = os.getcwd() + '/test/data/position/zhaopin/1.html'
-    # with open(filename, 'r') as f:
-    #     fileContext = f.read()
-    #     f.close()
+    filename = os.getcwd() + '/test/data/position/liepin/liepin_1.html'
+    with open(filename, 'r') as f:
+        fileContext = f.read()
+        f.close()
 
-    # post_args = strings.rpc_params({
-    #     'c': 'apis/logic_parse',
-    #     'm': 'parsers_engine',
-    #     'p': {
-    #         'site_id': 1,
-    #         'type': 2,
-    #         'body': fileContext,
-    #     }
-    # })
-    # print(json.dumps(post_args, ensure_ascii=False))
+    post_args = strings.rpc_params({
+        'c': 'apis/logic_parse',
+        'm': 'parsers_engine',
+        'p': {
+            'site_id': 3,
+            'type': 2,
+            'body': fileContext,
+        }
+    })
+    print(json.dumps(post_args, ensure_ascii=False))

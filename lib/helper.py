@@ -910,7 +910,6 @@ def handle_position_publish(args="", *extra):
     '''
     import datetime
     from dateutil.relativedelta import relativedelta
-
     if 'created' not in args:
         args['created'] = ''
     elif isMatch := re.findall(r'(\d{4})[-,/,年](\d{1,2})[-,/,月](\d{1,2})', args['created']):
