@@ -191,7 +191,7 @@ if __name__ == "__main__":
     server = tornado.httpserver.HTTPServer(app)
 
     # 绑定的端口
-    server.bind(8883)
+    server.bind(8880)
 
     # 开启的进程数量
     server.start(2)  
