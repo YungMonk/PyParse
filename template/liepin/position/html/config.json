@@ -1,0 +1,13 @@
+{
+    "20200720": {
+        "label": "中文简历--PC网页职位",
+        "rules": "",
+        "fname": "zh1.json",
+        "child": {
+            "table-divResume": {
+                "label": "整个信息放在id='job-view-enterprise'的div标签里面",
+                "rules": "//*[@id='job-view-enterprise']"
+            }
+        }
+    }
+}
