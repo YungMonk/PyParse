@@ -125,7 +125,19 @@ def implode(args="", *extra):
     '''
         字符串拼接
     '''
-    return ",".join(args)
+    if len(extra) and extra[0] :
+        return extra[0].join(args)
+    else:
+        return ",".join(args)
+
+
+def array_column(args: dict, *extra) -> list:
+    '''
+        获取字典中感兴趣的列
+    '''
+    if len(extra) and extra[0] :
+        return [array.get(extra[0], '') for array in args]
+
 
 def preg_match(args="", *extra):
     '''
@@ -649,6 +661,54 @@ def handle_corp_scale(args="", *extra):
         return ""
 
 
+def handle_position_language(args="", *extra):
+    '''
+        职位语言要求
+    '''
+    level = {'一般': 1, '良好': 2, '熟练': 3, '精通': 4}
+    lans = {'英语' : 1, '日语' : 2, '韩语' : 3, '法语' : 4, '西班牙语' : 5, '德语' : 6,'俄语' : 7, '阿拉伯语' : 8, '葡萄牙语' : 9, '意大利语' : 10}
+    
+    args["languages"] = []
+    args["language"] = ""
+
+    if 'language' not in args or not args['language']:
+        return args
+
+    if not extra:
+        split_tag_1 = '\n'
+        split_tag_2 = ':'
+    elif len(extra) == 1:
+        split_tag_1 = '\n'
+        split_tag_2 = extra[0]
+    elif len(extra) == 2:
+        split_tag_1 = extra[0]
+        split_tag_2 = extra[1]
+
+    languages = args.split(split_tag_1)
+    for lan in languages:
+        array = lan.split(split_tag_2)
+        tmp = {"id": "","name":"","level":""}
+        if len(array) == 2:
+            tmp["id"] = lans[strings.trim(array[0])] if strings.trim(array[0]) in lans else ""
+            tmp["name"] = array[0]
+            tmp["level"] = level[strings.trim(array[1])] if strings.trim(array[1]) in level else ""
+        else :
+            tmp["id"] = lans[strings.trim(array[0])] if strings.trim(array[0]) in lans else ""
+            tmp["name"] = array[0]
+            tmp["level"] = "" 
+
+        if not tmp["id"]:
+            continue
+        args["languages"].append(tmp)
+
+    if not args["languages"]:
+        args["language"] = ""
+    else:
+        args["language"] = json_encode(args["languages"])
+
+    return args
+
+
 def handle_position_number(args="", *extra):
     '''
         匹配招聘人数
@@ -725,7 +785,7 @@ def handle_position_salary(args="", *extra):
 
     if "salary" in args:
         salary = args['salary']
-        if '年' in salary and (matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S)):
+        if '年' in salary and (matches := re.findall(r'(\d+\.*\d*)', salary, re.I | re.S)):
         # 年薪 10万，10.5万，10-15万，10万-15万
             if len(matches) == 1:
                 salary_begin = strings.salary_to_k(matches[0], salary)
@@ -733,9 +793,8 @@ def handle_position_salary(args="", *extra):
             elif len(matches) == 2:
                 salary_begin = strings.salary_to_k(matches[0], salary)
                 salary_end   = strings.salary_to_k(matches[1], salary)
-
-            args['salary_begin'] = '%.2f' % (salary_begin/12)
-            args['salary_end']   = '%.2f' % (salary_end/12)
+            args['salary_begin'] = '%.2f' % (float(salary_begin) / 12)
+            args['salary_end']   = '%.2f' % (float(salary_end) / 12)
         elif '个月' in salary and (matches := re.findall(r'(\d+.*)万（(\d+)元/月\s*\*\s*(\d+)个月）', salary, re.I | re.S)):
         # 年薪 19.60万（14000元/月 * 14个月）猎聘邮件
             if len(matches) == 1:
@@ -846,17 +905,17 @@ def handle_position_publish(args="", *extra):
     elif isMatch := re.findall(r'(\d{1,2})[-,/,月](\d{1,2})', args['created']):
         args['created'] = "{}-{}".format(time.localtime().tm_year, "-".join(isMatch[0]))
     elif re.findall(r'刚刚|分钟前|小时前|今天', args['created']):
-        args['created'] = datetime.date.today()
+        args['created'] = str(datetime.date.today())
     elif re.findall(r'昨天', args['created']):
-        args['created'] = datetime.date.today() - relativedelta(days=1)
+        args['created'] = str(datetime.date.today() - relativedelta(days=1))
     elif re.findall(r'前天', args['created']):
-        args['created'] = datetime.date.today() - relativedelta(days=2)
+        args['created'] = str(datetime.date.today() - relativedelta(days=2))
     elif isMatch := re.findall(r'(\d{1,2})个*月前', args['created']):
         m = strings.atoi(isMatch[0])
-        args['created'] = datetime.date.today() - relativedelta(month=m)
+        args['created'] = str(datetime.date.today() - relativedelta(month=m))
     elif isMatch := re.findall(r'(\d{1,2})天前', args['created']):
         d = strings.atoi(isMatch[0])
-        args['created'] = datetime.date.today() - relativedelta(days=d)
+        args['created'] = str(datetime.date.today() - relativedelta(days=d))
     else:
         args['created'] = ''
 
