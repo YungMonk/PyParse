@@ -53,7 +53,7 @@
             },
             "city": {
                 "label": "工作地点",
-                "rules": "string(//div[@class='work_addr'])|preg_replace[\\s+,]|preg_replace[查看地图,]|trim"
+                "rules": "string(//div[@class='work_addr']/a)|preg_replace[\\s+,]|preg_replace[查看地图,]|trim"
             },
             "address": {
                 "label": "工作地址",

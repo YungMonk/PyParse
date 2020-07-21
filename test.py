@@ -15,7 +15,7 @@ if __name__ == '__main__':
     # isMatch = re.search(r'(\d+\s*)(?=人)', '上海,5-10年,本科,招1人')
     # print(isMatch[0])
 
-    filename = os.getcwd() + '/test/data/position/liepin/liepin_1.html'
+    filename = os.getcwd() + '/test/data/resume/tianjihr/1.html'
     with open(filename, 'r') as f:
         fileContext = f.read()
         f.close()
@@ -24,8 +24,8 @@ if __name__ == '__main__':
         'c': 'apis/logic_parse',
         'm': 'parsers_engine',
         'p': {
-            'site_id': 3,
-            'type': 2,
+            'site_id': 10023,
+            'type': 1,
             'body': fileContext,
         }
     })
