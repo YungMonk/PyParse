@@ -7,7 +7,8 @@ COPY sources.list /etc/apt/sources.list
 RUN apt-get update \
 && apt-get install -y curl \
 && apt-get install -y libcurl4-gnutls-dev \
-&& apt-get install -y libghc-gnutls-dev
+&& apt-get install -y libghc-gnutls-dev \
+&& apt-get clean all
 
 WORKDIR /opt/www/data_engine
 
