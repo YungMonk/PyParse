@@ -88,6 +88,20 @@ def host_address() -> str:
     return ip
 
 
+def net_used(port: int, ip='127.0.0.1') -> bool:
+    """
+        check port is used.
+    """
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        s.connect((ip, port))
+        return True
+    except:
+        return False
+    finally:
+        s.close()
+
+
 def rpc_params(request: dict, **header: Any) -> dict:
     """
         merge the params for rpc request.

@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3.8
 # -*- coding:utf-8 -*-
 
 import tornado.ioloop
@@ -20,6 +20,7 @@ from lib import path
 from lib import configer
 from lib import log
 from utils import xmltodict
+from utils import strings
 
 
 # 定义处理类型
@@ -156,31 +157,56 @@ def shutdown():
 
 # 系统执行入口
 if __name__ == "__main__":
+    env = "development"
+    port = 8880
+    thread_num = 2
 
-    os.chdir(os.path.join(os.path.dirname(__file__), '..'))
+    usage = u'''使用参数启动:
+                usage: python index.py [-p] [-e] [-tn]
 
-    env_config = None
+                -e [environment] ******使用环境,可选[development,testing,production]
+                                       ,默认:development
+                -p [prot]        ******启动端口,默认:8880
+                -tn[thread_num]  ******启用进行数，默认:2
+            '''
+    try:
+        opts, argvs = getopt.getopt(sys.argv[1:], "h:e:tn:p", [
+            "help",
+            "env=",
+            "port=="
+            "thread_num=",
+        ])
+    except Exception as e:
+        print(usage)
+        sys.exit(0)
 
-    opts, argvs = getopt.getopt(sys.argv[1:], "c:p:h")
     for opt, value in opts:
-        if opt == '-c':
-            env_config = value
-            path._CONF_PATH = os.path.dirname(os.path.abspath(value))
-        elif opt == '-p':
+        if opt == '-e' or opt == '--env':
+            if value in ['production', 'testing']:
+                env = value
+
+        elif opt == '-p' or opt == '--port':
+            if not value.isdigit() :
+                print("{} 端口格式错误".format(value))
+                sys.exit(0)
             port = int(value)
-        elif opt == '-h':
-            print (
-                u'''使用参数启动:
-                        usage: [-p|-c]
-                        -p [prot] ******启动端口,默认端口:%d
-                        -c <file> ******加载配置文件
-                ''' % port
-            )
+            if strings.net_used(port):
+                print("{} 端口已被占用".format(value))
+                sys.exit(0)
+
+        elif opt == '-tn' or opt == '--thread_num':
+            if not value.isdigit() :
+                print("{} 格式错误".format(value))
+                sys.exit(0)
+            thread_num = int(value)
+        
+        elif opt == '-h' or opt == '--help':
+            print(usage)
             sys.exit(0)
 
-    if not env_config:
-        env_config = os.path.join(path._CONF_PATH, 'development/config.json')
-        print("no configuration found!,will use [%s] instead" % env_config)
+    os.chdir(os.path.join(os.path.dirname(__file__), '..'))
+    env_config = os.path.join(path._CONF_PATH, env, 'config.json')
+    print("no configuration found!,will use [%s] instead" % env_config)
 
     # 加载配置文件
     env_config | configer.load_func(configer.instance.load) | configer.load_func(configer.instance.setup)
@@ -191,10 +217,10 @@ if __name__ == "__main__":
     server = tornado.httpserver.HTTPServer(app)
 
     # 绑定的端口
-    server.bind(8880)
+    server.bind(port)
 
     # 开启的进程数量
-    server.start(2)  
+    server.start(thread_num)
 
     # 信号注册
     # signal.signal(signal.SIGTERM, sig_handler)

@@ -15,18 +15,20 @@ if __name__ == '__main__':
     # isMatch = re.search(r'(\d+\s*)(?=人)', '上海,5-10年,本科,招1人')
     # print(isMatch[0])
 
-    filename = os.getcwd() + '/test/data/resume/tianjihr/1.html'
-    with open(filename, 'r') as f:
-        fileContext = f.read()
-        f.close()
+    print(strings.net_is_used(11211))
 
-    post_args = strings.rpc_params({
-        'c': 'apis/logic_parse',
-        'm': 'parsers_engine',
-        'p': {
-            'site_id': 10023,
-            'type': 1,
-            'body': fileContext,
-        }
-    })
-    print(json.dumps(post_args, ensure_ascii=False))
+    # filename = os.getcwd() + '/test/data/resume/tianjihr/1.html'
+    # with open(filename, 'r') as f:
+    #     fileContext = f.read()
+    #     f.close()
+
+    # post_args = strings.rpc_params({
+    #     'c': 'apis/logic_parse',
+    #     'm': 'parsers_engine',
+    #     'p': {
+    #         'site_id': 10023,
+    #         'type': 1,
+    #         'body': fileContext,
+    #     }
+    # })
+    # print(json.dumps(post_args, ensure_ascii=False))
