@@ -16,4 +16,4 @@ COPY  ./ /opt/www/data_engine
 
 RUN pip install -r /opt/www/data_engine/requirements.txt -i https://pypi.douban.com/simple
 
-CMD ["python", "index.py"]
+# CMD ["python", "index.py"]

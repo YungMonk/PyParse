@@ -2,3 +2,5 @@ lxml==4.5.0
 tornado==6.0.4
 cacheout==0.11.2
 pycurl==7.43.0.5
+fonttools==4.12.1
+python-dateutil==2.8.1
