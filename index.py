@@ -76,6 +76,8 @@ class MainHandler(tornado.web.RequestHandler):
         elif self.request.arguments:
             self.json_args = dict((k, v[-1]) for k, v in self.request.arguments.items())
 
+        tornado.log.logging.warning("---Params---：%s"% json.dumps(self.json_args))
+
         
     # 添加一个处理get请求方式的方法
     async def get(self, path):
