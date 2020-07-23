@@ -181,8 +181,7 @@ class hEngine(object):
         content = ""
         siteName = static_param.channelMap[self.__site]
 
-        filepath = os.path.join(path._TEMPLATE, siteName, static_param.parserType[
-            self.__type], 'html', filename)
+        filepath = os.path.join(path._TEMPLATE, siteName, self.__type, 'html', filename)
 
         logger.warn("loading file: %s" % filepath)
 

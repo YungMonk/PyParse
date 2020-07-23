@@ -12,11 +12,10 @@ class Log(object):
     logger = None
 
     def getLog(self):
-        return Log.logger
+        return self.logger
 
 @configer.instance.register(look='logging', level=1)
 def set_up(cfg) :
     log_path = os.path.join(path._CONF_PATH, cfg['config_file'])
     logging.config.fileConfig(log_path)
     Log.logger = logging.getLogger(cfg['default_logger'])
-

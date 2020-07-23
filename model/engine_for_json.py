@@ -140,14 +140,13 @@ class jEngine(object):
         file_name = os.path.join(
             path._TEMPLATE,
             channelMap[self.site],
-            parserType[self.type],
+            self.type,
             'json',
             file,
         )
         logger.warn("loading file: %s" % file_name)
 
         if not os.path.exists(file_name):
-            print(f"151,filename:{file_name}")
             if file_name == 'config.json':
                 raise HTTPError(500001, "渠道不支持")
             else:

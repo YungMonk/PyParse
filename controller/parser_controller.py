@@ -35,7 +35,7 @@ class HelloTest(object):
         if req.json_args['request']['p']['site_id'] not in static_param.channelMap:
             raise HTTPError(100002, "Params is error, site_id is no support!")
 
-        if req.json_args['request']['p']['type'] not in static_param.parserType:
+        if req.json_args['request']['p']['type'] not in static_param.parserType.values():
             raise HTTPError(100002, "Params is error, type is no support!")
 
         return await eng.dispatch(**req.json_args['request']['p'])

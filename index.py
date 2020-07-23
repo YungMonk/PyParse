@@ -129,14 +129,10 @@ def log_request(handler) :
          
 
 # 系统捕获信号处理
-def sig_handler(sig, frame):
+def signal_handler(sig, frame):
     logger = log.Log().getLog()
     logger.warning('Caught signal: %s', sig)
-    tornado.ioloop.IOLoop.current().add_callback(shutdown)
-
-
-# 处理系统关闭信号
-def shutdown():
+    
     io_loop = tornado.ioloop.IOLoop.current()
     
     ##########################
@@ -223,7 +219,7 @@ if __name__ == "__main__":
     server.start(thread_num)
 
     # 信号注册
-    # signal.signal(signal.SIGTERM, sig_handler)
-    # signal.signal(signal.SIGINT, sig_handler)
+    # signal.signal(signal.SIGTERM, signal_handler)
+    # signal.signal(signal.SIGINT, signal_handler)
 
     tornado.ioloop.IOLoop.current().start()  # 启动web程序，开始监听端口的连接
