@@ -1,11 +1,20 @@
+# this is the IDE config file for VS Code
 .vscode/
 
+# this is the python file to cache
 __pycache__/
 
+# this is the python test file temp cache
 .pytest_cache/
 
+# this is the temp file
 tmp/*
 
+# this is the macOS file
 .DS_Store
 
+# this is the IDE config file for JetBrains
 .idea
+
+# used for testing something
+script.py

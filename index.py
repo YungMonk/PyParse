@@ -14,6 +14,7 @@ import sys
 import time
 import signal
 import traceback
+from functools import partial
 
 from lib import route
 from lib import path
@@ -23,8 +24,10 @@ from utils import xmltodict
 from utils import strings
 
 
-# 定义处理类型
 class MainHandler(tornado.web.RequestHandler):
+    """
+        定义处理类型
+    """
     
     def set_default_headers(self):
         tornado.log.logging.info("---set_default_headers---:设置header")
@@ -117,8 +120,11 @@ class MainHandler(tornado.web.RequestHandler):
     def on_finish(self):
         tornado.log.logging.info("---on_finish---：结束，释放资源")
 
-# 记录请求日志
+
 def log_request(handler) :
+    """
+        记录请求日志
+    """
     if handler.get_status() < 400:
         log_method = tornado.log.access_log.info
     elif handler.get_status() < 500:
@@ -130,31 +136,61 @@ def log_request(handler) :
     log_method('"%s %s" %d %s %.6f',request.method, request.uri, handler.get_status(), request.remote_ip, request.request_time())
          
 
-# 系统捕获信号处理
-def signal_handler(sig, frame):
+def signal_handler(server, signum, frame):
+    """
+        系统捕获信号处理
+    """
+    import os
     logger = log.Log().getLog()
-    logger.warning('Caught signal: %s', sig)
+    logger.warning('Current processes id:%s, Parent processes id:%s, Caught signal: %s',os.getpid(), os.getppid(), signum)
     
-    io_loop = tornado.ioloop.IOLoop.current()
-    
+
+    if signum not in [signal.SIGINT, signal.SIGTERM]:
+        print(os.wait())
+        logger.warning('Not expected signal')
+
     ##########################
     ##  做一些处理，保证入库等  ##
     ##########################
 
-    deadline = time.time() + 5
+    io_loop = tornado.ioloop.IOLoop.instance()
 
-    def stop_loop():
+    def stop_loop(server, deadline: float):
         now = time.time()
-        if now < deadline and (io_loop._callbacks or io_loop._timeouts):
-            io_loop.add_timeout(now + 1, stop_loop)
+
+        # 获取当前事件循环中还没有结束的任务（任务不是正在运行的任务和已经完成的任务，既pending状态的任务）
+        # Future对象有以下状态：Pending,Runging,Done,Cancelled
+        tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task() and not t.done()]
+        if now < deadline and len(tasks) > 0:
+            logger.warning(f'Awaiting {len(tasks)} pending tasks: {tasks}')
+            io_loop.add_timeout(now + 1, stop_loop, server, deadline)
+            return
+
+        pending_connection = len(server._connections)
+        if now < deadline and pending_connection > 0:
+            logger.warning(f'Waiting on {pending_connection} connections to complete.')
+            io_loop.add_timeout(now + 1, stop_loop, server, deadline)
         else:
-            io_loop.stop() # 处理完现有的 callback后，结束ioloop循环
-    
-    stop_loop()
+            logger.warning('Stopping http server, and stop recive the http request.')
+            server.stop()
+            logger.warning(f'Continuing with {pending_connection} connections open.')
+            logger.warning('Stopping IOLoop')
+            io_loop.stop()
+            logger.warning('Shutdown complete.')
 
+    def shutdown():
+        TORNADO_SHUTDOWN_WAIT = 1
+        logger.warning(f'Will shutdown in {TORNADO_SHUTDOWN_WAIT} seconds ...')
+        try:
+            stop_loop(server, time.time() + TORNADO_SHUTDOWN_WAIT)
+        except BaseException as e:
+            logger.warning(f'Error trying to shutdown Tornado: {str(e)}')
 
-# 系统执行入口
-if __name__ == "__main__":
+    io_loop.add_callback_from_signal(shutdown)
+
+    os.kill(os.getppid(), signal.SIGKILL)
+
+def run():
     env = "development"
     port = 8880
     thread_num = 2
@@ -168,13 +204,13 @@ if __name__ == "__main__":
                 -tn[thread_num]  ******启用进行数，默认:2
             '''
     try:
-        opts, argvs = getopt.getopt(sys.argv[1:], "h:e:tn:p", [
+        opts, _ = getopt.getopt(sys.argv[1:], "h:e:tn:p", [
             "help",
             "env=",
             "port=="
             "thread_num=",
         ])
-    except Exception as e:
+    except Exception:
         print(usage)
         sys.exit(0)
 
@@ -222,6 +258,10 @@ if __name__ == "__main__":
 
     # 信号注册
     # signal.signal(signal.SIGTERM, signal_handler)
-    # signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGINT, partial(signal_handler, server))
 
     tornado.ioloop.IOLoop.current().start()  # 启动web程序，开始监听端口的连接
+
+# 系统执行入口
+if __name__ == "__main__":
+    run()
