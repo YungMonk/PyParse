@@ -10,14 +10,25 @@
 
 
 #### 启动docker容器
+> 开发环境：
 
 ```shell
-docker run --rm -it -p 8880:8880 \
+docker run -d --rm -it -p 8880:8880 \
 -v /opt/log/data_engine:/opt/log/data_engine \
 --add-host dev.gsystem.rpc:192.168.1.66 \
 --name=data_engine \
 hub.ifchange.com/data_group/data_engine:latest python index.py
 ```
+
+> 测试环境：
+
+```shell
+docker run -d --rm -it -p 8880:8880 \
+-v /opt/log/data_engine:/opt/log/data_engine \
+--name=data_engine \
+hub.ifchange.com/data_group/data_engine:latest python index.py -e testing
+```
+
 > 执行命令解说：
    `-v /opt/log/data_engine:/opt/log/data_engine` 将容器内的日志文件，映射到时宿主机；
    `--add-host dev.gsystem.rpc:192.168.1.66` 将需要用到的第三方服务的域名映射到时其主机；

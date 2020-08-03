@@ -202,6 +202,7 @@ def run():
                                        ,默认:development
                 -p [prot]        ******启动端口,默认:8880
                 -tn[thread_num]  ******启用进行数，默认:2
+                -h [help]        ******帮助信息
             '''
     try:
         opts, _ = getopt.getopt(sys.argv[1:], "h:e:tn:p", [
