@@ -268,8 +268,6 @@ def handle_gender(args="", *extra):
     sexs = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F', 'women': 'F', 'men': 'M','woman': 'F', 'man': 'M'}
     if (isMatch := re.search(r'(男|女|male|female|women|men|woman|man)', args)):
         return sexs[isMatch.group(1)]
-    elif (isMatch := re.search(r'(\d)', args)):
-        return sexs[isMatch.group(1)]
 
 
 def handle_degree(args="", *extra):
@@ -369,7 +367,7 @@ def handle_basic_experience(args="", *extra):
         # 10以上工作经验，10.0年以上工作经验，8年以上经验
         args["working_seniority_from"] = isMatch.group(1)
         args["work_experience"] = args["working_seniority_from"]
-    elif (isMatch := re.search(r'(\S+)年以上', experience)):
+    elif (isMatch := re.search(r'([\u4e00-\u9fa5]+)年以上', experience)):
         # 十年以上工作经验
         args["working_seniority_from"] = cn2dig(isMatch.group(1))
         args["work_experience"] = args["working_seniority_from"]
@@ -543,8 +541,8 @@ def handle_expect_salary(args="", *extra):
                 args['expect_annual_salary_from'] = strings.salary_to_k(matches[0], salary)
                 args['expect_annual_salary_to']   = strings.salary_to_k(matches[1], salary)
 
-            args['expect_salary_from'] = '%.2f' % (args['expect_annual_salary_from']/12)
-            args['expect_salary_to']   = '%.2f' % (args['expect_annual_salary_to']/12)
+            args['expect_salary_from'] = '%.2f' % (float(args['expect_annual_salary_from'])/12)
+            args['expect_salary_to']   = '%.2f' % (float(args['expect_annual_salary_to'])/12)
         elif '个月' in salary and (matches := re.findall(r'(\d+.*)万（(\d+)元/月\s*\*\s*(\d+)个月）', salary, re.I | re.S)):
         # 年薪 19.60万（14000元/月 * 14个月）猎聘邮件
             if len(matches) == 1:

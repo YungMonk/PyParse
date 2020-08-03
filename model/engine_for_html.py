@@ -77,7 +77,7 @@ class hEngine(object):
         # 选择模板文件
         configKey = ''
         for key, maps in config_tpl.items():
-            if recursive(maps):
+            if isinstance(maps, dict) and recursive(maps):
                 configKey = key
         if configKey == '':
             raise HTTPError(500003, "渠道的简历格式发生了变化")

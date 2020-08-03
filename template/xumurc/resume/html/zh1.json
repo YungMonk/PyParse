@@ -275,7 +275,7 @@
                 "rules": "string(./li[5])|preg_replace[工作职责：,]|trim"
             }
         },
-        "application_rules": "handle_inter_year|wash_name_null"
+        "application_rules": "handle_interval|wash_name_null"
     },
     "project": {
         "label": "项目经验",
@@ -311,7 +311,7 @@
                 "rules": ""
             }
         },
-        "application_rules": "handle_inter_year|wash_name_null"
+        "application_rules": "handle_interval|wash_name_null"
     },
     "education": {
         "label": "教育经历",
@@ -343,7 +343,7 @@
                 "rules": "string(./li[4])|preg_replace[专业描述：,]|trim"
             }
         },
-        "application_rules": "handle_inter_year|wash_name_null"
+        "application_rules": "handle_interval|wash_name_null"
     },
     "training": {
         "label": "培训经历",

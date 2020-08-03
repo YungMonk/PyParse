@@ -45,19 +45,19 @@
             },
             "age": {
                 "label": "年龄",
-                "rules": "string(//table[@class='infr']//tr[last()]//p)|trim|handle_age"
+                "rules": "string(//td[@class='name']/ancestor::tr[1]/following-sibling::tr[last()])|trim|handle_age"
             },
             "age_orgin": {
                 "label": "年龄",
-                "rules": "string(//table[@class='infr']//tr[last()]//p)|trim"
+                "rules": "string(//td[@class='name']/ancestor::tr[1]/following-sibling::tr[last()])|preg_replace[\\s+,]|trim"
             },
             "birth": {
                 "label": "出生日期",
-                "rules": "string(//table[@class='infr']//tr[last()]//p)|trim|handle_birthday"
+                "rules": "string(//td[@class='name']/ancestor::tr[1]/following-sibling::tr[last()])|trim|handle_birthday"
             },
             "gender": {
                 "label": "性别",
-                "rules": "string(//table[@class='infr']//tr[last()]//p)|trim|handle_gender"
+                "rules": "string(//td[@class='name']/ancestor::tr[1]/following-sibling::tr[last()])|trim|handle_gender"
             },
             "height": {
                 "label": "身高",
