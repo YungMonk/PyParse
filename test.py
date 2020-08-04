@@ -9,7 +9,7 @@ from datetime import datetime
 from utils import strings
 from dateutil.relativedelta import relativedelta
 if __name__ == '__main__':
-    filename = os.getcwd() + '/test/data/resume/zhaopin/en1_0.html'
+    filename = os.getcwd() + '/test/data/resume/51job/51_zh8_12.html'
     with open(filename, 'r') as f:
         fileContext = f.read()
         f.close()

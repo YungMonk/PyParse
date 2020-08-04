@@ -139,6 +139,20 @@ def array_column(args: dict, *extra) -> list:
         return [array.get(extra[0], '') for array in args]
 
 
+def get_value(args, *extra) :
+    '''
+        获取列表的值
+    '''
+    result = ""
+    if len(extra) == 2 :
+        param_1 = int(extra[0])
+        param_2 = int(extra[1])
+        if len(args) >= param_1 and param_1 >= param_2:
+            result = args[param_2]
+    
+    return result
+
+
 def preg_match(args="", *extra):
     '''
         正则使用
@@ -234,9 +248,9 @@ def handle_birthday(args="", *extra):
         匹配出生日
     '''
     string = ""
-    if (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})\s*(月|-|\.){1}\s*([0-3]{0,1}[0-9]{1})',args)):
+    if (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.|/){1}\s*([0,1]{0,1}[0-9]{1})\s*(月|-|\.|/){1}\s*([0-3]{0,1}[0-9]{1})',args)):
         string = "{}年{}月{}日".format(matchObj.group(1), matchObj.group(3), matchObj.group(5))
-    elif (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.){1}\s*([0,1]{0,1}[0-9]{1})', args)):
+    elif (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.|/){1}\s*([0,1]{0,1}[0-9]{1})', args)):
         string = "{}年{}月".format(matchObj.group(1), matchObj.group(3))
     elif (matchObj := re.search(r'(\d+)\s*岁', args)):
         string = "{}年".format(time.localtime(time.time()).tm_year - int(matchObj.group(1)))

@@ -9,5 +9,24 @@
                 "rules": "string(//table[@class='infr'])"
             }
         }
+    },
+    "20200804": {
+        "label": "中文简历--邮件简历",
+        "rules": "",
+        "fname": "zh2.json",
+        "child": {
+            "position": {
+                "label": "dom树中含有 应聘职位",
+                "rules": "string(//*[contains(text(),'应聘职位：')])"
+            },
+            "company": {
+                "label": "dom树中含有 应聘公司",
+                "rules": "string(//*[contains(text(),'应聘公司：')])"
+            },
+            "send_time": {
+                "label": "dom树中含有 投递时间",
+                "rules": "string(//*[contains(text(),'投递时间：')])"
+            }
+        }
     }
 }
