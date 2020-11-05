@@ -18,3 +18,5 @@ tmp/*
 
 # used for testing something
 script.py
+
+log
