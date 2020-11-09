@@ -7,24 +7,26 @@ import re
 import sys
 import traceback
 
-import lib.path as pather
+import config.constant as pather
 
 
 class load_func(object):
-    ''' 
-        loading the method by liunx-channel model.
-    '''
+    """
+        loading the method by linux-channel model.
+    """
+
     def __init__(self, func):
         self.func = func
 
     def __ror__(self, inputs):
         return self.func(inputs)
 
+
 class configer(object):
-    '''
+    """
         This class will hold configurations and registered setups(functions)
         It can determine when to setup them
-    '''
+    """
     config = {}
     setups = []
 
@@ -42,14 +44,14 @@ class configer(object):
         return foo
 
     def setup(self, own_cfg, onlevel=0):
-        '''
+        """
             Call all(or specific level) setup functions which registered via using
             "Configer.register" decorator.
-            If "onlevel" has been set, only the matched setup fucntions will be
+            If "onlevel" has been set, only the matched setup functions will be
             loaded(or hot reloaded).
-            BE CAREFUL! The registed setup function shall apply reload logic in case
+            BE CAREFUL! The registered setup function shall apply reload logic in case
             of a runtime-hot-reloaded callback hit.
-        '''
+        """
         self.setups.sort(key=lambda x: x['level'])
         self.config.update(own_cfg)
 
@@ -61,26 +63,25 @@ class configer(object):
                     func(self.config[location])
                 else:
                     func()
-            except Exception:
+            except ValueError:
                 traceback.print_exc()
                 sys.exit(1)
 
-    def load(self, fullpath):
+    def load(self, full_path):
         cfg = {}
-        with open(fullpath, 'r') as f:
+        with open(full_path, 'r') as f:
             raw = f.read()
-            #去掉多行注释
+            # 去掉多行注释
             raw_escape_comment = re.sub(r'[\s\t\n]+/\*[\s\S]+?\*/', '', raw)
             cfg = json.loads(raw_escape_comment)
-            
+
         if cfg.get('$includes'):
             for include in cfg['$includes']:
-                include_conf_file = os.path.join(pather._CONF_PATH, include)
+                include_conf_file = os.path.join(pather.CONF_PATH, include)
                 icfg = self.load(include_conf_file)
                 cfg.update(icfg)
-    
+
         return cfg
-    
+
 
 instance = configer()
-

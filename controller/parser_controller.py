@@ -1,9 +1,6 @@
-import os
-import time
-
 from tornado.web import HTTPError
 
-from lib import route, path
+from lib import route
 from model.engine import engine as eng
 from config import static_param
 

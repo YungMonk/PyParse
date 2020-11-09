@@ -7,7 +7,7 @@ import time
 from lxml import etree
 
 from lib import route
-from lib.configer import instance
+from lib.loader import instance
 from utils import strings
 
 
@@ -1234,7 +1234,7 @@ def font_decrypt(args: str = "", *extra) -> str:
     import os
     import base64
     import hashlib
-    from lib import path
+    from config import constant
 
     font_dict = {
         "uniE0A3": "硕", "uniE103": "A", "uniE108": "士", "uniE17A": "女", "uniE29E": "M",
@@ -1255,14 +1255,14 @@ def font_decrypt(args: str = "", *extra) -> str:
 
         # 当前的字体是否已经存在，不存在保存
         key_temp = hashlib.new('md5', font_chart.encode("utf-8")).hexdigest()
-        new_font_name = os.path.join(path._SCRIPT_FONT, key_temp + ".woff")
+        new_font_name = os.path.join(constant.SCRIPT_FONT, key_temp + ".woff")
         if not os.path.exists(new_font_name):
             with open(new_font_name, 'wb') as f:
                 f.write(font_temp)
                 f.close()
 
         # 得到基准字体的编码
-        font_base = TTFont(os.path.join(path._SCRIPT_FONT, "base.woff"))
+        font_base = TTFont(os.path.join(constant.SCRIPT_FONT, "base.woff"))
         font_base_order = font_base.getGlyphOrder()[1:]
 
         # 得到当前字体的编码

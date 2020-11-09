@@ -1,6 +1,10 @@
+from pip._internal.utils import logging
 
+from lib import route
 from model.engine_for_html import hEngine
 from model.engine_for_json import jEngine
+
+logger = route.logger
 
 
 class engine(object):

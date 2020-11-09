@@ -1,51 +1,41 @@
 #!/usr/bin/python3.8
 # -*- coding: utf-8 -*-
 
-import re
 import array
-import os,sys
-import json
 import hashlib
+import json
+import os
+import sys
+
+from lxml import etree
+from tornado.web import HTTPError
+
+from config import static_param, constant
+from lib import helper
+from lib.route import logger, lfu_cache
 
 curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
 sys.path.append(rootPath)
 
-from tornado.web import HTTPError
 
-from lib import helper, path, route
-from lxml import etree
-from config import static_param
+def xpath_to_html(xpath_list: list):
+    return etree.tostring(xpath_list, encoding="utf-8", pretty_print=True, method="html").decode()
 
 
 class hEngine(object):
-
-    __site = 0
-    __type = 0  # 1:简历 2:职位
-    __text = ""
-    __conf = ""
-
-    __parse_result = {}
-
-    typeArr = array.array('i', [1, 2])
-
 
     def __init__(self, **args):
         self.__site = args['site_id']
         self.__text = args['body']
         self.__type = args['type']
 
-        global logger
-        logger = route.logger
-        self.__cache = route.lfu_cache
-
-
     async def dispatch(self):
         # 58同城的简历内容需要字体解码
         if self.__site == 12:
-            self.__text = helper.font_decrypt(self.__text) 
+            self.__text = helper.font_decrypt(self.__text)
 
-        etreehtml = etree.HTML(self.__text)
+        ctx = etree.HTML(self.__text)
 
         # result = etreehtml.xpath("string(//table[@class='infr'])")
         # print(result)
@@ -56,13 +46,13 @@ class hEngine(object):
         #     return p_result
 
         # 读取配置信息
-        tplConf = json.loads(self.readFile("config.json"))
-        config_tpl = await self.parse(tplConf, etreehtml)
+        tpl_conf = json.loads(self.get_config_ctx("config.json"))
+        config_tpl = await self.parse(tpl_conf, ctx)
 
-        # 递归遍历字典
-        def recursive(dictOlist):
+        def recursive(dict_list):
+            # 递归遍历字典
             res = True
-            for ele in dictOlist.values():
+            for ele in dict_list.values():
                 if isinstance(ele, dict):
                     tmp = recursive(ele)
                     if tmp is not True:
@@ -82,18 +72,17 @@ class hEngine(object):
         if configKey == '':
             raise HTTPError(500003, "渠道的简历格式发生了变化")
 
-        templateName = tplConf[configKey]['fname']
+        templateName = tpl_conf[configKey]['fname']
 
-        templateContent = json.loads(self.readFile(templateName))
-        cv = await self.parse(templateContent, etreehtml)
+        templateContent = json.loads(self.get_config_ctx(templateName))
+        cv = await self.parse(templateContent, ctx)
 
         p_result = json.dumps(cv, ensure_ascii=False)
 
         # 写入内存缓存
-        self.__cache.set(tmp_key, p_result, ttl=30)
+        lfu_cache.set(tmp_key, p_result, ttl=30)
 
         return p_result
-
 
     # 内容解析
     async def parse(self, maps, etreehtml):
@@ -122,12 +111,12 @@ class hEngine(object):
                 expath = etreehtml
             else:
                 expath = etreehtml.xpath(helper.placeholder(arr[0]))
-            
+
             # 子项处理前对html文本数据进行处理
-            if len(expath) > 0  and len(arr[1:]) > 1 and arr[1] == 'call_prev':
+            if len(expath) > 0 and len(arr[1:]) > 1 and arr[1] == 'call_prev':
                 _html = ""
                 for _etree in expath:
-                    _html = _html + self.xpath_to_html(_etree)
+                    _html = _html + xpath_to_html(_etree)
                 expath = await helper.optimize(_html, arr[1:])
 
             if 'child' in value and isinstance(value['child'], dict) and len(value['child']):
@@ -140,9 +129,9 @@ class hEngine(object):
                         if 'application_rules' in value and value['application_rules']:
                             tmp_child = await helper.optimize(tmp_child, value['application_rules'].split('|'))
 
-                        if tmp_child :
+                        if tmp_child:
                             t.append(tmp_child)
-                        
+
                     tmp[key] = t
                 elif 'lists' in value and value['lists'] and not expath:
                     # 子项是列表,父项没有值
@@ -176,31 +165,31 @@ class hEngine(object):
 
         return tmp
 
-
-    def readFile(self, filename):
-        content = ""
+    def get_config_ctx(self, filename):
+        """获取文件内容"""
         siteName = static_param.channelMap[self.__site]
 
-        filepath = os.path.join(path._TEMPLATE, siteName, self.__type, 'html', filename)
+        filepath = os.path.join(
+            constant.TEMPLATE,
+            siteName,
+            self.__type,
+            'html',
+            filename
+        )
 
-        logger.warn("loading file: %s" % filepath)
+        logger.warning("loading file: %s" % filepath)
 
         if not os.path.exists(filepath):
-            print(f"191,filename:{filename}")
             if filename == 'config.json':
                 raise HTTPError(500001, "渠道不支持")
             else:
                 raise HTTPError(500002, "解析模板未找到")
 
         with open(filepath, 'r') as fopen:
-            content = fopen.read()
+            ctx = fopen.read()
             fopen.close()
 
             if not fopen.closed:
                 logger.fatal("file is not closed: %s" % filepath)
 
-        return content
-
-
-    def xpath_to_html(self, xpath_list:list):
-        return etree.tostring(xpath_list, encoding="utf-8", pretty_print=True, method="html").decode()
+        return ctx

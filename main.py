@@ -1,5 +1,7 @@
 #! /usr/bin/python3.8
 # -*- coding:utf-8 -*-
+# pylint: disable=W0223
+import types
 
 import tornado.ioloop
 import tornado.web
@@ -17,8 +19,8 @@ import traceback
 from functools import partial
 
 from lib import route
-from lib import path
-from lib import configer
+from config import constant
+from lib import loader
 from lib import log
 from utils import xmltodict
 from utils import strings
@@ -28,11 +30,12 @@ class MainHandler(tornado.web.RequestHandler):
     """
         定义处理类型
     """
-    
-    def set_default_headers(self):
+
+    def set_default_headers(self) -> None:
         tornado.log.logging.info("---set_default_headers---:设置header")
-    
-    def initialize(self):
+
+    @staticmethod
+    def initialize():
         tornado.log.logging.info("---initialize---:初始化")
 
     def prepare(self):
@@ -45,7 +48,7 @@ class MainHandler(tornado.web.RequestHandler):
         self.json_args = {}  # initialize args
 
         # 允许跨域请求
-        if (req_origin := self.request.headers.get('Origin')):
+        if req_origin := self.request.headers.get('Origin'):
             self.set_header('Access-Control-Allow-Origin', req_origin)
             self.set_header("Access-Control-Allow-Credentials", "true")
             self.set_header("Allow", "GET, HEAD, POST")
@@ -58,40 +61,36 @@ class MainHandler(tornado.web.RequestHandler):
             else:
                 self.set_header("Cache-Control", "no-cache")
 
-
         # json格式请求
         if "application/json" in self.request.headers.get('Content-Type', ''):
             try:
                 self.json_args = json.loads(self.request.body)
-            except Exception:
+            except TypeError:
                 self.send_error(400)
-
 
         # xml格式请求
         elif 'application/xml' in self.request.headers.get('Content-Type', ''):
             try:
                 self.json_args = xmltodict.parse(self.request.body)
-            except Exception:
+            except TypeError:
                 self.send_error(501)
-
 
         # 普通参数请求
         elif self.request.arguments:
             self.json_args = dict((k, v[-1]) for k, v in self.request.arguments.items())
 
-        tornado.log.logging.warning("---Params---：%s"% json.dumps(self.json_args))
+        tornado.log.logging.warning("---Params---：%s" % json.dumps(self.json_args))
 
-        
     # 添加一个处理get请求方式的方法
     async def get(self, path):
         await route.router.get(path, self)
-        
+
     async def post(self, path):
         await route.router.post(path, self)
 
     async def put(self, path):
         await route.router.put(path, self)
-        
+
     async def delete(self, path):
         await route.router.delete(path, self)
 
@@ -100,7 +99,7 @@ class MainHandler(tornado.web.RequestHandler):
 
     def write_error(self, status_code, **kwargs):
         tornado.log.logging.info("---write_error---：处理错误")
-        
+
         # 获取send_error中的reason，默认值是 unknown
         reason = kwargs.get('reason', 'unknown')
 
@@ -110,9 +109,9 @@ class MainHandler(tornado.web.RequestHandler):
             if isinstance(exception, tornado.web.HTTPError) and exception.log_message:
                 reason = exception.log_message
 
-            tracebackinfo = kwargs.get('exc_info')[2]
-            for filename, linenum, funcname, source in traceback.extract_tb(tracebackinfo, -1):
-                tornado.log.access_log.warning("%-23s:%s '%s' in %s()", filename, linenum, source, funcname) 
+            trace_back_info = kwargs.get('exc_info')[2]
+            for filename, line_num, func_name, source in traceback.extract_tb(trace_back_info, -1):
+                tornado.log.access_log.warning("%-23s:%s '%s' in %s()", filename, line_num, source, func_name)
 
         self.set_status(200)
         self.write({'status_code': status_code, 'reason': reason})
@@ -121,7 +120,7 @@ class MainHandler(tornado.web.RequestHandler):
         tornado.log.logging.info("---on_finish---：结束，释放资源")
 
 
-def log_request(handler) :
+def log_request(handler):
     """
         记录请求日志
     """
@@ -133,29 +132,33 @@ def log_request(handler) :
         log_method = tornado.log.access_log.error
 
     request = handler.request
-    log_method('"%s %s" %d %s %.6f',request.method, request.uri, handler.get_status(), request.remote_ip, request.request_time())
-         
+    log_method('"%s %s" %d %s %.6f', request.method, request.uri, handler.get_status(), request.remote_ip,
+               request.request_time())
 
-def signal_handler(server, signum, frame):
+
+def signal_handler(server: tornado.httpserver, signum: int, frame_type: types.FrameType) -> None:
     """
         系统捕获信号处理
     """
+
+    print("Received Signal: %s at frame: %s" % (signum, dir(frame_type)))
+
     import os
     logger = log.Log().getLog()
-    logger.warning('Current processes id:%s, Parent processes id:%s, Caught signal: %s',os.getpid(), os.getppid(), signum)
-    
+    logger.warning('Current processes id:%s, Parent processes id:%s, Caught signal: %s', os.getpid(), os.getppid(),
+                   signum)
 
     if signum not in [signal.SIGINT, signal.SIGTERM]:
         print(os.wait())
         logger.warning('Not expected signal')
 
-    ##########################
+    ###########################
     ##  做一些处理，保证入库等  ##
-    ##########################
+    ###########################
 
     io_loop = tornado.ioloop.IOLoop.instance()
 
-    def stop_loop(server, deadline: float):
+    def stop_loop(service: tornado.httpserver, deadline: float):
         now = time.time()
 
         # 获取当前事件循环中还没有结束的任务（任务不是正在运行的任务和已经完成的任务，既pending状态的任务）
@@ -163,16 +166,16 @@ def signal_handler(server, signum, frame):
         tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task() and not t.done()]
         if now < deadline and len(tasks) > 0:
             logger.warning(f'Awaiting {len(tasks)} pending tasks: {tasks}')
-            io_loop.add_timeout(now + 1, stop_loop, server, deadline)
+            io_loop.add_timeout(now + 1, stop_loop, service, deadline)
             return
 
-        pending_connection = len(server._connections)
+        pending_connection = len(service._connections)
         if now < deadline and pending_connection > 0:
             logger.warning(f'Waiting on {pending_connection} connections to complete.')
-            io_loop.add_timeout(now + 1, stop_loop, server, deadline)
+            io_loop.add_timeout(now + 1, stop_loop, service, deadline)
         else:
             logger.warning('Stopping http server, and stop receive the http request.')
-            server.stop()
+            service.stop()
             logger.warning(f'Continuing with {pending_connection} connections open.')
             logger.warning('Stopping IOLoop')
             io_loop.stop()
@@ -190,17 +193,18 @@ def signal_handler(server, signum, frame):
 
     os.kill(os.getppid(), signal.SIGKILL)
 
+
 def run():
     env = "development"
     port = 8880
     thread_num = 2
 
     usage = u'''使用参数启动:
-                usage: python index.py [-p] [-e] [-tn]
+                usage: python main.py [-p] [-e] [-tn]
 
                 -e [environment] ******使用环境,可选[development,testing,production]
                                        ,默认:development
-                -p [prot]        ******启动端口,默认:8880
+                -p [port]        ******启动端口,默认:8880
                 -tn[thread_num]  ******启用进行数，默认:2
                 -h [help]        ******帮助信息
             '''
@@ -211,7 +215,7 @@ def run():
             "port=="
             "thread_num=",
         ])
-    except Exception:
+    except ValueError:
         print(usage)
         sys.exit(0)
 
@@ -221,7 +225,7 @@ def run():
                 env = value
 
         elif opt == '-p' or opt == '--port':
-            if not value.isdigit() :
+            if not value.isdigit():
                 print("{} 端口格式错误".format(value))
                 sys.exit(0)
             port = int(value)
@@ -230,21 +234,21 @@ def run():
                 sys.exit(0)
 
         elif opt == '-tn' or opt == '--thread_num':
-            if not value.isdigit() :
+            if not value.isdigit():
                 print("{} 格式错误".format(value))
                 sys.exit(0)
             thread_num = int(value)
-        
+
         elif opt == '-h' or opt == '--help':
             print(usage)
             sys.exit(0)
 
     os.chdir(os.path.join(os.path.dirname(__file__), '..'))
-    env_config = os.path.join(path._CONF_PATH, env, 'config.json')
+    env_config = os.path.join(constant.CONF_PATH, env, 'config.json')
     print("no configuration found!,will use [%s] instead" % env_config)
 
     # 加载配置文件
-    env_config | configer.load_func(configer.instance.load) | configer.load_func(configer.instance.setup)
+    env_config | loader.load_func(loader.instance.load) | loader.load_func(loader.instance.setup)
 
     app = tornado.web.Application([
         (r"^(/[^\.|]*)(?!\.\w+)$", MainHandler),  # 路由
@@ -262,6 +266,7 @@ def run():
     signal.signal(signal.SIGINT, partial(signal_handler, server))
 
     tornado.ioloop.IOLoop.current().start()  # 启动web程序，开始监听端口的连接
+
 
 # 系统执行入口
 if __name__ == "__main__":

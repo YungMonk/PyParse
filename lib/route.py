@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import inspect
+import logging
 import re
 import os
 import sys
@@ -9,12 +10,17 @@ import sys
 import tornado.web
 from cacheout import LFUCache
 
-from lib import configer
+from lib import loader
 from lib import log
-from lib import path
+from config import constant
+
+# 加载缓存
+lfu_cache: LFUCache
+
+logger: logging.Logger
 
 
-@configer.instance.register(level=2)
+@loader.instance.register(level=2)
 def set_up():
     """ erase all nodes
         this function maybe called for hot deployment
@@ -24,11 +30,10 @@ def set_up():
     global logger
     logger = log.Log().getLog()
 
-    # 加载缓存
     global lfu_cache
     lfu_cache = LFUCache(maxsize=256)
 
-    files_list = os.listdir(path._CONTROLLER_PATH)
+    files_list = os.listdir(constant.CONTROLLER_PATH)
     files_list = set(['controller.' + x[:x.rfind('.')] for x in files_list if x.endswith('.py')])
     list(map(__import__, files_list))
 
