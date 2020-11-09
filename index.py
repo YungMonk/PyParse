@@ -159,7 +159,7 @@ def signal_handler(server, signum, frame):
         now = time.time()
 
         # 获取当前事件循环中还没有结束的任务（任务不是正在运行的任务和已经完成的任务，既pending状态的任务）
-        # Future对象有以下状态：Pending,Runging,Done,Cancelled
+        # Future对象有以下状态：Pending,Running,Done,Cancelled
         tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task() and not t.done()]
         if now < deadline and len(tasks) > 0:
             logger.warning(f'Awaiting {len(tasks)} pending tasks: {tasks}')
@@ -171,7 +171,7 @@ def signal_handler(server, signum, frame):
             logger.warning(f'Waiting on {pending_connection} connections to complete.')
             io_loop.add_timeout(now + 1, stop_loop, server, deadline)
         else:
-            logger.warning('Stopping http server, and stop recive the http request.')
+            logger.warning('Stopping http server, and stop receive the http request.')
             server.stop()
             logger.warning(f'Continuing with {pending_connection} connections open.')
             logger.warning('Stopping IOLoop')

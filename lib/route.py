@@ -1,45 +1,42 @@
 #!/usr/bin/python3.8
 # -*- coding: utf-8 -*-
 
-import json
-import random
 import inspect
 import re
 import os
 import sys
-import time
 
-import tornado
+import tornado.web
 from cacheout import LFUCache
 
 from lib import configer
 from lib import log
 from lib import path
 
+
 @configer.instance.register(level=2)
 def set_up():
-
-    ''' erase all nodes
+    """ erase all nodes
         this function maybe called for hot deployment
-    '''
+    """
 
     # 加载日志
     global logger
     logger = log.Log().getLog()
-    
+
     # 加载缓存
     global lfu_cache
     lfu_cache = LFUCache(maxsize=256)
-    
 
     files_list = os.listdir(path._CONTROLLER_PATH)
-    files_list = set(['controller.'+x[:x.rfind('.')] for x in files_list if x.endswith('.py')])
+    files_list = set(['controller.' + x[:x.rfind('.')] for x in files_list if x.endswith('.py')])
     list(map(__import__, files_list))
-    
+
     router.pre_check()
 
+
 class router(object):
-    '''dispather and decortor'''
+    """dispatcher and decorator"""
 
     _GET = 0x001
     _PUT = 0x004
@@ -62,9 +59,9 @@ class router(object):
 
     @classmethod
     def lookup_suitable_node(cls, prev, sentry, url, method, assert_wrong_method=False):
-        '''
+        """
             循环加载所有路由
-        '''
+        """
         if not sentry:
 
             if assert_wrong_method:
@@ -74,7 +71,7 @@ class router(object):
 
         wrong = assert_wrong_method
 
-        if (matches := sentry['eUrl'].match(url)):
+        if matches := sentry['eUrl'].match(url):
 
             if sentry['method'] & method:  # hit!
 
@@ -92,30 +89,30 @@ class router(object):
 
     @classmethod
     def pre_check(cls):
-        '''
+        """
             路由检查
-        '''
+        """
 
         check_mapper_list = []
 
-        for item in set(router.mapper) :
+        for item in set(router.mapper):
 
-            if router.mapper.count(item) > 1 :
-
+            if router.mapper.count(item) > 1:
                 check_mapper_list.append(item)
 
         if check_mapper_list:
 
             for check_child in check_mapper_list:
                 logger.fatal('Definition conflict : FUNCTION[%s]', check_child[0])
-            
+
             sys.exit(1)
 
     @classmethod
     def route(cls, **deco):
-        '''
+        """
             用以注册路由的装饰器
-        '''
+        """
+
         def foo(func):
             url = deco.get('url') or '/'
             eUrl = re.compile('^' + url + '$', re.IGNORECASE)
@@ -134,12 +131,13 @@ class router(object):
                     'next': {},
                 }
 
-                router.mapper.append('.'.join([mapper_node['moduleName'], mapper_node['className'], mapper_node['callName']]))
+                router.mapper.append(
+                    '.'.join([mapper_node['moduleName'], mapper_node['className'], mapper_node['callName']]))
 
                 # Yes, I used linked list here
                 # Any better way to contain urls?
                 # Disadvantage: have to visit the urls list from head to end to
-                # determind 404
+                # determined 404
 
                 if router.mapper_sentry:
                     router.last_sentry['next'] = mapper_node
@@ -154,9 +152,9 @@ class router(object):
 
     @classmethod
     async def emit(cls, path, request_handler, method_flag):
-        '''
+        """
             路由分发
-        '''
+        """
         mapper_node, m = router.lookup_suitable_node(None, router.mapper_sentry, path, method_flag)
 
         if mapper_node and m:
@@ -168,12 +166,12 @@ class router(object):
             callName = mapper_node['callName']
             className = mapper_node['className']
             moduleName = mapper_node['moduleName']
-            clazz = getattr(__import__(moduleName, fromlist=moduleName[moduleName.rfind('.')+1:]), className)
+            clazz = getattr(__import__(moduleName, fromlist=moduleName[moduleName.rfind('.') + 1:]), className)
 
             try:
                 obj = clazz()
             except Exception:
-                logger.exception("error occured when creating instance of %s" % className)
+                logger.exception("error occurred when creating instance of %s" % className)
                 pass
 
             call = getattr(obj, callName)
