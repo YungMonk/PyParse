@@ -243,7 +243,7 @@
     },
     "work": {
         "label": "工作经历",
-        "rules": "//*[contains(text(),'工作经历')]/ancestor::tr[1]/following-sibling::tr|call_prev|preg_replace[\\n,]|preg_match[(.*?)(?=tdBar)],0|handle_regualr[(<strong>),#####\\1,#####,<table>,</table>]",
+        "rules": "//*[contains(text(),'工作经历')]/ancestor::tr[1]/following-sibling::tr|call_prev|preg_replace[\\n,]|preg_match[(.*?)(?=tdBar)],0|handle_regular[(<strong>),#####\\1,#####,<table>,</table>]",
         "lists": true,
         "child": {
             "time": {
@@ -315,7 +315,7 @@
     },
     "education": {
         "label": "教育经历",
-        "rules": "//*[contains(text(),'教育背景')]/ancestor::tr[1]/following-sibling::tr|call_prev|preg_replace[\\n,]|preg_match[(.*?)(?=tdBar)],0|handle_regualr[(<strong>),#####\\1,#####,<table>,</table>]",
+        "rules": "//*[contains(text(),'教育背景')]/ancestor::tr[1]/following-sibling::tr|call_prev|preg_replace[\\n,]|preg_match[(.*?)(?=tdBar)],0|handle_regular[(<strong>),#####\\1,#####,<table>,</table>]",
         "lists": true,
         "child": {
             "time": {
@@ -347,7 +347,7 @@
     },
     "training": {
         "label": "培训经历",
-        "rules": "//*[contains(text(),'培训经历')]/ancestor::tr[1]/following-sibling::tr|call_prev|preg_replace[\\n,]|preg_match[(.*?)(?=tdBar)],0|handle_regualr[(<strong>),#####\\1,#####,<table>,</table>]",
+        "rules": "//*[contains(text(),'培训经历')]/ancestor::tr[1]/following-sibling::tr|call_prev|preg_replace[\\n,]|preg_match[(.*?)(?=tdBar)],0|handle_regular[(<strong>),#####\\1,#####,<table>,</table>]",
         "lists": true,
         "child": {
             "time": {

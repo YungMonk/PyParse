@@ -435,7 +435,7 @@
     },
     "certificate": {
         "label": "证书",
-        "rules": "//h3[text()='证书']/following-sibling::*|call_prev|handle_regualr[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
+        "rules": "//h3[text()='证书']/following-sibling::*|call_prev|handle_regular[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
         "lists": true,
         "child": {
             "name": {

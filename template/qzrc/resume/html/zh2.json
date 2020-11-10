@@ -239,7 +239,7 @@
     },
     "work": {
         "label": "工作经历",
-        "rules": "//*[contains(text(),'工作/实践经验')]/ancestor::tr/following-sibling::*|call_prev|preg_replace[\\n+,]|handle_regualr[(<tr>\\s*<td\\s*class=\"x\">\\s*所在单位\\s*</td>),#####\\1,#####,<table>,</table>]",
+        "rules": "//*[contains(text(),'工作/实践经验')]/ancestor::tr/following-sibling::*|call_prev|preg_replace[\\n+,]|handle_regular[(<tr>\\s*<td\\s*class=\"x\">\\s*所在单位\\s*</td>),#####\\1,#####,<table>,</table>]",
         "lists": true,
         "child": {
             "time": {

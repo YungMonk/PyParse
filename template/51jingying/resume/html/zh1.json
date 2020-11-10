@@ -347,7 +347,7 @@
     },
     "training": {
         "label": "培训经历",
-        "rules": "//*[contains(text(),'技能特长')]/following-sibling::*|call_prev|preg_match[<h6>培训经历</h6>(.*?)(<h6>@或@</div>)],0|handle_regualr[(<p class=\"yy_jobP\">.*?</p>),\\1#####,#####,<div>,</div>]",
+        "rules": "//*[contains(text(),'技能特长')]/following-sibling::*|call_prev|preg_match[<h6>培训经历</h6>(.*?)(<h6>@或@</div>)],0|handle_regular[(<p class=\"yy_jobP\">.*?</p>),\\1#####,#####,<div>,</div>]",
         "lists": true,
         "child": {
             "time": {

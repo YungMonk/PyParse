@@ -379,7 +379,7 @@
     },
     "language": {
         "label": "语言能力",
-        "rules": "//*[contains(text(),'语言能力')]/following-sibling::*|call_prev|handle_regualr[(.*?width: 240px;.*?</li>),\\1#####,#####,<div>,</div>]",
+        "rules": "//*[contains(text(),'语言能力')]/following-sibling::*|call_prev|handle_regular[(.*?width: 240px;.*?</li>),\\1#####,#####,<div>,</div>]",
         "lists": true,
         "child": {
             "name": {

@@ -243,7 +243,7 @@
     },
     "work": {
         "label": "工作经历",
-        "rules": "//*[contains(text(),'工作经验')]/ancestor::div[2]|call_prev|preg_replace[\\n,]|handle_regualr[(<b>.*?</ul>),#####\\1,#####,<div>,</div>]",
+        "rules": "//*[contains(text(),'工作经验')]/ancestor::div[2]|call_prev|preg_replace[\\n,]|handle_regular[(<b>.*?</ul>),#####\\1,#####,<div>,</div>]",
         "lists": true,
         "child": {
             "time": {

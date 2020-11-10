@@ -7,7 +7,7 @@ import re
 import sys
 import traceback
 
-import config.constant as pather
+import config.constant as const
 
 
 class load_func(object):
@@ -22,7 +22,7 @@ class load_func(object):
         return self.func(inputs)
 
 
-class configer(object):
+class configure(object):
     """
         This class will hold configurations and registered setups(functions)
         It can determine when to setup them
@@ -46,7 +46,7 @@ class configer(object):
     def setup(self, own_cfg, onlevel=0):
         """
             Call all(or specific level) setup functions which registered via using
-            "Configer.register" decorator.
+            "Configure.register" decorator.
             If "onlevel" has been set, only the matched setup functions will be
             loaded(or hot reloaded).
             BE CAREFUL! The registered setup function shall apply reload logic in case
@@ -68,7 +68,6 @@ class configer(object):
                 sys.exit(1)
 
     def load(self, full_path):
-        cfg = {}
         with open(full_path, 'r') as f:
             raw = f.read()
             # 去掉多行注释
@@ -77,11 +76,11 @@ class configer(object):
 
         if cfg.get('$includes'):
             for include in cfg['$includes']:
-                include_conf_file = os.path.join(pather.CONF_PATH, include)
+                include_conf_file = os.path.join(const.CONF_PATH, include)
                 icfg = self.load(include_conf_file)
                 cfg.update(icfg)
 
         return cfg
 
 
-instance = configer()
+config = configure()

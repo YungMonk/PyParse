@@ -291,7 +291,7 @@
     },
     "project": {
         "label": "项目经验",
-        "rules": "//h3[text()='项目经历']/following-sibling::*|call_prev|handle_regualr[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
+        "rules": "//h3[text()='项目经历']/following-sibling::*|call_prev|handle_regular[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
         "lists": true,
         "child": {
             "time": {
@@ -363,7 +363,7 @@
     },
     "training": {
         "label": "培训经历",
-        "rules": "//h3[contains(text(),'培训经历')]/following-sibling::*|call_prev|handle_regualr[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
+        "rules": "//h3[contains(text(),'培训经历')]/following-sibling::*|call_prev|handle_regular[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
         "lists": true,
         "child": {
             "time": {
@@ -395,7 +395,7 @@
     },
     "language": {
         "label": "语言能力",
-        "rules": "//h3[contains(text(),'语言能力')]/following-sibling::*|call_prev|handle_regualr[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
+        "rules": "//h3[contains(text(),'语言能力')]/following-sibling::*|call_prev|handle_regular[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
         "lists": true,
         "child": {
             "name": {
@@ -435,7 +435,7 @@
     },
     "certificate": {
         "label": "证书",
-        "rules": "//h3[text()='证书']/following-sibling::*|call_prev|handle_regualr[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
+        "rules": "//h3[text()='证书']/following-sibling::*|call_prev|handle_regular[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
         "lists": true,
         "child": {
             "name": {

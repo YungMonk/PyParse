@@ -20,7 +20,7 @@ lfu_cache: LFUCache
 logger: logging.Logger
 
 
-@loader.instance.register(level=2)
+@loader.config.register(level=2)
 def set_up():
     """ erase all nodes
         this function maybe called for hot deployment
@@ -173,9 +173,10 @@ class router(object):
             moduleName = mapper_node['moduleName']
             clazz = getattr(__import__(moduleName, fromlist=moduleName[moduleName.rfind('.') + 1:]), className)
 
+            obj = None
             try:
                 obj = clazz()
-            except Exception:
+            except ModuleNotFoundError:
                 logger.exception("error occurred when creating instance of %s" % className)
                 pass
 

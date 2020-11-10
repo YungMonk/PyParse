@@ -371,7 +371,7 @@
     },
     "training": {
         "label": "培训经历",
-        "rules": "//h3[contains(text(),'培训经历')]/following-sibling::*|call_prev|handle_regualr[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
+        "rules": "//h3[contains(text(),'培训经历')]/following-sibling::*|call_prev|handle_regular[(<h2>.*?</h2>),#####\\1,#####,<div id='work'>,</div>]",
         "lists": true,
         "child": {
             "time": {

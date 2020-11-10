@@ -1,7 +1,6 @@
 #!/usr/bin/python3.8
 # -*- coding: utf-8 -*-
 
-import array
 import hashlib
 import json
 import os
@@ -37,7 +36,7 @@ class hEngine(object):
 
         ctx = etree.HTML(self.__text)
 
-        # result = etreehtml.xpath("string(//table[@class='infr'])")
+        # result = etreehtml.xpath("string(//table[@class='info'])")
         # print(result)
 
         # 读取内存缓存

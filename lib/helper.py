@@ -7,7 +7,7 @@ import time
 from lxml import etree
 
 from lib import route
-from lib.loader import instance
+from lib.loader import config
 from utils import strings
 
 
@@ -25,7 +25,7 @@ async def optimize(args, funcs=None):
             continue
 
         params = []
-        if tmp := re.search(r'(.*?)\[(.*)\],(\d+),(\d+)', func):
+        if tmp := re.search(r'(.*?)\[(.*)],(\d+),(\d+)', func):
             call_info = tmp.groups()
 
             params = call_info[1].split(',')
@@ -40,7 +40,7 @@ async def optimize(args, funcs=None):
                 tmp = cres[idx_1]
                 if idx_2 < len(tmp):
                     args = tmp[idx_2]
-        elif tmp := re.search(r'(.*)\[(.*)\],(-*\d+)', func):
+        elif tmp := re.search(r'(.*)\[(.*)],(-*\d+)', func):
             call_info = tmp.groups()
 
             if call_info[0] == "preg_match" or call_info[0] == "preg_match_all":
@@ -58,7 +58,7 @@ async def optimize(args, funcs=None):
                 args = cres[idx_1]
             else:
                 args = ""
-        elif tmp := re.search(r'(.*?)\[(.*)\]', func):
+        elif tmp := re.search(r'(.*?)\[(.*)]', func):
             call_info = tmp.groups()
 
             params = call_info[1].split(',')
@@ -89,11 +89,11 @@ async def optimize(args, funcs=None):
     return args
 
 
-def placeholder(str=''):
+def placeholder(stg: str = '') -> str:
     """
         占位符还原
     """
-    return str.replace('@或@', '|').replace('逗号', ',').replace('左中括号', '[').replace('右中括号', ']').replace('左括号', '(').replace('右括号', ')').replace('\\n', '\n')
+    return stg.replace('@或@', '|').replace('逗号', ',').replace('左中括号', '[').replace('右中括号', ']').replace('左括号', '(').replace('右括号', ')').replace('\\n', '\n')
 
 
 def cn2dig(cn):
@@ -110,7 +110,7 @@ def trim(args="", *extra):
     return strings.trim(args, *extra)
 
 
-def strip_tags(args="", *extra):
+def strip_tags(args=""):
     """
         去除html文本中的所有标签
     """
@@ -150,7 +150,7 @@ def get_value(args, *extra):
     if len(extra) == 2:
         param_1 = int(extra[0])
         param_2 = int(extra[1])
-        if len(args) >= param_1 and param_1 >= param_2:
+        if len(args) >= param_1 >= param_2:
             result = args[param_2]
 
     return result
@@ -160,6 +160,7 @@ def preg_match(args="", *extra):
     """
         正则使用
     """
+    matches = None
     if len(extra) and extra[0] and (matches := re.search(extra[0], args, re.S | re.I)):
         return matches.groups()
 
@@ -168,6 +169,7 @@ def preg_match_all(args="", *extra):
     """
         正则全匹配
     """
+    matches = None
     if len(extra) and extra[0] and (matches := re.findall(extra[0], args, re.S | re.I)):
         return matches
 
@@ -182,7 +184,7 @@ def preg_replace(args="", *extra):
         return args
 
 
-def json_encode(args=None, *extra):
+def json_encode(args=None):
     """
         json序列化
     """
@@ -190,21 +192,21 @@ def json_encode(args=None, *extra):
     return json.dumps(args, ensure_ascii=False)
 
 
-def k2k(args="", *extra):
+def k2k(args=""):
     """
         单位（千）转换
     """
     return strings.salary_to_k(args)
 
 
-def w2k(args="", *extra):
+def w2k(args=""):
     """
         单位（万）转换
     """
     return strings.salary_to_k(args, 'W')
 
 
-def handle_regualr(args="", *extra):
+def handle_regular(args="", *extra):
     """
         正则分割
     """
@@ -232,11 +234,10 @@ def handle_xpath(args="", *extra):
     return etree.HTML(args).xpath(placeholder(extra[0]))
 
 
-def handle_birth(args=None, *extra):
+def handle_birth(args=None):
     """
         拼接出生日期
     """
-    birth = ""
     if 'birth_year' in args and args['birth_year']:
         birth = args['birth_year'] + '年'
         if 'birth_month' in args and args['birth_month']:
@@ -248,50 +249,50 @@ def handle_birth(args=None, *extra):
     return args
 
 
-def handle_birthday(args="", *extra):
+def handle_birthday(args=""):
     """
         匹配出生日
     """
     string = ""
     if (matchObj := re.search(
-            r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.|/){1}\s*([0,1]{0,1}[0-9]{1})\s*(月|-|\.|/){1}\s*([0-3]{0,1}[0-9]{1})',
+            r'([1-2][0,9][0-9]{2})\s*[年\-./]\s*([0-1]?[0-9])\s*[月\-./]\s*([0-3]?[0-9])',
             args)):
-        string = "{}年{}月{}日".format(matchObj.group(1), matchObj.group(3), matchObj.group(5))
-    elif (matchObj := re.search(r'([1-2]{1}[0,9]{1}[0-9]{2})\s*(年|-|\.|/){1}\s*([0,1]{0,1}[0-9]{1})', args)):
+        string = "{}年{}月{}日".format(matchObj.group(1), matchObj.group(2), matchObj.group(3))
+    elif matchObj := re.search(r'([1-2][0,9][0-9]{2})\s*[年\-./]\s*([0,1]?[0-9])', args):
         string = "{}年{}月".format(matchObj.group(1), matchObj.group(3))
-    elif (matchObj := re.search(r'(\d+)\s*岁', args)):
+    elif matchObj := re.search(r'(\d+)\s*岁', args):
         string = "{}年".format(time.localtime(time.time()).tm_year - int(matchObj.group(1)))
-    elif (matchObj := re.search(r'(\d{2})', args)):
+    elif matchObj := re.search(r'(\d{2})', args):
         string = "{}年".format(time.localtime(time.time()).tm_year - int(matchObj.group(1)))
     return string if string else args
 
 
-def handle_age(args="", *extra):
+def handle_age(args=""):
     """
         匹配年龄
     """
     string = ""
-    if (matchObj := re.search(r'(\d+)\s*岁', args)):
+    if matchObj := re.search(r'(\d+)\s*岁', args):
         string = matchObj.group(1)
-    elif (matchObj := re.search(r'(\d{4})\s*年*', args)):
+    elif matchObj := re.search(r'(\d{4})\s*年*', args):
         birt_year = matchObj.group(1)
         string = time.localtime().tm_year - strings.atoi(birt_year) + 1
-    elif (matchObj := re.search(r'(\d{4}).*?\d{1,2}', args)):
+    elif matchObj := re.search(r'(\d{4}).*?\d{1,2}', args):
         birt_year = matchObj.group(1)
         string = time.localtime().tm_year - strings.atoi(birt_year) + 1
     return string
 
 
-def handle_gender(args="", *extra):
+def handle_gender(args=""):
     """
         匹配性别
     """
-    sexs = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F', 'women': 'F', 'men': 'M', 'woman': 'F', 'man': 'M'}
-    if (isMatch := re.search(r'(男|女|male|female|women|men|woman|man)', args)):
-        return sexs[isMatch.group(1)]
+    sexes = {'男': 'M', '女': 'F', 'male': 'M', 'female': 'F', 'women': 'F', 'men': 'M', 'woman': 'F', 'man': 'M'}
+    if isMatch := re.search(r'(男|女|male|female|women|men|woman|man)', args):
+        return sexes[isMatch.group(1)]
 
 
-def handle_degree(args="", *extra):
+def handle_degree(args=""):
     """
         匹配学历
     """
@@ -318,23 +319,23 @@ def handle_degree(args="", *extra):
         '其他': 99,
         '不限': 99,
     }
-    if (isMatch := re.search(r'(初中|高中|中专|中技|专科|大专|本科|硕士|博士|MBA)', args)):
+    if isMatch := re.search(r'(初中|高中|中专|中技|专科|大专|本科|硕士|博士|MBA)', args):
         return degrees[isMatch.group(1)]
     else:
         return 99
 
 
-def handle_langue(args="", *extra):
+def handle_langue(args=""):
     """
         语言匹配
     """
-    if (isMatch := re.search(r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语/朝鲜语|普通话|粤语|闽南语|上海话|其它)', args)):
+    if isMatch := re.search(r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语/朝鲜语|普通话|粤语|闽南语|上海话|其它)', args):
         return isMatch.group(1)
     else:
         return ""
 
 
-def handle_sofar(args=None, *extra):
+def handle_sofar(args=None):
     """
         是否最近
     """
@@ -345,18 +346,18 @@ def handle_sofar(args=None, *extra):
     return args
 
 
-def handle_marital(args="", *extra):
+def handle_marital(args=""):
     """
         婚姻状态
     """
     marital = {'已婚': 'Y', '未婚': 'N', '保密': 'U', 'single': 'N', 'married': 'Y', 'unmarried': 'N'}
-    if (isMatch := re.search(r'(已婚|未婚|single|married|unmarried)', args)):
+    if isMatch := re.search(r'(已婚|未婚|single|married|unmarried)', args):
         return marital[isMatch.group(1)]
     else:
         return "U"
 
 
-def handle_experience_by_years(args: str = "", *extra) -> int:
+def handle_experience_by_years(args: str = "") -> int:
     """
         通过参加工作年获取工作经验
     """
@@ -367,7 +368,7 @@ def handle_experience_by_years(args: str = "", *extra) -> int:
     return time.localtime().tm_year - strings.atoi(year_start) + 1
 
 
-def handle_basic_experience(args=None, *extra):
+def handle_basic_experience(args=None):
     """
         工作经验
     """
@@ -421,7 +422,7 @@ def handle_basic_experience(args=None, *extra):
     return args
 
 
-def handle_current_status(args="", *extra):
+def handle_current_status(args=""):
     """
         当前状态
     """
@@ -434,29 +435,29 @@ def handle_current_status(args="", *extra):
     return status
 
 
-def handle_political(args="", *extra) -> str:
+def handle_political(args="") -> str:
     """
         政治背景
     """
-    parrten = r'(中共党员|共产党员|预备党员|团员|民主党派|无党派人士|无党派民主人士|群众|其他)'
-    if matches := re.findall(parrten, args, re.S | re.I):
+    partner = r'(中共党员|共产党员|预备党员|团员|民主党派|无党派人士|无党派民主人士|群众|其他)'
+    if matches := re.findall(partner, args, re.S | re.I):
         return matches[0]
     else:
         return ""
 
 
-def handle_update(args="", *extra) -> str:
+def handle_update(args="") -> str:
     """
         简历更新时间
     """
     return time.strftime("%Y-%m-%d", time.localtime(strings.str_to_time(args)))
 
 
-def handle_time(args="", *extra):
+def handle_time(args=""):
     """
         处理时间
     """
-    if matches := re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})', '\\1年\\2月', args)):
+    if matches := re.findall(r'(\d{4}.*?\d{1,2}.)', re.sub(r'(\d{4}).*?(\d{1,2})', '\\1年\\2月', args)):
         return matches[0]
     elif matches := re.findall(r'(\d{4}年)', args):
         return matches[0]
@@ -464,7 +465,7 @@ def handle_time(args="", *extra):
         return ""
 
 
-def handle_interval(args=None, *extra):
+def handle_interval(args=None):
     """
         处理时间间隔
     """
@@ -472,20 +473,20 @@ def handle_interval(args=None, *extra):
     args['end_time'] = ""
     args['so_far'] = "N"
 
-    isMatch = re.findall(r'(\d{4}.*?\d{1,2}.{1})', re.sub(r'(\d{4}).*?(\d{1,2})', '\\1年\\2月', args['time']))
+    isMatch = re.findall(r'(\d{4}.*?\d{1,2}.)', re.sub(r'(\d{4}).*?(\d{1,2})', '\\1年\\2月', args['time']))
     if len(isMatch) == 1:
         args['start_time'] = isMatch[0]
     elif len(isMatch) == 2:
         args['start_time'] = isMatch[0]
         args['end_time'] = isMatch[1]
 
-    args = handle_sofar(args, *extra)
+    args = handle_sofar(args)
 
     args.pop('time', '')
     return args
 
 
-def handle_education(args=None, *extra):
+def handle_education(args=None):
     """
         通过毕业时间和学位，获取学历时间
     """
@@ -503,43 +504,40 @@ def handle_education(args=None, *extra):
         args['end_time'] = '{}年{}月'.format(strings.atoi(isMatch[0][0]) + years, "07")
         args['start_time'] = edu_time
 
-    args = handle_sofar(args, *extra)
+    args = handle_sofar(args)
 
     args.pop('is_grad', '')
     args.pop('time', '')
     return args
 
 
-def handle_basic_salary(args=None, *extra):
+def handle_basic_salary(args=None):
     """
         处理基本薪资
     """
     args['basic_salary_from'] = ""
     args['basic_salary_to'] = ""
 
+    matches = None
     if "basic_salary" in args:
         salary = args['basic_salary']
         # 年薪
         if '年' in salary and (matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S)):
-            if len(matches) == 1:
-                args['basic_salary_from'] = strings.salary_to_k(matches[0], salary)
-                args['basic_salary_to'] = strings.salary_to_k(matches[0], salary)
-            elif len(matches) == 2:
-                args['basic_salary_from'] = strings.salary_to_k(matches[0], salary)
-                args['basic_salary_to'] = strings.salary_to_k(matches[1], salary)
-
+            pass
         elif matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S):
-            if len(matches) == 1:
-                args['basic_salary_from'] = strings.salary_to_k(matches[0], salary)
-                args['basic_salary_to'] = strings.salary_to_k(matches[0], salary)
-            elif len(matches) == 2:
-                args['basic_salary_from'] = strings.salary_to_k(matches[0], salary)
-                args['basic_salary_to'] = strings.salary_to_k(matches[1], salary)
+            pass
+
+        if len(matches) == 1:
+            args['basic_salary_from'] = strings.salary_to_k(matches[0], salary)
+            args['basic_salary_to'] = strings.salary_to_k(matches[0], salary)
+        elif len(matches) == 2:
+            args['basic_salary_from'] = strings.salary_to_k(matches[0], salary)
+            args['basic_salary_to'] = strings.salary_to_k(matches[1], salary)
 
     return args
 
 
-def handle_expect_salary(args=None, *extra):
+def handle_expect_salary(args=None):
     """
         处理期望薪资
     """
@@ -552,6 +550,7 @@ def handle_expect_salary(args=None, *extra):
     args['expect_day_salary_from'] = ""
     args['expect_day_salary_to'] = ""
 
+    matches = None
     if "expect_salary" in args:
         salary = args['expect_salary']
         if '年' in salary and (matches := re.findall(r'(\d+\.*\d+)', salary, re.I | re.S)):
@@ -603,7 +602,7 @@ def handle_expect_salary(args=None, *extra):
     return args
 
 
-def handle_phone(args="", *extra):
+def handle_phone(args=""):
     """
         匹配手机号
     """
@@ -614,7 +613,7 @@ def handle_phone(args="", *extra):
         return ""
 
 
-def handle_email(args="", *extra):
+def handle_email(args=""):
     """
         匹配邮箱号
     """
@@ -625,7 +624,7 @@ def handle_email(args="", *extra):
         return ""
 
 
-def handle_corp_name_merge(args=None, *extra):
+def handle_corp_name_merge(args=None):
     """
         公司名称合并
     """
@@ -635,7 +634,7 @@ def handle_corp_name_merge(args=None, *extra):
     return args
 
 
-def handle_contact_merge(args="", *extra):
+def handle_contact_merge(args=""):
     """
         联系方式合并
     """
@@ -660,18 +659,18 @@ def handle_contact_merge(args="", *extra):
     return args
 
 
-def handle_corp_type(args="", *extra):
+def handle_corp_type(args=""):
     """
         公司类型
     """
-    matches = re.search(r'(外资\(欧美\)|外资\(非欧美\)|合资|国企|私营\/民营|民营公司|民营|上市公司|创业公司|外企代表处|政府机关|国有企业|事业单位|非营利机构)', args)
+    matches = re.search(r'(外资\(欧美\)|外资\(非欧美\)|合资|国企|私营/民营|民营公司|民营|上市公司|创业公司|外企代表处|政府机关|国有企业|事业单位|非营利机构)', args)
     if matches:
         return matches.group(0)
     else:
         return ""
 
 
-def handle_corp_scale(args="", *extra):
+def handle_corp_scale(args=""):
     """
         公司规模
     """
@@ -687,7 +686,7 @@ def handle_position_language(args=None, *extra):
         职位语言要求
     """
     level = {'一般': 1, '良好': 2, '熟练': 3, '精通': 4}
-    lans = {'英语': 1, '日语': 2, '韩语': 3, '法语': 4, '西班牙语': 5, '德语': 6, '俄语': 7, '阿拉伯语': 8, '葡萄牙语': 9, '意大利语': 10}
+    langs = {'英语': 1, '日语': 2, '韩语': 3, '法语': 4, '西班牙语': 5, '德语': 6, '俄语': 7, '阿拉伯语': 8, '葡萄牙语': 9, '意大利语': 10}
 
     args["languages"] = []
     args["language"] = ""
@@ -698,6 +697,8 @@ def handle_position_language(args=None, *extra):
 
     params = args['language']
 
+    split_tag_1 = None
+    split_tag_2 = None
     if not extra:
         split_tag_1 = '\n'
         split_tag_2 = ':'
@@ -713,12 +714,12 @@ def handle_position_language(args=None, *extra):
         array = lan.split(split_tag_2)
         tmp = {"id": "", "name": "", "level": ""}
         if len(array) == 2:
-            tmp["id"] = lans[strings.trim(array[0])] if strings.trim(array[0]) in lans else ""
+            tmp["id"] = langs[strings.trim(array[0])] if strings.trim(array[0]) in langs else ""
             tmp["name"] = strings.trim(array[0])
             tmp["level"] = level[strings.trim(array[1])] if strings.trim(array[1]) in level else ""
             lan_tmp.append({"l": strings.trim(array[0]), "c": strings.trim(array[1])})
         else:
-            tmp["id"] = lans[strings.trim(array[0])] if strings.trim(array[0]) in lans else ""
+            tmp["id"] = langs[strings.trim(array[0])] if strings.trim(array[0]) in langs else ""
             tmp["name"] = strings.trim(array[0])
             tmp["level"] = ""
             lan_tmp.append({"l": strings.trim(array[0]), "c": ""})
@@ -735,7 +736,7 @@ def handle_position_language(args=None, *extra):
     return args
 
 
-def handle_position_number(args=None, *extra):
+def handle_position_number(args=None):
     """
         匹配招聘人数
     """
@@ -760,7 +761,7 @@ def handle_position_number(args=None, *extra):
     return args
 
 
-def handle_position_degree(args=None, *extra):
+def handle_position_degree(args=None):
     """
         匹配学历
     """
@@ -798,7 +799,7 @@ def handle_position_degree(args=None, *extra):
     else:
         args['degree_above'] = 'N'
 
-    if (isMatch := re.search(r'(初中|高中|中专|中技|专科|大专|本科|硕士|博士|MBA)', args['degree_name'])):
+    if isMatch := re.search(r'(初中|高中|中专|中技|专科|大专|本科|硕士|博士|MBA)', args['degree_name']):
         args['degree_name'] = isMatch.group(1)
         args['degree'] = degrees[isMatch.group(1)]
     else:
@@ -808,13 +809,16 @@ def handle_position_degree(args=None, *extra):
     return args
 
 
-def handle_position_salary(args=None, *extra):
+def handle_position_salary(args=None):
     """
         处理期望薪资
     """
     args['salary_begin'] = 0
     args['salary_end'] = 500
 
+    matches = None
+    salary_begin = None
+    salary_end = None
     if "salary" in args:
         salary = args['salary']
         if '年' in salary and (matches := re.findall(r'(\d+\.*\d*)', salary, re.I | re.S)):
@@ -852,7 +856,7 @@ def handle_position_salary(args=None, *extra):
     return args
 
 
-def handle_position_experience(args=None, *extra):
+def handle_position_experience(args=None):
     """
         职位工作经验
     """
@@ -876,34 +880,34 @@ def handle_position_experience(args=None, *extra):
         # 在读学生,在读生
         args['experience_begin'] = 0
         args['experience_end'] = -2
-    elif (isMatch := re.search(r'(\d{1,2})年以下(工作经验|经验)*', experience)):
+    elif isMatch := re.search(r'(\d{1,2})年以下(工作经验|经验)*', experience):
         # 10年以下工作经验，8年以下经验
         args["experience_end"] = isMatch.group(1)
-    elif (isMatch := re.search(r'(\d{1,2})(\s|\.0)*年以上(工作经验|经验)*', experience)):
+    elif isMatch := re.search(r'(\d{1,2})(\s|\.0)*年以上(工作经验|经验)*', experience):
         # 10以上工作经验，10.0年以上工作经验，8年以上经验
         args["experience_begin"] = isMatch.group(1)
         args['experience_above'] = "Y"
-    elif (isMatch := re.search(r'(\d{1,2})-(\d{1,2})年(工作经验|经验)*', experience)):
+    elif isMatch := re.search(r'(\d{1,2})-(\d{1,2})年(工作经验|经验)*', experience):
         # 8-10年工作经验，8-10年经验
         args["experience_begin"] = isMatch.group(1)
         args["experience_end"] = isMatch.group(2)
-    elif (isMatch := re.search(r'(\d{1,2})年(工作经验|经验)', experience)):
+    elif isMatch := re.search(r'(\d{1,2})年(工作经验|经验)', experience):
         # 8年工作经验
         args["experience_begin"] = isMatch.group(1)
         args["experience_end"] = args["experience_begin"]
-    elif (isMatch := re.search(r'(\d{1,2})years', experience)):
+    elif isMatch := re.search(r'(\d{1,2})years', experience):
         # 10years
         args["experience_begin"] = isMatch.group(1)
         args["experience_end"] = args["experience_begin"]
-    elif (isMatch := re.search(r'(\d{1,2})\s*年(?!\d)', experience)):
+    elif isMatch := re.search(r'(\d{1,2})\s*年(?!\d)', experience):
         # 10 年，10年
         args["experience_begin"] = isMatch.group(1)
         args["experience_end"] = args["experience_begin"]
-    elif (isMatch := re.search(r'([\u4e00-\u9fa5]+)年以上', experience)):
+    elif isMatch := re.search(r'([\u4e00-\u9fa5]+)年以上', experience):
         # 十年以上工作经验
         args["experience_begin"] = cn2dig(isMatch.group(1))
         args['experience_above'] = "Y"
-    elif (isMatch := re.search(r'([\u4e00-\u9fa5]+)年', experience)):
+    elif isMatch := re.search(r'([\u4e00-\u9fa5]+)年', experience):
         # 八年
         args["experience_begin"] = cn2dig(isMatch.group(1))
         args["experience_end"] = args["experience_begin"]
@@ -913,7 +917,7 @@ def handle_position_experience(args=None, *extra):
     return args
 
 
-def handle_position_delete(args=None, *extra):
+def handle_position_delete(args=None):
     """
         职位已删除
     """
@@ -927,7 +931,7 @@ def handle_position_delete(args=None, *extra):
     return args
 
 
-def handle_position_publish(args=None, *extra):
+def handle_position_publish(args=None):
     """
         职位发布时间
     """
@@ -935,11 +939,11 @@ def handle_position_publish(args=None, *extra):
     from dateutil.relativedelta import relativedelta
     if 'created' not in args:
         args['created'] = ''
-    elif isMatch := re.findall(r'(\d{4})[-,/,年](\d{1,2})[-,/,月](\d{1,2})', args['created']):
+    elif isMatch := re.findall(r'(\d{4})[-/年](\d{1,2})[-/月](\d{1,2})', args['created']):
         args['created'] = "-".join(isMatch[0])
-    elif isMatch := re.findall(r'(\d{4})[-,/,年](\d{1,2})', args['created']):
+    elif isMatch := re.findall(r'(\d{4})[-/年](\d{1,2})', args['created']):
         args['created'] = "-".join(isMatch[0])
-    elif isMatch := re.findall(r'(\d{1,2})[-,/,月](\d{1,2})', args['created']):
+    elif isMatch := re.findall(r'(\d{1,2})[-/月](\d{1,2})', args['created']):
         args['created'] = "{}-{}".format(time.localtime().tm_year, "-".join(isMatch[0]))
     elif re.findall(r'刚刚|分钟前|小时前|今天', args['created']):
         args['created'] = str(datetime.date.today())
@@ -959,7 +963,7 @@ def handle_position_publish(args=None, *extra):
     return args
 
 
-def wash_education(args="", *extra):
+def wash_education(args=""):
     """
         清洗教育经历
     """
@@ -970,7 +974,7 @@ def wash_education(args="", *extra):
     return args
 
 
-def wash_training(args="", *extra):
+def wash_training(args=""):
     """
         清洗培训经历
     """
@@ -981,31 +985,31 @@ def wash_training(args="", *extra):
     return args
 
 
-def wash_skill(args, *extra):
+def wash_skill(args):
     """
         清洗技能
     """
-    parrten = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它)'
+    partner = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它)'
     if "name" not in args or not args['name']:
         return None
-    elif "name" in args and re.findall(parrten, args['name'], re.S | re.I):
+    elif "name" in args and re.findall(partner, args['name'], re.S | re.I):
         return None
     else:
         return args
 
 
-def wash_langue(args, *extra):
+def wash_langue(args):
     """
         清洗语言
     """
-    parrten = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它|English|Chinese)'
-    if "name" in args and args['name'] and re.findall(parrten, args['name'], re.S | re.I):
+    partner = r'(英语|日语|俄语|阿拉伯语|法语|德语|西班牙语|葡萄牙语|意大利语|韩语|朝鲜语|普通话|粤语|闽南语|上海话|其它|English|Chinese)'
+    if "name" in args and args['name'] and re.findall(partner, args['name'], re.S | re.I):
         return args
     else:
         return None
 
 
-def wash_name_null(args, *extra):
+def wash_name_null(args):
     """
         清洗名称为空的
     """
@@ -1022,7 +1026,7 @@ def wash_name_null(args, *extra):
 #################################################################
 ######################### 异步方法调用  ###########################
 #################################################################
-async def handle_position_city(args, *extra) -> dict:
+async def handle_position_city(args) -> dict:
     """
         处理职位城市
     """
@@ -1034,7 +1038,7 @@ async def handle_position_city(args, *extra) -> dict:
 
         import json
         if "city" in args and args['city']:
-            gsys = await http_gsystem(url=instance.config.get('rcp_service', None)['gsystem'], city=args['city'])
+            gsys = await http_gsystem(url=config.config.get('rcp_service', None)['gsystem'], city=args['city'])
             city = max(gsys.split(','))
 
             args['city_ids'] = {city: args['city']}
@@ -1045,7 +1049,7 @@ async def handle_position_city(args, *extra) -> dict:
     return args
 
 
-async def handle_address_city(args, *extra) -> dict:
+async def handle_address_city(args) -> dict:
     """
         户籍，现居住地相关（单个城市）
     """
@@ -1067,10 +1071,10 @@ async def handle_address_city(args, *extra) -> dict:
 
         import json
         if "account_address" in args and args['account_address']:
-            args['account'] = await http_gsystem(url=instance.config.get('rcp_service', None)['gsystem'],
+            args['account'] = await http_gsystem(url=config.config.get('rcp_service', None)['gsystem'],
                                                  city=args['account_address'])
         if "address_detail" in args and args['address_detail']:
-            args['address'] = await http_gsystem(url=instance.config.get('rcp_service', None)['gsystem'],
+            args['address'] = await http_gsystem(url=config.config.get('rcp_service', None)['gsystem'],
                                                  city=args['address_detail'])
 
         args['account_district'] = args['account']  # 灵活用工使用
@@ -1079,7 +1083,7 @@ async def handle_address_city(args, *extra) -> dict:
     return args
 
 
-async def handle_except_citys(args, *extra):
+async def handle_except_citys(args):
     """
         处理期望城市（多个城市）
     """
@@ -1094,7 +1098,7 @@ async def handle_except_citys(args, *extra):
             citys = args['expect_city_names'].split(',')
             city_sets = []
             for _city in citys:
-                gsys = await http_gsystem(url=instance.config.get('rcp_service', None)['gsystem'], city=_city)
+                gsys = await http_gsystem(url=config.config.get('rcp_service', None)['gsystem'], city=_city)
                 _tmp = max(gsys.split(','))
                 city_sets.append(_tmp)
 
@@ -1150,17 +1154,17 @@ async def http_gsystem(**kwargs):
     except HTTPError as e:
         # HTTPError is raised for non-200 responses; the response
         # can be found in e.response.
-        route.logger.warn("request gsystem HTTPError: " + str(e))
+        route.logger.warning("request gsystem HTTPError: " + str(e))
     except Exception as e:
         # Other errors are possible, such as IOError.
-        route.logger.warn("request gsystem Exception: " + str(e))
+        route.logger.warning("request gsystem Exception: " + str(e))
     finally:
         http_client.close()
 
     return result
 
 
-async def fetch_head(args: str = "", *extra) -> str:
+async def fetch_head(args: str = "") -> str:
     """
         抓取头像（注：抓取头像会）
     """
@@ -1212,10 +1216,10 @@ async def fetch_head(args: str = "", *extra) -> str:
     except HTTPError as e:
         # HTTPError is raised for non-200 responses; the response
         # can be found in e.response.
-        route.logger.warn("fetch_head HTTPError: " + str(e))
+        route.logger.warning("fetch_head HTTPError: " + str(e))
     except Exception as e:
         # Other errors are possible, such as IOError.
-        route.logger.warn("fetch_head Exception: " + str(e))
+        route.logger.warning("fetch_head Exception: " + str(e))
     finally:
         http_client.close()
 
@@ -1225,7 +1229,7 @@ async def fetch_head(args: str = "", *extra) -> str:
 #################################################################
 ######################### 其它过滤方法  ###########################
 #################################################################
-def font_decrypt(args: str = "", *extra) -> str:
+def font_decrypt(args: str = "") -> str:
     """
         58同城字体解密
     """

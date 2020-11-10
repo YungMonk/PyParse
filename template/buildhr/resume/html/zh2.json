@@ -243,7 +243,7 @@
     },
     "work": {
         "label": "工作经历",
-        "rules": "//td[contains(text(),'工作经验')]/ancestor::tr[1]/following-sibling::*[1]/td|call_prev|handle_regualr[(<strong>),#####\\1,#####,<div>,</div>]",
+        "rules": "//td[contains(text(),'工作经验')]/ancestor::tr[1]/following-sibling::*[1]/td|call_prev|handle_regular[(<strong>),#####\\1,#####,<div>,</div>]",
         "lists": true,
         "child": {
             "time": {
@@ -279,7 +279,7 @@
     },
     "project": {
         "label": "项目经验",
-        "rules": "//td[contains(text(),'项目经验')]/ancestor::tr[1]/following-sibling::*[1]/td|call_prev|handle_regualr[(<strong>),#####\\1,#####,<div>,</div>]",
+        "rules": "//td[contains(text(),'项目经验')]/ancestor::tr[1]/following-sibling::*[1]/td|call_prev|handle_regular[(<strong>),#####\\1,#####,<div>,</div>]",
         "lists": true,
         "child": {
             "time": {
@@ -315,7 +315,7 @@
     },
     "education": {
         "label": "教育经历",
-        "rules": "//td[contains(text(),'教育背景')]/ancestor::tr[1]/following-sibling::*[1]/td|call_prev|handle_regualr[(<strong>),#####\\1,#####,<div>,</div>]",
+        "rules": "//td[contains(text(),'教育背景')]/ancestor::tr[1]/following-sibling::*[1]/td|call_prev|handle_regular[(<strong>),#####\\1,#####,<div>,</div>]",
         "lists": true,
         "child": {
             "time": {

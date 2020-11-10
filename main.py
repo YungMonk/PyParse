@@ -252,7 +252,7 @@ def run():
     print("no configuration found!,will use [%s] instead" % env_config)
 
     # 加载配置文件
-    env_config | loader.load_func(loader.instance.load) | loader.load_func(loader.instance.setup)
+    env_config | loader.load_func(loader.config.load) | loader.load_func(loader.config.setup)
 
     app = tornado.web.Application([
         (r"^(/[^\.|]*)(?!\.\w+)$", MainHandler),  # 路由

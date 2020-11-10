@@ -16,7 +16,7 @@ class Log(object):
         return self.logger
 
 
-@loader.instance.register(look='logging', level=1)
+@loader.config.register(look='logging', level=1)
 def set_up(cfg):
     log_path = os.path.join(constant.CONF_PATH, cfg['config_file'])
     logging.config.fileConfig(log_path)

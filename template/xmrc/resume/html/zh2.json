@@ -243,7 +243,7 @@
   },
   "work": {
     "label": "工作经历",
-    "rules": "//*[contains(text(),'工 作 经 历')]/ancestor::tr/following-sibling::tr|call_prev|handle_regualr[(<tr><td style=\"width:120px;\" colspan=\"2\" class=\"tg\">@或@<tr>\\s+<td style=\"width:120px;\" colspan=\"2\" class=\"tg\">),#####\\1,#####,<table>,</table>]",
+    "rules": "//*[contains(text(),'工 作 经 历')]/ancestor::tr/following-sibling::tr|call_prev|handle_regular[(<tr><td style=\"width:120px;\" colspan=\"2\" class=\"tg\">@或@<tr>\\s+<td style=\"width:120px;\" colspan=\"2\" class=\"tg\">),#####\\1,#####,<table>,</table>]",
     "lists": true,
     "child": {
       "time": {
@@ -315,7 +315,7 @@
   },
   "education": {
     "label": "教育经历",
-    "rules": "//*[contains(text(),'教 育 背 景')]/ancestor::tr/following-sibling::tr|call_prev|handle_regualr[(<tr>\\s+<td style=\"width:120px;\" colspan=\"2\"),#####\\1,#####,<table>,</table>]",
+    "rules": "//*[contains(text(),'教 育 背 景')]/ancestor::tr/following-sibling::tr|call_prev|handle_regular[(<tr>\\s+<td style=\"width:120px;\" colspan=\"2\"),#####\\1,#####,<table>,</table>]",
     "lists": true,
     "child": {
       "time": {
@@ -347,7 +347,7 @@
   },
   "training": {
     "label": "培训经历",
-    "rules": "//*[contains(text(),'培 训 经 历')]/ancestor::tr/following-sibling::tr|call_prev|handle_regualr[(<tr>\\s+<td style=\"width:120px;\" colspan=\"2\"@或@<tr><td style=\"width:120px;\" colspan=\"2\">),#####\\1,#####,<table>,</table>]",
+    "rules": "//*[contains(text(),'培 训 经 历')]/ancestor::tr/following-sibling::tr|call_prev|handle_regular[(<tr>\\s+<td style=\"width:120px;\" colspan=\"2\"@或@<tr><td style=\"width:120px;\" colspan=\"2\">),#####\\1,#####,<table>,</table>]",
     "lists": true,
     "child": {
       "time": {
