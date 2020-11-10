@@ -1,35 +1,39 @@
 #! /usr/bin/python3.8
 # -*- coding:utf-8 -*-
 # pylint: disable=W0223
-import types
-
-import tornado.ioloop
-import tornado.web
-import tornado.log
-import tornado.httpserver
 
 import asyncio
 import getopt
-import os
 import json
+import os
+import signal
 import sys
 import time
-import signal
 import traceback
+import types
 from functools import partial
+from typing import Optional, Awaitable
 
-from lib import route
+import tornado.httpserver
+import tornado.ioloop
+import tornado.log
+import tornado.web
+
 from config import constant
 from lib import loader
 from lib import log
-from utils import xmltodict
+from lib import route
 from utils import strings
+from utils import xmltodict
 
 
 class MainHandler(tornado.web.RequestHandler):
     """
         定义处理类型
     """
+
+    def data_received(self, chunk: bytes) -> Optional[Awaitable[None]]:
+        pass
 
     def set_default_headers(self) -> None:
         tornado.log.logging.info("---set_default_headers---:设置header")
@@ -79,7 +83,7 @@ class MainHandler(tornado.web.RequestHandler):
         elif self.request.arguments:
             self.json_args = dict((k, v[-1]) for k, v in self.request.arguments.items())
 
-        tornado.log.logging.warning("---Params---：%s" % json.dumps(self.json_args))
+        # tornado.log.logging.warning("---Params---：%s" % json.dumps(self.json_args))
 
     # 添加一个处理get请求方式的方法
     async def get(self, path):

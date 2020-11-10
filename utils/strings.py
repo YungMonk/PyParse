@@ -1,20 +1,16 @@
-import struct
-import fcntl
+#! /usr/bin/python3.8
+# -*- coding:utf-8 -*-
+import re
 import socket
 import time
-import re
-from typing import (
-    TypeVar, Iterator, Iterable, NoReturn, overload, Container,
-    Sequence, MutableSequence, Mapping, MutableMapping, Tuple, List, Any, Dict, Callable, Generic,
-    Set, AbstractSet, FrozenSet, MutableSet, Sized, Reversible, SupportsInt, SupportsFloat, SupportsAbs,
-    SupportsComplex, IO, BinaryIO, Union,
-    ItemsView, KeysView, ValuesView, ByteString, Optional, AnyStr, Type, Text,
-    Protocol,
-)
 from html.parser import HTMLParser
+from typing import (Any, )
 
 
 class MLStripper(HTMLParser):
+    def error(self, message):
+        pass
+
     def __init__(self):
         super().__init__(convert_charrefs=False)
         self.reset()
@@ -78,7 +74,7 @@ def host_address() -> str:
     """
         Return the current host address.
     """
-
+    s: socket = None
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(('8.8.8.8', 80))
@@ -96,7 +92,7 @@ def net_used(port: int, ip='127.0.0.1') -> bool:
     try:
         s.connect((ip, port))
         return True
-    except:
+    except ConnectionError:
         return False
     finally:
         s.close()
@@ -115,7 +111,7 @@ def rpc_params(request: dict, **header: Any) -> dict:
             'appid': 10,
             'user_ip': ip,
             'uid': 10,
-            'product_name': 'cvparser',
+            'product_name': 'cv_parser',
         },
         "request": {}
     }
@@ -136,11 +132,11 @@ def salary_to_k(args: str, flag: str = "") -> str:
         args = int(args)
 
     if '千' in flag or 'K' in flag or 'k' in flag:
-        return '%.2f' % (args)
+        return '%.2f' % args
     elif '万' in flag or 'W' in flag or 'w' in flag:
-        return '%.2f' % (args*10)
+        return '%.2f' % (args * 10)
     else:
-        return '%.2f' % (args*0.001)
+        return '%.2f' % (args * 0.001)
 
 
 def cn2dig(cn: str):
@@ -190,39 +186,39 @@ def cn2dig(cn: str):
 
     lcn = list(cn)
     unit = 0  # 当前的单位
-    ldig = []  # 临时数组
+    tmp_set = []  # 临时数组
 
     while lcn:
-        cndig = lcn.pop()
+        china_num = lcn.pop()
 
-        if cndig in CN_UNIT:
-            unit = CN_UNIT.get(cndig)
+        if china_num in CN_UNIT:
+            unit = CN_UNIT.get(china_num)
             if unit == 10000:
-                ldig.append('w')  # 标示万位
+                tmp_set.append('w')  # 标示万位
                 unit = 1
             elif unit == 100000000:
-                ldig.append('y')  # 标示亿位
+                tmp_set.append('y')  # 标示亿位
                 unit = 1
             elif unit == 1000000000000:  # 标示兆位
-                ldig.append('z')
+                tmp_set.append('z')
                 unit = 1
             continue
         else:
-            dig = CN_NUM.get(cndig)
+            dig = CN_NUM.get(china_num)
             if unit:
                 dig = dig * unit
                 unit = 0
 
-            ldig.append(dig)
+            tmp_set.append(dig)
 
     if unit == 10:  # 处理10-19的数字
-        ldig.append(10)
+        tmp_set.append(10)
 
     ret = 0
     tmp = 0
 
-    while ldig:
-        x = ldig.pop()
+    while tmp_set:
+        x = tmp_set.pop()
 
         if x == 'w':
             tmp *= 10000
@@ -246,12 +242,12 @@ def cn2dig(cn: str):
     return ret
 
 
-def atoi(str: str = "") -> int:
+def atoi(stg: str = "") -> int:
     """
-    :type str: str
+    :type stg: str
     :rtype: int
     """
-    s = str.lstrip()
+    s = stg.lstrip()
     if not s:
         return 0
     a = s[0]
@@ -282,12 +278,12 @@ def atoi(str: str = "") -> int:
         return num
 
 
-def get_val_by_keys(keys: str = "", ctx: dict = {}) -> Any:
+def get_val_by_keys(keys: str = "", ctx=None) -> Any:
     r"""get a value for dict or list by a string
 
     >>> dt = {
     >>>     "name": {
-    >>>         "real": "yung",
+    >>>         "real": "yang",
     >>>         "last": "monk",
     >>>     }
     >>>     "work": [
@@ -298,6 +294,8 @@ def get_val_by_keys(keys: str = "", ctx: dict = {}) -> Any:
     >>> 1
 
     """
+    if ctx is None:
+        ctx = {}
     arr_key = keys.split(".")
     for key in arr_key:
         if isinstance(ctx, list) and key.isdigit():
@@ -319,13 +317,13 @@ def get_val_by_keys(keys: str = "", ctx: dict = {}) -> Any:
 
 def str_to_time(args: str = "") -> int:
     """时间转时间戳"""
-    if matches := re.findall(r'(\d{4})[-,/,年](\d{1,2})[-,/,月](\d{1,2})', args, re.I | re.S):
+    if matches := re.findall(r'(\d{4})[-/年](\d{1,2})[-/月](\d{1,2})', args, re.I | re.S):
         timeArray = time.strptime(
             "{}/{}/{}".format(matches[0][0], matches[0][1], matches[0][2]), "%Y/%m/%d"
         )
         # 转换成时间戳
         return int(time.mktime(timeArray))
-    
+
     if matches := re.findall(r'(\d{4}).*?(\d{1,2})', args, re.I | re.S):
         # 转换成时间数组
         timeArray = time.strptime(
@@ -336,9 +334,8 @@ def str_to_time(args: str = "") -> int:
 
 
 if __name__ == "__main__":
-
     dict1 = {"name": "owen", "age": 18, "height": 150}
     dict2 = {"birthday": "1999-11-22", "height": 180}
 
-    newdict = dict(dict1, **dict2)
-    print(newdict)
+    new_dict = dict(dict1, **dict2)
+    print(new_dict)
